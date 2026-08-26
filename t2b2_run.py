@@ -1,4 +1,4 @@
-"""t2b2_run v1.2 (2026-08-26c): committed analysis logic for the T2b-2 production grid.
+"""t2b2_run v1.3 (2026-08-26d): committed analysis logic for the T2b-2 production grid.
 
 Purpose (final pre-production review sec.4): all analysis-relevant logic (grid definition,
 runner, extrapolation, refine, R2' adjacency, completion check, Git preregistration gate)
@@ -20,6 +20,13 @@ applied verbatim to a candidate geometry/sector; method fixed before any candida
 v1.2 (ProductionGO review sec.11, optional hardening): run_jobs skips already-done keys
 per transfer tag (no duplicate rows on partial-interruption resume); completion_check counts
 duplicate keys and requires zero.
+
+v1.3 (Colab operational fix): (a) the executing notebook is written to by the host (output
+autosave), so the tracked-clean test ignores the notebook path itself -- its analysis-relevant
+content is verified far more strictly by the source-only SHA against HEAD; every other tracked
+path must still be clean. (b) notebook identity now prefers the LIVE notebook source obtained
+from the host kernel (Colab `get_ipynb`), which also covers unsaved in-browser edits; the
+on-disk file is the fallback. (c) `nb_source_diff` reports where a mismatch occurs.
 """
 import os, json, csv, time, hashlib, subprocess
 import numpy as np
@@ -78,15 +85,46 @@ def _git(repo, *args):
     return subprocess.run(['git', '-C', repo] + list(args), capture_output=True)
 
 
+def live_notebook_source_sha():
+    """source-only SHA of the notebook the kernel is actually executing (Colab host request).
+    Returns None outside Colab or if the host does not answer."""
+    try:
+        from google.colab import _message
+        nb = _message.blocking_request('get_ipynb', timeout_sec=60)['ipynb']
+        return source_only_sha(json.dumps(nb).encode('utf-8'))
+    except Exception:
+        return None
+
+
+def nb_source_diff(head_bytes, local_bytes):
+    """Where do two notebooks differ in source? (for actionable gate errors)"""
+    def cells(b):
+        return [(c['cell_type'], ''.join(c['source'])) for c in json.loads(b.decode('utf-8'))['cells']]
+    a, b = cells(head_bytes), cells(local_bytes)
+    out = dict(n_cells_head=len(a), n_cells_local=len(b), first_diff=None)
+    for i in range(min(len(a), len(b))):
+        if a[i] != b[i]:
+            out['first_diff'] = dict(index=i, head_head=a[i][1][:80], local_head=b[i][1][:80])
+            break
+    if out['first_diff'] is None and len(a) != len(b):
+        extra = (b[len(a):] if len(b) > len(a) else a[len(b):])
+        out['first_diff'] = dict(index=min(len(a), len(b)), extra_cell_head=extra[0][1][:80],
+                                 side='local' if len(b) > len(a) else 'head')
+    return out
+
+
 def head_gate(repo_dir, local_files, rules_basename, rules_sha_expected,
-              notebook_basename=None, notebook_local_path=None, canonical_url=None):
+              notebook_basename=None, notebook_local_path=None, canonical_url=None,
+              nb_live_src_sha=None):
     """local_files: {basename: local_path} to verify against HEAD bytes.
     Returns dict; ok=True only if tracked-clean AND every file is tracked in HEAD with
     byte-identical content AND the rules file in HEAD has the exact expected SHA256
     (AND, when notebook_local_path is given, its source-only SHA equals HEAD's)."""
-    G = dict(ok=False, commit=None, tracked_clean=None, matches={}, rules_ok=False,
+    G = dict(ok=False, commit=None, tracked_clean=None, tracked_clean_strict=None,
+             dirty_paths=[], matches={}, rules_ok=False,
              rules_relpath=None, nb_relpath=None, nb_src_sha_head=None, nb_local_match=None,
-             origin_url=None, origin_ok=None, pushed=None)
+             nb_live_src_sha=nb_live_src_sha, nb_live_match=None, nb_identity_ok=False,
+             nb_diff=None, origin_url=None, origin_ok=None, pushed=None)
     r = _git(repo_dir, 'rev-parse', 'HEAD')
     if r.returncode != 0:
         G['error'] = 'not a git repo'
@@ -105,8 +143,6 @@ def head_gate(repo_dir, local_files, rules_basename, rules_sha_expected,
             G['pushed'] = bool(G['commit'] in remote_shas)
         else:
             G['pushed'] = None
-    G['tracked_clean'] = (_git(repo_dir, 'status', '--porcelain', '--untracked-files=no')
-                          .stdout.decode().strip() == '')
     tracked = _git(repo_dir, 'ls-files').stdout.decode().splitlines()
     def _rel(basename):
         hits = [p for p in tracked if os.path.basename(p) == basename]
@@ -114,6 +150,13 @@ def head_gate(repo_dir, local_files, rules_basename, rules_sha_expected,
     def _head_bytes(relpath):
         rr = _git(repo_dir, 'show', f'HEAD:{relpath}')
         return rr.stdout if rr.returncode == 0 else None
+    nb_rel_for_clean = _rel(notebook_basename) if notebook_basename else None
+    st = [ln for ln in _git(repo_dir, 'status', '--porcelain', '--untracked-files=no')
+          .stdout.decode().splitlines() if ln.strip()]
+    G['dirty_paths'] = [ln[3:].strip().strip('"').split(' -> ')[-1] for ln in st]
+    G['tracked_clean_strict'] = (len(G['dirty_paths']) == 0)
+    # 実行中notebookはホストが出力を書き戻すため清潔性判定から除外（内容はsource-only SHAで厳密照合）
+    G['tracked_clean'] = all(p == nb_rel_for_clean for p in G['dirty_paths'])
     for base, lpath in local_files.items():
         rel = _rel(base)
         hb = _head_bytes(rel) if rel else None
@@ -126,23 +169,31 @@ def head_gate(repo_dir, local_files, rules_basename, rules_sha_expected,
         hb = _head_bytes(rel)
         G['rules_ok'] = bool(hb is not None
                              and hashlib.sha256(hb).hexdigest() == rules_sha_expected)
-    nb_ok = True
     if notebook_basename:
         rel = _rel(notebook_basename)
         G['nb_relpath'] = rel
-        if rel:
-            hb = _head_bytes(rel)
-            if hb is not None:
-                try:
-                    G['nb_src_sha_head'] = source_only_sha(hb)
-                except Exception:
-                    G['nb_src_sha_head'] = None
-        nb_ok = G['nb_src_sha_head'] is not None
-        if notebook_local_path and os.path.exists(notebook_local_path) and G['nb_src_sha_head']:
-            G['nb_local_match'] = (source_only_sha(open(notebook_local_path, 'rb').read())
-                                   == G['nb_src_sha_head'])
-            nb_ok = nb_ok and bool(G['nb_local_match'])
-    G['ok'] = bool(G['tracked_clean'] and all(G['matches'].values()) and G['rules_ok'] and nb_ok)
+        hb = _head_bytes(rel) if rel else None
+        if hb is not None:
+            try:
+                G['nb_src_sha_head'] = source_only_sha(hb)
+            except Exception:
+                G['nb_src_sha_head'] = None
+        if G['nb_src_sha_head']:
+            if nb_live_src_sha:
+                G['nb_live_match'] = (nb_live_src_sha == G['nb_src_sha_head'])
+            if notebook_local_path and os.path.exists(notebook_local_path):
+                lb = open(notebook_local_path, 'rb').read()
+                G['nb_local_match'] = (source_only_sha(lb) == G['nb_src_sha_head'])
+                if G['nb_local_match'] is False and hb is not None:
+                    try:
+                        G['nb_diff'] = nb_source_diff(hb, lb)
+                    except Exception:
+                        pass
+        # live照合が得られればそれを採用（未保存編集も検出）／無ければディスク照合
+        G['nb_identity_ok'] = bool(G['nb_live_match'] if G['nb_live_match'] is not None
+                                   else G['nb_local_match'])
+    G['ok'] = bool(G['tracked_clean'] and all(G['matches'].values()) and G['rules_ok']
+                   and (G['nb_identity_ok'] if notebook_basename else True))
     return G
 
 
