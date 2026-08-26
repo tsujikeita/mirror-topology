@@ -1,4 +1,4 @@
-"""t2b2_run v1.4 (2026-08-26e): committed analysis logic for the T2b-2 production grid.
+"""t2b2_run v1.5 (2026-08-26f): committed analysis logic for the T2b-2 production grid.
 
 Purpose (final pre-production review sec.4): all analysis-relevant logic (grid definition,
 runner, extrapolation, refine, R2' adjacency, completion check, Git preregistration gate)
@@ -33,6 +33,11 @@ trailing spaces), which made a byte-identical analysis look modified. The canoni
 source_only_sha now strips CR, trailing whitespace per line, and trailing blank lines, so the
 identity check is invariant under editor whitespace normalisation while still catching every
 change of actual content.
+
+v1.5: the same canonicalisation now applies to the committed code files (core/bridge/run):
+upload chains append trailing newlines or convert line endings without changing semantics,
+so HEAD-vs-running comparison uses canonical text (CRLF->LF, per-line trailing whitespace and
+trailing blank lines stripped); raw byte equality is still recorded as `matches_raw`.
 """
 import os, json, csv, time, hashlib, subprocess
 import numpy as np
@@ -174,12 +179,21 @@ def head_gate(repo_dir, local_files, rules_basename, rules_sha_expected,
     G['tracked_clean_strict'] = (len(G['dirty_paths']) == 0)
     # 実行中notebookはホストが出力を書き戻すため清潔性判定から除外（内容はsource-only SHAで厳密照合）
     G['tracked_clean'] = all(p == nb_rel_for_clean for p in G['dirty_paths'])
+    def _canon_sha(b):
+        try:
+            return hashlib.sha256(canon_source(b.decode('utf-8')).encode('utf-8')).hexdigest()
+        except UnicodeDecodeError:
+            return hashlib.sha256(b).hexdigest()
+    G['matches_raw'] = {}
     for base, lpath in local_files.items():
         rel = _rel(base)
         hb = _head_bytes(rel) if rel else None
-        G['matches'][base] = bool(hb is not None and os.path.exists(lpath)
-                                  and hashlib.sha256(hb).hexdigest()
-                                  == hashlib.sha256(open(lpath, 'rb').read()).hexdigest())
+        lb = open(lpath, 'rb').read() if os.path.exists(lpath) else None
+        G['matches'][base] = bool(hb is not None and lb is not None
+                                  and _canon_sha(hb) == _canon_sha(lb))
+        G['matches_raw'][base] = bool(hb is not None and lb is not None
+                                      and hashlib.sha256(hb).hexdigest()
+                                      == hashlib.sha256(lb).hexdigest())
     rel = _rel(rules_basename)
     G['rules_relpath'] = rel
     if rel:
