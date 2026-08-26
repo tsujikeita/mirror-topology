@@ -1,4 +1,4 @@
-"""t2b2_run v1.3 (2026-08-26d): committed analysis logic for the T2b-2 production grid.
+"""t2b2_run v1.4 (2026-08-26e): committed analysis logic for the T2b-2 production grid.
 
 Purpose (final pre-production review sec.4): all analysis-relevant logic (grid definition,
 runner, extrapolation, refine, R2' adjacency, completion check, Git preregistration gate)
@@ -27,6 +27,12 @@ content is verified far more strictly by the source-only SHA against HEAD; every
 path must still be clean. (b) notebook identity now prefers the LIVE notebook source obtained
 from the host kernel (Colab `get_ipynb`), which also covers unsaved in-browser edits; the
 on-disk file is the fallback. (c) `nb_source_diff` reports where a mismatch occurs.
+
+v1.4 (canonicalisation fix): notebook editors normalise whitespace on save (Colab strips
+trailing spaces), which made a byte-identical analysis look modified. The canonical form for
+source_only_sha now strips CR, trailing whitespace per line, and trailing blank lines, so the
+identity check is invariant under editor whitespace normalisation while still catching every
+change of actual content.
 """
 import os, json, csv, time, hashlib, subprocess
 import numpy as np
@@ -74,9 +80,19 @@ def grid_sha(GEOMS, SECTORS, KCUTS, BAND):
 
 
 # ---------------- Git preregistration gate (HEAD-based, read-only) ----------------
+def canon_source(src):
+    """Canonical cell source: CR removed, per-line trailing whitespace stripped, trailing
+    blank lines removed (invariant under editor whitespace normalisation)."""
+    text = ''.join(src) if not isinstance(src, str) else src
+    lines = [ln.rstrip() for ln in text.replace('\r\n', '\n').replace('\r', '\n').split('\n')]
+    while lines and lines[-1] == '':
+        lines.pop()
+    return '\n'.join(lines)
+
+
 def source_only_sha(nb_bytes):
     nb = json.loads(nb_bytes.decode('utf-8'))
-    canon = [dict(cell_type=c['cell_type'], source=''.join(c['source']))
+    canon = [dict(cell_type=c['cell_type'], source=canon_source(c['source']))
              for c in nb.get('cells', [])]
     return hashlib.sha256(json.dumps(canon, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
 
@@ -99,7 +115,8 @@ def live_notebook_source_sha():
 def nb_source_diff(head_bytes, local_bytes):
     """Where do two notebooks differ in source? (for actionable gate errors)"""
     def cells(b):
-        return [(c['cell_type'], ''.join(c['source'])) for c in json.loads(b.decode('utf-8'))['cells']]
+        return [(c['cell_type'], canon_source(c['source']))
+                for c in json.loads(b.decode('utf-8'))['cells']]
     a, b = cells(head_bytes), cells(local_bytes)
     out = dict(n_cells_head=len(a), n_cells_local=len(b), first_diff=None)
     for i in range(min(len(a), len(b))):
