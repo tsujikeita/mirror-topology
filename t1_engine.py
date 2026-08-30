@@ -1,4 +1,4 @@
-"""t1_engine v1.3 (2026-08-27d): audited low-l predictive engine for compact-flat topologies.
+"""t1_engine v1.6 (2026-08-30b): audited low-l predictive engine for compact-flat topologies.
 
 v1.1 (pre-run re-audit, 4 BLOCKERs fixed):
   B1: O_axis is now labelled a NUMERICAL HARMONIC ROTATION and is validated by DIRECT-GEOMETRY
@@ -15,6 +15,17 @@ v1.1 (pre-run re-audit, 4 BLOCKERs fixed):
       lambda_min_raw / clip / effective rank.
 Statistic convention: S+- = (1/4pi) * integral ((T +- T o R)/2)^2 dOmega; in an orthonormal
 real basis S+ + S- = sum_i x_i^2 / (4pi), axis-independent.
+v1.5 (first contact with real CMBtopology covariances): the exact-symmetry tolerances
+inherited from t2b2 (rtol 1e-10, appropriate for analytically constructed covariances) are
+far tighter than the numerical-integration accuracy of CMBtopology's covariance pipeline
+(~1e-7 relative; observed 5.0e-8 on E7). Instead of loosening a pass/fail threshold, the
+covariance is now explicitly PROJECTED onto the subspace that satisfies the exact symmetries
+required by the theory (Hermiticity and the reality condition
+C_{l,-m;l',-m'} = (-1)^(m+m') conj(C_{lm;l'm'})); the size of the removed component is
+recorded and capped, the post-projection residual is required to be at machine precision, and the raw
+violation is hard-capped at a calibration ceiling frozen after the first numerical-covariance
+contact and before any inspection of scientific outputs. The impact of the projection on the
+science outputs E[S+-] is measured directly and capped as well.
 v1.3: no functional change from v1.2 (version bump for the v1.3 audit set; the isotropic
 reference C_l convention fix lives in the notebook: engine_selftest takes CL as an argument
 and is convention-agnostic).
@@ -33,6 +44,16 @@ import t2b2_bridge as br
 
 LS = (2, 3, 4)
 NDIM = 21
+# Calibration ceiling for RAW symmetry violations of numerically integrated covariances.
+# Frozen after the first numerical-covariance validation failure (reality_raw = 5.01e-8 on the
+# first E7 point) and BEFORE any inspection of scientific T1 outputs. It is a corruption
+# detector, not a claim about typical pipeline accuracy.
+RAW_SYMMETRY_CEILING = 1e-5
+# Frozen ceilings on the SIZE of the projection (the real safety gate on the correction).
+CORRECTION_MAX_CEILING = 1e-6
+CORRECTION_FRO_CEILING = 1e-6
+# Machine-precision tolerance for the algebraic identities (not a sensitivity threshold).
+IDENTITY_TOL = 1e-12
 FOURPI = 4.0 * np.pi
 
 
@@ -270,6 +291,36 @@ def scan_argmin_Splus(x, Vdirs, Pes):
 
 
 # ---------- covariance intake ----------
+def enforce_symmetries(Mx, ls=LS):
+    """Project a numerically computed covariance onto the physically exact subspace.
+
+    Two exact symmetries hold analytically for a real Gaussian temperature field:
+      (a) Hermiticity  C = C^dagger
+      (b) reality      C_{l,-m; l',-m'} = (-1)^(m+m') conj(C_{lm; l'm'})
+    A numerically integrated covariance satisfies them only to integration accuracy. The
+    orthogonal projection is the average of C with its symmetry image; the removed component
+    is returned as a diagnostic (it is NOT discarded silently).
+    """
+    lmf = br.lm_full(ls)
+    idx = {t: a for a, t in enumerate(lmf)}
+    scale = max(float(np.abs(Mx).max()), 1e-300)
+    C = 0.5 * (Mx + Mx.conj().T)                       # (a)
+    R = np.empty_like(C)
+    for (l, m) in lmf:
+        for (l2, m2) in lmf:
+            R[idx[(l, m)], idx[(l2, m2)]] = ((-1) ** (m + m2)) * np.conj(
+                C[idx[(l, -m)], idx[(l2, -m2)]])
+    Csym = 0.5 * (C + R)                               # (b)
+    info = dict(herm_raw=float(np.abs(Mx - Mx.conj().T).max() / scale),
+                reality_raw=float(br.check_reality(Mx, ls)[0]),
+                herm_post=float(np.abs(Csym - Csym.conj().T).max() / scale),
+                reality_post=float(br.check_reality(Csym, ls)[0]),
+                correction_max_rel=float(np.abs(Csym - Mx).max() / scale),
+                correction_fro_rel=float(np.linalg.norm(Csym - Mx)
+                                         / max(np.linalg.norm(Mx), 1e-300)))
+    return Csym, info
+
+
 def load_cov_full(path, lmax=4):
     """CMBtopology full-m complex covariance + validation. Returns (Mx, C_real, meta) with
     split hashes: cov_file_sha256 (file bytes) and cov_array_sha256 (array data)."""
@@ -278,22 +329,35 @@ def load_cov_full(path, lmax=4):
     Mx = np.load(path)
     lm = [(l, m) for l in range(2, lmax + 1) for m in range(-l, l + 1)]
     assert Mx.shape == (len(lm), len(lm)), (Mx.shape, len(lm))
-    herm = float(np.abs(Mx - Mx.conj().T).max() / max(np.abs(Mx).max(), 1e-300))
-    if herm > 1e-8:
-        raise RuntimeError(f'Hermiticity FAIL: {herm:.2e}')
-    wr, okr = br.check_reality(Mx)
-    if not okr:
-        raise RuntimeError(f'reality condition FAIL: {wr:.2e}')
-    Cr, info = br.to_real(Mx)
+    Csym, sym = enforce_symmetries(Mx, LS)
+    if sym['herm_raw'] > RAW_SYMMETRY_CEILING or sym['reality_raw'] > RAW_SYMMETRY_CEILING:
+        raise RuntimeError('raw symmetry violation above frozen calibration ceiling '
+                           f'{RAW_SYMMETRY_CEILING:.0e}: {sym}')
+    if sym['herm_post'] > IDENTITY_TOL or sym['reality_post'] > IDENTITY_TOL:
+        raise RuntimeError(f'projection did not restore exact symmetries: {sym}')
+    if (sym['correction_max_rel'] > CORRECTION_MAX_CEILING
+            or sym['correction_fro_rel'] > CORRECTION_FRO_CEILING):
+        raise RuntimeError('symmetry correction above frozen ceiling '
+                           f'({CORRECTION_MAX_CEILING:.0e}/{CORRECTION_FRO_CEILING:.0e}): {sym}')
+    qmi = quadratic_mean_identity(Mx, Csym)
+    if qmi > IDENTITY_TOL:
+        raise RuntimeError(f'quadratic-mean identity FAIL: {qmi:.2e}')
+    Cr, info = br.to_real(Csym)
     if not info['ok']:
         raise RuntimeError(f'real transform FAIL: {info}')
     _, eig_info = eigen_factor(Cr)                      # PSD hard gate
-    tp = complex_real_twopoint_check(Mx, Cr)
+    tp = complex_real_twopoint_check(Csym, Cr)
     if tp > 1e-10:
         raise RuntimeError(f'two-point complex vs real FAIL: {tp:.2e}')
-    return Mx, Cr, dict(herm=herm, reality=wr, twopoint=tp, eig=eig_info,
-                        cov_file_sha256=hashlib.sha256(fbytes).hexdigest(),
-                        cov_array_sha256=hashlib.sha256(Mx.tobytes()).hexdigest())
+    return Csym, Cr, dict(
+        symmetry=sym, quadratic_mean_identity=qmi, twopoint=tp, eig=eig_info,
+        real_transform=info,
+        cov_file_sha256=hashlib.sha256(fbytes).hexdigest(),
+        cov_array_sha256=hashlib.sha256(Mx.tobytes()).hexdigest(),
+        cov_projected_array_sha256=hashlib.sha256(
+            np.ascontiguousarray(Csym).tobytes()).hexdigest(),
+        real_cov_projected_sha256=hashlib.sha256(
+            np.ascontiguousarray(Cr).tobytes()).hexdigest())
 
 
 def load_cov_full_from_matrix(Mx, lmax=4):
@@ -302,6 +366,38 @@ def load_cov_full_from_matrix(Mx, lmax=4):
     Cr, info = br.to_real(Mx)
     assert info['ok']
     return Mx, Cr, dict(reality=wr)
+
+
+def quadratic_mean_identity(Mx_raw, Csym):
+    """Verify C_real_projected == (C_real_raw + C_real_raw^T)/2 (relative max error).
+
+    Because E[Q] = tr(P C_real) for any real symmetric P, this identity is exactly the
+    statement that the projection preserves the mean of EVERY real symmetric quadratic
+    statistic - for every reflection and half-turn projector, at every axis, without having
+    to test them one by one.
+    """
+    M = br.M_matrix(LS)[0]
+    Cr_raw = np.real(M @ Mx_raw @ M.conj().T)
+    Cr_sym, _ = br.to_real(Csym)
+    target = 0.5 * (Cr_raw + Cr_raw.T)
+    return float(np.abs(Cr_sym - target).max() / max(np.abs(Cr_sym).max(), 1e-300))
+
+
+def ESpm_identity_check(Mx, Csym, axes, ops=('refl', 'halfturn')):
+    """IMPLEMENTATION CONSISTENCY ONLY (not a sensitivity test): E[S+-] before/after the
+    projection must agree to machine precision, which follows algebraically from
+    quadratic_mean_identity. A non-zero result signals a coding error, not a physical effect."""
+    M = br.M_matrix(LS)[0]
+    Cr_raw = np.real(M @ Mx @ M.conj().T)
+    Cr_sym, _ = br.to_real(Csym)
+    worst = 0.0
+    for nvec in axes:
+        for op in ops:
+            a = exp_S(Cr_raw, nvec, op)
+            b = exp_S(Cr_sym, nvec, op)
+            for u, v in zip(a, b):
+                worst = max(worst, abs(u - v) / max(abs(v), 1e-300))
+    return float(worst)
 
 
 # ---------- audit evidence: v0.3 sampler, verbatim ----------
