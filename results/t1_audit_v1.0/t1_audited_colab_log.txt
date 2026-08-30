@@ -1,0 +1,745 @@
+Results obtained by MirrorTopology_T1_signmap_v1.6_audited.ipynb on Google Colab are as follows: 
+
+■1番目のCell-------------------------------------------------------
+Mounted at /content/drive
+BASE = /content/drive/MyDrive/mirror_topology / CMBtopology @ 0cc65e34f03d (/content/CMBtopology_pinned, fresh_clone) / mode = official
+
+
+■2番目のCell-------------------------------------------------------
+REPO_GATE.ok = True / G01-G05 = {'G06a_cmbtopology_commit': True, 'G06b_cmbtopology_clean': True, 'G06c_cmbtopology_origin': True, 'G05_head_gate_api': True, 'G01_repo_head': True, 'G02_nb_live_identity': True, 'G03_engine_head': True, 'G04_bridge_run_head': True, 'G01b_origin': True, 'G01c_pushed': True}
+engine import identity OK: /content/drive/MyDrive/mirror_topology/mirror_topology_repo/t1_engine.py
+
+
+■3番目のCell-------------------------------------------------------
+battery: {'A1_M_unitarity': '2.22e-16', 'A2_roundtrip': '1.32e-16', 'A3_twopoint': '2.13e-16', 'A4_emp_cov_rel': '1.46e-02', 'A5_trBC_vs_MC_over3sigma': '8.85e-01', 'A6_seed_repro': True, 'B1_geom_refl': '1.79e-11', 'B2_geom_halfturn': '1.74e-11', 'B3_projector_ids': '6.64e-12', 'iso_orientation_spread_rel': '2.49e-16'}
+LEGACY bias: {'ESp': 530.8872, 'ESm': 382.6107, 'Sp_new_ratio': 1.0001, 'Sm_new_ratio': 1.0, 'Sp_legacy_ratio': 0.8561, 'Sm_legacy_ratio': 0.9909}
+=== T1 ENGINE BATTERY PASS ===
+
+
+■4番目のCell-------------------------------------------------------
+E7 {'refl': 1} [('refl', 'M_A')]
+E8 {'refl': 2, 'halfturn': 1} [('refl', 'M_A'), ('refl', 'M_B'), ('halfturn', 'M_A@M_B')]
+E9 {'refl': 1} [('refl', 'M_A')]
+E10 {'refl': 2, 'halfturn': 1} [('refl', 'M_A'), ('refl', 'M_B'), ('halfturn', 'M_A@M_B')]
+G06d PASS / CL_CMBTOPO_REF (muK^2) = {2: 1016.29, 3: 481.27, 4: 273.2} / CL_AUDIT = {2: 1069.43, 3: 506.3, 4: 287.57}
+20解析点 + 3等方系列点
+
+
+■5番目のCell-------------------------------------------------------
+  E7_L1y1.0_g0         raw(herm=1.1e-16 real=5.0e-08) post=0.0e+00 corr(max=2.5e-08 fro=1.6e-08) qmi=1.0e-17
+                       PSD(lam_min=+1.180e+02 lam_max=1.366e+03 clip=0.00e+00 rank=21/21) proj_sha=211c9f1d13… (2s)
+  E7_L1y1.0_gq         raw(herm=1.6e-08 real=4.3e-08) post=0.0e+00 corr(max=2.1e-08 fro=1.9e-08) qmi=1.2e-17
+                       PSD(lam_min=+1.400e+02 lam_max=1.259e+03 clip=0.00e+00 rank=21/21) proj_sha=269a737c64… (5s)
+Running - E7 l_max=4_LAx_27649_LAy_27649_L1y_27649_L2x_27649_L2z_27649_x_0.00_y_0.25_z_0.00
+Running {'topology': 'E7', 'LAx': 1, 'LAy': 1, 'L1y': 1.0, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0.  , 0.25, 0.  ]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_1.00_L1y_1.00_L2x_1.00_L2z_1.00_x_0.00_y_0.25_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 28.84it/s]Done. k_max for ell_max = 0.007927293774573584
+
+Eigenmode 1: 3692
+Eigenmode 2: 177554
+E7 Final num of elements: 177554 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 2.545199155807495 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.2235995809725492
+Ratio of unique |k|: 0.012548295166540883
+Time to get unique k and theta: 0.037827491760253906 seconds
+
+Getting transfer functions
+100%|██████████| 2228/2228 [00:00<00:00, 15300.89it/s]
+Size of transfer function: 0.09 MB. 
+
+Getting spherical harmonics
+100%|██████████| 39701/39701 [00:18<00:00, 2196.10it/s]
+The spherical harmonics array is 2.27 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 410.71 seconds
+
+Calculating covariance matrix
+Size of integrand: 0.42 MB
+Time to get Correlation functions: 0:0:2
+  E7_L1y1.0_gh         raw(herm=1.8e-16 real=5.0e-08) post=0.0e+00 corr(max=2.5e-08 fro=1.8e-08) qmi=2.7e-17
+                       PSD(lam_min=+1.395e+02 lam_max=1.147e+03 clip=0.00e+00 rank=21/21) proj_sha=56a6498ac7… (422s)
+Running - E7 l_max=4_LAx_27649_LAy_27649_L1y_23502_L2x_27649_L2z_27649_x_0.00_y_0.50_z_0.00
+Running {'topology': 'E7', 'LAx': 1, 'LAy': 1, 'L1y': 0.85, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0. , 0.5, 0. ]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_1.00_L1y_0.85_L2x_1.00_L2z_1.00_x_0.00_y_0.50_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 38.31it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 3692
+
+Eigenmode 2: 151057
+E7 Final num of elements: 151057 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.1377420425415039 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.4143932422860245
+Ratio of unique |k|: 0.08717901189617164
+Time to get unique k and theta: 0.024564027786254883 seconds
+
+Getting transfer functions
+100%|██████████| 13169/13169 [00:00<00:00, 17089.34it/s]
+Size of transfer function: 0.5 MB. 
+
+Getting spherical harmonics
+100%|██████████| 62597/62597 [00:12<00:00, 5095.43it/s]
+The spherical harmonics array is 3.58 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 405.04 seconds
+
+Calculating covariance matrix
+Size of integrand: 2.51 MB
+Time to get Correlation functions: 0:0:2
+  E7_L1y0.85_g0        raw(herm=2.1e-08 real=4.3e-08) post=0.0e+00 corr(max=2.2e-08 fro=2.4e-08) qmi=1.3e-17
+                       PSD(lam_min=+1.290e+02 lam_max=1.214e+03 clip=0.00e+00 rank=21/21) proj_sha=e9871f92dd… (833s)
+Running - E7 l_max=4_LAx_27649_LAy_27649_L1y_23502_L2x_27649_L2z_27649_x_0.00_y_0.39_z_0.00
+Running {'topology': 'E7', 'LAx': 1, 'LAy': 1, 'L1y': 0.85, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0.   , 0.394, 0.   ]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_1.00_L1y_0.85_L2x_1.00_L2z_1.00_x_0.00_y_0.39_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 39.17it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 3692
+Eigenmode 2: 151057
+E7 Final num of elements: 151057 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.11663937568664551 seconds
+Getting repeated theta and k elements
+
+Ratio of unique theta: 0.4143932422860245
+Ratio of unique |k|: 0.08717901189617164
+Time to get unique k and theta: 0.023522138595581055 seconds
+
+Getting transfer functions
+100%|██████████| 13169/13169 [00:00<00:00, 17610.33it/s]
+Size of transfer function: 0.5 MB. 
+
+Getting spherical harmonics
+100%|██████████| 62597/62597 [00:12<00:00, 5040.96it/s]
+The spherical harmonics array is 3.58 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 399.98 seconds
+
+Calculating covariance matrix
+Size of integrand: 2.51 MB
+Time to get Correlation functions: 0:0:2
+  E7_L1y0.85_gq        raw(herm=1.5e-08 real=5.0e-08) post=0.0e+00 corr(max=2.5e-08 fro=1.8e-08) qmi=5.9e-18
+                       PSD(lam_min=+1.250e+02 lam_max=1.273e+03 clip=0.00e+00 rank=21/21) proj_sha=4d3ee886c0… (1238s)
+Running - E7 l_max=4_LAx_27649_LAy_27649_L1y_23502_L2x_27649_L2z_27649_x_0.00_y_0.29_z_0.00
+Running {'topology': 'E7', 'LAx': 1, 'LAy': 1, 'L1y': 0.85, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0.   , 0.287, 0.   ]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_1.00_L1y_0.85_L2x_1.00_L2z_1.00_x_0.00_y_0.29_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 40.48it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 3692
+
+Eigenmode 2: 151057
+E7 Final num of elements: 151057 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.12293052673339844 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.4143932422860245
+Ratio of unique |k|: 0.08717901189617164
+Time to get unique k and theta: 0.02617955207824707 seconds
+
+Getting transfer functions
+100%|██████████| 13169/13169 [00:00<00:00, 17566.08it/s]
+Size of transfer function: 0.5 MB. 
+
+Getting spherical harmonics
+100%|██████████| 62597/62597 [00:12<00:00, 5116.77it/s]
+The spherical harmonics array is 3.58 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 398.78 seconds
+
+Calculating covariance matrix
+Size of integrand: 2.51 MB
+Time to get Correlation functions: 0:0:3
+  E7_L1y0.85_gh        raw(herm=1.8e-08 real=4.8e-08) post=0.0e+00 corr(max=2.4e-08 fro=2.0e-08) qmi=5.9e-18
+                       PSD(lam_min=+1.301e+02 lam_max=1.264e+03 clip=0.00e+00 rank=21/21) proj_sha=212a79e4d4… (1642s)
+Running - E7 l_max=4_LAx_27649_LAy_27649_L1y_19354_L2x_27649_L2z_27649_x_0.00_y_0.50_z_0.00
+Running {'topology': 'E7', 'LAx': 1, 'LAy': 1, 'L1y': 0.7, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0. , 0.5, 0. ]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_1.00_L1y_0.70_L2x_1.00_L2z_1.00_x_0.00_y_0.50_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 40.30it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 3692
+Eigenmode 2: 124360
+E7 Final num of elements: 124360 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.11325740814208984 seconds
+Getting repeated theta and k elements
+
+Ratio of unique theta: 0.40889353489868124
+Ratio of unique |k|: 0.09059183017047281
+Time to get unique k and theta: 0.026103496551513672 seconds
+
+Getting transfer functions
+100%|██████████| 11266/11266 [00:00<00:00, 16790.44it/s]
+Size of transfer function: 0.43 MB. 
+
+Getting spherical harmonics
+100%|██████████| 50850/50850 [00:10<00:00, 4850.90it/s]
+The spherical harmonics array is 2.91 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 396.42 seconds
+
+Calculating covariance matrix
+Size of integrand: 2.15 MB
+Time to get Correlation functions: 0:0:3
+  E7_L1y0.7_g0         raw(herm=1.6e-08 real=3.6e-08) post=0.0e+00 corr(max=1.8e-08 fro=2.1e-08) qmi=1.3e-17
+                       PSD(lam_min=+1.309e+02 lam_max=1.296e+03 clip=0.00e+00 rank=21/21) proj_sha=dd14c03ce0… (2044s)
+Running - E7 l_max=4_LAx_27649_LAy_27649_L1y_19354_L2x_27649_L2z_27649_x_0.00_y_0.41_z_0.00
+Running {'topology': 'E7', 'LAx': 1, 'LAy': 1, 'L1y': 0.7, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0.   , 0.412, 0.   ]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_1.00_L1y_0.70_L2x_1.00_L2z_1.00_x_0.00_y_0.41_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 41.23it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 3692
+Eigenmode 2: 124360
+E7 Final num of elements: 124360 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.09949851036071777 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.40889353489868124
+Ratio of unique |k|: 0.09059183017047281
+Time to get unique k and theta: 0.017999649047851562 seconds
+
+Getting transfer functions
+
+100%|██████████| 11266/11266 [00:00<00:00, 17621.71it/s]
+Size of transfer function: 0.43 MB. 
+
+Getting spherical harmonics
+100%|██████████| 50850/50850 [00:09<00:00, 5452.70it/s]
+The spherical harmonics array is 2.91 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 395.55 seconds
+
+Calculating covariance matrix
+Size of integrand: 2.15 MB
+Time to get Correlation functions: 0:0:3
+  E7_L1y0.7_gq         raw(herm=1.3e-08 real=3.9e-08) post=0.0e+00 corr(max=1.9e-08 fro=2.1e-08) qmi=1.4e-17
+                       PSD(lam_min=+1.302e+02 lam_max=1.292e+03 clip=0.00e+00 rank=21/21) proj_sha=3e2dccdf81… (2446s)
+Running - E7 l_max=4_LAx_27649_LAy_27649_L1y_19354_L2x_27649_L2z_27649_x_0.00_y_0.33_z_0.00
+Running {'topology': 'E7', 'LAx': 1, 'LAy': 1, 'L1y': 0.7, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0.   , 0.325, 0.   ]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_1.00_L1y_0.70_L2x_1.00_L2z_1.00_x_0.00_y_0.33_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 41.43it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 3692
+Eigenmode 2: 124360
+E7 Final num of elements: 124360 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.08332014083862305 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.40889353489868124
+Ratio of unique |k|: 0.09059183017047281
+Time to get unique k and theta: 0.01676034927368164 seconds
+
+Getting transfer functions
+
+100%|██████████| 11266/11266 [00:00<00:00, 17638.07it/s]
+Size of transfer function: 0.43 MB. 
+
+Getting spherical harmonics
+100%|██████████| 50850/50850 [00:08<00:00, 5690.33it/s]
+The spherical harmonics array is 2.91 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 396.84 seconds
+
+Calculating covariance matrix
+Size of integrand: 2.15 MB
+Time to get Correlation functions: 0:0:2
+  E7_L1y0.7_gh         raw(herm=1.6e-08 real=3.7e-08) post=0.0e+00 corr(max=1.9e-08 fro=2.2e-08) qmi=1.4e-17
+                       PSD(lam_min=+1.329e+02 lam_max=1.293e+03 clip=0.00e+00 rank=21/21) proj_sha=2ff40cfb4a… (2848s)
+Running - E7 l_max=4_LAx_27649_LAy_27649_L1y_16589_L2x_27649_L2z_27649_x_0.00_y_0.50_z_0.00
+Running {'topology': 'E7', 'LAx': 1, 'LAy': 1, 'L1y': 0.6, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0. , 0.5, 0. ]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_1.00_L1y_0.60_L2x_1.00_L2z_1.00_x_0.00_y_0.50_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 40.14it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 3692
+Eigenmode 2: 106512
+E7 Final num of elements: 106512 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.08874368667602539 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.3786240048069701
+Ratio of unique |k|: 0.06512881177707676
+Time to get unique k and theta: 0.022976398468017578 seconds
+
+Getting transfer functions
+
+100%|██████████| 6937/6937 [00:00<00:00, 16745.28it/s]
+Size of transfer function: 0.26 MB. 
+
+Getting spherical harmonics
+100%|██████████| 40328/40328 [00:07<00:00, 5048.75it/s]
+The spherical harmonics array is 2.31 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 397.40 seconds
+
+Calculating covariance matrix
+Size of integrand: 1.32 MB
+Time to get Correlation functions: 0:0:3
+  E7_L1y0.6_g0         raw(herm=1.6e-08 real=4.6e-08) post=0.0e+00 corr(max=2.3e-08 fro=2.3e-08) qmi=4.9e-17
+                       PSD(lam_min=+1.092e+02 lam_max=1.438e+03 clip=0.00e+00 rank=21/21) proj_sha=9135e3df2d… (3251s)
+Running - E7 l_max=4_LAx_27649_LAy_27649_L1y_16589_L2x_27649_L2z_27649_x_0.00_y_0.42_z_0.00
+Running {'topology': 'E7', 'LAx': 1, 'LAy': 1, 'L1y': 0.6, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0.   , 0.425, 0.   ]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_1.00_L1y_0.60_L2x_1.00_L2z_1.00_x_0.00_y_0.42_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 42.14it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 3692
+Eigenmode 2: 106512
+E7 Final num of elements: 106512 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.09757685661315918 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.3786240048069701
+Ratio of unique |k|: 0.06512881177707676
+Time to get unique k and theta: 0.0211031436920166 seconds
+
+Getting transfer functions
+
+100%|██████████| 6937/6937 [00:00<00:00, 17011.74it/s]
+Size of transfer function: 0.26 MB. 
+
+Getting spherical harmonics
+100%|██████████| 40328/40328 [00:06<00:00, 5871.07it/s]
+The spherical harmonics array is 2.31 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 394.73 seconds
+
+Calculating covariance matrix
+Size of integrand: 1.32 MB
+Time to get Correlation functions: 0:0:4
+  E7_L1y0.6_gq         raw(herm=9.0e-09 real=4.2e-08) post=0.0e+00 corr(max=2.1e-08 fro=2.2e-08) qmi=4.9e-17
+                       PSD(lam_min=+1.141e+02 lam_max=1.434e+03 clip=0.00e+00 rank=21/21) proj_sha=404791717d… (3652s)
+Running - E7 l_max=4_LAx_27649_LAy_27649_L1y_16589_L2x_27649_L2z_27649_x_0.00_y_0.35_z_0.00
+Running {'topology': 'E7', 'LAx': 1, 'LAy': 1, 'L1y': 0.6, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0.  , 0.35, 0.  ]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_1.00_L1y_0.60_L2x_1.00_L2z_1.00_x_0.00_y_0.35_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 40.86it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 3692
+Eigenmode 2: 106512
+E7 Final num of elements: 106512 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.08056306838989258 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.3786240048069701
+Ratio of unique |k|: 0.06512881177707676
+Time to get unique k and theta: 0.014113903045654297 seconds
+
+Getting transfer functions
+
+100%|██████████| 6937/6937 [00:00<00:00, 17259.41it/s]
+Size of transfer function: 0.26 MB. 
+
+Getting spherical harmonics
+100%|██████████| 40328/40328 [00:08<00:00, 4483.98it/s]
+The spherical harmonics array is 2.31 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 392.87 seconds
+
+Calculating covariance matrix
+Size of integrand: 1.32 MB
+Time to get Correlation functions: 0:0:2
+  E7_L1y0.6_gh         raw(herm=1.6e-08 real=4.4e-08) post=0.0e+00 corr(max=2.2e-08 fro=2.3e-08) qmi=2.4e-17
+                       PSD(lam_min=+1.146e+02 lam_max=1.435e+03 clip=0.00e+00 rank=21/21) proj_sha=5af870fb2c… (4050s)
+Running - E7 l_max=4_LAx_19354_LAy_27649_L1y_27649_L2x_27649_L2z_27649_x_0.00_y_0.00_z_0.00
+Running {'topology': 'E7', 'LAx': 0.7, 'LAy': 1, 'L1y': 1, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0., 0., 0.]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_0.70_LAy_1.00_L1y_1.00_L2x_1.00_L2z_1.00_x_0.00_y_0.00_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 41.31it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 2576
+Eigenmode 2: 124354
+E7 Final num of elements: 124354 Minimum k_amp 0.0002272416186438812 n_x_max 49 n_z_max 60
+Time to get list of k, phi, theta: 0.08222317695617676 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.7476960934107467
+Ratio of unique |k|: 0.14568892034031877
+Time to get unique k and theta: 0.018035411834716797 seconds
+
+Getting transfer functions
+
+100%|██████████| 18117/18117 [00:01<00:00, 18032.83it/s]
+Size of transfer function: 0.69 MB. 
+
+Getting spherical harmonics
+100%|██████████| 92979/92979 [00:17<00:00, 5296.17it/s]
+The spherical harmonics array is 5.32 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 409.19 seconds
+
+Calculating covariance matrix
+Size of integrand: 3.46 MB
+Time to get Correlation functions: 0:0:3
+  E7_LAx0.7            raw(herm=6.8e-17 real=3.7e-08) post=0.0e+00 corr(max=1.8e-08 fro=1.8e-08) qmi=1.3e-17
+                       PSD(lam_min=+1.222e+02 lam_max=1.282e+03 clip=0.00e+00 rank=21/21) proj_sha=4d3ced53df… (4465s)
+Running - E7 l_max=4_LAx_35944_LAy_27649_L1y_27649_L2x_27649_L2z_27649_x_0.00_y_0.00_z_0.00
+Running {'topology': 'E7', 'LAx': 1.3, 'LAy': 1, 'L1y': 1, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0., 0., 0.]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.30_LAy_1.00_L1y_1.00_L2x_1.00_L2z_1.00_x_0.00_y_0.00_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 38.59it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 4842
+
+Eigenmode 2: 231094
+E7 Final num of elements: 231094 Minimum k_amp 0.00018249785770946787 n_x_max 91 n_z_max 81
+Time to get list of k, phi, theta: 0.20125889778137207 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.7929760184167481
+Ratio of unique |k|: 0.16172639705055086
+Time to get unique k and theta: 0.04498410224914551 seconds
+
+Getting transfer functions
+100%|██████████| 37374/37374 [00:02<00:00, 14705.75it/s]
+Size of transfer function: 1.43 MB. 
+
+Getting spherical harmonics
+100%|██████████| 183252/183252 [00:35<00:00, 5193.10it/s]
+The spherical harmonics array is 10.49 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 430.63 seconds
+
+Calculating covariance matrix
+Size of integrand: 7.13 MB
+Time to get Correlation functions: 0:0:5
+  E7_LAx1.3            raw(herm=3.4e-16 real=2.2e-08) post=0.0e+00 corr(max=1.1e-08 fro=1.5e-08) qmi=1.1e-17
+                       PSD(lam_min=+1.300e+02 lam_max=1.355e+03 clip=0.00e+00 rank=21/21) proj_sha=dc5094c5ad… (4903s)
+Running - E7 l_max=4_LAx_27649_LAy_27649_L1y_27649_L2x_13824_L2z_27649_x_0.00_y_0.00_z_0.00
+Running {'topology': 'E7', 'LAx': 1, 'LAy': 1, 'L1y': 1, 'L2x': 0.5, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0., 0., 0.]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_1.00_L1y_1.00_L2x_0.50_L2z_1.00_x_0.00_y_0.00_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 40.05it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 3668
+
+Eigenmode 2: 177566
+E7 Final num of elements: 177566 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.14487433433532715 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.40367525314530933
+Ratio of unique |k|: 0.025337057770068595
+Time to get unique k and theta: 0.0272676944732666 seconds
+
+Getting transfer functions
+100%|██████████| 4499/4499 [00:00<00:00, 16692.81it/s]
+Size of transfer function: 0.17 MB. 
+
+Getting spherical harmonics
+100%|██████████| 71679/71679 [00:14<00:00, 5089.61it/s]
+The spherical harmonics array is 4.1 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 399.27 seconds
+
+Calculating covariance matrix
+Size of integrand: 0.86 MB
+Time to get Correlation functions: 0:0:3
+  E7_tilt              raw(herm=9.1e-17 real=3.4e-08) post=0.0e+00 corr(max=1.7e-08 fro=1.7e-08) qmi=1.3e-17
+                       PSD(lam_min=+1.443e+02 lam_max=1.216e+03 clip=0.00e+00 rank=21/21) proj_sha=0590d13b8e… (5309s)
+Running - E8 l_max=4_LAx_27649_LAy_0_LBx_0_LBz_27649_LCy_27649_x_0.00_y_0.00_z_0.00
+Running {'topology': 'E8', 'LAx': 1, 'LAy': 0, 'LBx': 0, 'LBz': 1, 'LCy': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0., 0., 0.]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E8_LAx_1.00_LAy_0.00_LBx_0.00_LBz_1.00_LCy_1.00_x_0.00_y_0.00_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 30.07it/s]Done. k_max for ell_max = 0.007927293774573584
+
+Eigenmode 1: 3742
+Eigenmode 2: 5612
+Eigenmode 3: 5680
+Eigenmode 4: 177700
+E8 Final num of elements: 177700 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 5.118840217590332 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.44615644344400673
+Ratio of unique |k|: 0.019380979178390545
+Time to get unique k and theta: 0.03459024429321289 seconds
+
+Getting transfer functions
+100%|██████████| 3444/3444 [00:00<00:00, 12137.34it/s]
+Size of transfer function: 0.13 MB. 
+
+Getting spherical harmonics
+100%|██████████| 79282/79282 [00:15<00:00, 5183.08it/s]
+The spherical harmonics array is 4.54 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 407.16 seconds
+
+Calculating covariance matrix
+Size of integrand: 0.66 MB
+Time to get Correlation functions: 0:0:2
+  E8_def               raw(herm=2.7e-17 real=3.7e-08) post=0.0e+00 corr(max=1.9e-08 fro=1.6e-08) qmi=5.2e-18
+                       PSD(lam_min=+1.172e+02 lam_max=1.375e+03 clip=0.00e+00 rank=21/21) proj_sha=3762988c19… (5725s)
+Running - E9 l_max=4_LAx_27649_LAy_27649_L1y_27649_L2x_27649_L2z_27649_x_0.00_y_0.00_z_0.00
+Running {'topology': 'E9', 'LAx': 1, 'LAy': 1, 'L1y': 1, 'L2x': 1, 'L2z': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0., 0., 0.]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E9_LAx_1.00_LAy_1.00_L1y_1.00_L2x_1.00_L2z_1.00_x_0.00_y_0.00_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 40.74it/s]Done. k_max for ell_max = 0.007927293774573584
+
+Eigenmode 1: 3808
+Eigenmode 2: 177713
+E9 Final num of elements: 177713 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 88
+Time to get list of k, phi, theta: 1.1690146923065186 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.2622936982663058
+Ratio of unique |k|: 0.015046732653210514
+Time to get unique k and theta: 0.025693655014038086 seconds
+
+Getting transfer functions
+100%|██████████| 2674/2674 [00:00<00:00, 14044.90it/s]
+Size of transfer function: 0.1 MB. 
+
+Getting spherical harmonics
+100%|██████████| 46613/46613 [00:09<00:00, 4739.75it/s]
+The spherical harmonics array is 2.67 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 393.86 seconds
+
+Calculating covariance matrix
+Size of integrand: 0.51 MB
+Time to get Correlation functions: 0:0:3
+  E9_def               raw(herm=4.1e-17 real=3.3e-08) post=0.0e+00 corr(max=1.6e-08 fro=2.0e-08) qmi=1.1e-17
+                       PSD(lam_min=+1.392e+02 lam_max=1.375e+03 clip=0.00e+00 rank=21/21) proj_sha=83bfcdd524… (6126s)
+Running - E10 l_max=4_LAx_27649_LAy_0_LBx_0_LBz_27649_LCy_27649_x_0.00_y_0.00_z_0.00
+Running {'topology': 'E10', 'LAx': 1, 'LAy': 0, 'LBx': 0, 'LBz': 1, 'LCy': 1, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0., 0., 0.]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E10_LAx_1.00_LAy_0.00_LBx_0.00_LBz_1.00_LCy_1.00_x_0.00_y_0.00_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 35.58it/s]Done. k_max for ell_max = 0.007927293774573584
+
+Eigenmode 1: 3742
+Eigenmode 2: 5607
+Eigenmode 3: 5675
+Eigenmode 4: 177695
+E10 Final num of elements: 177695 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 3.1285629272460938 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.4461689974394327
+Ratio of unique |k|: 0.019381524522355722
+Time to get unique k and theta: 0.025053024291992188 seconds
+
+Getting transfer functions
+100%|██████████| 3444/3444 [00:00<00:00, 14149.72it/s]
+Size of transfer function: 0.13 MB. 
+
+Getting spherical harmonics
+100%|██████████| 79282/79282 [00:15<00:00, 5200.76it/s]
+The spherical harmonics array is 4.54 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 406.06 seconds
+
+Calculating covariance matrix
+Size of integrand: 0.66 MB
+Time to get Correlation functions: 0:0:4
+  E10_def              raw(herm=4.7e-17 real=3.3e-08) post=0.0e+00 corr(max=1.6e-08 fro=2.0e-08) qmi=1.1e-17
+                       PSD(lam_min=+1.644e+02 lam_max=1.375e+03 clip=0.00e+00 rank=21/21) proj_sha=2e494010cb… (6540s)
+Running - E8 l_max=4_LAx_27649_LAy_0_LBx_0_LBz_27649_LCy_19354_x_0.00_y_0.00_z_0.00
+Running {'topology': 'E8', 'LAx': 1, 'LAy': 0, 'LBx': 0, 'LBz': 1, 'LCy': 0.7, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0., 0., 0.]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E8_LAx_1.00_LAy_0.00_LBx_0.00_LBz_1.00_LCy_0.70_x_0.00_y_0.00_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 26.94it/s]Done. k_max for ell_max = 0.007927293774573584
+
+Eigenmode 1: 3742
+Eigenmode 2: 5046
+Eigenmode 3: 5114
+Eigenmode 4: 124469
+E8 Final num of elements: 124469 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.8561952114105225 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.8108926720709574
+Ratio of unique |k|: 0.15824020438824124
+Time to get unique k and theta: 0.042644500732421875 seconds
+
+Getting transfer functions
+100%|██████████| 19696/19696 [00:02<00:00, 9791.61it/s]
+Size of transfer function: 0.75 MB. 
+
+Getting spherical harmonics
+100%|██████████| 100931/100931 [00:18<00:00, 5330.28it/s]
+The spherical harmonics array is 5.78 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 408.66 seconds
+
+Calculating covariance matrix
+Size of integrand: 3.76 MB
+Time to get Correlation functions: 0:0:4
+  E8_LCy0.7            raw(herm=3.9e-17 real=2.2e-08) post=0.0e+00 corr(max=1.1e-08 fro=2.0e-08) qmi=4.8e-18
+                       PSD(lam_min=+1.080e+02 lam_max=1.703e+03 clip=0.00e+00 rank=21/21) proj_sha=137fadcf87… (6956s)
+Running - E10 l_max=4_LAx_27649_LAy_0_LBx_0_LBz_27649_LCy_19354_x_0.00_y_0.00_z_0.00
+Running {'topology': 'E10', 'LAx': 1, 'LAy': 0, 'LBx': 0, 'LBz': 1, 'LCy': 0.7, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0., 0., 0.]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E10_LAx_1.00_LAy_0.00_LBx_0.00_LBz_1.00_LCy_0.70_x_0.00_y_0.00_z_0.00_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 36.48it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 3742
+Eigenmode 2: 5048
+Eigenmode 3: 5116
+
+Eigenmode 4: 124471
+E10 Final num of elements: 124471 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.5455441474914551 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.8115303966385744
+Ratio of unique |k|: 0.15817338978557255
+Time to get unique k and theta: 0.026540279388427734 seconds
+
+Getting transfer functions
+100%|██████████| 19688/19688 [00:01<00:00, 15255.18it/s]
+Size of transfer function: 0.75 MB. 
+
+Getting spherical harmonics
+100%|██████████| 101012/101012 [00:20<00:00, 4917.39it/s]
+The spherical harmonics array is 5.78 MB 
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 409.41 seconds
+
+Calculating covariance matrix
+Size of integrand: 3.76 MB
+Time to get Correlation functions: 0:0:2
+  E10_LCy0.7           raw(herm=3.9e-17 real=2.2e-08) post=0.0e+00 corr(max=1.1e-08 fro=1.9e-08) qmi=9.7e-18
+                       PSD(lam_min=+1.430e+02 lam_max=1.707e+03 clip=0.00e+00 rank=21/21) proj_sha=00b4a39a4f… (7375s)
+  ISOseries_L1.4       raw(herm=7.6e-17 real=1.3e-08) post=0.0e+00 corr(max=6.7e-09 fro=5.2e-09) qmi=1.2e-17
+                       PSD(lam_min=+2.068e+02 lam_max=1.151e+03 clip=0.00e+00 rank=21/21) proj_sha=8e22a380b7… (7376s)
+  ISOseries_L2         raw(herm=1.6e-16 real=3.7e-08) post=0.0e+00 corr(max=1.9e-08 fro=1.1e-08) qmi=6.9e-18
+                       PSD(lam_min=+2.341e+02 lam_max=1.043e+03 clip=0.00e+00 rank=21/21) proj_sha=726e5dfcf9… (7378s)
+  ISOseries_L3         raw(herm=4.6e-16 real=2.1e-08) post=0.0e+00 corr(max=1.0e-08 fro=7.3e-09) qmi=3.5e-18
+                       PSD(lam_min=+2.542e+02 lam_max=1.013e+03 clip=0.00e+00 rank=21/21) proj_sha=7471641c61… (7380s)
+G09サマリ: raw最大(herm=2.08e-08, reality=5.02e-08) corr最大(max=2.51e-08, fro=2.44e-08) qmi最大=4.90e-17
+PSDサマリ: lambda_min最小=1.080e+02 clip最大=0.00e+00 rank最小=21
+covariance完了検査: 23/23 OK
+
+
+■6番目のCell-------------------------------------------------------
+scan directions: 384 (nside=8)
+  E7_L1y1.0_g0         done
+  E7_L1y1.0_gq         done
+  E7_L1y1.0_gh         done
+  E7_L1y0.85_g0        done
+  E7_L1y0.85_gq        done
+  E7_L1y0.85_gh        done
+  E7_L1y0.7_g0         done
+  E7_L1y0.7_gq         done
+  E7_L1y0.7_gh         done
+  E7_L1y0.6_g0         done
+  E7_L1y0.6_gq         done
+  E7_L1y0.6_gh         done
+  E7_LAx0.7            done
+  E7_LAx1.3            done
+  E7_tilt              done
+  E8_def               done
+  E9_def               done
+  E10_def              done
+  E8_LCy0.7            done
+  E10_LCy0.7           done
+saved: /content/drive/MyDrive/mirror_topology/runs_t1_audited/t1_audited_results.csv
+
+
+■7番目のCell-------------------------------------------------------
+  ISOseries_L1.4   rel={2: 1.0, 3: 1.022, 4: 1.095} offdiag=0.0160 d_iso=0.1779 ori=0.0607
+  ISOseries_L2     rel={2: 1.0, 3: 1.032, 4: 1.051} offdiag=0.0033 d_iso=0.0875 ori=0.0229
+  ISOseries_L3     rel={2: 1.0, 3: 1.018, 4: 1.025} offdiag=0.0006 d_iso=0.0407 ori=0.0093
+絶対振幅 alpha(最終L)=0.9631（G22b: |alpha-1|<0.15）
+収束系列（記録・単調性はhard条件にしない）: {'offdiag': [0.016015898828094968, 0.0033281087353606133, 0.0006489032585964954], 'd_iso': [0.17789344786803157, 0.0874873000892281, 0.040741631070772756], 'orientation': [0.06065421647367997, 0.022854543582406364, 0.009334922176209907]}
+=== ISO CONVERGENCE GATE PASS ===
+
+
+■8番目のCell-------------------------------------------------------
+※旧値は自己正規化比・新値はraw解析期待値——定義が異なる対照表（同一誤り共有の可能性があるためregressionは独立validationとは呼ばない）
+tag                旧(Sp,Sm)      新E[Sp]/E[Sm]@A_R    符号主張(E[Sp]<E[Sm])  判定
+E7_L1y1.0_g0       (1.013,0.671)  (446.1,272.3)        False                維持
+E7_L1y1.0_gq       (0.993,0.693)  (438.1,262.6)        False                維持
+E7_L1y1.0_gh       (1.019,0.691)  (433.7,256.6)        False                維持
+E7_L1y0.85_g0      (1.073,0.640)  (434.5,226.3)        False                維持
+E7_L1y0.85_gq      (1.077,0.633)  (440.4,233.6)        False                維持
+E7_L1y0.85_gh      (1.057,0.654)  (439.4,232.5)        False                維持
+E7_L1y0.7_g0       (1.043,0.672)  (409.5,212.5)        False                維持
+E7_L1y0.7_gq       (1.069,0.661)  (404.3,206.6)        False                維持
+E7_L1y0.7_gh       (1.090,0.630)  (404.9,207.3)        False                維持
+E7_L1y0.6_g0       (1.138,0.568)  (400.8,185.7)        False                維持
+E7_L1y0.6_gq       (1.117,0.600)  (405.1,190.4)        False                維持
+E7_L1y0.6_gh       (1.115,0.587)  (404.0,189.2)        False                維持
+E7_LAx0.7          (1.023,0.714)  (399.5,268.4)        False                維持
+E7_LAx1.3          (1.012,0.676)  (454.0,268.6)        False                維持
+E7_tilt            (0.996,0.708)  (415.4,268.9)        False                維持
+{
+ "maintained": "符号比較の向き（E7系refl_A軸でE[S+]とE[S-]の大小）が新旧で一致するかを上表で判定",
+ "corrected": "旧v0.3のMC絶対値（自己正規化比）は撤回し，本監査版のraw値（解析E[S±]＋MC分布）に置換。half-turn軸のmirror統計値は全て撤回（別演算子_Hで再定義）",
+ "retracted": "sign map（S+<S-）を主判定とする研究設計を撤回。主役はjoint p(S+,S-|M)（Step 1で観測と同一統計・同一scan ruleの下で比較）"
+}
+
+
+■9番目のCell-------------------------------------------------------
+OFFICIAL = True
+gates: {"G06a_cmbtopology_commit": true, "G06b_cmbtopology_clean": true, "G06c_cmbtopology_origin": true, "G05_head_gate_api": true, "G01_repo_head": true, "G02_nb_live_identity": true, "G03_engine_head": true, "G04_bridge_run_head": true, "G01b_origin": true, "G01c_pushed": true, "G00_import_identity": true, "G07_M_unitarity": true, "G08_roundtrip": true, "G10_twopoint": true, "G12_empirical_cov": true, "G13_geom_refl": true, "G14_geom_halfturn": true, "G15_projector_ids": true, "G16_antipodal": true, "G17_trBC_vs_MC": true, "G24_seed_repro": true, "G_axes_group_closure": true, "G_axes_expected": true, "G06d_camb_reference_match": true, "G18_cov_binding": true, "G19_cov_sha": true, "G11_cov_psd": true, "G09a_raw_symmetry": true, "G09b_projection_exact": true, "G09c_correction_small": true, "G09d_quadratic_mean_identity": true, "G09e_ESpm_identity": true, "G09_symmetry_projection": true, "G22_iso_distance": true, "G22b_iso_amplitude": true, "G23_iso_orientation": true, "G21_regression_complete": true, "G20_points_complete": true, "G25_applicable_finite": true, "G25b_npz_finite": true, "G26_output_hashes": true}
+
+
