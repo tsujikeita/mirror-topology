@@ -29,6 +29,9 @@
   → 正本は `MirrorTopology_T2a_analytic_v1.3_audited.ipynb`
 - `MirrorTopology_T2b2_signmap_v0.6.ipynb` 〜 `v0.8.ipynb`
   → 正本は `MirrorTopology_T2b2_signmap_v0.9.ipynb`
+- `MirrorTopology_Step0_observed_values_v0.6.ipynb`
+  → 正本は `results/step0_v0.7/MirrorTopology_Step0_official_v0.7.ipynb`
+  （公式実行はv0.7。対応の検証は`docs/step0_v0.7_correspondence_check.md`）
 
 `docs/` に残る旧版の規則ファイル（`T1_audit_rules_v1.3/v1.4`,
 `T2a_audit_rules_v1.1/v1.2`, `T2b2_decision_rules_frozen_v0.1/v0.2`）も同様に履歴であり，
