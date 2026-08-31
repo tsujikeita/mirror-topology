@@ -1,0 +1,75 @@
+{
+  "notebook": "Step0 v0.7 official",
+  "timestamp": "2026-08-25 13:12:52.087986",
+  "versions": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "healpy": "1.20.0"
+  },
+  "commit_step0": "d36e7567e8a7869c0d7b84955b4139ab0e782af0",
+  "commit_predreg": "63aa853f176837a6c16dcc2851fdec6fd783b6d6",
+  "commit_note": "63aa853…=偏光予言登録（pipeline外）／d36e756…=Step0パイプライン凍結（本実行）",
+  "cmbanom_commit": "aaf8137427d54ce4c77e59734391aca491a4a8db",
+  "src_sha256": {
+    "src/plane_mirror.py": "1af60a031ffd6854f0c7941ce83ca2c94e9c5f3a146996151bb1f53dfb7f1fbd",
+    "src/phase2_core.py": "976534f5cf6c93521a1e974dd6e175e613bc639b4b173a5cc25f8f0545963d7d",
+    "data/a1_bands.csv": "14a7e7c36dc245cf8ebc654029e046f0bd7d1a2c8e9f682d8b1f7a04399c2ae9"
+  },
+  "map_sha256": {
+    "PR3_Commander": "2f88c2d385e3c96a8ead4d98254e8b92ad4f460c58810697ad61132f2ff0020b",
+    "PR3_NILC": "63f3b41ea5a0e934d2d425ccb7c51b12539e4fb147e75e18a92e18e003bee352",
+    "PR3_SEVEM": "c395a7fcf955560a62d7b8404eb3ff19e868d6c03c0ad83dbf99571951e12ab9",
+    "PR3_SMICA": "1fda86de628c43820e999ad1564960cb5350c972c7f820b4132d6c6d149a8272",
+    "Nofi_70GHz": "bac5d05118d1044c07910283a31e20d712a5f55190a3258e12c6c53fc1cc2665",
+    "Nofi_94GHz": "6a24e2867e4f4aefd4f2cff7e0b591912f8f4690e5cccb24cec99f95c2047266",
+    "Nofi_100GHz": "b30cb4cacb104ca1e705c320f9f4b867c0a03e4130248cca54f007a57e87b867",
+    "Nofi_143GHz": "ad95a5135470d3f297267d75c5323ad30aaf454d1bf0f8a1aae076142ba0c6eb",
+    "PR4_Sevem": "94b6647a220590e82162786c02a10a81d6e4421cc3949e247cdd4486cf280a1e",
+    "PR4_Commander": "e9dfe38bc25d7ba22294161ffa709c1fc11914a3019eb1deaf3ed0e646dae40a"
+  },
+  "mask_source_sha256": "027ea598135c77784000f37885c36800d1255aa7e2b5a5780514907ff05ca5ee",
+  "processed_mask_sha256": "2b46cf1b46268cf3e7c119ec7c29de90a80fbb6e0c239572da51369da68b3305",
+  "cl_file_sha256": "e4d06f6afba86ba7ed3af8b032a470fec4ed01d42c292813605971fff6e6436b",
+  "axis": {
+    "nside": 16,
+    "pix": 1134,
+    "ordering": "ring"
+  },
+  "config": "N16_Splanck_Kcommon_mdON_harm",
+  "fsky": 0.6510416666666666,
+  "null": {
+    "recipe": "seed 0..999, synalm lmax128, PR3 best-fit Cl",
+    "arrays_sha256": {
+      "Sp2_4": "961cf71068263f58bc770f4746ecff84df536a55cce207864412f6ef28f39f09",
+      "Sp5_8": "0600712b388759185ee0c78ecec940c01ed4a3439ae5d1794bb20815165b96b2",
+      "Sp9_16": "3f767deccc6820fb9dcf45e17a8e2f173d22540b01bce2e36b60b1ddd82bd4de",
+      "Sp17_32": "1de355c7952bdd37ca9cdd766d2c7918f28a4dc7efad383efaae6484166a8154",
+      "Sp33_64": "bf94e289c2abe9e4f153bd5665367cc44d795f91813691663a6bf87fe66b7fca",
+      "Sm2_4": "63c1b4fe97ab9b56509e49633c312b8ce4d10a158db28c09fe9de3595ab9b2d9",
+      "Sm5_8": "ef1a73bf897dc3dd4a38e5ea3a745425dc21d6e3a79d1cb565c7cbecceb5a65d",
+      "Sm9_16": "1cb32453cb492027948be16eae4d0728d39649e45a63340930ababf41f607d9f",
+      "Sm17_32": "461f9f23dfd02aafa07d1b7e4eabac61dba61c1676bc3ecab337d0e17ac44467",
+      "Sm33_64": "7641692e68d11a657517966357be7f0789e3473ade2debc2dbed1dfbf4b8fc49"
+    },
+    "cross_env_check": {
+      "max_abs_diff_Sp": 0.0,
+      "max_abs_diff_Sm": 0.0,
+      "sha256_bitlevel_match": true
+    },
+    "claim_level": "per-realization regeneration; exact median agreement (5 bands); cross-env element check"
+  },
+  "frozen_stat_calls": 10,
+  "conds": {
+    "commit_exact": true,
+    "clean_tree": true,
+    "src_sha_match": true,
+    "frozen_stat_used": true,
+    "mask_source_sha": true,
+    "cl_file_sha": true,
+    "input_maps_sha": true,
+    "gateA_permap": true,
+    "gateB_null_median": true
+  },
+  "official": true,
+  "p_label": "p(rho) etc. are frozen-axis conditional; 10 maps are robustness, not independent trials"
+}
