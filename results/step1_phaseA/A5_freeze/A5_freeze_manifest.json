@@ -2,8 +2,11 @@
  "schema": "A5_freeze_manifest_v1",
  "date": "2026-09-03",
  "git": {
-  "commit": "(fill after commit)",
-  "tag": "step1-phaseA-A5-v1.0"
+  "commit": "95ab0adb55a3ea8b522deb5aa0a64b13e883e675",
+  "tag": "step1-phaseA-A5-v1.0",
+  "origin": "https://github.com/tsujikeita/mirror-topology",
+  "path": "results/step1_phaseA/A5_freeze/",
+  "note": "SHA values are those of the committed (LF-normalised) files; console logs were CRLF before commit"
  },
  "scripts": {
   "build_A5_freeze_manifest.py": "d1421e699f3e1fa529d20a8b90142b7d93eeb6184fbe8b3172551769c2f6de96",
@@ -14,8 +17,8 @@
   "a5_input_manifest_v2.json": "ae2dd6feb79f6016664df44e6bc35630e60f6df623512dcfbe6761389752e6a6"
  },
  "outputs": {
-  "Console_Log_of_s1_build_Bstack_l2_4_v1.0.2_py.txt": "49c8e6fb1cfb51a40bc5454a1bc6aabb3dbb7d063103d3cf2be5e43d9a30c5dc",
-  "Console_Log_of_s1_phaseA5_v1.1_py.txt": "07d1763ad49aba2102aea17755fd04481ad716449edb2e960dd147b4da22c626",
+  "Console_Log_of_s1_build_Bstack_l2_4_v1.0.2_py.txt": "88456854a3e32ea95a50c52089162da9abf09a7bbc71655f2f64d4be7ef58ff2",
+  "Console_Log_of_s1_phaseA5_v1.1_py.txt": "f38246b5b06e5639f7126abc2a6d3af2eeafa5199f4ee01b556b77ff8ceb5ea3",
   "a5_antipodal_reflection_diagnostic.csv": "56537908904c653eedd002e60b78f8e1787d6231423ef17db8c387a8205e80e2",
   "a5_battery_3072_vs_1536.csv": "f99d0f67380c6c5ed6a514886a7d519358f28d37bb4c93388123018b8d760239",
   "a5_battery_float32_vs_float64.csv": "ec9b0e312a3ef9605536f44db3bdb64bd359af9df9d41ffff224d6e33e9ee66a",
