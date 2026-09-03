@@ -1,0 +1,337 @@
+{
+ "script": "s1_phaseA5_v1.1.py",
+ "date": "2026-09-03",
+ "formal_env_gate": true,
+ "expected_env": {
+  "numpy": "2.1.3",
+  "healpy": "1.20.0",
+  "python": "3.13"
+ },
+ "pem": {
+  "commit": "d36e7567e8a7869c0d7b84955b4139ab0e782af0",
+  "src_sha": {
+   "src/plane_mirror.py": "1af60a031ffd6854f0c7941ce83ca2c94e9c5f3a146996151bb1f53dfb7f1fbd",
+   "src/phase2_core.py": "976534f5cf6c93521a1e974dd6e175e613bc639b4b173a5cc25f8f0545963d7d"
+  }
+ },
+ "cmbanom_commit": "aaf8137427d54ce4c77e59734391aca491a4a8db",
+ "nside": 16,
+ "lmax": 128,
+ "mask": "common",
+ "processed_mask_sha256": "2b46cf1b46268cf3e7c119ec7c29de90a80fbb6e0c239572da51369da68b3305",
+ "reflection_table_sha256": "e06b97febbaae48ac1c5bbc358637d2f3a7f874bca54de83d6ce9d630a0741f5",
+ "axis_grid": {
+  "n_axes": 3072,
+  "dedup_rule": "pixel_id < antipode_id",
+  "n_dedup": 1536
+ },
+ "argmin_rule": "np.argmin over 3072 axes (first occurrence)",
+ "selection_dtype": "float32",
+ "evaluation_band": [
+  2,
+  4
+ ],
+ "selection_bands": {
+  "full": [
+   0,
+   128
+  ],
+  "l32": [
+   2,
+   32
+  ],
+  "l24": [
+   2,
+   24
+  ],
+  "l16": [
+   2,
+   16
+  ],
+  "l8": [
+   2,
+   8
+  ],
+  "l2_4": [
+   2,
+   4
+  ]
+ },
+ "versions": {
+  "python": "3.13.15",
+  "numpy": "2.1.3",
+  "healpy": "1.20.0",
+  "platform": "Linux-6.6.122+-x86_64-with-glibc2.35"
+ },
+ "maps": {
+  "PR3_Commander": "2f88c2d385e3c96a8ead4d98254e8b92ad4f460c58810697ad61132f2ff0020b",
+  "PR3_NILC": "63f3b41ea5a0e934d2d425ccb7c51b12539e4fb147e75e18a92e18e003bee352",
+  "PR3_SEVEM": "c395a7fcf955560a62d7b8404eb3ff19e868d6c03c0ad83dbf99571951e12ab9",
+  "PR3_SMICA": "1fda86de628c43820e999ad1564960cb5350c972c7f820b4132d6c6d149a8272",
+  "Nofi_70GHz": "bac5d05118d1044c07910283a31e20d712a5f55190a3258e12c6c53fc1cc2665",
+  "Nofi_94GHz": "6a24e2867e4f4aefd4f2cff7e0b591912f8f4690e5cccb24cec99f95c2047266",
+  "Nofi_100GHz": "b30cb4cacb104ca1e705c320f9f4b867c0a03e4130248cca54f007a57e87b867",
+  "Nofi_143GHz": "ad95a5135470d3f297267d75c5323ad30aaf454d1bf0f8a1aae076142ba0c6eb",
+  "PR4_Sevem": "94b6647a220590e82162786c02a10a81d6e4421cc3949e247cdd4486cf280a1e",
+  "PR4_Commander": "e9dfe38bc25d7ba22294161ffa709c1fc11914a3019eb1deaf3ed0e646dae40a"
+ },
+ "expected_maps": {
+  "PR3_Commander": "2f88c2d385e3c96a8ead4d98254e8b92ad4f460c58810697ad61132f2ff0020b",
+  "PR3_NILC": "63f3b41ea5a0e934d2d425ccb7c51b12539e4fb147e75e18a92e18e003bee352",
+  "PR3_SEVEM": "c395a7fcf955560a62d7b8404eb3ff19e868d6c03c0ad83dbf99571951e12ab9",
+  "PR3_SMICA": "1fda86de628c43820e999ad1564960cb5350c972c7f820b4132d6c6d149a8272",
+  "Nofi_70GHz": "bac5d05118d1044c07910283a31e20d712a5f55190a3258e12c6c53fc1cc2665",
+  "Nofi_94GHz": "6a24e2867e4f4aefd4f2cff7e0b591912f8f4690e5cccb24cec99f95c2047266",
+  "Nofi_100GHz": "b30cb4cacb104ca1e705c320f9f4b867c0a03e4130248cca54f007a57e87b867",
+  "Nofi_143GHz": "ad95a5135470d3f297267d75c5323ad30aaf454d1bf0f8a1aae076142ba0c6eb",
+  "PR4_Sevem": "94b6647a220590e82162786c02a10a81d6e4421cc3949e247cdd4486cf280a1e",
+  "PR4_Commander": "e9dfe38bc25d7ba22294161ffa709c1fc11914a3019eb1deaf3ed0e646dae40a"
+ },
+ "consensus_axis": 1134,
+ "gates": {
+  "G_a5_axes_reproduced": true,
+  "G_a5_values_reproduced": true,
+  "G_a5_consensus_1134": true,
+  "G_a5_vectorised_scan_equiv": true,
+  "G_a5_f32_f64_same_plane_data": true,
+  "G_cmbanom_commit": true,
+  "G_cmbanom_clean": true,
+  "G_cmbanom_origin": true,
+  "G_pem_origin": true,
+  "G_input_bitlevel": true,
+  "G_input_float": true,
+  "G_maps_sha_all_known": true,
+  "G_maps_sha_match": true,
+  "G_dedup_battery_completed": true
+ },
+ "flags": {
+  "F_dedup_equivalent": false,
+  "F_historical_3072_selected": true,
+  "F_selection_dtype_primary": "float32"
+ },
+ "script_sha256": "5f501051ecfb1f73d3969f19cf2eeb6c794e30f2d2f8edeac29d294ea16bc627",
+ "script_origin": "https://github.com/tsujikeita/mirror-topology (Step 1 Phase A)",
+ "cmbanom_origin": "https://github.com/LauraHerold/CMBanom.git",
+ "antipodal_diagnostic": {
+  "n_antipodal_R_rows_different": 292,
+  "max_antipodal_R_pixel_mismatches": 64,
+  "n_mismatching_axis_pairs": 146,
+  "axis_antipode_Sp_max_diff": 4.660552978515625,
+  "pairs_sha256": "6bdc7d7a5549ea2156f497b4e2d4087c0417c34a459ee23f5390a17dd4b663c5"
+ },
+ "input_bitlevel_sha": {
+  "mask_source": "027ea598135c77784000f37885c36800d1255aa7e2b5a5780514907ff05ca5ee",
+  "cl_file": "e4d06f6afba86ba7ed3af8b032a470fec4ed01d42c292813605971fff6e6436b",
+  "a1_axes_csv": "b8cb439f4ad1e51d1cc977c1520bf83a1c3c8396cdf32d961f3c08bf33156e3a",
+  "processed_mask": "2b46cf1b46268cf3e7c119ec7c29de90a80fbb6e0c239572da51369da68b3305",
+  "reflection_table": "e06b97febbaae48ac1c5bbc358637d2f3a7f874bca54de83d6ce9d630a0741f5",
+  "valid_table": "4da781e5fa5bd46246f14b01d4e0dd41475a3f6bdae5071123bd983ac6c83cf3",
+  "cnt": "6e62038586601ce4ac70f6a96ad0df7cc6e5c5681511723ea58f73cdb9b18686"
+ },
+ "input_float_sha": {
+  "fl": "b40f3877c02884ea9c749d1546a4a5e94624172878f290180a869a3eae63b95b",
+  "cl_array": "efb18d27696879980ad910030c2238e0020f88f86100e412eb661cba9bf4634a",
+  "selwin_full": "b40f3877c02884ea9c749d1546a4a5e94624172878f290180a869a3eae63b95b",
+  "selwin_l32": "48c18b4b65c5bb29cb98bcc0d006790a9d5953552a07416a799c3401361a72c0",
+  "selwin_l24": "6eeeb8534b9e404fb6aff3336352b9d9e5b4ffcff22a25282279301e5bb330a8",
+  "selwin_l16": "78a047bc548691095a7473a09fe227af48a87522f3bbec4edd4f33269ee6e9e6",
+  "selwin_l8": "232b6b3f7b91a8cc81ce964f7ddd5ffca2790c2c69fafda9cc8f506e1c14d64e",
+  "selwin_l2_4": "7d5cefc02dcf38ceaaa66c09ed9cff2718100594a35a1e6f2365e82e59888547"
+ },
+ "pixwin_source": "healpy_download",
+ "manifest_generated_in": "colab",
+ "input_float_maxdiff": {
+  "fl": {
+   "scaled_maxdiff": 0.0,
+   "argmax_index": 0,
+   "ref_at_argmax": 1.0000000000001288,
+   "cur_at_argmax": 1.0000000000001288,
+   "elementwise_rel_on_significant": 0.0
+  },
+  "cl_array": {
+   "scaled_maxdiff": 0.0,
+   "argmax_index": 0,
+   "ref_at_argmax": 0.0,
+   "cur_at_argmax": 0.0,
+   "elementwise_rel_on_significant": 0.0
+  },
+  "selwin_full": {
+   "scaled_maxdiff": 0.0,
+   "argmax_index": 0,
+   "ref_at_argmax": 1.0000000000001288,
+   "cur_at_argmax": 1.0000000000001288,
+   "elementwise_rel_on_significant": 0.0
+  },
+  "selwin_l32": {
+   "scaled_maxdiff": 0.0,
+   "argmax_index": 0,
+   "ref_at_argmax": 0.0,
+   "cur_at_argmax": 0.0,
+   "elementwise_rel_on_significant": 0.0
+  },
+  "selwin_l24": {
+   "scaled_maxdiff": 0.0,
+   "argmax_index": 0,
+   "ref_at_argmax": 0.0,
+   "cur_at_argmax": 0.0,
+   "elementwise_rel_on_significant": 0.0
+  },
+  "selwin_l16": {
+   "scaled_maxdiff": 0.0,
+   "argmax_index": 0,
+   "ref_at_argmax": 0.0,
+   "cur_at_argmax": 0.0,
+   "elementwise_rel_on_significant": 0.0
+  },
+  "selwin_l8": {
+   "scaled_maxdiff": 0.0,
+   "argmax_index": 0,
+   "ref_at_argmax": 0.0,
+   "cur_at_argmax": 0.0,
+   "elementwise_rel_on_significant": 0.0
+  },
+  "selwin_l2_4": {
+   "scaled_maxdiff": 0.0,
+   "argmax_index": 0,
+   "ref_at_argmax": 0.0,
+   "cur_at_argmax": 0.0,
+   "elementwise_rel_on_significant": 0.0
+  }
+ },
+ "input_float_rtol": 1e-12,
+ "input_manifest": "a5_input_manifest_v2.json",
+ "input_gate_note": "bit-level = files and integer/boolean arrays; float arrays (fl, cl, selection windows) are compared by max|cur-ref|/max|ref| <= rtol because they are computed and are not bit-identical across environments; elementwise relative differences on beam-suppressed high-l entries (~1e-15..1e-23) are recorded as diagnostics only",
+ "note_T_arrays": "values are float32-derived (stored in float64 containers)",
+ "checkpoint_binding_sha": "c95d9d99bd59d26ff5b0566177f781b4ef71bf979d788802dfdbdc15a583f907",
+ "null": {
+  "n": 1000,
+  "seed_recipe": "np.random.seed(s); hp.synalm(fid_cl, lmax=128), s=0..N-1 (Step 0 seeds)",
+  "status": "design-discovery sample; official probabilities require fresh stream",
+  "summary": {
+   "fixed": {
+    "T1_med": 391.3361511230469,
+    "P_T1_le_obs": 0.0,
+    "n_T1_le_obs": 0,
+    "T2_med": 279.48463439941406,
+    "T2_q16": 147.09008178710937,
+    "T2_q84": 536.4793969726562,
+    "P_T2_le_obs": 0.459,
+    "P_EB": 0.0,
+    "n_EB": 0,
+    "rho_med": 0.1676189922996322
+   },
+   "full": {
+    "T1_med": 164.6348419189453,
+    "P_T1_le_obs": 0.002,
+    "n_T1_le_obs": 2,
+    "T2_med": 546.5808410644531,
+    "T2_q16": 319.5719738769531,
+    "T2_q84": 898.9421704101562,
+    "P_T2_le_obs": 0.092,
+    "P_EB": 0.0,
+    "n_EB": 0,
+    "rho_med": -0.5289734432913487
+   },
+   "l32": {
+    "T1_med": 164.30382537841797,
+    "P_T1_le_obs": 0.002,
+    "n_T1_le_obs": 2,
+    "T2_med": 546.5808410644531,
+    "T2_q16": 319.5719738769531,
+    "T2_q84": 898.9421704101562,
+    "P_T2_le_obs": 0.092,
+    "P_EB": 0.0,
+    "n_EB": 0,
+    "rho_med": -0.5289734432913487
+   },
+   "l24": {
+    "T1_med": 164.30382537841797,
+    "P_T1_le_obs": 0.002,
+    "n_T1_le_obs": 2,
+    "T2_med": 543.9457397460938,
+    "T2_q16": 318.9750634765625,
+    "T2_q84": 896.8323779296875,
+    "P_T2_le_obs": 0.092,
+    "P_EB": 0.0,
+    "n_EB": 0,
+    "rho_med": -0.5288490688867871
+   },
+   "l16": {
+    "T1_med": 164.07342529296875,
+    "P_T1_le_obs": 0.002,
+    "n_T1_le_obs": 2,
+    "T2_med": 541.9737243652344,
+    "T2_q16": 317.0412536621094,
+    "T2_q84": 893.8955834960936,
+    "P_T2_le_obs": 0.092,
+    "P_EB": 0.0,
+    "n_EB": 0,
+    "rho_med": -0.5329673384780973
+   },
+   "l8": {
+    "T1_med": 160.31221771240234,
+    "P_T1_le_obs": 0.002,
+    "n_T1_le_obs": 2,
+    "T2_med": 546.3187866210938,
+    "T2_q16": 319.14810546875,
+    "T2_q84": 901.1354907226563,
+    "P_T2_le_obs": 0.086,
+    "P_EB": 0.0,
+    "n_EB": 0,
+    "rho_med": -0.5485947270245557
+   },
+   "l2_4": {
+    "T1_med": 118.45995712280273,
+    "P_T1_le_obs": 0.015,
+    "n_T1_le_obs": 15,
+    "T2_med": 593.00048828125,
+    "T2_q16": 364.2214794921875,
+    "T2_q84": 950.7947387695311,
+    "P_T2_le_obs": 0.041,
+    "P_EB": 0.004,
+    "n_EB": 4,
+    "rho_med": -0.6519456666730176
+   }
+  },
+  "axis_agreement_with_full": {
+   "l32": 0.998,
+   "l24": 0.974,
+   "l16": 0.856,
+   "l8": 0.367,
+   "l2_4": 0.052
+  },
+  "axis_sep_median_deg": {
+   "l32": 0.0,
+   "l24": 0.0,
+   "l16": 0.0,
+   "l8": 3.6857186525930143,
+   "l2_4": 13.240970100399373
+  },
+  "compensation": {
+   "tot_cv_axis_median": 0.11177535453737564,
+   "tot_maxmin_axis_median": 1.818461907168615,
+   "corr_axis_T1T2_median": -0.820345179731828
+  }
+ },
+ "battery": {
+  "fresh_n": 2000,
+  "fresh_seed_stream": "default_rng(20260902) -> np.random.seed per draw",
+  "dedup_same_plane_all": false,
+  "dedup_max_Sp_axis_vs_antipode": 4.660552978515625,
+  "f32_f64_same_axis_frac_null": 1.0,
+  "f32_f64_same_plane_frac_null": 1.0,
+  "f32_f64_sep_deg_p90_null": 8.537736462515939e-07,
+  "f32_f64_same_plane_data": true
+ },
+ "consensus_rule_in_simulation": "signal-only equivalent (single latent sky argmin; no correlated component-separation ensemble)",
+ "outputs": {
+  "a5_historical_axis_reproduction.csv": "52c6515ae2f57ab41fd16b68a506670e5185a6bb47ea28617851dd7d1237c7d4",
+  "a5_data_selection_band.csv": "3c037ff332b6bd481d839e29690f2be74203d4fb39168527f064220afbdf9bcc",
+  "a5_null_selection.npz": "d0de2cf6643ff19e134567616f243298b2cc83dd081032949984c1c6abfa2b9e",
+  "a5_battery_3072_vs_1536.csv": "f99d0f67380c6c5ed6a514886a7d519358f28d37bb4c93388123018b8d760239",
+  "a5_battery_float32_vs_float64.csv": "ec9b0e312a3ef9605536f44db3bdb64bd359af9df9d41ffff224d6e33e9ee66a",
+  "a5_compensation_metrics.csv": "6a7232963fb65143368c54193f9bd85f4ae4ab1777471a61c4bb43a5d2a7ccbe",
+  "a5_antipodal_reflection_diagnostic.csv": "56537908904c653eedd002e60b78f8e1787d6231423ef17db8c387a8205e80e2"
+ },
+ "elapsed_s": 1854.0554840564728
+}

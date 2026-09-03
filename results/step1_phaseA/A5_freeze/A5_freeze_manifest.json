@@ -1,0 +1,59 @@
+{
+ "schema": "A5_freeze_manifest_v1",
+ "date": "2026-09-03",
+ "git": {
+  "commit": "(fill after commit)",
+  "tag": "step1-phaseA-A5-v1.0"
+ },
+ "scripts": {
+  "build_A5_freeze_manifest.py": "d1421e699f3e1fa529d20a8b90142b7d93eeb6184fbe8b3172551769c2f6de96",
+  "s1_build_Bstack_l2_4_v1.0.2.py": "61ee38d738bdaf55fb614973669e21f77acf9d5b8fd09f3ad7d135d34acb5711",
+  "s1_phaseA5_v1.1.py": "5f501051ecfb1f73d3969f19cf2eeb6c794e30f2d2f8edeac29d294ea16bc627"
+ },
+ "input_manifest": {
+  "a5_input_manifest_v2.json": "ae2dd6feb79f6016664df44e6bc35630e60f6df623512dcfbe6761389752e6a6"
+ },
+ "outputs": {
+  "Console_Log_of_s1_build_Bstack_l2_4_v1.0.2_py.txt": "49c8e6fb1cfb51a40bc5454a1bc6aabb3dbb7d063103d3cf2be5e43d9a30c5dc",
+  "Console_Log_of_s1_phaseA5_v1.1_py.txt": "07d1763ad49aba2102aea17755fd04481ad716449edb2e960dd147b4da22c626",
+  "a5_antipodal_reflection_diagnostic.csv": "56537908904c653eedd002e60b78f8e1787d6231423ef17db8c387a8205e80e2",
+  "a5_battery_3072_vs_1536.csv": "f99d0f67380c6c5ed6a514886a7d519358f28d37bb4c93388123018b8d760239",
+  "a5_battery_float32_vs_float64.csv": "ec9b0e312a3ef9605536f44db3bdb64bd359af9df9d41ffff224d6e33e9ee66a",
+  "a5_compensation_metrics.csv": "6a7232963fb65143368c54193f9bd85f4ae4ab1777471a61c4bb43a5d2a7ccbe",
+  "a5_data_selection_band.csv": "3c037ff332b6bd481d839e29690f2be74203d4fb39168527f064220afbdf9bcc",
+  "a5_historical_axis_reproduction.csv": "52c6515ae2f57ab41fd16b68a506670e5185a6bb47ea28617851dd7d1237c7d4",
+  "a5_null_selection.npz": "d0de2cf6643ff19e134567616f243298b2cc83dd081032949984c1c6abfa2b9e",
+  "a5_provenance.json": "33765464cd4f4bea67e78fddb769e92ccbea38e68f6ec74778a203309971ba80",
+  "s1_Bstack_l2_4_N16_common_v1.npz": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",
+  "s1_Bstack_l2_4_provenance.json": "2122d8dae071be6e933ddb9913d4c9e3b3ca2412e2f89548133bf6ec9051ec1f",
+  "s1_Bstack_l2_4_validation.csv": "720eda4c67882a2c3df6e7526544fc9f0d81a4ff6f7e246169d5fe95cd736585"
+ },
+ "reports": {
+  "Step1_PhaseA_A5_formal_run_report.md": "66f9920cbbbfbaeccdb529f93dd03577ea357376ab1bfec05dee297d290960d6"
+ },
+ "provenance_links": {
+  "a5_script_sha256": "5f501051ecfb1f73d3969f19cf2eeb6c794e30f2d2f8edeac29d294ea16bc627",
+  "bstack_script": "s1_build_Bstack_l2_4_v1.0.2.py",
+  "bstack_script_sha256": "61ee38d738bdaf55fb614973669e21f77acf9d5b8fd09f3ad7d135d34acb5711",
+  "bstack_array_sha256": "eb51414885785b77e9d3f7fbb25e1c9396f52e19c053d58113d50e206353a93f",
+  "a5_gates_all_true": true,
+  "bstack_gates_all_true": true
+ },
+ "science_decisions": {
+  "primary_event": "E_B = {T1 <= T1_obs and T2 <= T2_obs}; mechanism decomposition Q_joint = Q_T1 x Q_noncomp",
+  "axis_grid": 3072,
+  "pm_dedup": false,
+  "argmin": "first occurrence",
+  "selection_dtype": "float32 (primary); float64 audited-equivalent alternate",
+  "evaluation": "float64 quadratic forms (B-stack)",
+  "bstack_scope": "l2-4 evaluator on all 3072 axes; S1 (l2-4-only) selection surrogate",
+  "historical_selection": "full-band Planck-smoothed N16/common map, argmin S+ over 3072 axes; consensus rule = signal-only equivalent in simulation",
+  "S2_hybrid_status": "HOLD (pending A8 benchmark and A11 S4 validation set)",
+  "design_discovery_null": "N=1000 Step 0 seeds; official probabilities require a fresh stream"
+ },
+ "lessons": [
+  "input manifest must be generated in the formal (Colab) environment; sandbox float references are not authoritative",
+  "float input arrays compared by max|cur-ref|/max|ref| <= 1e-12; elementwise relative differences on beam-suppressed entries are diagnostics only",
+  "formal run stops if the input manifest is missing (no silent manifest-generation mode)"
+ ]
+}

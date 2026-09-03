@@ -1,0 +1,44 @@
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.5/8.5 MB 24.7 MB/s eta 0:00:00
+Downloading https://healpy.github.io/healpy-data/pixel_window_functions/pixel_window_n0128.fits
+|===========================================|  14k/ 14k (100.00%)         0s
+Downloading https://healpy.github.io/healpy-data/pixel_window_functions/pixel_window_n0016.fits
+|===========================================| 8.6k/8.6k (100.00%)         0s
+pixwin source: healpy_download
+[1] data-side reproduction done (17s): consensus=1134 {'G_a5_axes_reproduced': True, 'G_a5_values_reproduced': True, 'G_a5_consensus_1134': True, 'G_a5_vectorised_scan_equiv': True}
+    null 100/1000 (109s)
+    null 200/1000 (220s)
+    null 300/1000 (331s)
+    null 400/1000 (442s)
+    null 500/1000 (551s)
+    null 600/1000 (663s)
+    null 700/1000 (772s)
+    null 800/1000 (882s)
+    null 900/1000 (992s)
+    null 1000/1000 (1102s)
+[2] null selection done (1102s)
+    battery 200/2000 (73s)
+    battery 400/2000 (148s)
+    battery 600/2000 (221s)
+    battery 800/2000 (294s)
+    battery 1000/2000 (366s)
+    battery 1200/2000 (440s)
+    battery 1400/2000 (512s)
+    battery 1600/2000 (585s)
+    battery 1800/2000 (658s)
+    battery 2000/2000 (731s)
+[3] batteries done (731s)
+[3b] antipodal diagnostic: {'n_antipodal_R_rows_different': 292, 'max_antipodal_R_pixel_mismatches': 64, 'n_mismatching_axis_pairs': 146, 'axis_antipode_Sp_max_diff': 4.660552978515625, 'pairs_sha256': '6bdc7d7a5549ea2156f497b4e2d4087c0417c34a459ee23f5390a17dd4b663c5'}
+
+=== SUMMARY ===
+gates: {'G_a5_axes_reproduced': True, 'G_a5_values_reproduced': True, 'G_a5_consensus_1134': True, 'G_a5_vectorised_scan_equiv': True, 'G_a5_f32_f64_same_plane_data': True, 'G_cmbanom_commit': True, 'G_cmbanom_clean': True, 'G_cmbanom_origin': True, 'G_pem_origin': True, 'G_input_bitlevel': True, 'G_input_float': True, 'G_maps_sha_all_known': True, 'G_maps_sha_match': True, 'G_dedup_battery_completed': True}
+  fixed  T1med= 391.3 P(T1<=obs)=0.0000 (0)  T2med= 279.5 q16/84=(147,536)  P(E_B)=0.0000 (0)
+  full   T1med= 164.6 P(T1<=obs)=0.0020 (2)  T2med= 546.6 q16/84=(320,899)  P(E_B)=0.0000 (0)
+  l32    T1med= 164.3 P(T1<=obs)=0.0020 (2)  T2med= 546.6 q16/84=(320,899)  P(E_B)=0.0000 (0)
+  l24    T1med= 164.3 P(T1<=obs)=0.0020 (2)  T2med= 543.9 q16/84=(319,897)  P(E_B)=0.0000 (0)
+  l16    T1med= 164.1 P(T1<=obs)=0.0020 (2)  T2med= 542.0 q16/84=(317,894)  P(E_B)=0.0000 (0)
+  l8     T1med= 160.3 P(T1<=obs)=0.0020 (2)  T2med= 546.3 q16/84=(319,901)  P(E_B)=0.0000 (0)
+  l2_4   T1med= 118.5 P(T1<=obs)=0.0150 (15)  T2med= 593.0 q16/84=(364,951)  P(E_B)=0.0040 (4)
+axis agreement w/ full: {'l32': 0.998, 'l24': 0.974, 'l16': 0.856, 'l8': 0.367, 'l2_4': 0.052}
+compensation: {'tot_cv_axis_median': 0.112, 'tot_maxmin_axis_median': 1.818, 'corr_axis_T1T2_median': -0.82}
+dedup same plane (all): False | f32/f64 same-plane frac (fresh null): 1.0 | p90 sep 0.0 deg
+elapsed 1854 s

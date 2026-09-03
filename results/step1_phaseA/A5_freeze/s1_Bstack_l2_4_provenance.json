@@ -1,0 +1,60 @@
+{
+ "script": "s1_build_Bstack_l2_4_v1.0.2.py",
+ "script_sha256": "61ee38d738bdaf55fb614973669e21f77acf9d5b8fd09f3ad7d135d34acb5711",
+ "date": "2026-09-03",
+ "scope": "map-free evaluation of the frozen l=2-4 statistic on all 3072 axes; enables S1 (l2-4-only) selection surrogate. Historical full-band selection and S2 hybrid need a higher-dimensional stack.",
+ "pem_commit": "d36e7567e8a7869c0d7b84955b4139ab0e782af0",
+ "bridge_sha": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872",
+ "input_sha": {
+  "processed_mask": "2b46cf1b46268cf3e7c119ec7c29de90a80fbb6e0c239572da51369da68b3305",
+  "reflection_table": "e06b97febbaae48ac1c5bbc358637d2f3a7f874bca54de83d6ce9d630a0741f5",
+  "valid_table": "4da781e5fa5bd46246f14b01d4e0dd41475a3f6bdae5071123bd983ac6c83cf3",
+  "cnt": "6e62038586601ce4ac70f6a96ad0df7cc6e5c5681511723ea58f73cdb9b18686",
+  "fl": "b40f3877c02884ea9c749d1546a4a5e94624172878f290180a869a3eae63b95b",
+  "eval_window": "7d5cefc02dcf38ceaaa66c09ed9cff2718100594a35a1e6f2365e82e59888547",
+  "cl_array": "efb18d27696879980ad910030c2238e0020f88f86100e412eb661cba9bf4634a"
+ },
+ "expected_bitlevel": {
+  "processed_mask": "2b46cf1b46268cf3e7c119ec7c29de90a80fbb6e0c239572da51369da68b3305",
+  "reflection_table": "e06b97febbaae48ac1c5bbc358637d2f3a7f874bca54de83d6ce9d630a0741f5",
+  "valid_table": "4da781e5fa5bd46246f14b01d4e0dd41475a3f6bdae5071123bd983ac6c83cf3",
+  "cnt": "6e62038586601ce4ac70f6a96ad0df7cc6e5c5681511723ea58f73cdb9b18686"
+ },
+ "input_gate_note": "bit-level gate on processed_mask, reflection_table, valid_table and cnt; float arrays validated through the pm.scan_S comparison battery",
+ "build_seconds": 9.38381290435791,
+ "bstack_array_sha256": "eb51414885785b77e9d3f7fbb25e1c9396f52e19c053d58113d50e206353a93f",
+ "npz_sha256": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",
+ "gates": {
+  "G_pem_commit": true,
+  "G_pem_clean": true,
+  "G_bridge_sha": true,
+  "G_input_bitlevel": true,
+  "G_bpm_1134_match": true,
+  "G_bstack_symmetric": true,
+  "G_bstack_psd": true,
+  "G_bstack_data_same_axis": true,
+  "G_bstack_EB_indicator": true,
+  "G_bstack_quadform_equiv": true,
+  "G_bstack_all_same_axis": true,
+  "G_bstack_f32cast_all_same_axis": true
+ },
+ "validation": {
+  "n": 3010,
+  "same_axis_frac": 1.0,
+  "same_axis_f32cast_frac": 1.0,
+  "n_axis_mismatch": 0,
+  "sep_deg_p90": 8.537736462515939e-07,
+  "max_rel_Sp": 1.9470847836388182e-07,
+  "max_rel_Sm": 1.815029139271951e-07,
+  "T1_rel_at_selected_max": 1.803697075947097e-07,
+  "EB_indicator_mismatch": 0,
+  "data_same_axis_all": true
+ },
+ "validation_design": "reference = pm.scan_S (historical float32 map-domain); B-stack = float64 quadratic forms; samples = 10 maps + Step0 null seeds 0..N-1 + fresh stream default_rng(20260903)",
+ "versions": {
+  "python": "3.13.15",
+  "numpy": "2.1.3",
+  "healpy": "1.20.0",
+  "platform": "Linux-6.6.122+-x86_64-with-glibc2.35"
+ }
+}

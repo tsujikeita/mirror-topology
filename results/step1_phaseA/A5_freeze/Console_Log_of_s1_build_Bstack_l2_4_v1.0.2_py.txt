@@ -1,0 +1,12 @@
+[1] build 9.4s  sha=eb51414885785b77  1134 match=True  psd_min=-5.19e-20
+    null 250/1000 (48s)
+    null 500/1000 (94s)
+    null 750/1000 (143s)
+    null 1000/1000 (190s)
+    fresh 500/2000 (285s)
+    fresh 1000/2000 (378s)
+    fresh 1500/2000 (470s)
+    fresh 2000/2000 (563s)
+[2] validation: {'n': 3010, 'same_axis_frac': '1.000e+00', 'same_axis_f32cast_frac': '1.000e+00', 'n_axis_mismatch': 0, 'sep_deg_p90': '8.538e-07', 'max_rel_Sp': '1.947e-07', 'max_rel_Sm': '1.815e-07', 'T1_rel_at_selected_max': '1.804e-07', 'EB_indicator_mismatch': 0, 'data_same_axis_all': True}
+[3] saved /content/drive/MyDrive/mirror_topology/runs_step1_phaseA/bstack_v1.0/s1_Bstack_l2_4_N16_common_v1.npz
+    gates: {'G_pem_commit': True, 'G_pem_clean': True, 'G_bridge_sha': True, 'G_input_bitlevel': True, 'G_bpm_1134_match': True, 'G_bstack_symmetric': True, 'G_bstack_psd': True, 'G_bstack_data_same_axis': True, 'G_bstack_EB_indicator': True, 'G_bstack_quadform_equiv': True, 'G_bstack_all_same_axis': True, 'G_bstack_f32cast_all_same_axis': True}
