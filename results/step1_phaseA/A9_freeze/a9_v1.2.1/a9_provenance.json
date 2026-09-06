@@ -1,0 +1,203 @@
+{
+ "script": "s1_phaseA9_v1.2.1.py",
+ "script_sha256": "2905c036a04a04e33672a07ba464d95ae6a669c8ea7b918f17a6813e864dde2c",
+ "timestamp": "2026-09-06T14:29:19.000952+00:00",
+ "seeds": {
+  "haar": [
+   20260906,
+   9,
+   1
+  ],
+  "rep": [
+   20260906,
+   9,
+   2
+  ],
+  "mc": [
+   20260906,
+   9,
+   3
+  ]
+ },
+ "n_mc": 1000000,
+ "records": {
+  "bridge": {
+   "t2b2_bridge_sha256": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872",
+   "M21_sha256": "c488cc7070a2d391e8ceeea08c87643d1f1552515990fb135652c4599c6101e8",
+   "LM_sha256": "4d5f9471cc92c9fc76d27237fbe0bf43acb0aec3c30fccd78b7ea9cb5c4a153c",
+   "real_basis_sha256": "e278e7ec89765483c31b205325035f47fc57f9a3951c0feb34934a9e5b4aa10b",
+   "mirror_topology_commit": "ab19caaa9504bea6fd9870b97ad2bb88d69d820a",
+   "mirror_topology_origin": "https://github.com/tsujikeita/mirror-topology.git",
+   "mirror_topology_clean": true
+  },
+  "bstack": {
+   "file": "s1_Bstack_l2_4_N16_common_v1.npz",
+   "file_sha256": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",
+   "array_sha256": "eb51414885785b77e9d3f7fbb25e1c9396f52e19c053d58113d50e206353a93f",
+   "a5_freeze": {
+    "commit": "95ab0adb55a3ea8b522deb5aa0a64b13e883e675",
+    "tag": "step1-phaseA-A5-v1.0",
+    "path": "results/step1_phaseA/A5_freeze/"
+   }
+  },
+  "haar": {
+   "N": 100000,
+   "alpha": 0.01,
+   "holm": "standard step-down",
+   "ks_pvalues": {
+    "cos_theta": 0.5338289375347248,
+    "phi": 0.4173677240325153,
+    "left_QR_cos": 0.7545125337289634,
+    "right_RQ_cos": 0.6767802778389727,
+    "rotation_angle": 0.7379956993435679
+   },
+   "mean_abs_max": 0.001833581778165904,
+   "cov_dev_max": 0.0014310922295141073
+  },
+  "quadrature": {
+   "n_theta": 10,
+   "n_phi": 10,
+   "nodes_sha256": "b53296ec7b42ec928bd64ecd1c4f3eb382ba90b3e354ee3bde5299662bdbbf41",
+   "weights_sha256": "94d2eab0bd6b95620a3df3c4dfec294dcc8fb22eb43a09cb2661c16454c586cd"
+  },
+  "real_basis_bridge_maxdiff": 1.1102230246251565e-16,
+  "known_z_rotation_maxdiff": 1.0547118733938987e-15,
+  "representation": {
+   "worst_homomorphism": 1.1000812202389212e-15,
+   "worst_orthogonality": 1.2212453270876722e-15,
+   "worst_direct_geometry": 4.898163399327789e-15,
+   "construction": "Euler-angle-convention-independent quadrature (depends on: active rotation, frozen real basis, column-coefficient convention)"
+  },
+  "synthetic_C": {
+   "C_sha256": "5423c461c77b1527d1583f152873fa8576b3a1984d99a47fa0425fd3154a4235",
+   "eig_min": 333.9906628785335,
+   "eig_max": 2612.7428763308735,
+   "sqrt_sha256": "cb0b67b52e0dc71f51e531fdd1b523dee8e1568ddae904757faaaf5fd7e22cf3",
+   "reconstruction_residual": 3.185079470778866e-15
+  },
+  "imhof_eig_axis1134": {
+   "lambda_min_raw": 0.03110978907846076,
+   "clip_tol": 1.9161297218807247e-10,
+   "n_clipped": 0,
+   "effective_rank": 21,
+   "postclip_sha256": "76cc6c686c4163b0731678be3f741cb3419e1f9c3db1a39b25c55a8131fc7fe4"
+  },
+  "imhof_eig_axis777": {
+   "lambda_min_raw": 0.02084930964203953,
+   "clip_tol": 2.290151774396458e-10,
+   "n_clipped": 0,
+   "effective_rank": 21,
+   "postclip_sha256": "b66d295e82d2fab653701ff1f9230b3bdb9d0cac16163b948b6b54c940da27e7"
+  },
+  "imhof_low_rank_caveat": "low effective rank (k=1 chi2_1; also the rank-3 zero-eigenvalue diagnostic) is numerically unstable for the generic Imhof/Gil-Pelaez inversion: recorded, not gated; the frozen B-stack cases have effective rank 21 and are gated by MC (z), Gil-Pelaez (1e-6) and saddlepoint agreement",
+  "imhof_applicability": {
+   "bstack_axis1134": {
+    "psd": true,
+    "effective_rank": 21,
+    "n_clipped": 0,
+    "warnings_zero": true,
+    "quad_err_ok": true,
+    "gp_converged": true,
+    "imhof_gp_agree": true,
+    "monotone": true,
+    "in_range": true,
+    "applicable": true
+   },
+   "bstack_axis777": {
+    "psd": true,
+    "effective_rank": 21,
+    "n_clipped": 0,
+    "warnings_zero": true,
+    "quad_err_ok": true,
+    "gp_converged": true,
+    "imhof_gp_agree": true,
+    "monotone": true,
+    "in_range": true,
+    "applicable": true
+   }
+  },
+  "imhof_scope": "Imhof is approved as an independent 1D marginal-tail diagnostic (fixed orientation, fixed axis, S+) ONLY when the per-case applicability gate passes. The current infinite-interval oscillatory inversion can become unstable for sufficiently low effective rank or slowly decaying characteristic functions (observed: chi2_1 and the rank-3 zero-eigenvalue diagnostic); registered rank-21 cases pass all gates. Gil-Pelaez = independent numerical inversion route (same characteristic function); Lugannani-Rice = asymptotic diagnostic.",
+  "imhof_known_law_deep_tail_note": "chi2_1 deep tail (q=0.001/0.999): imhof abs err = 1.00e-03 / 5.94e-04 with 7/7 warnings; deep-tail reference for the single-eigenvalue case is the exact chi2 CDF (recorded, not gated)"
+ },
+ "gates": {
+  "G_scipy_version_match": true,
+  "G_healpy_version_match": true,
+  "G_numpy_version_match": true,
+  "G_bridge_sha": true,
+  "G_bstack_official": true,
+  "G_bstack_file_sha": true,
+  "G_haar_orthogonal": true,
+  "G_haar_det": true,
+  "G_haar_ks_holm": true,
+  "G_haar_moments": true,
+  "G_real_basis_bridge": true,
+  "G_complex_path": true,
+  "G_quadrature_orthonormal": true,
+  "G_known_z_rotation": true,
+  "G_D_homomorphism": true,
+  "G_D_orthogonal": true,
+  "G_D_direct_geometry_complex_path": true,
+  "G_sqrt_reconstruction": true,
+  "G_moments_all": true,
+  "G_imhof_known_law_k5_all_quantiles": true,
+  "G_gilpelaez_known_law_k5_all_quantiles": true,
+  "G_imhof_known_law_k21_all_quantiles": true,
+  "G_gilpelaez_known_law_k21_all_quantiles": true,
+  "G_imhof_bstack_vs_mc": true,
+  "G_imhof_bstack_no_warnings": true,
+  "G_imhof_vs_gilpelaez_bstack": true,
+  "G_imhof_vs_saddlepoint_tails_rel5pct": true,
+  "G_imhof_psd": true,
+  "G_imhof_per_case_applicability": true,
+  "G_imhof_monotone_in_range": true
+ },
+ "OFFICIAL": true,
+ "scope_note": "Imhof/Gil-Pelaez/saddlepoint validate the 1D marginal P(S+ <= s | fixed orientation, fixed axis) only; not the orientation mixture, axis-selection minimum, joint (T1,T2), Event B nor Q_noncomp",
+ "git_calls": [
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/tmp/finalchk2",
+    "rev-parse",
+    "HEAD"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/tmp/finalchk2",
+    "remote",
+    "get-url",
+    "origin"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/tmp/finalchk2",
+    "status",
+    "--porcelain",
+    "--untracked-files=no"
+   ],
+   "stderr": ""
+  }
+ ],
+ "outputs": {
+  "a9_moment_battery.csv": "e3931047df65d9db9838fd920aba2abbd04516902a4f34629dbc09fbc22d69d7",
+  "a9_imhof_battery.csv": "766b9b627f8b5bff04878f2f1628518b60645f500be6440c486349f0c4a67121"
+ },
+ "versions": {
+  "python": "3.12.3",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "healpy": "1.20.0",
+  "pandas": "3.0.2",
+  "platform": "Linux-6.18.44-fc-v24-x86_64-with-glibc2.39",
+  "blas_lapack": "{'blas': 'scipy-openblas', 'lapack': 'scipy-openblas'}"
+ }
+}

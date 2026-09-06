@@ -1,0 +1,46 @@
+gates: {'G_scipy_version_match': True, 'G_healpy_version_match': True, 'G_numpy_version_match': True, 'G_bridge_sha': True, 'G_bstack_official': True, 'G_bstack_file_sha': True, 'G_haar_orthogonal': True, 'G_haar_det': True, 'G_haar_ks_holm': True, 'G_haar_moments': True, 'G_real_basis_bridge': True, 'G_complex_path': True, 'G_quadrature_orthonormal': True, 'G_known_z_rotation': True, 'G_D_homomorphism': True, 'G_D_orthogonal': True, 'G_D_direct_geometry_complex_path': True, 'G_sqrt_reconstruction': True, 'G_moments_all': True, 'G_imhof_known_law_k5_all_quantiles': True, 'G_gilpelaez_known_law_k5_all_quantiles': True, 'G_imhof_known_law_k21_all_quantiles': True, 'G_gilpelaez_known_law_k21_all_quantiles': True, 'G_imhof_bstack_vs_mc': True, 'G_imhof_bstack_no_warnings': True, 'G_imhof_vs_gilpelaez_bstack': True, 'G_imhof_vs_saddlepoint_tails_rel5pct': True, 'G_imhof_psd': True, 'G_imhof_per_case_applicability': True, 'G_imhof_monotone_in_range': True}
+summary: max|z| moments = 2.0487 | Imhof-GP max = 1.292e-09 | max |z_imhof| = 1.6533 | LR max rel tail = 0.0479
+haar KS p: {'cos_theta': 0.534, 'phi': 0.417, 'left_QR_cos': 0.755, 'right_RQ_cos': 0.677, 'rotation_angle': 0.738}
+basis bridge maxdiff: 1.1e-16 | z-rotation: 1.1e-15 | rep: {'worst_homomorphism': '1.1e-15', 'worst_orthogonality': '1.2e-15', 'worst_direct_geometry': '4.9e-15'}
+  covariance  axis  z_E_Sp  z_E_Sm  z_Var_Sp  z_Var_Sm  z_Cov
+       fixed  1134   -0.01   -0.17     -0.21      0.54  -2.05
+       fixed   777   -0.25    0.66      0.13     -1.67  -0.70
+rotated_D(R)  1134    0.75   -0.76     -0.08     -0.15  -0.22
+rotated_D(R)   777   -0.26    0.63      0.27     -0.72  -1.04
+           case  quantile   P_ref  P_imhof  z_imhof  imhof_vs_gilpelaez  imhof_vs_saddle  imhof_warnings
+bstack_axis1134   0.00100 0.00100  0.00096 -1.28408             0.00000          0.00001               0
+bstack_axis1134   0.01000 0.01000  0.00985 -1.49302             0.00000          0.00008               0
+bstack_axis1134   0.05000 0.05000  0.04993 -0.30170             0.00000          0.00044               0
+bstack_axis1134   0.50000 0.50000  0.50015  0.30851             0.00000          0.00339               0
+bstack_axis1134   0.95000 0.95000  0.94984 -0.71498             0.00000          0.00145               0
+bstack_axis1134   0.99000 0.99000  0.99000 -0.04401             0.00000          0.00037               0
+bstack_axis1134   0.99900 0.99900  0.99900 -0.13065             0.00000          0.00004               0
+ bstack_axis777   0.00100 0.00100  0.00095 -1.65329             0.00000          0.00001               0
+ bstack_axis777   0.01000 0.01000  0.00987 -1.32988             0.00000          0.00009               0
+ bstack_axis777   0.05000 0.05000  0.04995 -0.23784             0.00000          0.00047               0
+ bstack_axis777   0.50000 0.50000  0.49995 -0.10871             0.00000          0.00428               0
+ bstack_axis777   0.95000 0.95000  0.94996 -0.18586             0.00000          0.00197               0
+ bstack_axis777   0.99000 0.99000  0.98995 -0.49064             0.00000          0.00048               0
+ bstack_axis777   0.99900 0.99900  0.99903  1.06948             0.00000          0.00004               0
+          case  quantile  abs_err_imhof  abs_err_gilpelaez  imhof_warnings
+        chi2_1  1.00e-03       1.00e-03           1.09e-04               1
+        chi2_1  1.00e-02       1.63e-06           1.44e-06               1
+        chi2_1  5.00e-02       5.60e-06           2.06e-08               1
+        chi2_1  5.00e-01       1.12e-05           5.05e-11               1
+        chi2_1  9.50e-01       3.85e-04           2.83e-10               1
+        chi2_1  9.90e-01       8.87e-04           3.72e-10               1
+        chi2_1  9.99e-01       5.94e-04           4.75e-10               1
+ scaled_chi2_5  1.00e-03       1.95e-09           4.34e-19               0
+ scaled_chi2_5  1.00e-02       1.17e-10           1.02e-16               0
+ scaled_chi2_5  5.00e-02       6.06e-11           2.08e-17               0
+ scaled_chi2_5  5.00e-01       1.60e-10           2.22e-16               0
+ scaled_chi2_5  9.50e-01       1.58e-08           0.00e+00               0
+ scaled_chi2_5  9.90e-01       8.80e-10           2.22e-16               0
+ scaled_chi2_5  9.99e-01       1.01e-10           1.11e-16               1
+scaled_chi2_21  1.00e-03       9.64e-14           2.77e-16               0
+scaled_chi2_21  1.00e-02       4.15e-13           3.42e-16               0
+scaled_chi2_21  5.00e-02       5.25e-13           1.46e-16               0
+scaled_chi2_21  5.00e-01       2.28e-13           5.55e-16               0
+scaled_chi2_21  9.50e-01       8.10e-11           2.22e-16               0
+scaled_chi2_21  9.90e-01       1.15e-12           1.11e-16               0
+scaled_chi2_21  9.99e-01       2.47e-10           0.00e+00               0

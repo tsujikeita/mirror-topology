@@ -1,0 +1,35 @@
+{
+ "schema": "freeze_manifest_v1",
+ "stage": "Step 1 Phase A-9 (rotation machinery and analytic batteries)",
+ "date": "2026-09-06T14:29:19.206166+00:00",
+ "git": {
+  "origin": "https://github.com/tsujikeita/mirror-topology",
+  "path": "results/step1_phaseA/A9_freeze/",
+  "archive_tag": "step1-phaseA-A9-v1.0",
+  "archive_commit": "resolved externally by archive_tag (git ls-remote ... refs/tags/<tag>^{})",
+  "dependency_commit": "ab19caaa9504bea6fd9870b97ad2bb88d69d820a",
+  "note": "the archive commit is not embedded to avoid self-reference; resolve it from the annotated tag"
+ },
+ "scripts": {
+  "build_freeze_manifest.py": "63d8fa8b6ddff08ea27c10d35aa0e840fde06f426f02e3d3509923d8bf3a9096",
+  "s1_phaseA9_v1.2.1.py": "2905c036a04a04e33672a07ba464d95ae6a669c8ea7b918f17a6813e864dde2c"
+ },
+ "reports": {
+  "Step1_PhaseA_A9_report_v1.2.1.md": "f2ee1242cb6b0f61f836bee69c5e50ab14d6e7d8e28c3a949a0756a8e447067f"
+ },
+ "outputs": {
+  "Console_Log_of_s1_phaseA9_v1.2.1_py.txt": "60d9bfcc685a94b518ac107d5f51e5853469b96fc6240d9814004fb02be17a20",
+  "a9_v1.2.1/a9_imhof_battery.csv": "766b9b627f8b5bff04878f2f1628518b60645f500be6440c486349f0c4a67121",
+  "a9_v1.2.1/a9_moment_battery.csv": "e3931047df65d9db9838fd920aba2abbd04516902a4f34629dbc09fbc22d69d7",
+  "a9_v1.2.1/a9_provenance.json": "09c03219f43ce69368c238ab61567c3e804a45302386485820b45534539d16ef"
+ },
+ "provenance_summary": {
+  "a9_v1.2.1/a9_provenance.json": {
+   "script": "s1_phaseA9_v1.2.1.py",
+   "script_sha256": "2905c036a04a04e33672a07ba464d95ae6a669c8ea7b918f17a6813e864dde2c",
+   "gates_all_true": true,
+   "n_gates": 30,
+   "OFFICIAL": true
+  }
+ }
+}
