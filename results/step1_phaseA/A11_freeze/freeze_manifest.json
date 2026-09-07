@@ -6,9 +6,11 @@
   "origin": "https://github.com/tsujikeita/mirror-topology",
   "path": "results/step1_phaseA/A11_freeze/",
   "archive_tag": "step1-phaseA-A11-freeze-v1.0",
-  "archive_commit": "resolved externally by archive_tag",
+  "archive_commit": "4f677675f367fece5315ded5b370e4b2845a1220",
   "notebook_commit": "104d5912e3571d5538fc02b54f0c4926a72f3732",
-  "dependency_commit": "efa23136e99be70814d17a4845bcdca0eac1bada"
+  "dependency_commit": "efa23136e99be70814d17a4845bcdca0eac1bada",
+  "archive_tag_object": "8d6ab22326f1de8a174e2c34c2273ea0b587b14a",
+  "note": "archive_commit resolved from the annotated tag via git ls-remote (peeled); manifest updated in a follow-up commit"
  },
  "notebook_source_only_sha256": "c1f3a362e4c68429eafe122e44014d1e4a34152bd362ad5c77e5db2cd8457346",
  "official": {
@@ -61,8 +63,9 @@
    "sha256": "381620f15a15e95dd56f014e95f0a4dcdb9ed5fe29af7b4f6dbf294090b96fd1"
   },
   "official/Console_log_of_official.txt": {
-   "size": 12883,
-   "sha256": "1fa46e556bce0f0eafeb92188e5b18418cb90df54e899def1f57be0b3db2e483"
+   "size": 12674,
+   "sha256": "3384ca686abbe01d9ac5b6a3cbe6e7e57d2c8c906bfcac0f1635c1140a47c51a",
+   "note": "LF-normalised by git on commit (was CRLF in the submitted zip; content identical)"
   },
   "official/a11_bridge_results.csv": {
    "size": 5472,
@@ -385,8 +388,9 @@
    "sha256": "e9d33948912e70236095b09c30bd3a58d82dd70eecc3ea25caee482125311295"
   },
   "smoke/Console_log_of_smoke.txt": {
-   "size": 6523,
-   "sha256": "17d6fc4caba07627032c17033eb92a4fea48fc59d4ff712dee573497a777f1ed"
+   "size": 6379,
+   "sha256": "31b8b80fbac4f313dab8a0fcc00ffaccb531a6f74b20b03fa001610a5e2bbf58",
+   "note": "LF-normalised by git on commit (was CRLF in the submitted zip; content identical)"
   },
   "smoke/a11_bridge_results.csv": {
    "size": 435,
