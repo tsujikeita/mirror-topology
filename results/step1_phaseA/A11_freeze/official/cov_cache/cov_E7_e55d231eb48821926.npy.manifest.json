@@ -1,0 +1,44 @@
+{
+ "tag": "E7_e55d231eb48821926fa5123a3ba95998a67afec7369e02f5ce3e2dc30211b96c",
+ "manifest": {
+  "topology": "E7",
+  "params": {
+   "LAx": 1.0,
+   "LAy": 0.3,
+   "L1y": 1.0,
+   "L2x": 0.0,
+   "L2z": 1.0
+  },
+  "x0": [
+   0.51,
+   0.21,
+   0.42
+  ],
+  "run_config": {
+   "l_max": 4,
+   "do_polarization": false,
+   "normalize": false,
+   "l_range": [
+    [
+     2,
+     4
+    ]
+   ],
+   "lp_range": [
+    [
+     2,
+     4
+    ]
+   ]
+  },
+  "cmbtopology_commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+  "requirements_sha256": "c8c985d01620f7b0d13cc6ab84b7f40f1024d9c3764c2bc6c3d566949e40b7b2",
+  "env_fingerprint": "9b706cd43d5b61657d385b52f03070aa4379ccd9f284cc39a1b3808e08a25012"
+ },
+ "cov_file_sha256": "016c64be6bd47e2bfabd1c95ebea6d1144e7ac52ba780429b39edb4e044d5797",
+ "cov_array_sha256": "06e46b1c3684804c84b14bf0e17c673d518eef8430e740b5f93f6650c7c1a095",
+ "source_run_dir": "E7_LAx_1.00_LAy_0.30_L1y_1.00_L2x_0.00_L2z_1.00_x_0.51_y_0.21_z_0.42_l_max_4",
+ "seconds": 396.8492956161499,
+ "reused_from": "a11_v1.3.1_official",
+ "parent_provenance_sha256": "381620f15a15e95dd56f014e95f0a4dcdb9ed5fe29af7b4f6dbf294090b96fd1"
+}

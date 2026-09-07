@@ -1,0 +1,700 @@
+{
+ "notebook": "Step1 Phase A-11 x0 bridge v1.4.1 [smoke]",
+ "status": "SMOKE_PASS",
+ "SMOKE_PASS": true,
+ "OFFICIAL": false,
+ "notebook_identity": {
+  "live": "72f31d9e1c6b08ded3f42baac6f5f46b4b8e34c75fd52b0fb8662b66458d70ca",
+  "origin_main_head": "104d5912e3571d5538fc02b54f0c4926a72f3732",
+  "head_copy": "c1f3a362e4c68429eafe122e44014d1e4a34152bd362ad5c77e5db2cd8457346"
+ },
+ "date": "2026-09-07",
+ "timestamp": "2026-09-07T13:15:04.760572+00:00",
+ "conclusion": "smoke (H1 only): H1 match",
+ "gates": {
+  "G_mt_commit": true,
+  "G_mt_origin": true,
+  "G_mt_clean_preimport": true,
+  "G_t1_engine_sha": true,
+  "G_bridge_sha": true,
+  "G_t2b2_run_sha": true,
+  "G_a6_artifact_sha": true,
+  "G_ct_commit": true,
+  "G_ct_origin": true,
+  "G_ct_clean_preimport_incl_untracked": true,
+  "G_ct_dependencies_present": true,
+  "G_live_import_paths": true,
+  "G_live_module_sha": true,
+  "G_live_dependency_versions": true,
+  "G_env_lock_candidate_complete": true,
+  "G_notebook_head_available": true,
+  "G_quadrature_orthonormal": true,
+  "G_real_basis_bridge": true,
+  "G_D_orthogonal_all_used": true,
+  "G_D_direct_geometry_complex_path": true,
+  "G_D_homomorphism": true,
+  "G_reflection_D_analytic": true,
+  "G_a6_ct_M_binding": true,
+  "G_a6_ct_T_binding": true,
+  "G_displacement_parallel_independent": true,
+  "G_displacement_perpendicular_independent": true,
+  "G_displacement_components_excited": true,
+  "G_predicate_A6_CT_binding": true,
+  "G_smoke_cache_reuse": true,
+  "G_unique_covariances": true,
+  "G_case_inventory": true,
+  "G_smoke_H1_match": true
+ },
+ "required_gates": [
+  "G_mt_commit",
+  "G_mt_origin",
+  "G_mt_clean_preimport",
+  "G_t1_engine_sha",
+  "G_bridge_sha",
+  "G_t2b2_run_sha",
+  "G_a6_artifact_sha",
+  "G_ct_commit",
+  "G_ct_origin",
+  "G_ct_clean_preimport_incl_untracked",
+  "G_ct_dependencies_present",
+  "G_live_import_paths",
+  "G_live_module_sha",
+  "G_live_dependency_versions",
+  "G_quadrature_orthonormal",
+  "G_real_basis_bridge",
+  "G_D_orthogonal_all_used",
+  "G_D_direct_geometry_complex_path",
+  "G_D_homomorphism",
+  "G_reflection_D_analytic",
+  "G_a6_ct_M_binding",
+  "G_a6_ct_T_binding",
+  "G_displacement_parallel_independent",
+  "G_displacement_perpendicular_independent",
+  "G_displacement_components_excited",
+  "G_predicate_A6_CT_binding",
+  "G_unique_covariances",
+  "G_case_inventory",
+  "G_env_lock_candidate_complete",
+  "G_notebook_head_available",
+  "G_smoke_cache_reuse",
+  "G_smoke_H1_match"
+ ],
+ "gate_inventory_exact": true,
+ "tolerances": {
+  "match": 1e-05,
+  "discriminate": 0.01
+ },
+ "run_config": {
+  "l_max": 4,
+  "do_polarization": false,
+  "normalize": false,
+  "l_range": [
+   [
+    2,
+    4
+   ]
+  ],
+  "lp_range": [
+   [
+    2,
+    4
+   ]
+  ]
+ },
+ "environment": {
+  "python": "3.13.15",
+  "metadata_versions": {
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "matplotlib": "3.10.0",
+   "healpy": "1.20.0",
+   "camb": "2.0.4",
+   "tqdm": "4.67.3",
+   "numba": "0.61.2",
+   "quaternionic": "1.0.17",
+   "spherical": "1.1.4",
+   "pandas": "2.2.3"
+  },
+  "live_versions": {
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "matplotlib": "3.10.0",
+   "healpy": "1.20.0",
+   "camb": "2.0.4",
+   "tqdm": "4.67.3",
+   "numba": "0.61.2",
+   "quaternionic": "1.0.17",
+   "spherical": "1.1.4",
+   "pandas": "2.2.3"
+  },
+  "requirements_sha256": "c8c985d01620f7b0d13cc6ab84b7f40f1024d9c3764c2bc6c3d566949e40b7b2",
+  "platform": {
+   "machine": "x86_64",
+   "platform": "Linux-6.6.122+-x86_64-with-glibc2.35"
+  },
+  "blas_lapack": "{'blas': 'scipy-openblas', 'lapack': 'scipy-openblas'}",
+  "fingerprint": "9b706cd43d5b61657d385b52f03070aa4379ccd9f284cc39a1b3808e08a25012",
+  "full_pip_freeze_diagnostic_sha256": "3c68707373363664fef8302ffad9c1fc3a1b79a76cca8110355a8c5d2de4e7af",
+  "lock_path": "/content/drive/MyDrive/mirror_topology/runs_step1_phaseA/a11_env_lock.json",
+  "lock_sha256": null
+ },
+ "repos": {
+  "mirror_topology": {
+   "commit": "efa23136e99be70814d17a4845bcdca0eac1bada",
+   "head": "efa23136e99be70814d17a4845bcdca0eac1bada",
+   "origin": "https://github.com/tsujikeita/mirror-topology.git",
+   "clean": true,
+   "canonical": "https://github.com/tsujikeita/mirror-topology"
+  },
+  "cmbtopology": {
+   "commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+   "source_sha": {
+    "E2.py": "ea13ff16e8a9072c8d6fa2c8a3e64f1b56ef7f6fbe1db2250fd5475b1a703776",
+    "E7.py": "34cb0b19b32cca8ef5db4d96f5df9d977517d8eadef9bb6d95c90e687753d84d",
+    "E8.py": "3979deca5f06734882cd767c055f89d7dc10d6e89393b5537b9ad963dff76f5d",
+    "run_topology.py": "2431b905fbe82ac6f2badab1263a4e2c6a238d1a25e2e3062b9ce83dc655d45f"
+   },
+   "head": "0cc65e34f03df85e92f738686bff0a476132f337",
+   "origin": "https://github.com/CompactCollaboration/CMBtopology.git",
+   "clean": true,
+   "canonical": "https://github.com/CompactCollaboration/CMBtopology"
+  }
+ },
+ "frozen_sha": {
+  "t1_engine": "87bf8424073af021264b12fe312ab5255b71008bdd5fe874d164d48daf034dc8",
+  "bridge": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872",
+  "run": "03c80f2136a8ff7ffb1077749895811ef95dd9d779c7996891d89e75545ff8db",
+  "a6_script": "661ed0b01f35853263d9374f56960dd8f87d7bdf68070f2493d5576e702e2b2e"
+ },
+ "git_calls": [
+  {
+   "cmd": [
+    "git",
+    "clone",
+    "https://github.com/tsujikeita/mirror-topology.git",
+    "/content/mt_a11"
+   ],
+   "stderr": "Cloning into '/content/mt_a11'..."
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a11",
+    "rev-parse",
+    "--is-shallow-repository"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a11",
+    "fetch",
+    "-q",
+    "origin",
+    "efa23136e99be70814d17a4845bcdca0eac1bada"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a11",
+    "reset",
+    "-q",
+    "--hard",
+    "efa23136e99be70814d17a4845bcdca0eac1bada"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a11",
+    "clean",
+    "-fdx",
+    "-q"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a11",
+    "rev-parse",
+    "HEAD"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a11",
+    "remote",
+    "get-url",
+    "origin"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a11",
+    "status",
+    "--porcelain"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "clone",
+    "https://github.com/CompactCollaboration/CMBtopology.git",
+    "/content/CMBtopology_pinned"
+   ],
+   "stderr": "Cloning into '/content/CMBtopology_pinned'..."
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBtopology_pinned",
+    "rev-parse",
+    "--is-shallow-repository"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBtopology_pinned",
+    "fetch",
+    "-q",
+    "origin",
+    "0cc65e34f03df85e92f738686bff0a476132f337"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBtopology_pinned",
+    "reset",
+    "-q",
+    "--hard",
+    "0cc65e34f03df85e92f738686bff0a476132f337"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBtopology_pinned",
+    "clean",
+    "-fdx",
+    "-q"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBtopology_pinned",
+    "rev-parse",
+    "HEAD"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBtopology_pinned",
+    "remote",
+    "get-url",
+    "origin"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBtopology_pinned",
+    "status",
+    "--porcelain"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a11",
+    "fetch",
+    "-q",
+    "origin",
+    "main"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a11",
+    "rev-parse",
+    "origin/main"
+   ],
+   "stderr": ""
+  }
+ ],
+ "diagnostics": {
+  "notebook": {
+   "live": "72f31d9e1c6b08ded3f42baac6f5f46b4b8e34c75fd52b0fb8662b66458d70ca",
+   "origin_main_head": "104d5912e3571d5538fc02b54f0c4926a72f3732",
+   "head_copy": "c1f3a362e4c68429eafe122e44014d1e4a34152bd362ad5c77e5db2cd8457346"
+  },
+  "representation": {
+   "worst_orthogonality": 2.220446049250313e-15,
+   "worst_direct_geometry": 2.005631759395652e-15,
+   "worst_homomorphism": 1.1102230246251565e-15,
+   "quadrature_nodes_sha256": "b53296ec7b42ec928bd64ecd1c4f3eb382ba90b3e354ee3bde5299662bdbbf41",
+   "quadrature_weights_sha256": "fdf0626ca95bb4b582ed9ba321a55e7fe1cb024b6142517fc51960836fdc0771",
+   "M21_sha256": "c488cc7070a2d391e8ceeea08c87643d1f1552515990fb135652c4599c6101e8",
+   "LM_sha256": "4d5f9471cc92c9fc76d27237fbe0bf43acb0aec3c30fccd78b7ea9cb5c4a153c",
+   "RB_sha256": "e278e7ec89765483c31b205325035f47fc57f9a3951c0feb34934a9e5b4aa10b"
+  }
+ },
+ "cases": [
+  {
+   "case": "E7_b1_A",
+   "topology": "E7",
+   "shape": {
+    "LAx": 1.0,
+    "LAy": 0.3,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "base": [
+    0.31,
+    0.21,
+    0.42
+   ],
+   "gen": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.3,
+    0.0
+   ],
+   "lattice": [
+    [
+     2.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "structurally_forced_same": false,
+   "structurally_forced_same_CT": false,
+   "candidate_for_discrimination": true,
+   "old_predicate_2T_in_Lambda_SUPERSEDED_DIAGNOSTIC": false,
+   "x0_H1": [
+    -0.69,
+    -0.51,
+    0.42
+   ],
+   "x0_H2": [
+    1.31,
+    0.09,
+    0.42
+   ],
+   "dpar_err": 0.0,
+   "dperp_err": 0.0,
+   "dpar_norm": 1.0,
+   "dperp_norm": 0.72
+  }
+ ],
+ "invariance": [],
+ "expected_inventory": {
+  "candidates": [
+   "E7_b1_A"
+  ],
+  "forced_same": [],
+  "lat_cases": [],
+  "kernel_cases": [],
+  "ctrl": [],
+  "half_period": [],
+  "n_rows": 1,
+  "n_unique_cov": 3
+ },
+ "covariance_intake_meta": {
+  "E7_99337bfd75deea5fe22932dcdb6caac12130913528ed83f83574e88f8a344bd6": {
+   "cache": {
+    "tag": "E7_99337bfd75deea5fe22932dcdb6caac12130913528ed83f83574e88f8a344bd6",
+    "manifest": {
+     "topology": "E7",
+     "params": {
+      "LAx": 1.0,
+      "LAy": 0.3,
+      "L1y": 1.0,
+      "L2x": 0.0,
+      "L2z": 1.0
+     },
+     "x0": [
+      0.31,
+      0.21,
+      0.42
+     ],
+     "run_config": {
+      "l_max": 4,
+      "do_polarization": false,
+      "normalize": false,
+      "l_range": [
+       [
+        2,
+        4
+       ]
+      ],
+      "lp_range": [
+       [
+        2,
+        4
+       ]
+      ]
+     },
+     "cmbtopology_commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+     "requirements_sha256": "c8c985d01620f7b0d13cc6ab84b7f40f1024d9c3764c2bc6c3d566949e40b7b2",
+     "env_fingerprint": "9b706cd43d5b61657d385b52f03070aa4379ccd9f284cc39a1b3808e08a25012"
+    },
+    "cov_file_sha256": "27e2bb589722526a40ddeca1b738f6c58edb1c8efd39672b0f7080d8de133308",
+    "cov_array_sha256": "edde23c57816e55c5be499b69665488975e935c4db8b25fad8fd6e63aa929dac",
+    "source_run_dir": "E7_LAx_1.00_LAy_0.30_L1y_1.00_L2x_0.00_L2z_1.00_x_0.31_y_0.21_z_0.42_l_max_4",
+    "seconds": 469.40416049957275
+   },
+   "intake": {
+    "symmetry": {
+     "herm_raw": 8.93454366223601e-09,
+     "reality_raw": 4.341387751046046e-08,
+     "herm_post": 0.0,
+     "reality_post": 0.0,
+     "correction_max_rel": 2.170693875523023e-08,
+     "correction_fro_rel": 1.5812473663098513e-08
+    },
+    "quadratic_mean_identity": 3.639299677360384e-17,
+    "twopoint": 4.75707701489073e-16,
+    "eig": {
+     "lambda_min_raw": 117.82457480687012,
+     "lambda_max": 992.793400726684,
+     "lambda_clip_max": 0.0,
+     "effective_rank": 21
+    },
+    "real_transform": {
+     "imag_rel": 5.1409691134552795e-17,
+     "asym_rel": 0.0,
+     "ok": true
+    },
+    "cov_file_sha256": "27e2bb589722526a40ddeca1b738f6c58edb1c8efd39672b0f7080d8de133308",
+    "cov_array_sha256": "edde23c57816e55c5be499b69665488975e935c4db8b25fad8fd6e63aa929dac",
+    "cov_projected_array_sha256": "cea5fc627c7c779cd5c85059a0c490487afc1b3e3a9c8dbb7caf5fb598851113",
+    "real_cov_projected_sha256": "a370c95ea522bf2937218e596bd040721b69ae4c8b8f76fceb13c5418ed8a93f"
+   }
+  },
+  "E7_c85280fc4644c8adce6fc6dafcbf5ada7f30f0caf643d47ccea75e30d86afc91": {
+   "cache": {
+    "tag": "E7_c85280fc4644c8adce6fc6dafcbf5ada7f30f0caf643d47ccea75e30d86afc91",
+    "manifest": {
+     "topology": "E7",
+     "params": {
+      "LAx": 1.0,
+      "LAy": 0.3,
+      "L1y": 1.0,
+      "L2x": 0.0,
+      "L2z": 1.0
+     },
+     "x0": [
+      -0.69,
+      -0.51,
+      0.42
+     ],
+     "run_config": {
+      "l_max": 4,
+      "do_polarization": false,
+      "normalize": false,
+      "l_range": [
+       [
+        2,
+        4
+       ]
+      ],
+      "lp_range": [
+       [
+        2,
+        4
+       ]
+      ]
+     },
+     "cmbtopology_commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+     "requirements_sha256": "c8c985d01620f7b0d13cc6ab84b7f40f1024d9c3764c2bc6c3d566949e40b7b2",
+     "env_fingerprint": "9b706cd43d5b61657d385b52f03070aa4379ccd9f284cc39a1b3808e08a25012"
+    },
+    "cov_file_sha256": "59aba217df2ec2e2223029a0647f7399190b94a5c6790e099162c7a2e407edf0",
+    "cov_array_sha256": "99b94548b29de6127d8081dec665ef4473a30005521087dc15ebfc4e5ba39083",
+    "source_run_dir": "E7_LAx_1.00_LAy_0.30_L1y_1.00_L2x_0.00_L2z_1.00_x_-0.69_y_-0.51_z_0.42_l_max_4",
+    "seconds": 430.1287636756897
+   },
+   "intake": {
+    "symmetry": {
+     "herm_raw": 8.934543680460462e-09,
+     "reality_raw": 4.3413877528720955e-08,
+     "herm_post": 0.0,
+     "reality_post": 0.0,
+     "correction_max_rel": 2.1706938764360477e-08,
+     "correction_fro_rel": 1.581247366674572e-08
+    },
+    "quadratic_mean_identity": 9.098249193401067e-18,
+    "twopoint": 3.1713846765938613e-16,
+    "eig": {
+     "lambda_min_raw": 117.82457480686938,
+     "lambda_max": 992.7934007266767,
+     "lambda_clip_max": 0.0,
+     "effective_rank": 21
+    },
+    "real_transform": {
+     "imag_rel": 3.745086026764022e-17,
+     "asym_rel": 0.0,
+     "ok": true
+    },
+    "cov_file_sha256": "59aba217df2ec2e2223029a0647f7399190b94a5c6790e099162c7a2e407edf0",
+    "cov_array_sha256": "99b94548b29de6127d8081dec665ef4473a30005521087dc15ebfc4e5ba39083",
+    "cov_projected_array_sha256": "f5368458c67a3d15553398c24dc2a24a01a8083fddfbcace24e9009e6d1a3937",
+    "real_cov_projected_sha256": "b2f24a3ba9667bac33919a245b2eb09d5c30fa312fab777e58406cf26e1b7d5f"
+   }
+  },
+  "E2_594095bcb3445a26442e2b4c280a36f1156d15640bf7b13600dee79754367795": {
+   "cache": {
+    "tag": "E2_594095bcb3445a26442e2b4c280a36f1156d15640bf7b13600dee79754367795",
+    "manifest": {
+     "topology": "E2",
+     "params": {
+      "Lx": 1.0,
+      "Ly": 1.0,
+      "Lz": 1.0,
+      "alpha": 90.0,
+      "beta": 90.0,
+      "gamma": 0.0
+     },
+     "x0": [
+      0.31,
+      0.21,
+      0.42
+     ],
+     "run_config": {
+      "l_max": 4,
+      "do_polarization": false,
+      "normalize": false,
+      "l_range": [
+       [
+        2,
+        4
+       ]
+      ],
+      "lp_range": [
+       [
+        2,
+        4
+       ]
+      ]
+     },
+     "cmbtopology_commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+     "requirements_sha256": "c8c985d01620f7b0d13cc6ab84b7f40f1024d9c3764c2bc6c3d566949e40b7b2",
+     "env_fingerprint": "9b706cd43d5b61657d385b52f03070aa4379ccd9f284cc39a1b3808e08a25012"
+    },
+    "cov_file_sha256": "ae25862ac33d525b9068b2766c2e76c0e177ec71151ae7674b4b1f11c62eacf1",
+    "cov_array_sha256": "7897078ff0b71abcd152dd9ae2d81fa69c3d90da1a71501e160e0d36a38590c7",
+    "source_run_dir": "E2_Lx_1.00_Ly_1.00_Lz_1.00_beta_90_alpha_90_gamma_0_x_0.31_y_0.21_z_0.42_l_max_4_accuracy_99_percent",
+    "seconds": 433.0081205368042
+   },
+   "intake": {
+    "symmetry": {
+     "herm_raw": 1.6224364145109102e-08,
+     "reality_raw": 1.9847977313804713e-08,
+     "herm_post": 0.0,
+     "reality_post": 0.0,
+     "correction_max_rel": 1.1113024056450192e-08,
+     "correction_fro_rel": 1.7292616612721477e-08
+    },
+    "quadratic_mean_identity": 2.9228878301863774e-18,
+    "twopoint": 2.0242983468938146e-16,
+    "eig": {
+     "lambda_min_raw": 117.52584528598501,
+     "lambda_max": 1231.360839925775,
+     "lambda_clip_max": 0.0,
+     "effective_rank": 21
+    },
+    "real_transform": {
+     "imag_rel": 4.906877421721646e-17,
+     "asym_rel": 0.0,
+     "ok": true
+    },
+    "cov_file_sha256": "ae25862ac33d525b9068b2766c2e76c0e177ec71151ae7674b4b1f11c62eacf1",
+    "cov_array_sha256": "7897078ff0b71abcd152dd9ae2d81fa69c3d90da1a71501e160e0d36a38590c7",
+    "cov_projected_array_sha256": "5dc60f5b2e85b771c250714bb52068b46a7c164fc2de8564acbc0e06935b6e64",
+    "real_cov_projected_sha256": "77e94e683e2e2aff895fa07d801a0d235b6400aa218e27f0e5f135585c7ca950"
+   }
+  }
+ },
+ "reused_from_parent": {
+  "parent": "a11_v1.3.1_official",
+  "parent_sha": {
+   "provenance": "381620f15a15e95dd56f014e95f0a4dcdb9ed5fe29af7b4f6dbf294090b96fd1",
+   "csv": "1095b5d8ee8c63e2f4ea21924625e4da5412f5a3af20b6ed88379fd1e058a754"
+  },
+  "tags": []
+ },
+ "prospective_predictions": {
+  "A": "E7_b1_y_half_period: rel < 1e-5",
+  "B": "E7tilt3_b1_A (LAy=0.30, L2x=0.5): rel_H1 < 1e-5, rel_H2 > 1e-2, rel_H1_vs_H2 > 1e-2"
+ },
+ "outputs": {
+  "results_csv_sha256": "318e1e54f3482613fc7e142d77467381c113ca191c3fc40038c3e6dd064bec24"
+ }
+}

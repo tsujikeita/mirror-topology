@@ -1,0 +1,45 @@
+{
+ "tag": "E2_084bd5cf73c9b4f1d0d98f749b372581c1c1edb70f368945d832c373bbb3bc9b",
+ "manifest": {
+  "topology": "E2",
+  "params": {
+   "Lx": 1.0,
+   "Ly": 1.0,
+   "Lz": 1.0,
+   "alpha": 90.0,
+   "beta": 90.0,
+   "gamma": 0.0
+  },
+  "x0": [
+   1.31,
+   0.21,
+   0.42
+  ],
+  "run_config": {
+   "l_max": 4,
+   "do_polarization": false,
+   "normalize": false,
+   "l_range": [
+    [
+     2,
+     4
+    ]
+   ],
+   "lp_range": [
+    [
+     2,
+     4
+    ]
+   ]
+  },
+  "cmbtopology_commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+  "requirements_sha256": "c8c985d01620f7b0d13cc6ab84b7f40f1024d9c3764c2bc6c3d566949e40b7b2",
+  "env_fingerprint": "9b706cd43d5b61657d385b52f03070aa4379ccd9f284cc39a1b3808e08a25012"
+ },
+ "cov_file_sha256": "4ec4c346c9ccc6add7a7fb92f95206eaac68bac3704001d0057d18e08eccfd3f",
+ "cov_array_sha256": "59608d7363b07b86a0fd0d2ef3ec68052bc3a1a34275a14bbe7d856b5f9d50f7",
+ "source_run_dir": "E2_Lx_1.00_Ly_1.00_Lz_1.00_beta_90_alpha_90_gamma_0_x_1.31_y_0.21_z_0.42_l_max_4_accuracy_99_percent",
+ "seconds": 399.2255780696869,
+ "reused_from": "a11_v1.3.1_official",
+ "parent_provenance_sha256": "381620f15a15e95dd56f014e95f0a4dcdb9ed5fe29af7b4f6dbf294090b96fd1"
+}

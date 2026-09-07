@@ -1,0 +1,144 @@
+■1番目のセル-------------------------------------------------------
+Mounted at /content/drive
+mode=smoke / mirror-topology @ efa23136e99b / CMBtopology @ 0cc65e34f03d / env fingerprint 9b706cd43d5b
+live versions: {'numpy': '2.1.3', 'scipy': '1.16.3', 'matplotlib': '3.10.0', 'healpy': '1.20.0', 'camb': '2.0.4', 'tqdm': '4.67.3', 'numba': '0.61.2', 'quaternionic': '1.0.17', 'spherical': '1.1.4', 'pandas': '2.2.3'}
+notebook: {'live': '72f31d9e1c6b08ded3f42baac6f5f46b4b8e34c75fd52b0fb8662b66458d70ca', 'origin_main_head': '104d5912e3571d5538fc02b54f0c4926a72f3732', 'head_copy': 'c1f3a362e4c68429eafe122e44014d1e4a34152bd362ad5c77e5db2cd8457346'}
+
+
+■2番目のセル-------------------------------------------------------
+D(M) gates OK
+
+
+■3番目のセル-------------------------------------------------------
+binding: M 0.0e+00 T 6.1e-17 | displacement gates: True True
+  E7_b1_A       forced_same=False (old 2T-in-Lambda=False) x0_H1=[-0.69, -0.51, 0.42] x0_H2=[1.31, 0.09, 0.42]
+
+
+■4番目のセル-------------------------------------------------------
+Running - E7 l_max=4_LAx_27649_LAy_8294_L1y_27649_L2x_0_L2z_27649_x_0.31_y_0.21_z_0.42
+Running {'topology': 'E7', 'LAx': 1.0, 'LAy': 0.3, 'L1y': 1.0, 'L2x': 0.0, 'L2z': 1.0, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([0.31, 0.21, 0.42]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_0.30_L1y_1.00_L2x_0.00_L2z_1.00_x_0.31_y_0.21_z_0.42_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 26.25it/s]Done. k_max for ell_max = 0.007927293774573584
+
+Eigenmode 1: 3672
+Eigenmode 2: 177494
+E7 Final num of elements: 177494 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 3.0589852333068848 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.22173707280246094
+Ratio of unique |k|: 0.012569438966950995
+Time to get unique k and theta: 0.03657102584838867 seconds
+
+Getting transfer functions
+100%|██████████| 2231/2231 [00:00<00:00, 8593.75it/s]
+Size of transfer function: 0.09 MB. 
+
+
+Getting spherical harmonics
+100%|██████████| 39357/39357 [00:19<00:00, 2051.38it/s]
+The spherical harmonics array is 2.25 MB 
+
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 463.53 seconds
+
+Calculating covariance matrix
+Size of integrand: 0.43 MB
+Time to get Correlation functions: 0:0:3
+  generated E7_99337bfd75deea5fe (469s)
+Running - E7 l_max=4_LAx_27649_LAy_8294_L1y_27649_L2x_0_L2z_27649_x_-0.69_y_-0.51_z_0.42
+Running {'topology': 'E7', 'LAx': 1.0, 'LAy': 0.3, 'L1y': 1.0, 'L2x': 0.0, 'L2z': 1.0, 'do_polarization': False, 'c_l_accuracy': 0.99, 'x0': array([-0.69, -0.51,  0.42]), 'l_max': 4, 'l_min': 2}
+Making run folder: runs/E7_LAx_1.00_LAy_0.30_L1y_1.00_L2x_0.00_L2z_1.00_x_-0.69_y_-0.51_z_0.42_l_max_4/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 34.66it/s]Done. k_max for ell_max = 0.007927293774573584
+Eigenmode 1: 3672
+
+Eigenmode 2: 177494
+E7 Final num of elements: 177494 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 70
+Time to get list of k, phi, theta: 0.17383050918579102 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.22173707280246094
+Ratio of unique |k|: 0.012569438966950995
+Time to get unique k and theta: 0.030271530151367188 seconds
+
+Getting transfer functions
+100%|██████████| 2231/2231 [00:00<00:00, 12932.75it/s]
+Size of transfer function: 0.09 MB. 
+
+
+Getting spherical harmonics
+100%|██████████| 39357/39357 [00:08<00:00, 4660.42it/s]
+The spherical harmonics array is 2.25 MB 
+
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 425.68 seconds
+
+Calculating covariance matrix
+Size of integrand: 0.43 MB
+Time to get Correlation functions: 0:0:3
+  generated E7_c85280fc4644c8adc (430s)
+No shift: False
+Running {'topology': 'E2', 'Lx': 1.0, 'Ly': 1.0, 'Lz': 1.0, 'x0': array([0.31, 0.21, 0.42]), 'beta': 90.0, 'alpha': 90.0, 'gamma': 0.0, 'c_l_accuracy': 0.99, 'l_max': 4, 'do_polarization': False, 'l_min': 2}
+Making run folder: runs/E2_Lx_1.00_Ly_1.00_Lz_1.00_beta_90_alpha_90_gamma_0_x_0.31_y_0.21_z_0.42_l_max_4_accuracy_99_percent/
+Shape of transfer function from CAMB: (3, 203, 8363)
+
+Finding k_max as a function of ell
+100%|██████████| 3/3 [00:00<00:00, 30.47it/s]Done. k_max for ell_max = 0.007927293774573584
+
+Eigenmode 1: 68
+Eigenmode 2: 177632
+E2 Final num of elements: 177632 Minimum k_amp 0.0002272416186438812 n_x_max 70 n_z_max 140
+Size of tilde xi: 5.42 MB.
+Shape tilde xi: (177632, 2) 
+
+Time to get list of k, phi, theta: 1.3104548454284668 seconds
+Getting repeated theta and k elements
+Ratio of unique theta: 0.16816226805980905
+Ratio of unique |k|: 0.012559673932624752
+Time to get unique k and theta: 0.023841142654418945 seconds
+
+Getting transfer functions
+100%|██████████| 2231/2231 [00:00<00:00, 12814.94it/s]
+Size of transfer function: 0.09 MB. 
+
+
+Getting spherical harmonics
+100%|██████████| 29871/29871 [00:06<00:00, 4377.01it/s]
+The spherical harmonics array is 1.71 MB 
+
+
+**************
+Done with all preprocessing
+**************
+Time to pre-process with l_max=4 and accuracy=0.99: 428.36 seconds
+
+Calculating covariance matrix
+Size of integrand: 0.43 MB
+Time to get Correlation functions: 0:0:3
+  generated E2_594095bcb3445a264 (433s)
+共分散 3 個（期待 3）(22.2 min)
+
+
+■5番目のセル-------------------------------------------------------
+   case     gen  structurally_forced_same   rel_H1  rel_H2  rel_H1_vs_H2  white_H1  H1_match  H2_match empirically_discriminating
+E7_b1_A glide_A                     False 7.99e-08     NaN           NaN  8.55e-08      True     False                       None
+
+判定: smoke (H1 only): H1 match
+
+
+■6番目のセル-------------------------------------------------------
+[smoke] environment lock written: /content/drive/MyDrive/mirror_topology/runs_step1_phaseA/a11_env_lock.json
+STATUS = SMOKE_PASS / 判定: smoke (H1 only): H1 match / saved: /content/drive/MyDrive/mirror_topology/runs_step1_phaseA/a11_v1.4.1_smoke
+
+
+
