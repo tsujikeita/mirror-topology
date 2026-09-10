@@ -1,0 +1,311 @@
+{
+ "schema": "freeze_manifest_v2",
+ "stage": "Step 1 Phase A-8 (A8a v1.1.2 feature stack + A8b v1.1.8 scan benchmark) — official",
+ "date": "2026-09-10T15:50:40.390092+00:00",
+ "git": {
+  "origin": "https://github.com/tsujikeita/mirror-topology",
+  "path": "results/step1_phaseA/A8_freeze/",
+  "archive_tag": "step1-phaseA-A8-freeze-v1.0",
+  "archive_commit": "resolved externally from the annotated tag: git ls-remote origin refs/tags/step1-phaseA-A8-freeze-v1.0^{}",
+  "notebook_commits": {
+   "a8a_v1_1_2": "7b561642e3a69cae8acd380ec4c3e4684794156d",
+   "a8b_v1_1_8": "856c3c84084d0951e423efa9f4f7b96fba284ba9"
+  },
+  "dependency_commit": "5ad38e12c4d769f3ddbfb95b2cff18d959bfc0e7",
+  "note": "archive commit not embedded (self-reference); resolve from the tag"
+ },
+ "notebook_source_only_sha256": {
+  "a8a_v1_1_2": "7fe775f970c3485add5f7181a2f32e681af1feb369e8181168cb67b418d0285d",
+  "a8b_v1_1_8": "e2b33af9da22079f47012587441c7db163735989c9b5d6ccbde6ad2978b3f0df"
+ },
+ "child_script_sha256": {
+  "cpu": "4cfd7c0976ba77e23d69d8a188a8fcc49269312be996544affcf5a0c0dac8561",
+  "gpu": "12020228ddc6737970559369786833a7de10939deba84acc53920396c9e48a42"
+ },
+ "a8a": {
+  "status": "FEATURESTACK_VALID",
+  "n_required_gates": 49,
+  "gates_all_true": true,
+  "flags": {
+   "float32_eligible_for_event_outputs": true,
+   "float32_eligible_for_axis_outputs": true,
+   "float32_eligible_for_rules": true
+  },
+  "F16_sha256": {
+   "F16_float64_array": "4feac2669642c895e9c1391867b8d0dccd85a0abf3f04fec074ae8ab5af345f6",
+   "F16_float32_array": "a0281b4fec848623c14b2bef7d0689da6a07083bcb0d8c553075ef0d2094dd9a",
+   "F16_float64_file": "aca84c5f39e4b35eccfc01c328874fdef053a09084fe689efa0d4e7b2d0728f1",
+   "F16_float32_file": "9e433de0742c495068facea43509da1104567ecf9b27c8804c96f86c343ec8a9",
+   "iu0": "29fcc71fca28e2f4a8356c429b854202fb378ade745f5ec87a29e884e43d29d3",
+   "iu1": "d0d9034249be6a21037f3ca4a3d8084037d6e52055d15259da6ea216bb154e2b",
+   "basis_lm": "c07384a63f9f1ae6b4c1373a9b9d20476a098ab6a578574912cbd9af8b0c8521",
+   "axis_pixel_ids": "08da22ccc26914d8f29ed6fd54fc388b6b80be608c7e1f90e8b37ea65628cca2"
+  },
+  "F16_in_git": false,
+  "env_lock_sha256": "f62ec9354bdb78c68550ef3ee46c7481f899ddac1ffdb9935a6a2669ae4a127d",
+  "smoke": {
+   "status": "SMOKE_PASS",
+   "n_required_gates": 47
+  }
+ },
+ "a8b": {
+  "status": "BENCHMARK_VALID",
+  "n_required_gates": 35,
+  "gates_all_true": true,
+  "smoke": {
+   "status": "SMOKE_PASS",
+   "n_required_gates": 35
+  },
+  "environment": {
+   "cpu": "Intel(R) Xeon(R) CPU @ 2.20GHz",
+   "threads": 2,
+   "gpu": "none",
+   "python": "3.13.15",
+   "numpy": "2.1.3"
+  },
+  "route_decision": {
+   "l24": {
+    "route": "l24_feature231",
+    "selection_dtype": "float32",
+    "evaluation_dtype": "float64",
+    "sample_chunk": 20000,
+    "threads": 2,
+    "measured_N": 1000000,
+    "minutes_per_1e6": 0.6551323329832788,
+    "peak_increment_GB": 0.33275904
+   },
+   "s2": {
+    "route": "s2_feature",
+    "selection_dtype": "float32",
+    "evaluation_dtype": "float64",
+    "sample_chunk": 1024,
+    "axis_block": 3072,
+    "threads": 2,
+    "measured_N": 200000,
+    "minutes_per_1e6": 83.083739100417,
+    "measured_or_extrapolated_1e6": "extrapolated_from_200000",
+    "peak_increment_GB": 1.020473344
+   },
+   "s2_production_device": "cpu",
+   "gpu_status": "unavailable"
+  },
+  "selection_reproducibility_measured": {
+   "float64_raw_argmin_exact": true,
+   "float32_flip_occurrences_across_chunk_comparisons": 3995,
+   "float32_unique_flipped_samples_by_route": {
+    "l24_feature231/float32": 141,
+    "s2_feature/float32": 1381,
+    "l24_direct_einsum/float32": 156
+   },
+   "float32_all_flips_antipodal": true,
+   "float32_max_selection_score_rel": 2.1162662573337444e-06,
+   "float32_max_T1_rel": 0.0,
+   "float32_max_T2_rel": 0.0,
+   "eventB_identical_all": true,
+   "float32_selection_present": true,
+   "eventB_indicator_nondegenerate_in_audit": {
+    "l24_feature231/float32": false,
+    "l24_feature231/float64": false,
+    "l24_direct_einsum/float64": false,
+    "s2_feature/float32": false,
+    "s2_feature/float64": false,
+    "l24_diagnostic_full_Spm/float64": false,
+    "l24_direct_einsum/float32": false
+   }
+  },
+  "timeouts": [
+   "s2_feature/float64/winner/N=200000/chunk=1024/axis_block=3072 (classified timeout, TIMEOUT=3600 s)"
+  ],
+  "amendment": {
+   "parent_failed_smoke": "a8b/v1.1.5_smoke_FAILED/ (kept)",
+   "parent_provenance_sha256": "ad92387f5bd9cdcd7e6a393688704503660539d1abdb44d7962be4398a418a40",
+   "report": "A8b_amendment_v1.1.7.md",
+   "report_sha256": "950bea6c479c9a786158db530f0242cc659e507b25bbdbaad8f67e5839d7c68b",
+   "withdrawn_version": "v1.1.6 (never run)",
+   "new_gate_semantics": "selected-output equivalence: float64 raw argmin exact; float32 axis may differ only to the exact antipodal partner (same unoriented plane) at raw margin < selection tol; selection score (sel tol), float64 T1/T2 (TOL_EVAL) and Event B indicator must agree; one shared predicate for every comparison"
+  }
+ },
+ "cross_checks": {
+  "a8a_official_status": true,
+  "a8a_smoke_status": true,
+  "a8a_official_manifest_file_sha": true,
+  "a8a_official_validation_csv_sha": true,
+  "a8a_smoke_validation_csv_sha": true,
+  "a8a_env_lock_sha": true,
+  "a8a_smoke_chain_sha": true,
+  "a8a_notebook_source_only_sha": true,
+  "F16_external_note_lists_recorded_shas": true,
+  "a8b_official_status": true,
+  "a8b_smoke_status": true,
+  "a8b_parent_failed_status": true,
+  "a8b_smoke_outputs_sha": true,
+  "a8b_smoke_inputs_a8a_provenance_sha": true,
+  "a8b_smoke_F16_expected_sha": true,
+  "a8b_smoke_amendment_binding": true,
+  "a8b_official_outputs_sha": true,
+  "a8b_official_inputs_a8a_provenance_sha": true,
+  "a8b_official_F16_expected_sha": true,
+  "a8b_official_amendment_binding": true,
+  "a8b_parent_outputs_sha": true,
+  "a8b_notebook_source_only_sha": true,
+  "a8b_smoke_official_same_child_sha": true,
+  "received_list_matches_archived_non_log_files": true
+ },
+ "optional_missing": [
+  "a8a/smoke/Console_log_of_smoke_A8a_featurestack_v1.1.2.txt"
+ ],
+ "files": {
+  "A8_rules_v1.0.md": {
+   "size": 4394,
+   "sha256": "b5fb5c5b35c9faceba3660e9d07799b0b44d9e27c8113178db6de01b0d322ef1"
+  },
+  "A8a_A8b_received_artifacts_SHA256.txt": {
+   "size": 2838,
+   "sha256": "28e12269014a6231b1d64e7523b6afc2189e8a05152298eafb23e3b7c1397a2e"
+  },
+  "A8b_amendment_v1.1.7.md": {
+   "size": 6729,
+   "sha256": "950bea6c479c9a786158db530f0242cc659e507b25bbdbaad8f67e5839d7c68b"
+  },
+  "ChatGPT_audit_A8a_A8b_RESULTS_PASS_FREEZE_GO.md": {
+   "size": 18052,
+   "sha256": "0ad6af6ebcbe891094b08dd07ab16c8743a84ef430f1a41fc4ccc85fae5fc623"
+  },
+  "F16_EXTERNAL_ARTIFACTS.md": {
+   "size": 1140,
+   "sha256": "d215ac32cfcfff1887616337f0bbdccffc8479bee8cf66041e0f62255507580a"
+  },
+  "MirrorTopology_Step1_A8a_featurestack_v1.1.2.ipynb": {
+   "size": 38519,
+   "sha256": "d5575de0bf53eced5686d1cae755c4fd97cfb87b8d0365dae16d43ac5c0af4d8"
+  },
+  "MirrorTopology_Step1_A8b_scan_benchmark_v1.1.8.ipynb": {
+   "size": 84078,
+   "sha256": "748b1f0a4385f65845dbb9d461967b5d998c263907ac77ccca177aa00e688488"
+  },
+  "README_FREEZE_PROCEDURE.md": {
+   "size": 1472,
+   "sha256": "964d0b3fc3335411aa96331f7d7b77dd9f17c42eedb6cc34ed700b31f4e8819e"
+  },
+  "Step1_PhaseA_A8_final_report.md": {
+   "size": 4377,
+   "sha256": "fc21d953e45d09845153933b0f59cf477be788a96b9e6b4cca064442d9fd9128"
+  },
+  "Step1_PhaseA_A8_independent_verification.md": {
+   "size": 6401,
+   "sha256": "50ad1d5a84c29467ef908e7ede86db7f59e72f6b26fd655f478f036ebbc13455"
+  },
+  "a8_env_lock.json": {
+   "size": 773,
+   "sha256": "f62ec9354bdb78c68550ef3ee46c7481f899ddac1ffdb9935a6a2669ae4a127d"
+  },
+  "a8a/official/Console_log_of_official_A8a_featurestack_v1.1.2.txt": {
+   "size": 2515,
+   "sha256": "25854ffb93c57e9720da333fcd5dcfffe9c4a42b04785e6b6850f5bc3cc61032",
+   "note": "LF-normalised (git would normalise on commit); CRLF hash of the submitted file is in A8a_A8b_received_artifacts_SHA256.txt"
+  },
+  "a8a/official/a8a_provenance.json": {
+   "size": 27320,
+   "sha256": "04fc829e3de1a0043028bc9265f1a6991aa113d47b66985e1b0b3d2005ee9750"
+  },
+  "a8a/official/a8a_validation.csv": {
+   "size": 429516,
+   "sha256": "522813e1fe6e0ada0c874acaf6323ab910e8982108243ee5ebd798c4f2e0d459"
+  },
+  "a8a/official/s1_Bplus_featurestack_l2_16_N16_common_v1_manifest.json": {
+   "size": 13503,
+   "sha256": "d89f580124460ae0ef3bb71e0c9a141d10f43ee16b082b4b3af30445de726554"
+  },
+  "a8a/smoke/a8a_provenance.json": {
+   "size": 26722,
+   "sha256": "56281a1980bf648a43c98b857cdff0039a6b946ee698caa65d0fdedc27ed7832"
+  },
+  "a8a/smoke/a8a_validation.csv": {
+   "size": 25476,
+   "sha256": "de3af2bcbf2e8e13b11e17bef225a52c741b80a9da836129c3544c8b1b5df3d8"
+  },
+  "a8a/smoke/s1_Bplus_featurestack_l2_16_N16_common_v1_manifest.json": {
+   "size": 13422,
+   "sha256": "08e8d9a0adc5256b7e3eaca7c6fac981e562ec6db963c84daf0dab08f3bf67e5"
+  },
+  "a8b/official/Console_log_of_official_A8b_scan_benchmark_v1.1.8.txt": {
+   "size": 22242,
+   "sha256": "9e8e660206ded02377b91157b050d385f85bb9f9e84cb18df1277479f74b4a83",
+   "note": "LF-normalised (git would normalise on commit); CRLF hash of the submitted file is in A8a_A8b_received_artifacts_SHA256.txt"
+  },
+  "a8b/official/a8b_attempts_evidence.jsonl": {
+   "size": 142028,
+   "sha256": "a132c835d82187079095772dbd93fe26f274e6b16b4fa01387eae8a4f9fc94d5"
+  },
+  "a8b/official/a8b_audit_vectors.npz": {
+   "size": 2810228,
+   "sha256": "cf3e465260088b52bd5696be8c588dc9ad66ed4eb52c5f583cad91c03a4080b6"
+  },
+  "a8b/official/a8b_benchmark_cpu.csv": {
+   "size": 21121,
+   "sha256": "3345a7c2d5ba3db28b03dc36713aacd63190fafc45272342fd2a8426a36e3029"
+  },
+  "a8b/official/a8b_benchmark_gpu.csv": {
+   "size": 1,
+   "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  "a8b/official/a8b_provenance.json": {
+   "size": 44380,
+   "sha256": "a5314043e025a00ffe7ca6d89985bb1b6064e398bc9ef911de7348d601c85d6a"
+  },
+  "a8b/official/a8b_timed_audit_index.json": {
+   "size": 31237,
+   "sha256": "4b580821385207e9e4d7dffe2a3f7a316c81565e945eb7092f8bbefafaefbb6a"
+  },
+  "a8b/official/a8b_timed_audit_vectors.npz": {
+   "size": 14155688,
+   "sha256": "9c362781836c3b7f79f652998164b04b92545058aac60c812648dd439008b108"
+  },
+  "a8b/smoke/Console_log_of_smoke_A8b_scan_benchmark_v1.1.8.txt": {
+   "size": 12615,
+   "sha256": "af7fd49c633a7cc4de688fd55ff7afbd9a5bd2b50fce5a0f1b0eb1580aff573a",
+   "note": "LF-normalised (git would normalise on commit); CRLF hash of the submitted file is in A8a_A8b_received_artifacts_SHA256.txt"
+  },
+  "a8b/smoke/a8b_attempts_evidence.jsonl": {
+   "size": 70065,
+   "sha256": "f7995ce652fb05717e8d2bc38e9971ebab92de4f9cf942bd61688aae8c87a365"
+  },
+  "a8b/smoke/a8b_audit_vectors.npz": {
+   "size": 150228,
+   "sha256": "b8914298ad587473292017696383cf38bc50005e7fb5add3ac462555b79e738a"
+  },
+  "a8b/smoke/a8b_benchmark_cpu.csv": {
+   "size": 11012,
+   "sha256": "914964cdc8ac8cc12bd2553df5317205410ca9e755100b63f6dcca3d18f9fd41"
+  },
+  "a8b/smoke/a8b_benchmark_gpu.csv": {
+   "size": 1,
+   "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  "a8b/smoke/a8b_provenance.json": {
+   "size": 31518,
+   "sha256": "d9902be16f7fb31a226973d99d27de206353d5f696699169fd218255585c88bc"
+  },
+  "a8b/smoke/a8b_timed_audit_index.json": {
+   "size": 15637,
+   "sha256": "856536af018c15f2068ef449e26d836dd4cae83d35f450b0d2f991c164f7f656"
+  },
+  "a8b/smoke/a8b_timed_audit_vectors.npz": {
+   "size": 387364,
+   "sha256": "b6f57f3805e4fd9cda48cbc76dbb48488441e5a7addfa1d752ab459997ae06c1"
+  },
+  "a8b/v1.1.5_smoke_FAILED/a8b_attempts_evidence.jsonl": {
+   "size": 70038,
+   "sha256": "37b4cd5949e9870de8205f248b4e69db49093a32f39ea42a367207aa25cf3521"
+  },
+  "a8b/v1.1.5_smoke_FAILED/a8b_audit_vectors.npz": {
+   "size": 150228,
+   "sha256": "209f506eaaa94928020f58282b4c7118b7cceb2fab01c582591ac25bc20e0b1e"
+  },
+  "a8b/v1.1.5_smoke_FAILED/a8b_provenance.json": {
+   "size": 18549,
+   "sha256": "ad92387f5bd9cdcd7e6a393688704503660539d1abdb44d7962be4398a418a40"
+  }
+ },
+ "n_files": 37
+}

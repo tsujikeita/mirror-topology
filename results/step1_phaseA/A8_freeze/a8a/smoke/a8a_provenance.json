@@ -1,0 +1,2099 @@
+{
+ "notebook": "Step1 Phase A-8a feature stack v1.1.2 [smoke]",
+ "status": "SMOKE_PASS",
+ "FEATURESTACK_VALID": false,
+ "timestamp": "2026-09-09T13:50:23.417783+00:00",
+ "gates": {
+  "G_pem_commit": true,
+  "G_pem_origin": true,
+  "G_pem_clean_preimport": true,
+  "G_cmbanom_commit": true,
+  "G_cmbanom_origin": true,
+  "G_cmbanom_clean_preimport": true,
+  "G_mt_commit": true,
+  "G_mt_origin": true,
+  "G_mt_clean_preimport": true,
+  "G_a5_manifest_sha": true,
+  "G_a5_provenance_in_manifest": true,
+  "G_a5_bstack_file_sha": true,
+  "G_pem_src_sha": true,
+  "G_mt_src_sha": true,
+  "G_live_dependency_versions": true,
+  "G_live_import_paths": true,
+  "G_live_module_sha": true,
+  "G_env_lock_candidate_complete": true,
+  "G_notebook_head_available": true,
+  "G_pipeline_objects": true,
+  "G_mask_R_valid_cnt_sha": true,
+  "G_a5_input_manifest_sha": true,
+  "G_FL_matches_A5": true,
+  "G_CL_matches_A5": true,
+  "G_W4_matches_A5": true,
+  "G_W16_matches_A5": true,
+  "G_basis_extension": true,
+  "G_Y16_prefix_equals_Y4": true,
+  "G_a5_bstack_array_sha": true,
+  "G_B16_l4_block_equals_A5_all_axes": true,
+  "G_B16_symmetric_psd_sampled": true,
+  "G_F16_finite_shape": true,
+  "G_observed_map_sha": true,
+  "G_observed_inventory_10": true,
+  "G_a11_freeze_manifest_sha": true,
+  "G_a11_official_provenance_sha": true,
+  "G_a11_official_status": true,
+  "G_a11_cov_tag_unique": true,
+  "G_a11_cov_sha": true,
+  "G_a11_cov_basis_matches_M4": true,
+  "G_F16_pipeline_battery_f64": true,
+  "G_F16_observed_maps_agree": true,
+  "G_F16_pipeline_battery_f32_non_tie": true,
+  "G_F16_f32_eventB": true,
+  "G_artifact_reopen": true,
+  "G_artifact_packing_roundtrip": true,
+  "G_manifest_roundtrip": true
+ },
+ "flags": {
+  "F_F16_f32_near_tie_count": 69,
+  "F_F16_f32_near_tie_axis_mismatch": 0,
+  "F_F16_f32_near_tie_rule_ok": true,
+  "F_F16_f32_axis_mismatch_count": 0,
+  "F_F16_f32_axis_mismatch_max_plane_folded_sep_deg": 0.0,
+  "float32_eligible_for_event_outputs": true,
+  "float32_eligible_for_axis_outputs": true,
+  "float32_eligible_for_rules": true
+ },
+ "required_gates": [
+  "G_pem_commit",
+  "G_pem_origin",
+  "G_pem_clean_preimport",
+  "G_cmbanom_commit",
+  "G_cmbanom_origin",
+  "G_cmbanom_clean_preimport",
+  "G_mt_commit",
+  "G_mt_origin",
+  "G_mt_clean_preimport",
+  "G_a5_manifest_sha",
+  "G_a5_provenance_in_manifest",
+  "G_a5_bstack_file_sha",
+  "G_pem_src_sha",
+  "G_mt_src_sha",
+  "G_live_dependency_versions",
+  "G_live_import_paths",
+  "G_live_module_sha",
+  "G_pipeline_objects",
+  "G_mask_R_valid_cnt_sha",
+  "G_a5_input_manifest_sha",
+  "G_FL_matches_A5",
+  "G_CL_matches_A5",
+  "G_W4_matches_A5",
+  "G_W16_matches_A5",
+  "G_basis_extension",
+  "G_Y16_prefix_equals_Y4",
+  "G_a5_bstack_array_sha",
+  "G_B16_l4_block_equals_A5_all_axes",
+  "G_B16_symmetric_psd_sampled",
+  "G_F16_finite_shape",
+  "G_a11_freeze_manifest_sha",
+  "G_a11_official_provenance_sha",
+  "G_a11_official_status",
+  "G_a11_cov_tag_unique",
+  "G_a11_cov_sha",
+  "G_a11_cov_basis_matches_M4",
+  "G_observed_map_sha",
+  "G_observed_inventory_10",
+  "G_F16_pipeline_battery_f64",
+  "G_F16_observed_maps_agree",
+  "G_F16_pipeline_battery_f32_non_tie",
+  "G_F16_f32_eventB",
+  "G_artifact_reopen",
+  "G_artifact_packing_roundtrip",
+  "G_manifest_roundtrip",
+  "G_env_lock_candidate_complete",
+  "G_notebook_head_available"
+ ],
+ "gate_inventory_exact": true,
+ "manifest": {
+  "schema": "featurestack_manifest_v1",
+  "artifact": "S+ feature stack, l=2..16, N16 common mask, 3072 axes",
+  "shape": [
+   3072,
+   40755
+  ],
+  "dtype_primary": "float64",
+  "packing": "upper-triangular (i<=j) row-major; off-diagonal entries x2 so that S+(x,a) = f(x).F[a] with f = x_i x_j (i<=j)",
+  "axis_pixel_ids": "0..3071 RING (nside 16)",
+  "basis_lm": [
+   [
+    2,
+    0,
+    "c"
+   ],
+   [
+    2,
+    1,
+    "c"
+   ],
+   [
+    2,
+    1,
+    "s"
+   ],
+   [
+    2,
+    2,
+    "c"
+   ],
+   [
+    2,
+    2,
+    "s"
+   ],
+   [
+    3,
+    0,
+    "c"
+   ],
+   [
+    3,
+    1,
+    "c"
+   ],
+   [
+    3,
+    1,
+    "s"
+   ],
+   [
+    3,
+    2,
+    "c"
+   ],
+   [
+    3,
+    2,
+    "s"
+   ],
+   [
+    3,
+    3,
+    "c"
+   ],
+   [
+    3,
+    3,
+    "s"
+   ],
+   [
+    4,
+    0,
+    "c"
+   ],
+   [
+    4,
+    1,
+    "c"
+   ],
+   [
+    4,
+    1,
+    "s"
+   ],
+   [
+    4,
+    2,
+    "c"
+   ],
+   [
+    4,
+    2,
+    "s"
+   ],
+   [
+    4,
+    3,
+    "c"
+   ],
+   [
+    4,
+    3,
+    "s"
+   ],
+   [
+    4,
+    4,
+    "c"
+   ],
+   [
+    4,
+    4,
+    "s"
+   ],
+   [
+    5,
+    0,
+    "c"
+   ],
+   [
+    5,
+    1,
+    "c"
+   ],
+   [
+    5,
+    1,
+    "s"
+   ],
+   [
+    5,
+    2,
+    "c"
+   ],
+   [
+    5,
+    2,
+    "s"
+   ],
+   [
+    5,
+    3,
+    "c"
+   ],
+   [
+    5,
+    3,
+    "s"
+   ],
+   [
+    5,
+    4,
+    "c"
+   ],
+   [
+    5,
+    4,
+    "s"
+   ],
+   [
+    5,
+    5,
+    "c"
+   ],
+   [
+    5,
+    5,
+    "s"
+   ],
+   [
+    6,
+    0,
+    "c"
+   ],
+   [
+    6,
+    1,
+    "c"
+   ],
+   [
+    6,
+    1,
+    "s"
+   ],
+   [
+    6,
+    2,
+    "c"
+   ],
+   [
+    6,
+    2,
+    "s"
+   ],
+   [
+    6,
+    3,
+    "c"
+   ],
+   [
+    6,
+    3,
+    "s"
+   ],
+   [
+    6,
+    4,
+    "c"
+   ],
+   [
+    6,
+    4,
+    "s"
+   ],
+   [
+    6,
+    5,
+    "c"
+   ],
+   [
+    6,
+    5,
+    "s"
+   ],
+   [
+    6,
+    6,
+    "c"
+   ],
+   [
+    6,
+    6,
+    "s"
+   ],
+   [
+    7,
+    0,
+    "c"
+   ],
+   [
+    7,
+    1,
+    "c"
+   ],
+   [
+    7,
+    1,
+    "s"
+   ],
+   [
+    7,
+    2,
+    "c"
+   ],
+   [
+    7,
+    2,
+    "s"
+   ],
+   [
+    7,
+    3,
+    "c"
+   ],
+   [
+    7,
+    3,
+    "s"
+   ],
+   [
+    7,
+    4,
+    "c"
+   ],
+   [
+    7,
+    4,
+    "s"
+   ],
+   [
+    7,
+    5,
+    "c"
+   ],
+   [
+    7,
+    5,
+    "s"
+   ],
+   [
+    7,
+    6,
+    "c"
+   ],
+   [
+    7,
+    6,
+    "s"
+   ],
+   [
+    7,
+    7,
+    "c"
+   ],
+   [
+    7,
+    7,
+    "s"
+   ],
+   [
+    8,
+    0,
+    "c"
+   ],
+   [
+    8,
+    1,
+    "c"
+   ],
+   [
+    8,
+    1,
+    "s"
+   ],
+   [
+    8,
+    2,
+    "c"
+   ],
+   [
+    8,
+    2,
+    "s"
+   ],
+   [
+    8,
+    3,
+    "c"
+   ],
+   [
+    8,
+    3,
+    "s"
+   ],
+   [
+    8,
+    4,
+    "c"
+   ],
+   [
+    8,
+    4,
+    "s"
+   ],
+   [
+    8,
+    5,
+    "c"
+   ],
+   [
+    8,
+    5,
+    "s"
+   ],
+   [
+    8,
+    6,
+    "c"
+   ],
+   [
+    8,
+    6,
+    "s"
+   ],
+   [
+    8,
+    7,
+    "c"
+   ],
+   [
+    8,
+    7,
+    "s"
+   ],
+   [
+    8,
+    8,
+    "c"
+   ],
+   [
+    8,
+    8,
+    "s"
+   ],
+   [
+    9,
+    0,
+    "c"
+   ],
+   [
+    9,
+    1,
+    "c"
+   ],
+   [
+    9,
+    1,
+    "s"
+   ],
+   [
+    9,
+    2,
+    "c"
+   ],
+   [
+    9,
+    2,
+    "s"
+   ],
+   [
+    9,
+    3,
+    "c"
+   ],
+   [
+    9,
+    3,
+    "s"
+   ],
+   [
+    9,
+    4,
+    "c"
+   ],
+   [
+    9,
+    4,
+    "s"
+   ],
+   [
+    9,
+    5,
+    "c"
+   ],
+   [
+    9,
+    5,
+    "s"
+   ],
+   [
+    9,
+    6,
+    "c"
+   ],
+   [
+    9,
+    6,
+    "s"
+   ],
+   [
+    9,
+    7,
+    "c"
+   ],
+   [
+    9,
+    7,
+    "s"
+   ],
+   [
+    9,
+    8,
+    "c"
+   ],
+   [
+    9,
+    8,
+    "s"
+   ],
+   [
+    9,
+    9,
+    "c"
+   ],
+   [
+    9,
+    9,
+    "s"
+   ],
+   [
+    10,
+    0,
+    "c"
+   ],
+   [
+    10,
+    1,
+    "c"
+   ],
+   [
+    10,
+    1,
+    "s"
+   ],
+   [
+    10,
+    2,
+    "c"
+   ],
+   [
+    10,
+    2,
+    "s"
+   ],
+   [
+    10,
+    3,
+    "c"
+   ],
+   [
+    10,
+    3,
+    "s"
+   ],
+   [
+    10,
+    4,
+    "c"
+   ],
+   [
+    10,
+    4,
+    "s"
+   ],
+   [
+    10,
+    5,
+    "c"
+   ],
+   [
+    10,
+    5,
+    "s"
+   ],
+   [
+    10,
+    6,
+    "c"
+   ],
+   [
+    10,
+    6,
+    "s"
+   ],
+   [
+    10,
+    7,
+    "c"
+   ],
+   [
+    10,
+    7,
+    "s"
+   ],
+   [
+    10,
+    8,
+    "c"
+   ],
+   [
+    10,
+    8,
+    "s"
+   ],
+   [
+    10,
+    9,
+    "c"
+   ],
+   [
+    10,
+    9,
+    "s"
+   ],
+   [
+    10,
+    10,
+    "c"
+   ],
+   [
+    10,
+    10,
+    "s"
+   ],
+   [
+    11,
+    0,
+    "c"
+   ],
+   [
+    11,
+    1,
+    "c"
+   ],
+   [
+    11,
+    1,
+    "s"
+   ],
+   [
+    11,
+    2,
+    "c"
+   ],
+   [
+    11,
+    2,
+    "s"
+   ],
+   [
+    11,
+    3,
+    "c"
+   ],
+   [
+    11,
+    3,
+    "s"
+   ],
+   [
+    11,
+    4,
+    "c"
+   ],
+   [
+    11,
+    4,
+    "s"
+   ],
+   [
+    11,
+    5,
+    "c"
+   ],
+   [
+    11,
+    5,
+    "s"
+   ],
+   [
+    11,
+    6,
+    "c"
+   ],
+   [
+    11,
+    6,
+    "s"
+   ],
+   [
+    11,
+    7,
+    "c"
+   ],
+   [
+    11,
+    7,
+    "s"
+   ],
+   [
+    11,
+    8,
+    "c"
+   ],
+   [
+    11,
+    8,
+    "s"
+   ],
+   [
+    11,
+    9,
+    "c"
+   ],
+   [
+    11,
+    9,
+    "s"
+   ],
+   [
+    11,
+    10,
+    "c"
+   ],
+   [
+    11,
+    10,
+    "s"
+   ],
+   [
+    11,
+    11,
+    "c"
+   ],
+   [
+    11,
+    11,
+    "s"
+   ],
+   [
+    12,
+    0,
+    "c"
+   ],
+   [
+    12,
+    1,
+    "c"
+   ],
+   [
+    12,
+    1,
+    "s"
+   ],
+   [
+    12,
+    2,
+    "c"
+   ],
+   [
+    12,
+    2,
+    "s"
+   ],
+   [
+    12,
+    3,
+    "c"
+   ],
+   [
+    12,
+    3,
+    "s"
+   ],
+   [
+    12,
+    4,
+    "c"
+   ],
+   [
+    12,
+    4,
+    "s"
+   ],
+   [
+    12,
+    5,
+    "c"
+   ],
+   [
+    12,
+    5,
+    "s"
+   ],
+   [
+    12,
+    6,
+    "c"
+   ],
+   [
+    12,
+    6,
+    "s"
+   ],
+   [
+    12,
+    7,
+    "c"
+   ],
+   [
+    12,
+    7,
+    "s"
+   ],
+   [
+    12,
+    8,
+    "c"
+   ],
+   [
+    12,
+    8,
+    "s"
+   ],
+   [
+    12,
+    9,
+    "c"
+   ],
+   [
+    12,
+    9,
+    "s"
+   ],
+   [
+    12,
+    10,
+    "c"
+   ],
+   [
+    12,
+    10,
+    "s"
+   ],
+   [
+    12,
+    11,
+    "c"
+   ],
+   [
+    12,
+    11,
+    "s"
+   ],
+   [
+    12,
+    12,
+    "c"
+   ],
+   [
+    12,
+    12,
+    "s"
+   ],
+   [
+    13,
+    0,
+    "c"
+   ],
+   [
+    13,
+    1,
+    "c"
+   ],
+   [
+    13,
+    1,
+    "s"
+   ],
+   [
+    13,
+    2,
+    "c"
+   ],
+   [
+    13,
+    2,
+    "s"
+   ],
+   [
+    13,
+    3,
+    "c"
+   ],
+   [
+    13,
+    3,
+    "s"
+   ],
+   [
+    13,
+    4,
+    "c"
+   ],
+   [
+    13,
+    4,
+    "s"
+   ],
+   [
+    13,
+    5,
+    "c"
+   ],
+   [
+    13,
+    5,
+    "s"
+   ],
+   [
+    13,
+    6,
+    "c"
+   ],
+   [
+    13,
+    6,
+    "s"
+   ],
+   [
+    13,
+    7,
+    "c"
+   ],
+   [
+    13,
+    7,
+    "s"
+   ],
+   [
+    13,
+    8,
+    "c"
+   ],
+   [
+    13,
+    8,
+    "s"
+   ],
+   [
+    13,
+    9,
+    "c"
+   ],
+   [
+    13,
+    9,
+    "s"
+   ],
+   [
+    13,
+    10,
+    "c"
+   ],
+   [
+    13,
+    10,
+    "s"
+   ],
+   [
+    13,
+    11,
+    "c"
+   ],
+   [
+    13,
+    11,
+    "s"
+   ],
+   [
+    13,
+    12,
+    "c"
+   ],
+   [
+    13,
+    12,
+    "s"
+   ],
+   [
+    13,
+    13,
+    "c"
+   ],
+   [
+    13,
+    13,
+    "s"
+   ],
+   [
+    14,
+    0,
+    "c"
+   ],
+   [
+    14,
+    1,
+    "c"
+   ],
+   [
+    14,
+    1,
+    "s"
+   ],
+   [
+    14,
+    2,
+    "c"
+   ],
+   [
+    14,
+    2,
+    "s"
+   ],
+   [
+    14,
+    3,
+    "c"
+   ],
+   [
+    14,
+    3,
+    "s"
+   ],
+   [
+    14,
+    4,
+    "c"
+   ],
+   [
+    14,
+    4,
+    "s"
+   ],
+   [
+    14,
+    5,
+    "c"
+   ],
+   [
+    14,
+    5,
+    "s"
+   ],
+   [
+    14,
+    6,
+    "c"
+   ],
+   [
+    14,
+    6,
+    "s"
+   ],
+   [
+    14,
+    7,
+    "c"
+   ],
+   [
+    14,
+    7,
+    "s"
+   ],
+   [
+    14,
+    8,
+    "c"
+   ],
+   [
+    14,
+    8,
+    "s"
+   ],
+   [
+    14,
+    9,
+    "c"
+   ],
+   [
+    14,
+    9,
+    "s"
+   ],
+   [
+    14,
+    10,
+    "c"
+   ],
+   [
+    14,
+    10,
+    "s"
+   ],
+   [
+    14,
+    11,
+    "c"
+   ],
+   [
+    14,
+    11,
+    "s"
+   ],
+   [
+    14,
+    12,
+    "c"
+   ],
+   [
+    14,
+    12,
+    "s"
+   ],
+   [
+    14,
+    13,
+    "c"
+   ],
+   [
+    14,
+    13,
+    "s"
+   ],
+   [
+    14,
+    14,
+    "c"
+   ],
+   [
+    14,
+    14,
+    "s"
+   ],
+   [
+    15,
+    0,
+    "c"
+   ],
+   [
+    15,
+    1,
+    "c"
+   ],
+   [
+    15,
+    1,
+    "s"
+   ],
+   [
+    15,
+    2,
+    "c"
+   ],
+   [
+    15,
+    2,
+    "s"
+   ],
+   [
+    15,
+    3,
+    "c"
+   ],
+   [
+    15,
+    3,
+    "s"
+   ],
+   [
+    15,
+    4,
+    "c"
+   ],
+   [
+    15,
+    4,
+    "s"
+   ],
+   [
+    15,
+    5,
+    "c"
+   ],
+   [
+    15,
+    5,
+    "s"
+   ],
+   [
+    15,
+    6,
+    "c"
+   ],
+   [
+    15,
+    6,
+    "s"
+   ],
+   [
+    15,
+    7,
+    "c"
+   ],
+   [
+    15,
+    7,
+    "s"
+   ],
+   [
+    15,
+    8,
+    "c"
+   ],
+   [
+    15,
+    8,
+    "s"
+   ],
+   [
+    15,
+    9,
+    "c"
+   ],
+   [
+    15,
+    9,
+    "s"
+   ],
+   [
+    15,
+    10,
+    "c"
+   ],
+   [
+    15,
+    10,
+    "s"
+   ],
+   [
+    15,
+    11,
+    "c"
+   ],
+   [
+    15,
+    11,
+    "s"
+   ],
+   [
+    15,
+    12,
+    "c"
+   ],
+   [
+    15,
+    12,
+    "s"
+   ],
+   [
+    15,
+    13,
+    "c"
+   ],
+   [
+    15,
+    13,
+    "s"
+   ],
+   [
+    15,
+    14,
+    "c"
+   ],
+   [
+    15,
+    14,
+    "s"
+   ],
+   [
+    15,
+    15,
+    "c"
+   ],
+   [
+    15,
+    15,
+    "s"
+   ],
+   [
+    16,
+    0,
+    "c"
+   ],
+   [
+    16,
+    1,
+    "c"
+   ],
+   [
+    16,
+    1,
+    "s"
+   ],
+   [
+    16,
+    2,
+    "c"
+   ],
+   [
+    16,
+    2,
+    "s"
+   ],
+   [
+    16,
+    3,
+    "c"
+   ],
+   [
+    16,
+    3,
+    "s"
+   ],
+   [
+    16,
+    4,
+    "c"
+   ],
+   [
+    16,
+    4,
+    "s"
+   ],
+   [
+    16,
+    5,
+    "c"
+   ],
+   [
+    16,
+    5,
+    "s"
+   ],
+   [
+    16,
+    6,
+    "c"
+   ],
+   [
+    16,
+    6,
+    "s"
+   ],
+   [
+    16,
+    7,
+    "c"
+   ],
+   [
+    16,
+    7,
+    "s"
+   ],
+   [
+    16,
+    8,
+    "c"
+   ],
+   [
+    16,
+    8,
+    "s"
+   ],
+   [
+    16,
+    9,
+    "c"
+   ],
+   [
+    16,
+    9,
+    "s"
+   ],
+   [
+    16,
+    10,
+    "c"
+   ],
+   [
+    16,
+    10,
+    "s"
+   ],
+   [
+    16,
+    11,
+    "c"
+   ],
+   [
+    16,
+    11,
+    "s"
+   ],
+   [
+    16,
+    12,
+    "c"
+   ],
+   [
+    16,
+    12,
+    "s"
+   ],
+   [
+    16,
+    13,
+    "c"
+   ],
+   [
+    16,
+    13,
+    "s"
+   ],
+   [
+    16,
+    14,
+    "c"
+   ],
+   [
+    16,
+    14,
+    "s"
+   ],
+   [
+    16,
+    15,
+    "c"
+   ],
+   [
+    16,
+    15,
+    "s"
+   ],
+   [
+    16,
+    16,
+    "c"
+   ],
+   [
+    16,
+    16,
+    "s"
+   ]
+  ],
+  "basis_convention": "t2b2_bridge M_matrix(range(2,17)): m=0 Re; cos sqrt2 Re; sin sqrt2 Im; frozen l2-4 ordering is the prefix",
+  "window": "FL(planck, nside16) x [l=2..16]",
+  "normalization": "S = mean over valid pairs of ((T+T[R])/2)^2, / cnt (frozen pm.scan_S)",
+  "packing_schema_version": "packed_upper_v1",
+  "sha256": {
+   "F16_float64_array": "4feac2669642c895e9c1391867b8d0dccd85a0abf3f04fec074ae8ab5af345f6",
+   "F16_float32_array": "a0281b4fec848623c14b2bef7d0689da6a07083bcb0d8c553075ef0d2094dd9a",
+   "F16_float64_file": "aca84c5f39e4b35eccfc01c328874fdef053a09084fe689efa0d4e7b2d0728f1",
+   "F16_float32_file": "9e433de0742c495068facea43509da1104567ecf9b27c8804c96f86c343ec8a9",
+   "iu0": "29fcc71fca28e2f4a8356c429b854202fb378ade745f5ec87a29e884e43d29d3",
+   "iu1": "d0d9034249be6a21037f3ca4a3d8084037d6e52055d15259da6ea216bb154e2b",
+   "basis_lm": "c07384a63f9f1ae6b4c1373a9b9d20476a098ab6a578574912cbd9af8b0c8521",
+   "axis_pixel_ids": "08da22ccc26914d8f29ed6fd54fc388b6b80be608c7e1f90e8b37ea65628cca2"
+  },
+  "inputs": {
+   "processed_mask": "2b46cf1b46268cf3e7c119ec7c29de90a80fbb6e0c239572da51369da68b3305",
+   "R": "e06b97febbaae48ac1c5bbc358637d2f3a7f874bca54de83d6ce9d630a0741f5",
+   "valid": "4da781e5fa5bd46246f14b01d4e0dd41475a3f6bdae5071123bd983ac6c83cf3",
+   "cnt": "6e62038586601ce4ac70f6a96ad0df7cc6e5c5681511723ea58f73cdb9b18686",
+   "bstack_file": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",
+   "bstack_array": "eb51414885785b77e9d3f7fbb25e1c9396f52e19c053d58113d50e206353a93f",
+   "pem_src": {
+    "src/plane_mirror.py": "1af60a031ffd6854f0c7941ce83ca2c94e9c5f3a146996151bb1f53dfb7f1fbd",
+    "src/phase2_core.py": "976534f5cf6c93521a1e974dd6e175e613bc639b4b173a5cc25f8f0545963d7d"
+   },
+   "FL": "b40f3877c02884ea9c749d1546a4a5e94624172878f290180a869a3eae63b95b",
+   "W4": "7d5cefc02dcf38ceaaa66c09ed9cff2718100594a35a1e6f2365e82e59888547",
+   "W16": "78a047bc548691095a7473a09fe227af48a87522f3bbec4edd4f33269ee6e9e6",
+   "CL": "efb18d27696879980ad910030c2238e0020f88f86100e412eb661cba9bf4634a",
+   "pixwin_source_diagnostic": "healpy_download"
+  },
+  "frozen_repos": {
+   "pem": {
+    "commit": "d36e7567e8a7869c0d7b84955b4139ab0e782af0",
+    "head": "d36e7567e8a7869c0d7b84955b4139ab0e782af0",
+    "origin": "https://github.com/tsujikeita/plane-excised-mirror.git",
+    "clean": true,
+    "canonical": "https://github.com/tsujikeita/plane-excised-mirror"
+   },
+   "cmbanom": {
+    "commit": "aaf8137427d54ce4c77e59734391aca491a4a8db",
+    "head": "aaf8137427d54ce4c77e59734391aca491a4a8db",
+    "origin": "https://github.com/LauraHerold/CMBanom.git",
+    "clean": true,
+    "canonical": "https://github.com/LauraHerold/CMBanom"
+   },
+   "mt": {
+    "commit": "5ad38e12c4d769f3ddbfb95b2cff18d959bfc0e7",
+    "head": "5ad38e12c4d769f3ddbfb95b2cff18d959bfc0e7",
+    "origin": "https://github.com/tsujikeita/mirror-topology.git",
+    "clean": true,
+    "canonical": "https://github.com/tsujikeita/mirror-topology"
+   }
+  },
+  "build": {
+   "seconds": 121.14047241210938,
+   "max_l4_block_diff": 5.551115123125783e-17,
+   "sym_max": 1.805196617188365e-17,
+   "psd_min_sampled": 5.131199361075979e-16,
+   "GB": 1.00159488
+  },
+  "validation": {
+   "n": 70,
+   "max_all_axis_rel_resid_f64": 1.7248682487750226e-07,
+   "max_all_axis_rel_resid_f32": 8.416767514063395e-07,
+   "argmin_agree_f64": 1.0,
+   "argmin_agree_f32": 1.0,
+   "argmin_agree_f32_f64": 1.0,
+   "EB_mismatch_f64": 0,
+   "near_tie_count": 69,
+   "f32_f64_agree_by_margin": {
+    "<1e-6": 1.0,
+    "1e-6..1e-4": 1.0,
+    "1e-4..1e-2": 1.0
+   },
+   "per_group_argmin_agree_f64": {
+    "fresh_isotropic": 1.0,
+    "hybrid_E7_l24_iso_l516": 1.0,
+    "observed": 1.0
+   },
+   "EB_mismatch_f32": 0,
+   "antipode_exact_tie_frac": 0.9571428571428572,
+   "runner_up_is_antipode_frac": 1.0,
+   "R_row_equal_frac": 0.9571428571428572,
+   "near_tie_bins": [
+    {
+     "margin_bin": "<1e-6",
+     "n": "67",
+     "agree_f32_f64": "1.0",
+     "max_sep_f32_deg": "1.4787793334710982e-06"
+    },
+    {
+     "margin_bin": "1e-6..1e-4",
+     "n": "2",
+     "agree_f32_f64": "1.0",
+     "max_sep_f32_deg": "0.0"
+    },
+    {
+     "margin_bin": "1e-4..1e-2",
+     "n": "1",
+     "agree_f32_f64": "1.0",
+     "max_sep_f32_deg": "0.0"
+    },
+    {
+     "margin_bin": "1e-2..1e-1",
+     "n": "0",
+     "agree_f32_f64": "nan",
+     "max_sep_f32_deg": "nan"
+    },
+    {
+     "margin_bin": ">1e-1",
+     "n": "0",
+     "agree_f32_f64": "nan",
+     "max_sep_f32_deg": "nan"
+    }
+   ],
+   "smallest_margin_K": {
+    "K": 20,
+    "agree_f32_f64": 1.0,
+    "max_sep_f32_deg": 1.2074182697257333e-06,
+    "min_gap": 0.0
+   }
+  },
+  "notebook": {
+   "live": "1a4bf7b56d5f84869eea6ca525e02ef86cd7b2fb43bfcec9db539557bae2aa67",
+   "origin_main_head": "7b561642e3a69cae8acd380ec4c3e4684794156d",
+   "head_copy": "7fe775f970c3485add5f7181a2f32e681af1feb369e8181168cb67b418d0285d"
+  },
+  "env_fingerprint": "dee5b715ca8b5b409d10f1b582e7c92fa31b6987d1eabbc6d2fe870af65db875"
+ },
+ "manifest_file": "s1_Bplus_featurestack_l2_16_N16_common_v1_manifest.json",
+ "manifest_file_sha256": "08e8d9a0adc5256b7e3eaca7c6fac981e562ec6db963c84daf0dab08f3bf67e5",
+ "map_sha256": {
+  "PR3_Commander": "2f88c2d385e3c96a8ead4d98254e8b92ad4f460c58810697ad61132f2ff0020b",
+  "PR3_NILC": "63f3b41ea5a0e934d2d425ccb7c51b12539e4fb147e75e18a92e18e003bee352",
+  "PR3_SEVEM": "c395a7fcf955560a62d7b8404eb3ff19e868d6c03c0ad83dbf99571951e12ab9",
+  "PR3_SMICA": "1fda86de628c43820e999ad1564960cb5350c972c7f820b4132d6c6d149a8272",
+  "Nofi_70GHz": "bac5d05118d1044c07910283a31e20d712a5f55190a3258e12c6c53fc1cc2665",
+  "Nofi_94GHz": "6a24e2867e4f4aefd4f2cff7e0b591912f8f4690e5cccb24cec99f95c2047266",
+  "Nofi_100GHz": "b30cb4cacb104ca1e705c320f9f4b867c0a03e4130248cca54f007a57e87b867",
+  "Nofi_143GHz": "ad95a5135470d3f297267d75c5323ad30aaf454d1bf0f8a1aae076142ba0c6eb",
+  "PR4_Sevem": "94b6647a220590e82162786c02a10a81d6e4421cc3949e247cdd4486cf280a1e",
+  "PR4_Commander": "e9dfe38bc25d7ba22294161ffa709c1fc11914a3019eb1deaf3ed0e646dae40a"
+ },
+ "environment": {
+  "python": "3.13.15",
+  "live": {
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "pandas": "2.2.3",
+   "psutil": "5.9.5",
+   "threadpoolctl": "3.6.0"
+  },
+  "platform": {
+   "machine": "x86_64",
+   "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+   "cpu_count": 2,
+   "ram_GB": 13.61
+  },
+  "blas": "{'blas': 'scipy-openblas', 'lapack': 'scipy-openblas'}",
+  "fingerprint": "dee5b715ca8b5b409d10f1b582e7c92fa31b6987d1eabbc6d2fe870af65db875",
+  "lock_sha256": null
+ },
+ "notebook_identity": {
+  "live": "1a4bf7b56d5f84869eea6ca525e02ef86cd7b2fb43bfcec9db539557bae2aa67",
+  "origin_main_head": "7b561642e3a69cae8acd380ec4c3e4684794156d",
+  "head_copy": "7fe775f970c3485add5f7181a2f32e681af1feb369e8181168cb67b418d0285d"
+ },
+ "diagnostics": {
+  "notebook": {
+   "live": "1a4bf7b56d5f84869eea6ca525e02ef86cd7b2fb43bfcec9db539557bae2aa67",
+   "origin_main_head": "7b561642e3a69cae8acd380ec4c3e4684794156d",
+   "head_copy": "7fe775f970c3485add5f7181a2f32e681af1feb369e8181168cb67b418d0285d"
+  },
+  "input_binding_scaled_diff": {
+   "FL": 0.0,
+   "CL": 0.0,
+   "W4": 0.0,
+   "W16": 0.0
+  },
+  "F16_build": {
+   "seconds": 121.14047241210938,
+   "max_l4_block_diff": 5.551115123125783e-17,
+   "sym_max": 1.805196617188365e-17,
+   "psd_min_sampled": 5.131199361075979e-16,
+   "GB": 1.00159488
+  },
+  "validation_seeds": {
+   "recipe": "SeedSequence([20260908,8,1]) -> integers(2^31-1, N_ISO); hybrid SeedSequence([20260908,8,2])",
+   "seed_array_sha256": "713804502d8f084be31895b519037c1c5230422c7c259bb762449e237c04c2e0"
+  },
+  "validation": {
+   "n": 70,
+   "max_all_axis_rel_resid_f64": 1.7248682487750226e-07,
+   "max_all_axis_rel_resid_f32": 8.416767514063395e-07,
+   "argmin_agree_f64": 1.0,
+   "argmin_agree_f32": 1.0,
+   "argmin_agree_f32_f64": 1.0,
+   "EB_mismatch_f64": 0,
+   "near_tie_count": 69,
+   "f32_f64_agree_by_margin": {
+    "<1e-6": 1.0,
+    "1e-6..1e-4": 1.0,
+    "1e-4..1e-2": 1.0
+   },
+   "per_group_argmin_agree_f64": {
+    "fresh_isotropic": 1.0,
+    "hybrid_E7_l24_iso_l516": 1.0,
+    "observed": 1.0
+   },
+   "EB_mismatch_f32": 0,
+   "antipode_exact_tie_frac": 0.9571428571428572,
+   "runner_up_is_antipode_frac": 1.0,
+   "R_row_equal_frac": 0.9571428571428572,
+   "near_tie_bins": [
+    {
+     "margin_bin": "<1e-6",
+     "n": "67",
+     "agree_f32_f64": "1.0",
+     "max_sep_f32_deg": "1.4787793334710982e-06"
+    },
+    {
+     "margin_bin": "1e-6..1e-4",
+     "n": "2",
+     "agree_f32_f64": "1.0",
+     "max_sep_f32_deg": "0.0"
+    },
+    {
+     "margin_bin": "1e-4..1e-2",
+     "n": "1",
+     "agree_f32_f64": "1.0",
+     "max_sep_f32_deg": "0.0"
+    },
+    {
+     "margin_bin": "1e-2..1e-1",
+     "n": "0",
+     "agree_f32_f64": "nan",
+     "max_sep_f32_deg": "nan"
+    },
+    {
+     "margin_bin": ">1e-1",
+     "n": "0",
+     "agree_f32_f64": "nan",
+     "max_sep_f32_deg": "nan"
+    }
+   ],
+   "smallest_margin_K": {
+    "K": 20,
+    "agree_f32_f64": 1.0,
+    "max_sep_f32_deg": 1.2074182697257333e-06,
+    "min_gap": 0.0
+   }
+  },
+  "flags": {
+   "F_F16_f32_near_tie_count": 69,
+   "F_F16_f32_near_tie_axis_mismatch": 0,
+   "F_F16_f32_near_tie_rule_ok": true,
+   "F_F16_f32_axis_mismatch_count": 0,
+   "F_F16_f32_axis_mismatch_max_plane_folded_sep_deg": 0.0,
+   "float32_eligible_for_event_outputs": true,
+   "float32_eligible_for_axis_outputs": true,
+   "float32_eligible_for_rules": true
+  }
+ },
+ "git_calls": [
+  {
+   "cmd": [
+    "git",
+    "clone",
+    "https://github.com/tsujikeita/plane-excised-mirror.git",
+    "/content/pem_a8"
+   ],
+   "stderr": "Cloning into '/content/pem_a8'..."
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/pem_a8",
+    "rev-parse",
+    "--is-shallow-repository"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/pem_a8",
+    "fetch",
+    "-q",
+    "origin",
+    "d36e7567e8a7869c0d7b84955b4139ab0e782af0"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/pem_a8",
+    "reset",
+    "-q",
+    "--hard",
+    "d36e7567e8a7869c0d7b84955b4139ab0e782af0"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/pem_a8",
+    "clean",
+    "-fdx",
+    "-q"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/pem_a8",
+    "rev-parse",
+    "HEAD"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/pem_a8",
+    "remote",
+    "get-url",
+    "origin"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/pem_a8",
+    "status",
+    "--porcelain"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "clone",
+    "https://github.com/LauraHerold/CMBanom.git",
+    "/content/CMBanom"
+   ],
+   "stderr": "Cloning into '/content/CMBanom'...\nUpdating files:  72% (90/124)\nUpdating files:  73% (91/124)\nUpdating files:  74% (92/124)\nUpdating files:  75% (93/124)\nUpdating files:  76% (95/124)\nUpdating files:"
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBanom",
+    "rev-parse",
+    "--is-shallow-repository"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBanom",
+    "fetch",
+    "-q",
+    "origin",
+    "aaf8137427d54ce4c77e59734391aca491a4a8db"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBanom",
+    "reset",
+    "-q",
+    "--hard",
+    "aaf8137427d54ce4c77e59734391aca491a4a8db"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBanom",
+    "clean",
+    "-fdx",
+    "-q"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBanom",
+    "rev-parse",
+    "HEAD"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBanom",
+    "remote",
+    "get-url",
+    "origin"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/CMBanom",
+    "status",
+    "--porcelain"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "clone",
+    "https://github.com/tsujikeita/mirror-topology.git",
+    "/content/mt_a8"
+   ],
+   "stderr": "Cloning into '/content/mt_a8'..."
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a8",
+    "rev-parse",
+    "--is-shallow-repository"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a8",
+    "fetch",
+    "-q",
+    "origin",
+    "5ad38e12c4d769f3ddbfb95b2cff18d959bfc0e7"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a8",
+    "reset",
+    "-q",
+    "--hard",
+    "5ad38e12c4d769f3ddbfb95b2cff18d959bfc0e7"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a8",
+    "clean",
+    "-fdx",
+    "-q"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a8",
+    "rev-parse",
+    "HEAD"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a8",
+    "remote",
+    "get-url",
+    "origin"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a8",
+    "status",
+    "--porcelain"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a8",
+    "fetch",
+    "-q",
+    "origin",
+    "main"
+   ],
+   "stderr": ""
+  },
+  {
+   "cmd": [
+    "git",
+    "-C",
+    "/content/mt_a8",
+    "rev-parse",
+    "origin/main"
+   ],
+   "stderr": ""
+  }
+ ],
+ "outputs": {
+  "validation_csv_sha256": "de3af2bcbf2e8e13b11e17bef225a52c741b80a9da836129c3544c8b1b5df3d8"
+ }
+}

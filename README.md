@@ -18,6 +18,7 @@ result of every hard gate.
 | **T2a** — harmonic closed form & multipole decomposition | `MirrorTopology_T2a_analytic_v1.3_audited.ipynb` | `docs/T2a_audit_rules_v1.3.md` | `t2a-audit-v1.0` | **FROZEN** |
 | **T2b-2** — twisted-channel sign map (production grid) | `MirrorTopology_T2b2_signmap_v0.9.ipynb` | `docs/T2b2_decision_rules_frozen_v0.3.md` | — | production complete |
 | **Step 0** — frozen observational values | `results/step0_v0.7/MirrorTopology_Step0_official_v0.7.ipynb` | — | — | official run complete |
+| **Step 1 A8** — hybrid ℓ≤16 feature stack (A8a) & scan benchmark (A8b) | `results/step1_phaseA/A8_freeze/MirrorTopology_Step1_A8a_featurestack_v1.1.2.ipynb`, `…/MirrorTopology_Step1_A8b_scan_benchmark_v1.1.8.ipynb` | `results/step1_phaseA/A8_freeze/A8_rules_v1.0.md` | `step1-phaseA-A8-freeze-v1.0` | **FROZEN** (engineering; S2 scientific adoption HOLD) |
 
 Shared, frozen library code (do not edit; referenced by hash from the notebooks above):
 
@@ -35,6 +36,7 @@ Frozen outputs live under `results/<stage>/` together with the full execution lo
 - `results/step0_v0.7/` — `step0_official_v0_7.csv` (the ten frozen observational rows),
   `step0_gateA_permap_v0_7.csv`, `step0_null_arrays_v0_7.npz`, `step0_provenance_v0_7.json`,
   **and the notebook that produced them**, `MirrorTopology_Step0_official_v0.7.ipynb`
+- `results/step1_phaseA/A8_freeze/` — A8a feature-stack provenance/validation, A8b benchmark outputs (smoke, official, and the kept v1.1.5 FAILED smoke with its amendment report), `freeze_manifest.json`; the 1.5 GB F16 `.npy` files are bound by SHA256 in `F16_EXTERNAL_ARTIFACTS.md`
 
 Each provenance JSON contains the notebook's **source-only SHA256** (a hash of the code cells
 alone, invariant under editor whitespace normalisation and output autosave), so any third party

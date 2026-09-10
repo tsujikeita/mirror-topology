@@ -1,0 +1,168 @@
+■1番目のセルの出力-------------------------------------------------------
+Mounted at /content/drive
+{'G_mt_commit': True, 'G_mt_origin': True, 'G_mt_clean': True, 'G_t2b2_run_sha': True, 'G_notebook_head_available': True, 'G_a8a_status': True, 'G_a8a_manifest_sha': True, 'G_a8a_manifest_embedded_equal': True, 'G_F16_file_sha': True, 'G_a5_bstack_file_sha': True, 'G_colab_runtime': True, 'G_parent_failed_smoke_binding': True, 'G_parent_failed_smoke_artifacts': True, 'G_F16_array_sha_local': True}
+float32 eligible (A8a): event True / axis True -> selection float32 allowed: True
+{
+ "python": "3.13.15",
+ "numpy": "2.1.3",
+ "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+ "cpu_model": "AMD EPYC 7B12",
+ "cpu_logical": 2,
+ "cpu_affinity": 2,
+ "threads_registered": 2,
+ "ram_GB": 13.61,
+ "swap_GB": 0.0,
+ "threadpools_parent": [
+  {
+   "internal_api": "openblas",
+   "num_threads": 2,
+   "version": "0.3.27"
+  }
+ ],
+ "gpu": "none"
+}
+preflight OK: {'G_parent_failed_smoke_binding': True, 'G_parent_failed_smoke_artifacts': True, 'G_antipode_map_involution': True, 'G_antipode_map_expected_sha': True, 'G_eventB_thresholds_bound': True, 'G_plane_equivalence_gate_selftest': True}
+
+
+■2番目のセルの出力-------------------------------------------------------
+child ready 4cfd7c0976ba / threads 2
+
+
+■3番目のセルの出力-------------------------------------------------------
+[pilot   ] l24_direct_einsum        sel=float64 N=    4000 ch= 1000 ab=   - production     0.44s (scan 0.43 eval64 0.02) +0.06GB
+[pilot   ] l24_direct_einsum        sel=float64 N=    4000 ch= 2000 ab=   - production     0.73s (scan 0.69 eval64 0.04) +0.10GB
+[pilot   ] l24_feature231           sel=float64 N=    4000 ch= 1000 ab=   - production     0.28s (scan 0.27 eval64 0.01) +0.07GB
+[pilot   ] l24_feature231           sel=float64 N=    4000 ch= 2000 ab=   - production     0.39s (scan 0.35 eval64 0.04) +0.10GB
+[pilot   ] s2_feature               sel=float64 N=     512 ch=  128 ab=3072 production     5.49s (scan 5.49 eval64 0.00) +2.02GB
+[pilot   ] s2_feature               sel=float64 N=     512 ch=  256 ab=3072 production     3.43s (scan 3.43 eval64 0.00) +2.01GB
+[pilot   ] l24_direct_einsum        sel=float32 N=    4000 ch= 1000 ab=   - production     0.15s (scan 0.14 eval64 0.01) +0.05GB
+[pilot   ] l24_direct_einsum        sel=float32 N=    4000 ch= 2000 ab=   - production     0.15s (scan 0.14 eval64 0.01) +0.07GB
+[pilot   ] l24_feature231           sel=float32 N=    4000 ch= 1000 ab=   - production     0.08s (scan 0.07 eval64 0.01) +0.05GB
+[pilot   ] l24_feature231           sel=float32 N=    4000 ch= 2000 ab=   - production     0.08s (scan 0.07 eval64 0.01) +0.07GB
+[pilot   ] s2_feature               sel=float32 N=     512 ch=  128 ab=3072 production     3.25s (scan 3.25 eval64 0.00) +1.01GB
+[pilot   ] s2_feature               sel=float32 N=     512 ch=  256 ab=3072 production     1.73s (scan 1.73 eval64 0.00) +1.03GB
+[pilot   ] l24_diagnostic_full_Spm  sel=float64 N=    4000 ch= 2000 ab=   - production     0.57s (scan 0.56 eval64 0.01) +0.16GB
+[finalist] l24_direct_einsum        sel=float64 N=    1000 ch= 1000 ab=   - production     0.07s (scan 0.07 eval64 0.00) +0.06GB
+[finalist] l24_direct_einsum        sel=float64 N=    1000 ch= 2000 ab=   - production     0.07s (scan 0.07 eval64 0.00) +0.06GB
+[finalist] l24_feature231           sel=float64 N=    1000 ch= 1000 ab=   - production     0.04s (scan 0.04 eval64 0.00) +0.07GB
+[finalist] l24_feature231           sel=float64 N=    1000 ch= 2000 ab=   - production     0.05s (scan 0.04 eval64 0.00) +0.07GB
+[finalist] s2_feature               sel=float64 N=    1000 ch=  256 ab=3072 production     8.31s (scan 8.30 eval64 0.00) +2.02GB
+[finalist] s2_feature               sel=float64 N=    1000 ch=  128 ab=3072 production     8.36s (scan 8.35 eval64 0.01) +2.03GB
+[finalist] l24_direct_einsum        sel=float32 N=    1000 ch= 2000 ab=   - production     0.04s (scan 0.03 eval64 0.00) +0.05GB
+[finalist] l24_direct_einsum        sel=float32 N=    1000 ch= 1000 ab=   - production     0.04s (scan 0.03 eval64 0.00) +0.05GB
+[finalist] l24_feature231           sel=float32 N=    1000 ch= 2000 ab=   - production     0.02s (scan 0.02 eval64 0.00) +0.05GB
+[finalist] l24_feature231           sel=float32 N=    1000 ch= 1000 ab=   - production     0.02s (scan 0.02 eval64 0.00) +0.05GB
+[finalist] s2_feature               sel=float32 N=    1000 ch=  256 ab=3072 production     3.84s (scan 3.83 eval64 0.00) +1.03GB
+[finalist] s2_feature               sel=float32 N=    1000 ch=  128 ab=3072 production     4.05s (scan 4.05 eval64 0.01) +1.00GB
+[winner  ] l24_direct_einsum        sel=float64 N=    2000 ch= 1000 ab=   - production     0.15s (scan 0.14 eval64 0.01) +0.06GB
+[winner  ] l24_feature231           sel=float64 N=    2000 ch= 1000 ab=   - production     0.09s (scan 0.08 eval64 0.01) +0.07GB
+[winner  ] s2_feature               sel=float64 N=     512 ch=  128 ab=3072 production     4.36s (scan 4.35 eval64 0.00) +2.02GB
+[winner  ] l24_direct_einsum        sel=float32 N=    2000 ch= 1000 ab=   - production     0.10s (scan 0.09 eval64 0.01) +0.05GB
+[winner  ] l24_feature231           sel=float32 N=    2000 ch= 2000 ab=   - production     0.05s (scan 0.04 eval64 0.00) +0.06GB
+[winner  ] s2_feature               sel=float32 N=     512 ch=  256 ab=3072 production     1.76s (scan 1.75 eval64 0.00) +0.99GB
+CPU stages done 2.8 min
+
+
+■4番目のセルの出力-------------------------------------------------------
+GPU status: unavailable
+
+
+■5番目のセルの出力-------------------------------------------------------
+   stage                   route selection_dtype    N  chunk  axis_block status  scan_s  eval64_s  production_s_median  per_1e6_min  peak_increment_GB  eligible
+   pilot       l24_direct_einsum         float64 4000   1000         NaN     ok   0.425    0.0182                0.444         1.85             0.0614      True
+   pilot       l24_direct_einsum         float64 4000   2000         NaN     ok   0.689     0.036                0.725         3.02             0.0951      True
+   pilot          l24_feature231         float64 4000   1000         NaN     ok   0.272     0.012                0.284         1.18             0.0656      True
+   pilot          l24_feature231         float64 4000   2000         NaN     ok   0.355    0.0353                 0.39         1.62             0.0989      True
+   pilot              s2_feature         float64  512    128    3.07e+03     ok    5.49   0.00297                 5.49          179               2.02      True
+   pilot              s2_feature         float64  512    256    3.07e+03     ok    3.43   0.00183                 3.43          112               2.01      True
+   pilot       l24_direct_einsum         float32 4000   1000         NaN     ok   0.143   0.00903                0.152        0.632             0.0489      True
+   pilot       l24_direct_einsum         float32 4000   2000         NaN     ok   0.137   0.00874                0.146        0.607             0.0661      True
+   pilot          l24_feature231         float32 4000   1000         NaN     ok  0.0716   0.00778               0.0794        0.331             0.0509      True
+   pilot          l24_feature231         float32 4000   2000         NaN     ok  0.0705   0.00747                0.078        0.325             0.0659      True
+   pilot              s2_feature         float32  512    128    3.07e+03     ok    3.25   0.00285                 3.25          106               1.01      True
+   pilot              s2_feature         float32  512    256    3.07e+03     ok    1.73   0.00195                 1.73         56.3               1.03      True
+   pilot l24_diagnostic_full_Spm         float64 4000   2000         NaN     ok   0.564   0.00887                0.573         2.39              0.155      True
+finalist       l24_direct_einsum         float64 1000   1000         NaN     ok  0.0713   0.00313               0.0749         1.25             0.0578      True
+finalist       l24_direct_einsum         float64 1000   2000         NaN     ok  0.0713   0.00283               0.0736         1.23              0.058      True
+finalist          l24_feature231         float64 1000   1000         NaN     ok  0.0381   0.00202                 0.04        0.667             0.0657      True
+finalist          l24_feature231         float64 1000   2000         NaN     ok  0.0442   0.00213               0.0463        0.772             0.0658      True
+finalist              s2_feature         float64 1000    256    3.07e+03     ok     8.3   0.00342                 8.31          138               2.02      True
+finalist              s2_feature         float64 1000    128    3.07e+03     ok    8.35   0.00563                 8.36          139               2.03      True
+finalist       l24_direct_einsum         float32 1000   2000         NaN     ok  0.0331   0.00245               0.0355        0.592              0.047      True
+finalist       l24_direct_einsum         float32 1000   1000         NaN     ok  0.0349   0.00213                0.037        0.617              0.047      True
+finalist          l24_feature231         float32 1000   2000         NaN     ok  0.0196   0.00259               0.0217        0.362             0.0507      True
+finalist          l24_feature231         float32 1000   1000         NaN     ok  0.0229   0.00228               0.0249        0.414             0.0507      True
+finalist              s2_feature         float32 1000    256    3.07e+03     ok    3.83   0.00408                 3.84           64               1.03      True
+finalist              s2_feature         float32 1000    128    3.07e+03     ok    4.05    0.0061                 4.05         67.6              0.996      True
+  winner       l24_direct_einsum         float64 2000   1000         NaN     ok    0.14   0.00584                0.146         1.22             0.0614      True
+  winner          l24_feature231         float64 2000   1000         NaN     ok  0.0848   0.00535               0.0904        0.754             0.0657      True
+  winner              s2_feature         float64  512    128    3.07e+03     ok    4.35   0.00454                 4.36          142               2.02      True
+  winner       l24_direct_einsum         float32 2000   1000         NaN     ok  0.0947    0.0066                0.102        0.846             0.0488      True
+  winner          l24_feature231         float32 2000   2000         NaN     ok  0.0428   0.00395               0.0468         0.39             0.0639      True
+  winner              s2_feature         float32  512    256    3.07e+03     ok    1.75    0.0024                 1.76         57.2              0.991      True
+
+ROUTE_DECISION: {
+ "l24": {
+  "route": "l24_feature231",
+  "selection_dtype": "float32",
+  "evaluation_dtype": "float64",
+  "sample_chunk": 2000,
+  "axis_block": null,
+  "threads": 2,
+  "measured_N": 2000,
+  "minutes_per_1e6": 0.39019276666749647,
+  "minutes_per_1e6_scan_only": 0.3567784333332232,
+  "minutes_per_1e6_end_to_end": 0.40112259166752057,
+  "measured_or_extrapolated_1e6": "extrapolated_from_2000",
+  "peak_increment_GB": 0.06391808,
+  "peak_run_increment_GB": 0.06391808,
+  "peak_setup_GB": 0.065265664,
+  "fallback_tiers": [
+   {
+    "chunk": 1000,
+    "axis_block": null,
+    "measured_N": 4000
+   }
+  ],
+  "residency": "resident"
+ },
+ "s2": {
+  "baseline_cpu": {
+   "route": "s2_feature",
+   "selection_dtype": "float32",
+   "evaluation_dtype": "float64",
+   "sample_chunk": 256,
+   "axis_block": 3072,
+   "threads": 2,
+   "measured_N": 512,
+   "minutes_per_1e6": 57.21184339192072,
+   "minutes_per_1e6_scan_only": 57.12397493489174,
+   "minutes_per_1e6_end_to_end": 57.28980501302031,
+   "measured_or_extrapolated_1e6": "extrapolated_from_512",
+   "peak_increment_GB": 0.990879744,
+   "peak_run_increment_GB": 0.58048512,
+   "peak_setup_GB": 1.025306624,
+   "fallback_tiers": [
+    {
+     "chunk": 128,
+     "axis_block": 3072,
+     "measured_N": 1000
+    }
+   ],
+   "residency": "resident"
+  },
+  "optional_gpu": null,
+  "production_device": "cpu",
+  "gpu_adoption_rule": "A8a both flags and CPU S2 f32-vs-f64 PASS and GPU ok and adopted config cross-check PASS and gpu_eligible (consistent hashes, finite timings, threads registered, peak_reserved <= 65% VRAM); optional 1e6 by linearity(<1.2)+budget"
+ },
+ "float32_eligibility": {
+  "event": true,
+  "axis": true,
+  "unified_requirement": "both"
+ },
+ "evaluation_dtype": "float64 (frozen, A5 specification)",
+ "dtype_rule": "route-specific: floa
+STATUS = SMOKE_PASS
+
+
+
