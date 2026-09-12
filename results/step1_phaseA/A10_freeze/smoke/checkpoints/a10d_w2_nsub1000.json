@@ -1,0 +1,296 @@
+{
+ "n_sub": 1000,
+ "clusters_per_sample": 100,
+ "selection_sensitivity": {
+  "delta_q99_bound": 0.0,
+  "null_bound_median": 0.0,
+  "decision_margin_ok_per_seed": [
+   true,
+   true,
+   true
+  ],
+  "rule": "|W2_max - q99| > observed perturbation bound + delta_q99_bound => the above/below-q99 decision cannot change under the float32 selection path"
+ },
+ "primary_independent": {
+  "observed": {
+   "seed0": {
+    "pairwise": {
+     "P1P2": 0.2543185720304656,
+     "P1P3": 0.271161828869208,
+     "P2P3": 0.276096542686777
+    },
+    "W2_max": 0.276096542686777,
+    "eps_subset": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "W2max_perturbation_bound": 0.0
+   },
+   "seed1": {
+    "pairwise": {
+     "P1P2": 0.24865959535548454,
+     "P1P3": 0.24277315845927777,
+     "P2P3": 0.25291005580165593
+    },
+    "W2_max": 0.25291005580165593,
+    "eps_subset": [
+     1.894542325920147e-06,
+     0.0,
+     0.0
+    ],
+    "W2max_perturbation_bound": 1.894542325920147e-06
+   },
+   "seed2": {
+    "pairwise": {
+     "P1P2": 0.2408698808603765,
+     "P1P3": 0.28913113250086725,
+     "P2P3": 0.2672476945039498
+    },
+    "W2_max": 0.28913113250086725,
+    "eps_subset": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "W2max_perturbation_bound": 0.0
+   }
+  },
+  "finite_pool_exceedance": [
+   0.09090909090909091,
+   0.18181818181818182,
+   0.09090909090909091
+  ],
+  "decision_above_q99": [
+   true,
+   false,
+   true
+  ]
+ },
+ "diagnostic_crn": {
+  "observed": {
+   "seed0": {
+    "pairwise": {
+     "P1P2": 0.18481822935050218,
+     "P1P3": 0.16274556934265327,
+     "P2P3": 0.16097801210059182
+    },
+    "W2_max": 0.18481822935050218,
+    "eps_subset": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "W2max_perturbation_bound": 0.0
+   },
+   "seed1": {
+    "pairwise": {
+     "P1P2": 0.1754160417659536,
+     "P1P3": 0.16409631078439732,
+     "P2P3": 0.14779933330847764
+    },
+    "W2_max": 0.1754160417659536,
+    "eps_subset": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "W2max_perturbation_bound": 0.0
+   },
+   "seed2": {
+    "pairwise": {
+     "P1P2": 0.1624277551508585,
+     "P1P3": 0.1500319887436667,
+     "P2P3": 0.14651325731333795
+    },
+    "W2_max": 0.1624277551508585,
+    "eps_subset": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "W2max_perturbation_bound": 0.0
+   }
+  },
+  "conservative_exceedance": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "note": "CRN estimator vs independent-sample null: conservative scale reference, not an exact MC p"
+ },
+ "binding": "0614b30ef331ae1fec9aaffe1bfa86f3fd8999d2bda301f276def004dc23657c",
+ "binding_payload": {
+  "notebook_source": "731cb898c777d909c1d310e66731dcb78aeb1caefbf1be5582eaf0a3c97eb0a0",
+  "live_source": "81e36752ce336a2e4b1ae6dc2f797f03aea81a32035e2db301c17eb1ff483687",
+  "versions": {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "pandas": "2.2.3",
+   "pot": "0.9.7.post1"
+  },
+  "threads": 2,
+  "threads_live": [
+   {
+    "api": "blas",
+    "lib": "openblas",
+    "n": 2,
+    "file": "libscipy_openblas64_-ff651d7f.so",
+    "version": "0.3.27"
+   },
+   {
+    "api": "openmp",
+    "lib": "openmp",
+    "n": 2,
+    "file": "libgomp-e985bcbb.so.1.0.0",
+    "version": null
+   },
+   {
+    "api": "blas",
+    "lib": "openblas",
+    "n": 2,
+    "file": "libscipy_openblas-b75cc656.so",
+    "version": "0.3.29.dev"
+   },
+   {
+    "api": "openmp",
+    "lib": "openmp",
+    "n": 2,
+    "file": "libgomp.so.1",
+    "version": null
+   },
+   {
+    "api": "blas",
+    "lib": "openblas",
+    "n": 2,
+    "file": "libopenblasp-r0-59ffcd50.3.15.so",
+    "version": "0.3.15"
+   },
+   {
+    "api": "openmp",
+    "lib": "openmp",
+    "n": 2,
+    "file": "libgomp-a34b3233.so.1.0.0",
+    "version": null
+   },
+   {
+    "api": "openmp",
+    "lib": "openmp",
+    "n": 2,
+    "file": "libgomp-870cb1d0.so.1.0.0",
+    "version": null
+   },
+   {
+    "api": "blas",
+    "lib": "openblas",
+    "n": 1,
+    "file": "libopenblas-r0-11edc3fa.3.15.so",
+    "version": "0.3.15"
+   }
+  ],
+  "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+  "cpu": "x86_64",
+  "asset_sha": {
+   "bstack": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",
+   "a5_null": "d0de2cf6643ff19e134567616f243298b2cc83dd081032949984c1c6abfa2b9e",
+   "a5_prov": "33765464cd4f4bea67e78fddb769e92ccbea38e68f6ec74778a203309971ba80",
+   "a9_prov": "09c03219f43ce69368c238ab61567c3e804a45302386485820b45534539d16ef",
+   "a9_manifest": "4b454a157b0bdbed4a6c8856b750bb0a8951f042c56a596a4971a1bc092e2c9a",
+   "a9_script": "2905c036a04a04e33672a07ba464d95ae6a669c8ea7b918f17a6813e864dde2c",
+   "a8_manifest": "3384c9c5994a8c656ca1c868ff60156ad7e627a038bfeffe320972a6fc72e031",
+   "a8b_prov": "a5314043e025a00ffe7ca6d89985bb1b6064e398bc9ef911de7348d601c85d6a",
+   "a11_manifest": "6000d7b7049dc5232f3e87daab2d4e56cb069cd15145f252ba4a548bf94df981",
+   "cov_P1": "27e2bb589722526a40ddeca1b738f6c58edb1c8efd39672b0f7080d8de133308",
+   "cov_P2": "727772a10af23118f4cb4c725af369578c1d3ac9d52d0cb641e4fc6399c29219",
+   "cov_P3": "dbec1b921c3d74847095d364c04222f795c59ce4eb86686817e70d7d861d53fe",
+   "step0_npz": "5bf6e5167995515c5f0a38f4e126ca252bbf8a28e7e6c90fe0d167481871e0f0",
+   "step0_csv": "6ed885d10a6455995b342152e71cd14f79c87b84ff6fb9539b3ebd4f61e551cb"
+  },
+  "IND_sha": [
+   "000ec38f1086d12ef4b46e218e5e56e610d8ca740cd73fdc516d79d67030abba",
+   "40a24aaf20977dfbb743da840ced527a16d3ebb019ab291dfaf1b8199f0555a8",
+   "06ffc2d7f2353d5b00905190fe81bb430b74a1dc3db708b3e4c5687bc8640929"
+  ],
+  "CRN_sha": [
+   "e972aa85f45905656508d586a2d4efcdcb4a283fa8c88e57a760852319b0c2fe",
+   "d6cea254a51934688217e59fda1e38737147c0bb6bb183e9049c213aed3ea6b6",
+   "f211e2349d84a126595f7383936d6d119fed863181401cb0956ea2e320d3378a"
+  ],
+  "TwI_sha": "b711a14377be2e80d9e0508aa2e7f7f7f272078de2303fa791a65ee05346d268",
+  "config": {
+   "N": 20000,
+   "N_CAL": 20000,
+   "N_PSEUDO": 50,
+   "B_BOOT": 300,
+   "B_NULL": 10,
+   "N_SUB_W2": [
+    1000,
+    2000
+   ],
+   "N_W2_POOL": 8000,
+   "N_FIT": 5000
+  },
+  "seed": 20260912,
+  "adopted_m": 10,
+  "production": {
+   "route": "l24_feature231",
+   "selection_dtype": "float64",
+   "evaluation_dtype": "float64",
+   "sample_chunk": 2000,
+   "sample_chunk_sensitivity": 20000,
+   "threads": 2,
+   "primary": "float64",
+   "sensitivity": "float32",
+   "a8b_winners": {
+    "float64": {
+     "chunk": 2000,
+     "N": 1000000,
+     "production_s_median": 76.65821095789943,
+     "peak_increment_GB": 0.09900032
+    },
+    "float32": {
+     "chunk": 20000,
+     "N": 1000000,
+     "production_s_median": 39.30793997899673,
+     "peak_increment_GB": 0.33275904
+    }
+   },
+   "supersede_note": "A10 supersedes the l2-4 selection dtype only (float32 -> float64, cost ~1.3 min/1e6) on stress evidence: non-antipodal near-tie flips and antipodal flips with T2 rel diff up to 5e-3; A8b benchmark stays valid; S2 keeps float32"
+  },
+  "mt_commit": "1bdd9ea8a00891d6dc3622331f6dad5b86c16c89",
+  "mu_c_sha": "6004dc474d1c6383a4234272d29ba0b4b2c2ed015e8028451d26d9b24a45cc1c",
+  "Sih_sha": "33ab0b7976385eeebbb3e2e7a059f1cb8cb7e123e7686063fc1d9e6c03e4e03f",
+  "S_POS_sha": [
+   "230e4c6801b32b8a2232cff3290d35b9abfdba17243e817a140a8a163428a499",
+   "776090a459287c268542f9a8756c927011f5ad093856bfddbb296f1d8c2586f7",
+   "6f0fa1d1f1da7ea9308fe14341faa9bcab469cca93553097ff9af832fbbee2ff"
+  ],
+  "S_I_sha": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c",
+  "mode": "smoke",
+  "n_sub": 1000
+ },
+ "emd_warnings_nsub": 0,
+ "null": {
+  "B": 10,
+  "q99_method_higher": 0.25517736965151266,
+  "q95": 0.25517736965151266,
+  "median": 0.23470506909627573,
+  "max": 0.25517736965151266,
+  "pool_reuse": "finite pool; blocks disjoint within a replicate, re-permuted when exhausted"
+ },
+ "null_values": [
+  0.22721201698849017,
+  0.24717954917215765,
+  0.2226581174808958,
+  0.22142462537406554,
+  0.2405609806537458,
+  0.25517736965151266,
+  0.22884915753880566,
+  0.2410754117954206,
+  0.2242323077212958,
+  0.24441773915294931
+ ],
+ "emd_warnings": 0
+}

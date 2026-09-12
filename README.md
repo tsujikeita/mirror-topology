@@ -19,6 +19,7 @@ result of every hard gate.
 | **T2b-2** — twisted-channel sign map (production grid) | `MirrorTopology_T2b2_signmap_v0.9.ipynb` | `docs/T2b2_decision_rules_frozen_v0.3.md` | — | production complete |
 | **Step 0** — frozen observational values | `results/step0_v0.7/MirrorTopology_Step0_official_v0.7.ipynb` | — | — | official run complete |
 | **Step 1 A8** — hybrid ℓ≤16 feature stack (A8a) & scan benchmark (A8b) | `results/step1_phaseA/A8_freeze/MirrorTopology_Step1_A8a_featurestack_v1.1.2.ipynb`, `…/MirrorTopology_Step1_A8b_scan_benchmark_v1.1.8.ipynb` | `results/step1_phaseA/A8_freeze/A8_rules_v1.0.md` | `step1-phaseA-A8-freeze-v1.0` | **FROZEN** (engineering; S2 scientific adoption HOLD) |
+| **Step 1 A10** — W₂ estimator, orientation-cluster m, calibration pathway | `results/step1_phaseA/A10_freeze/MirrorTopology_Step1_A10_v1.2.9.ipynb` | `results/step1_phaseA/A10_freeze/A10_rules_v1.0.md` | `step1-phaseA-A10-freeze-v1.0` | **FROZEN** (design/estimator; global calibration & final W₂ threshold not frozen) |
 
 Shared, frozen library code (do not edit; referenced by hash from the notebooks above):
 

@@ -1,0 +1,30 @@
+■1番目のセルの出力-------------------------------------------------------
+Mounted at /content/drive
+threadpools: [{'api': 'blas', 'lib': 'openblas', 'n': 2, 'file': 'libscipy_openblas64_-ff651d7f.so', 'version': '0.3.27'}, {'api': 'openmp', 'lib': 'openmp', 'n': 2, 'file': 'libgomp-e985bcbb.so.1.0.0', 'version': None}, {'api': 'blas', 'lib': 'openblas', 'n': 2, 'file': 'libscipy_openblas-b75cc656.so', 'version': '0.3.29.dev'}, {'api': 'openmp', 'lib': 'openmp', 'n': 2, 'file': 'libgomp.so.1', 'version': None}, {'api': 'blas', 'lib': 'openblas', 'n': 2, 'file': 'libopenblasp-r0-59ffcd50.3.15.so', 'version': '0.3.15'}, {'api': 'openmp', 'lib': 'openmp', 'n': 2, 'file': 'libgomp-a34b3233.so.1.0.0', 'version': None}, {'api': 'openmp', 'lib': 'openmp', 'n': 2, 'file': 'libgomp-870cb1d0.so.1.0.0', 'version': None}, {'api': 'blas', 'lib': 'openblas', 'n': 1, 'file': 'libopenblas-r0-11edc3fa.3.15.so', 'version': '0.3.15'}]
+A10a ENGINE_VALID | mode official | MT 1bdd9ea8a008 | threads [{'api': 'blas', 'lib': 'openblas', 'n': 2, 'file': 'libscipy_openblas64_-ff651d7f.so', 'version': '0.3.27'}, {'api': 'openmp', 'lib': 'openmp', 'n': 2, 'file': 'libgomp-e985bcbb.so.1.0.0', 'version': None}, {'api': 'blas', 'lib': 'openblas', 'n': 2, 'file': 'libscipy_openblas-b75cc656.so', 'version': '0.3.29.dev'}, {'api': 'openmp', 'lib': 'openmp', 'n': 2, 'file': 'libgomp.so.1', 'version': None}, {'api': 'blas', 'lib': 'openblas', 'n': 2, 'file': 'libopenblasp-r0-59ffcd50.3.15.so', 'version': '0.3.15'}, {'api': 'openmp', 'lib': 'openmp', 'n': 2, 'file': 'libgomp-a34b3233.so.1.0.0', 'version': None}, {'api': 'openmp', 'lib': 'openmp', 'n': 2, 'file': 'libgomp-870cb1d0.so.1.0.0', 'version': None}, {'api': 'blas', 'lib': 'openblas', 'n': 1, 'file': 'libopenblas-r0-11edc3fa.3.15.so', 'version': '0.3.15'}] | versions {'python': '3.13.15', 'numpy': '2.1.3', 'scipy': '1.16.3', 'healpy': '1.20.0', 'pandas': '2.2.3', 'pot': '0.9.7.post1'} mismatch {}
+   calibration: T1_med 120.4 (A5 118.5 CI [115.4, 122.8]) P(T1<=obs) 0.0149 (A5 15/1000) P(E_B) 0.0037 (A5 4/1000) f32/f64 flip 0.0086 (14s)
+
+
+■2番目のセルの出力-------------------------------------------------------
+m10_rep1: K=100000 P_M=0.00492 P_I=0.00365 Q=1.3464804163242947 CI=[1.308, 1.383] relh=0.028 ev+ M/I=4808/3591 prec=True | f32sel Q=1.3464804163242947 | 216s
+m10_rep2: K=100000 P_M=0.00481 P_I=0.00370 Q=1.2994060475161986 CI=[1.266, 1.337] relh=0.027 ev+ M/I=4705/3624 prec=True | f32sel Q=1.2994060475161986 | 209s
+m100_rep1: K=10000 P_M=0.00493 P_I=0.00370 Q=1.3304535637149029 CI=[1.293, 1.366] relh=0.028 ev+ M/I=3915/3111 prec=True | f32sel Q=1.3304535637149029 | 137s
+m100_rep2: K=10000 P_M=0.00487 P_I=0.00373 Q=1.3043944265809218 CI=[1.268, 1.34] relh=0.028 ev+ M/I=3861/3089 prec=True | f32sel Q=1.3043944265809218 | 138s
+m decision: {'DELTA_M': 0.09531017980432493, 'DELTA_M_rationale': 'Engineering tolerance, not derived: coarsening the orientation clustering to m=100 is accepted if the multiplicative discrepancy of the support ratio Q is within 10%, i.e. below the Phase A Monte Carlo design differences. Near the decision thresholds Q=3/10 a 10% difference can change a verdict; the full grid (Phase B/C) must additionally record that no threshold crossing arises from the m choice.', 'per_m': {10: {'finite': True, 'precise': True, 'consistent': True, 'usable': True}, 100: {'finite': True, 'precise': True, 'consistent': True, 'usable': True}}, 'diff_logCI_rep1': [-0.0501407653365417, 0.028151628757441653], 'diff_logCI_rep2': [-0.03616027427374777, 0.04297200080234133], 'diff_logCI_pooled': [-0.03274324050386514, 0.024416982204176742], 'equivalence_established': True, 'equivalence_verdict_5_bootstrap_seeds': [True, True, True, True, True], 'zero_in_all_CIs': True, 'point_diff_rep1': -0.011974179583002842, 'point_diff_rep2': 0.0038316186031440713, 'replicate_delta_logQ_m10': 0.03558681549324927, 'replicate_delta_logQ_m100': 0.019781017307102355, 'precision': {'m10_rep1': True, 'm10_rep2': True, 'm100_rep1': True, 'm100_rep2': True}, 'adopted_m': 100, 'reason': 'm=100 practically equivalent to m=10 within the pre-registered margin; both usable'} | status True
+
+
+■3番目のセルの出力-------------------------------------------------------
+A10c pathway: {'one_point_false_support_frequency': 0.0, 'negative_control': {'support_rate': 0.0, 'Q_median': 0.9998529576576392, 'bootstrap': 'independent numerator/denominator weights'}, 'positive_control': {'support_rate_at_pseudo': 0.15, 'Q_median_at_pseudo': 3.5103379076423598, 'Q_at_observed': 97.91144708423326, 'Q_lowerCI_at_observed': 94.97034769978171, 'D_at_observed': 17.585798460292565, 'logD_at_observed': 2.867091670655304, 'logD_pseudo_min': -771.7349980289829, 'logD_pseudo_max': 3.830115628129384, 'density_ratio': 'log-space (gaussian_kde.logpdf); v1.2.8 Colab official failed the control inventory because the boosted-KDE pdf underflowed to 0 at far-tail pseudo thresholds', 'note': 'at central pseudo thresholds the ratio is capped by 1/P_iso, so the control is evaluated at the observed (tail) thresholds', 'construction': 'isotropic sample with T1 and T2 scaled by 0.35 (synthetic boosted Event B), same clusters'}, 'Q_pseudo_median': 1.051195403253442} | status True
+
+
+■4番目のセルの出力-------------------------------------------------------
+W2 n_sub=2000: primary W2_max [0.2241, 0.2122, 0.2005] finite-pool exceedance [0.014925373134328358, 0.07462686567164178, 0.1791044776119403] | CRN W2_max [0.1324, 0.1494, 0.1308] | null q99 0.2364 median 0.1822 (337s)
+W2 n_sub=5000: primary W2_max [0.1348, 0.1527, 0.1487] finite-pool exceedance [0.208955223880597, 0.01990049751243781, 0.029850746268656716] | CRN W2_max [0.1015, 0.0973, 0.1094] | null q99 0.1647 median 0.1273 (2581s)
+A10d status True
+
+
+■5番目のセルの出力-------------------------------------------------------
+STATUS = A10_VALID | required gates 61 / 61 (official would require 61 ) | components {'ENGINE_VALID': True, 'M_SENSITIVITY_RESOLVED': True, 'CALIBRATION_PATH_VALID': True, 'W2_PATHWAY_VALID': True} | provenance SHA bf5deec02568fa5c
+
+
+

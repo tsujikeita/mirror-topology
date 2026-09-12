@@ -1,0 +1,70 @@
+{
+ "CAL": {
+  "status_name": "one_point_one_system_calibration_pathway_prototype",
+  "NOT": "familywise global calibration (requires all families, both systems, family prior integration, n_pseudo >= 2000 or precision stopping; Phase B/C engine)",
+  "model_point": "E7_b1_A x0(1), PR3-power-matched",
+  "m": 10,
+  "n_pseudo": 50,
+  "event": "Event B with 2D pseudo thresholds (T1 <= T1_pseudo and T2 <= T2_pseudo)",
+  "method": "sorted-T1 searchsorted + per-cluster counts; one shared cluster-resampling matrix (B x K) for every pseudo; Q lower CI = 2.5% percentile; D = KDE point estimate (fitting subsample separate from evaluation)",
+  "one_point_false_support_frequency": 0.0,
+  "one_point_false_support_wilson": [
+   0.0,
+   0.07134760017861413
+  ],
+  "one_point_strong_raw_frequency": 0.0,
+  "negative_control": {
+   "support_rate": 0.0,
+   "Q_median": 1.029932125727989,
+   "bootstrap": "independent numerator/denominator weights"
+  },
+  "bootstrap_fractions": {
+   "valid_min": 1.0,
+   "den_zero_max": 0.0,
+   "num_zero_max": 0.0,
+   "both_zero_max": 0.0
+  },
+  "positive_control": {
+   "support_rate_at_pseudo": 0.14,
+   "Q_median_at_pseudo": 3.9084501219612635,
+   "Q_at_observed": 93.43421052631578,
+   "Q_lowerCI_at_observed": 75.86675531914894,
+   "D_at_observed": 18.765036492802622,
+   "logD_at_observed": 2.931995377312118,
+   "logD_pseudo_min": -381.39919549872224,
+   "logD_pseudo_max": 1.9323359924673689,
+   "density_ratio": "log-space (gaussian_kde.logpdf); v1.2.8 Colab official failed the control inventory because the boosted-KDE pdf underflowed to 0 at far-tail pseudo thresholds",
+   "note": "at central pseudo thresholds the ratio is capped by 1/P_iso, so the control is evaluated at the observed (tail) thresholds",
+   "construction": "isotropic sample with T1 and T2 scaled by 0.35 (synthetic boosted Event B), same clusters"
+  },
+  "sensitivity_float32_selection": {
+   "scope": "CONDITIONAL: primary (float64) pseudo thresholds held fixed; model/isotropic hit tables, Q lower CI, D and support recomputed from the float32-selected outputs (same clusters)",
+   "support_mismatch_count": 0,
+   "false_support_frequency_f32": 0.0,
+   "hit_table_cells_changed_M": 0,
+   "hit_table_cells_changed_I": 0,
+   "max_abs_dlogQ_pseudo": 0.0,
+   "max_abs_dlogD_pseudo": 0.0
+  },
+  "Q_pseudo_median": 1.055675109175314,
+  "pseudo_T1_q": [
+   64.79590917204547,
+   113.33923138404674,
+   242.5334843150309
+  ],
+  "pseudo_T2_q": [
+   257.9051833638349,
+   601.5068190839213,
+   1171.0137591149714
+  ],
+  "table_seconds": 0.04717588424682617
+ },
+ "gates": {
+  "G_cal_table_matches_bruteforce": true,
+  "G_cal_negative_control": true,
+  "G_cal_positive_control": true,
+  "G_cal_main_inventory": true,
+  "G_cal_control_inventory": true,
+  "G_cal_bootstrap_valid_fraction": true
+ }
+}

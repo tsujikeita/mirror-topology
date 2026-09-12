@@ -1,0 +1,1857 @@
+{
+ "notebook": "Step1 Phase A-10 v1.2.8 [official]",
+ "required_gate_count": {
+  "smoke": 54,
+  "official": 61
+ },
+ "status": "FAILED",
+ "component_status": {
+  "ENGINE_VALID": true,
+  "M_SENSITIVITY_RESOLVED": true,
+  "CALIBRATION_PATH_VALID": false,
+  "W2_PATHWAY_VALID": true
+ },
+ "timestamp": "2026-09-12T06:42:45",
+ "mode": "official",
+ "config": {
+  "N": 1000000,
+  "N_CAL": 200000,
+  "N_PSEUDO": 200,
+  "B_BOOT": 2000,
+  "B_NULL": 200,
+  "N_SUB_W2": [
+   2000,
+   5000
+  ],
+  "N_W2_POOL": 200000,
+  "N_FIT": 20000
+ },
+ "master_seed": 20260912,
+ "streams": {
+  "gaussian": 0,
+  "rotation": 1,
+  "calibration": 2,
+  "pseudo": 3,
+  "bootstrap": 4,
+  "w2": 5
+ },
+ "production_path": {
+  "route": "l24_feature231",
+  "selection_dtype": "float64",
+  "evaluation_dtype": "float64",
+  "sample_chunk": 2000,
+  "sample_chunk_sensitivity": 20000,
+  "threads": 2,
+  "primary": "float64",
+  "sensitivity": "float32",
+  "a8b_winners": {
+   "float64": {
+    "chunk": 2000,
+    "N": 1000000,
+    "production_s_median": 76.65821095789943,
+    "peak_increment_GB": 0.09900032
+   },
+   "float32": {
+    "chunk": 20000,
+    "N": 1000000,
+    "production_s_median": 39.30793997899673,
+    "peak_increment_GB": 0.33275904
+   }
+  },
+  "supersede_note": "A10 supersedes the l2-4 selection dtype only (float32 -> float64, cost ~1.3 min/1e6) on stress evidence: non-antipodal near-tie flips and antipodal flips with T2 rel diff up to 5e-3; A8b benchmark stays valid; S2 keeps float32"
+ },
+ "threads_live": [
+  {
+   "api": "blas",
+   "lib": "openblas",
+   "n": 2,
+   "file": "libscipy_openblas64_-ff651d7f.so",
+   "version": "0.3.27"
+  },
+  {
+   "api": "openmp",
+   "lib": "openmp",
+   "n": 2,
+   "file": "libgomp-e985bcbb.so.1.0.0",
+   "version": null
+  },
+  {
+   "api": "blas",
+   "lib": "openblas",
+   "n": 2,
+   "file": "libscipy_openblas-b75cc656.so",
+   "version": "0.3.29.dev"
+  },
+  {
+   "api": "openmp",
+   "lib": "openmp",
+   "n": 2,
+   "file": "libgomp.so.1",
+   "version": null
+  },
+  {
+   "api": "blas",
+   "lib": "openblas",
+   "n": 2,
+   "file": "libopenblasp-r0-59ffcd50.3.15.so",
+   "version": "0.3.15"
+  },
+  {
+   "api": "openmp",
+   "lib": "openmp",
+   "n": 2,
+   "file": "libgomp-a34b3233.so.1.0.0",
+   "version": null
+  },
+  {
+   "api": "openmp",
+   "lib": "openmp",
+   "n": 2,
+   "file": "libgomp-870cb1d0.so.1.0.0",
+   "version": null
+  },
+  {
+   "api": "blas",
+   "lib": "openblas",
+   "n": 1,
+   "file": "libopenblas-r0-11edc3fa.3.15.so",
+   "version": "0.3.15"
+  }
+ ],
+ "notebook_identity": {
+  "basename": "MirrorTopology_Step1_A10_v1.2.8.ipynb",
+  "head_copy": "2839287e2503620d9d580eb1aef2499c16c475b9257e0205a0c81691d1d25a33",
+  "live": "2839287e2503620d9d580eb1aef2499c16c475b9257e0205a0c81691d1d25a33"
+ },
+ "thread_gate_detail": {
+  "numpy_pool_candidates": [
+   {
+    "api": "blas",
+    "lib": "openblas",
+    "n": 2,
+    "file": "libscipy_openblas64_-ff651d7f.so",
+    "version": "0.3.27"
+   }
+  ],
+  "all_blas": [
+   {
+    "api": "blas",
+    "lib": "openblas",
+    "n": 2,
+    "file": "libscipy_openblas64_-ff651d7f.so",
+    "version": "0.3.27"
+   },
+   {
+    "api": "blas",
+    "lib": "openblas",
+    "n": 2,
+    "file": "libscipy_openblas-b75cc656.so",
+    "version": "0.3.29.dev"
+   },
+   {
+    "api": "blas",
+    "lib": "openblas",
+    "n": 2,
+    "file": "libopenblasp-r0-59ffcd50.3.15.so",
+    "version": "0.3.15"
+   },
+   {
+    "api": "blas",
+    "lib": "openblas",
+    "n": 1,
+    "file": "libopenblas-r0-11edc3fa.3.15.so",
+    "version": "0.3.15"
+   }
+  ]
+ },
+ "repo": {
+  "commit": "1bdd9ea8a00891d6dc3622331f6dad5b86c16c89",
+  "git_calls": [
+   [
+    "git",
+    "fetch",
+    "-q",
+    "origin",
+    "1bdd9ea8a00891d6dc3622331f6dad5b86c16c89",
+    0
+   ],
+   [
+    "git",
+    "checkout",
+    "-q",
+    "--force",
+    "1bdd9ea8a00891d6dc3622331f6dad5b86c16c89",
+    0
+   ],
+   [
+    "git",
+    "clean",
+    "-fdxq",
+    0
+   ],
+   [
+    "git",
+    "rev-parse",
+    "HEAD",
+    0
+   ],
+   [
+    "git",
+    "remote",
+    "get-url",
+    "origin",
+    0
+   ],
+   [
+    "git",
+    "status",
+    "--porcelain",
+    "--untracked-files=all",
+    0
+   ],
+   [
+    "git",
+    "fetch",
+    "-q",
+    "origin",
+    "main",
+    0
+   ]
+  ]
+ },
+ "environment": {
+  "versions": {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "pandas": "2.2.3",
+   "pot": "0.9.7.post1"
+  },
+  "expected": {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "pot": "0.9.7.post1"
+  },
+  "mismatch": {},
+  "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+  "in_colab": true
+ },
+ "assets": {
+  "bstack": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",
+  "a5_null": "d0de2cf6643ff19e134567616f243298b2cc83dd081032949984c1c6abfa2b9e",
+  "a5_prov": "33765464cd4f4bea67e78fddb769e92ccbea38e68f6ec74778a203309971ba80",
+  "a9_prov": "09c03219f43ce69368c238ab61567c3e804a45302386485820b45534539d16ef",
+  "a9_manifest": "4b454a157b0bdbed4a6c8856b750bb0a8951f042c56a596a4971a1bc092e2c9a",
+  "a9_script": "2905c036a04a04e33672a07ba464d95ae6a669c8ea7b918f17a6813e864dde2c",
+  "a8_manifest": "3384c9c5994a8c656ca1c868ff60156ad7e627a038bfeffe320972a6fc72e031",
+  "a8b_prov": "a5314043e025a00ffe7ca6d89985bb1b6064e398bc9ef911de7348d601c85d6a",
+  "a11_manifest": "6000d7b7049dc5232f3e87daab2d4e56cb069cd15145f252ba4a548bf94df981",
+  "cov_P1": "27e2bb589722526a40ddeca1b738f6c58edb1c8efd39672b0f7080d8de133308",
+  "cov_P2": "727772a10af23118f4cb4c725af369578c1d3ac9d52d0cb641e4fc6399c29219",
+  "cov_P3": "dbec1b921c3d74847095d364c04222f795c59ce4eb86686817e70d7d861d53fe",
+  "step0_npz": "5bf6e5167995515c5f0a38f4e126ca252bbf8a28e7e6c90fe0d167481871e0f0",
+  "step0_csv": "6ed885d10a6455995b342152e71cd14f79c87b84ff6fb9539b3ebd4f61e551cb"
+ },
+ "module_sha": {
+  "t1_engine": "87bf8424073af021264b12fe312ab5255b71008bdd5fe874d164d48daf034dc8",
+  "t2b2_bridge": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872",
+  "t2b2_run": "03c80f2136a8ff7ffb1077749895811ef95dd9d779c7996891d89e75545ff8db"
+ },
+ "generation_streams": {
+  "namespaces": {
+   "calibration": 100,
+   "m_sensitivity": 200,
+   "pseudo": 300,
+   "negative_control": 400,
+   "w2_independent": 500,
+   "w2_crn": 600,
+   "w2_isotropic": 700
+  },
+  "calls": [
+   {
+    "ns": "calibration",
+    "ids": [
+     100,
+     0
+    ],
+    "N": 200000,
+    "m": 100,
+    "systems": 1
+   },
+   {
+    "ns": "m_sensitivity",
+    "ids": [
+     200,
+     10,
+     1
+    ],
+    "N": 1000000,
+    "m": 10,
+    "systems": 2
+   },
+   {
+    "ns": "m_sensitivity",
+    "ids": [
+     200,
+     10,
+     2
+    ],
+    "N": 1000000,
+    "m": 10,
+    "systems": 2
+   },
+   {
+    "ns": "m_sensitivity",
+    "ids": [
+     200,
+     100,
+     1
+    ],
+    "N": 1000000,
+    "m": 100,
+    "systems": 2
+   },
+   {
+    "ns": "m_sensitivity",
+    "ids": [
+     200,
+     100,
+     2
+    ],
+    "N": 1000000,
+    "m": 100,
+    "systems": 2
+   },
+   {
+    "ns": "pseudo",
+    "ids": [
+     300,
+     0
+    ],
+    "N": 200,
+    "m": 1,
+    "systems": 1
+   },
+   {
+    "ns": "negative_control",
+    "ids": [
+     400,
+     100
+    ],
+    "N": 1000000,
+    "m": 100,
+    "systems": 1
+   },
+   {
+    "ns": "w2_independent",
+    "ids": [
+     500,
+     0
+    ],
+    "N": 200000,
+    "m": 100,
+    "systems": 1
+   },
+   {
+    "ns": "w2_independent",
+    "ids": [
+     500,
+     1
+    ],
+    "N": 200000,
+    "m": 100,
+    "systems": 1
+   },
+   {
+    "ns": "w2_independent",
+    "ids": [
+     500,
+     2
+    ],
+    "N": 200000,
+    "m": 100,
+    "systems": 1
+   },
+   {
+    "ns": "w2_crn",
+    "ids": [
+     600,
+     0
+    ],
+    "N": 200000,
+    "m": 100,
+    "systems": 3
+   },
+   {
+    "ns": "w2_isotropic",
+    "ids": [
+     700,
+     0
+    ],
+    "N": 600000,
+    "m": 100,
+    "systems": 1
+   }
+  ]
+ },
+ "cross_selection_policy": {
+  "primary": "float64 selection (l2-4; A10 supersedes the A8b l2-4 dtype recommendation)",
+  "sensitivity": "float32 selection (A8b registered path, kept for S2)",
+  "TOL_NEAR_TIE": 1e-06,
+  "TOL_EVENTB_MISMATCH": 1e-05,
+  "DELTA_Q_SENS": 0.01,
+  "W2_full_pool_rms_diagnostic_fraction": 0.05,
+  "axis_reporting": "plane-folded label; raw oriented representative kept (AX, full for calibration and all m runs) and used for float64 T1/T2 evaluation; near-minimizer ambiguity at float32 resolution recorded per flip with plane-folded angle",
+  "a8b_TOL_EVAL_unchanged": 1e-06,
+  "sandbox_discovery": "antipodal flips can change T2 by up to ~1e-3 relative (non-identical B- rows of pixelised antipodal representatives); non-antipodal flips occur at near ties (S+ within float32 resolution); flip rate ~5e-5 per sample; Event B unaffected in 8e4 samples",
+  "status": "primary float64 selection for l2-4 adopted prospectively in v1.2.4 before any official run; A8b float32 result remains a valid performance benchmark and the sensitivity path; S2 remains float32; per-dtype chunks bound to the A8b CPU winners (float64: 2000, float32: 20000)"
+ },
+ "quadrature": {
+  "dirs": "b53296ec7b42ec928bd64ecd1c4f3eb382ba90b3e354ee3bde5299662bdbbf41",
+  "weights": "fdf0626ca95bb4b582ed9ba321a55e7fe1cb024b6142517fc51960836fdc0771",
+  "M21": "c488cc7070a2d391e8ceeea08c87643d1f1552515990fb135652c4599c6101e8",
+  "a9_nodes_match": true,
+  "a9_weights_match": false
+ },
+ "event": "Event B = {T1 <= T1_obs and T2 <= T2_obs} (A5-frozen primary event); central-band E_sel of v1.0 is superseded",
+ "gates": {
+  "G_repo_commit": true,
+  "G_repo_origin": true,
+  "G_repo_clean": true,
+  "G_live_modules": true,
+  "G_env_versions": true,
+  "G_threads_live_registered": true,
+  "G_notebook_live_source": true,
+  "G_asset_file_sha": true,
+  "G_a9_binding": true,
+  "G_a8b_chunk_binding": true,
+  "G_a8b_production_spec_bound": true,
+  "G_a5_binding": true,
+  "G_bstack_array_sha": true,
+  "G_cvec_sha": true,
+  "G_cvec_lblock_constant": true,
+  "G_basis_order": true,
+  "G_a9_basis_hashes": true,
+  "G_step0_obs_bound": true,
+  "G_cov_basis_matches_M21": true,
+  "G_cov_positions_distinct": true,
+  "G_matched_power": true,
+  "G_sqrt_hard": true,
+  "G_quadrature_orthonormal": true,
+  "G_a9_quadrature_hashes": false,
+  "G_a9_quadrature_size": true,
+  "G_quadrature_gauss_legendre_exact": true,
+  "G_D_batch_matches_single": true,
+  "G_D_orthogonal": true,
+  "G_D_homomorphism": true,
+  "G_D_direct_geometry": true,
+  "G_D_known_z_rotation": true,
+  "G_antipode_map": true,
+  "G_a8b_kernel_exact_regression": true,
+  "G_scan_vs_direct": true,
+  "G_iso_engine_matches_A5_null": true,
+  "G_cross_selection_helper_selftest": true,
+  "G_cal_f32_f64_selection_consistency": true,
+  "G_cal_sensitivity_wiring": true,
+  "G_m_run_inventory": true,
+  "G_m10_usable": true,
+  "G_m100_usable": true,
+  "G_m_decision_policy": true,
+  "G_m_decision_resolved": true,
+  "G_m_f32_f64_selection_consistency_all_runs": true,
+  "G_m_f32_f64_no_nonantipodal_flip": false,
+  "G_m_Q_f32_sensitivity_bound": true,
+  "G_cal_table_matches_bruteforce": true,
+  "G_cal_negative_control": true,
+  "G_cal_positive_control": true,
+  "G_cal_main_inventory": true,
+  "G_cal_bootstrap_valid_fraction": true,
+  "G_cal_control_inventory": false,
+  "G_w2_solver_clean": true,
+  "G_w2_nsub_inventory": true,
+  "G_w2_observed_finite": true,
+  "G_w2_pair_seed_inventory": true,
+  "G_w2_null_length_exact": true,
+  "G_w2_full_pool_selection_rms_small": true,
+  "G_w2_selection_decision_margin": true,
+  "G_w2_all_pair_values_finite": true,
+  "G_w2_seed_decision_agree": true,
+  "G_w2_nsub_decision_agree": true,
+  "G_w2_seed_spread": true,
+  "G_output_inventory_exact": true,
+  "G_generation_stream_keys_unique": true,
+  "G_gate_inventory_exact": true
+ },
+ "required_gates": [
+  "G_repo_commit",
+  "G_repo_origin",
+  "G_repo_clean",
+  "G_live_modules",
+  "G_env_versions",
+  "G_threads_live_registered",
+  "G_notebook_live_source",
+  "G_asset_file_sha",
+  "G_a9_binding",
+  "G_a9_basis_hashes",
+  "G_a9_quadrature_size",
+  "G_quadrature_gauss_legendre_exact",
+  "G_a8b_production_spec_bound",
+  "G_a8b_chunk_binding",
+  "G_a8b_kernel_exact_regression",
+  "G_a5_binding",
+  "G_bstack_array_sha",
+  "G_cvec_sha",
+  "G_cvec_lblock_constant",
+  "G_basis_order",
+  "G_step0_obs_bound",
+  "G_cov_basis_matches_M21",
+  "G_cov_positions_distinct",
+  "G_matched_power",
+  "G_sqrt_hard",
+  "G_quadrature_orthonormal",
+  "G_D_batch_matches_single",
+  "G_D_orthogonal",
+  "G_D_homomorphism",
+  "G_D_direct_geometry",
+  "G_D_known_z_rotation",
+  "G_antipode_map",
+  "G_scan_vs_direct",
+  "G_cross_selection_helper_selftest",
+  "G_iso_engine_matches_A5_null",
+  "G_cal_f32_f64_selection_consistency",
+  "G_cal_sensitivity_wiring",
+  "G_m_run_inventory",
+  "G_m_f32_f64_selection_consistency_all_runs",
+  "G_m10_usable",
+  "G_m_decision_policy",
+  "G_m_decision_resolved",
+  "G_cal_table_matches_bruteforce",
+  "G_cal_negative_control",
+  "G_cal_positive_control",
+  "G_cal_main_inventory",
+  "G_cal_control_inventory",
+  "G_cal_bootstrap_valid_fraction",
+  "G_w2_solver_clean",
+  "G_w2_nsub_inventory",
+  "G_w2_observed_finite",
+  "G_w2_all_pair_values_finite",
+  "G_w2_pair_seed_inventory",
+  "G_w2_null_length_exact",
+  "G_w2_seed_decision_agree",
+  "G_w2_nsub_decision_agree",
+  "G_w2_seed_spread",
+  "G_w2_selection_decision_margin",
+  "G_output_inventory_exact",
+  "G_generation_stream_keys_unique",
+  "G_gate_inventory_exact"
+ ],
+ "diagnostic_gates": [
+  "G_a9_quadrature_hashes",
+  "G_m100_usable",
+  "G_m_Q_f32_sensitivity_bound",
+  "G_m_f32_f64_no_nonantipodal_flip",
+  "G_w2_full_pool_selection_rms_small"
+ ],
+ "gate_policy": "status is exact over required_gates only; diagnostic gates (e.g. G_m100_usable when m=10 is adopted; stability gates in smoke) are recorded and may be False without affecting status",
+ "covariance": {
+  "primary_system": "PR3-power-matched (morphology-only covariance experiment)",
+  "model_point": "E7_b1_A x0(1)=(0.31,0.21,0.42)",
+  "c_l_CT": {
+   "cov_P1": [
+    631.4823174774028,
+    409.70434807013413,
+    238.7619014354304
+   ],
+   "cov_P2": [
+    660.5254401778996,
+    389.44439330941526,
+    246.4485477584954
+   ],
+   "cov_P3": [
+    685.8820223560565,
+    370.8071858779611,
+    255.51119364266944
+   ]
+  },
+  "c_l_PR3": [
+   1064.7171662281169,
+   504.60627721102173,
+   286.7042588407274
+  ],
+  "sqrt": {
+   "cov_P1": {
+    "lambda_min": 141.4833450525449,
+    "clip": 0,
+    "sym": 4.116279618299255e-17,
+    "recon": 3.484440741604067e-15
+   },
+   "cov_P2": {
+    "lambda_min": 136.86569612704685,
+    "clip": 0,
+    "sym": 4.810569086411327e-17,
+    "recon": 2.1895533996179302e-15
+   },
+   "cov_P3": {
+    "lambda_min": 131.57046740638867,
+    "clip": 0,
+    "sym": 3.737680251389153e-17,
+    "recon": 2.674163961549934e-15
+   }
+  },
+  "sqrt_iso": {
+   "lambda_min": 286.7042588407274,
+   "clip": 0,
+   "sym": 0.0,
+   "recon": 5.2550797913991186e-17
+  },
+  "ct_intake": {
+   "cov_P1": {
+    "lambda_min_raw": 117.82457480687012,
+    "lambda_max": 992.793400726684,
+    "lambda_clip_max": 0.0,
+    "effective_rank": 21
+   },
+   "cov_P2": {
+    "lambda_min_raw": 117.64834829850884,
+    "lambda_max": 1046.2436272240875,
+    "lambda_clip_max": 0.0,
+    "effective_rank": 21
+   },
+   "cov_P3": {
+    "lambda_min_raw": 117.25575165287123,
+    "lambda_max": 1091.2289079510017,
+    "lambda_clip_max": 0.0,
+    "effective_rank": 21
+   }
+  },
+  "positions": {
+   "cov_P1": [
+    0.31,
+    0.21,
+    0.42
+   ],
+   "cov_P2": [
+    0.13,
+    0.44,
+    0.27
+   ],
+   "cov_P3": [
+    0.31,
+    0.32999999999999996,
+    0.42
+   ]
+  },
+  "real_transform": {
+   "cov_P1": {
+    "imag_rel": 5.1409691134552795e-17,
+    "asym_rel": 0.0,
+    "ok": true
+   },
+   "cov_P2": {
+    "imag_rel": 6.11667456820404e-17,
+    "asym_rel": 0.0,
+    "ok": true
+   },
+   "cov_P3": {
+    "imag_rel": 9.730903556470933e-17,
+    "asym_rel": 0.0,
+    "ok": true
+   }
+  }
+ },
+ "calibration": {
+  "N": 200000,
+  "m": 100,
+  "primary_selection": "float64",
+  "T1_med": 120.43422003041243,
+  "T2_med": 609.2605731158183,
+  "P_T1_le_obs": 0.014875,
+  "P_eventB": 0.003665,
+  "T2_q16_q84_secondary": [
+   381.97529923647494,
+   952.4910436964187
+  ],
+  "f32_f64_axis_flip_frac": 0.00863,
+  "cross_selection": {
+   "n": 200000,
+   "flip_frac": 0.00863,
+   "n_flip": 1726,
+   "n_antipodal": 1726,
+   "n_nonantipodal": 0,
+   "T1_rel_max": 6.547185878244656e-07,
+   "T2_rel_max": 0.002113734302691263,
+   "T1_rel_max_at_flips": 6.547185878244656e-07,
+   "max_plane_angle_deg_nonantipodal": 0.0,
+   "flips_only_at_near_ties": true,
+   "eventB_mismatch": 0,
+   "eventB_mismatch_frac": 0.0,
+   "eventB_identical": true,
+   "all_finite": true,
+   "consistency": true
+  },
+  "A5": {
+   "n": 1000,
+   "T1_med": 118.45995712280273,
+   "T1_med_CI": [
+    115.42416000366211,
+    122.77178955078125
+   ],
+   "T2_med": 593.00048828125,
+   "T2_med_CI": [
+    571.3977973937988,
+    617.9871261596679
+   ],
+   "P_T1_le_obs": 0.015,
+   "P_T1_le_obs_wilson": [
+    0.0091109787688965,
+    0.02460097702042674
+   ],
+   "P_eventB": 0.004,
+   "P_eventB_wilson": [
+    0.0015565881296028053,
+    0.01023955634772571
+   ]
+  },
+  "seconds": 30.214632749557495
+ },
+ "m_sensitivity": {
+  "runs": {
+   "m10_rep1": {
+    "tag": "m10_rep1",
+    "K": 100000,
+    "P_M": 0.004916,
+    "P_I": 0.003651,
+    "CI_widths_5seeds": [
+     0.055579314087753406,
+     0.05465237962807806,
+     0.05574112218208721,
+     0.054859172007453494,
+     0.05635666526152583
+    ],
+    "hits_M": 4916,
+    "hits_I": 3651,
+    "Q": 1.3464804163242947,
+    "logQ": 0.29749408903028857,
+    "se_logQ": 0.014233692178959064,
+    "logCI95": [
+     0.26886024531791497,
+     0.3244395594056684
+    ],
+    "CI95": [
+     1.30847226314259,
+     1.3832551963399706
+    ],
+    "CI_rel_halfwidth": 0.027769781235113568,
+    "CI_width_CV_5seeds": 0.011143028156712195,
+    "event_positive_clusters_M": 4808,
+    "event_positive_clusters_I": 3591,
+    "precision_gate": true,
+    "P_M_T1_le_obs": 0.01718,
+    "P_I_T1_le_obs": 0.014355,
+    "T1_med_M": 118.7361111882015,
+    "T1_med_I": 120.24297538667517,
+    "T2_med_M": 604.2281564301225,
+    "T2_med_I": 607.97629943263,
+    "rotation_seconds": 100.84445181899957,
+    "seconds": 415.79755544662476,
+    "sensitivity_float32_selection": {
+     "Q": 1.3464804163242947,
+     "logQ": 0.29749408903028857,
+     "CI95": [
+      1.30847226314259,
+      1.3832551963399706
+     ],
+     "hits_M": 4916,
+     "hits_I": 3651,
+     "abs_dlogQ_primary_vs_f32": 0.0
+    },
+    "cross_selection": {
+     "model": {
+      "n": 1000000,
+      "flip_frac": 0.008624,
+      "n_flip": 8624,
+      "n_antipodal": 8622,
+      "n_nonantipodal": 2,
+      "T1_rel_max": 6.186327961163409e-07,
+      "T2_rel_max": 0.07105741997383185,
+      "T1_rel_max_at_flips": 6.186327961163409e-07,
+      "max_plane_angle_deg_nonantipodal": 4.526879380615897,
+      "flips_only_at_near_ties": true,
+      "eventB_mismatch": 0,
+      "eventB_mismatch_frac": 0.0,
+      "eventB_identical": true,
+      "all_finite": true,
+      "consistency": true
+     },
+     "iso": {
+      "n": 1000000,
+      "flip_frac": 0.008627,
+      "n_flip": 8627,
+      "n_antipodal": 8622,
+      "n_nonantipodal": 5,
+      "T1_rel_max": 4.922489371171252e-07,
+      "T2_rel_max": 0.04695480462426555,
+      "T1_rel_max_at_flips": 4.922489371171252e-07,
+      "max_plane_angle_deg_nonantipodal": 7.427548288963749,
+      "flips_only_at_near_ties": true,
+      "eventB_mismatch": 0,
+      "eventB_mismatch_frac": 0.0,
+      "eventB_identical": true,
+      "all_finite": true,
+      "consistency": true
+     }
+    }
+   },
+   "m10_rep2": {
+    "tag": "m10_rep2",
+    "K": 100000,
+    "P_M": 0.004813,
+    "P_I": 0.003704,
+    "CI_widths_5seeds": [
+     0.054792284409973635,
+     0.05646412518581828,
+     0.05751826246718514,
+     0.054950504820334006,
+     0.055204751411424446
+    ],
+    "hits_M": 4813,
+    "hits_I": 3704,
+    "Q": 1.2994060475161986,
+    "logQ": 0.2619072735370393,
+    "se_logQ": 0.013855754472752493,
+    "logCI95": [
+     0.2356785666759147,
+     0.2904708510858883
+    ],
+    "CI95": [
+     1.2657673849526572,
+     1.3370568945261587
+    ],
+    "CI_rel_halfwidth": 0.027431575260778076,
+    "CI_width_CV_5seeds": 0.018773144316643467,
+    "event_positive_clusters_M": 4705,
+    "event_positive_clusters_I": 3624,
+    "precision_gate": true,
+    "P_M_T1_le_obs": 0.017095,
+    "P_I_T1_le_obs": 0.014652,
+    "T1_med_M": 118.64464066110244,
+    "T1_med_I": 120.22466800947481,
+    "T2_med_M": 604.0777074059038,
+    "T2_med_I": 608.2243456717797,
+    "rotation_seconds": 85.16901134999989,
+    "seconds": 376.84240436553955,
+    "sensitivity_float32_selection": {
+     "Q": 1.2994060475161986,
+     "logQ": 0.2619072735370393,
+     "CI95": [
+      1.2657673849526572,
+      1.3370568945261587
+     ],
+     "hits_M": 4813,
+     "hits_I": 3704,
+     "abs_dlogQ_primary_vs_f32": 0.0
+    },
+    "cross_selection": {
+     "model": {
+      "n": 1000000,
+      "flip_frac": 0.008882,
+      "n_flip": 8882,
+      "n_antipodal": 8877,
+      "n_nonantipodal": 5,
+      "T1_rel_max": 5.1481873971155e-07,
+      "T2_rel_max": 0.034220993761884755,
+      "T1_rel_max_at_flips": 5.1481873971155e-07,
+      "max_plane_angle_deg_nonantipodal": 3.6830256604132634,
+      "flips_only_at_near_ties": true,
+      "eventB_mismatch": 0,
+      "eventB_mismatch_frac": 0.0,
+      "eventB_identical": true,
+      "all_finite": true,
+      "consistency": true
+     },
+     "iso": {
+      "n": 1000000,
+      "flip_frac": 0.008661,
+      "n_flip": 8661,
+      "n_antipodal": 8659,
+      "n_nonantipodal": 2,
+      "T1_rel_max": 4.976183220611548e-07,
+      "T2_rel_max": 0.03019609854470669,
+      "T1_rel_max_at_flips": 4.976183220611548e-07,
+      "max_plane_angle_deg_nonantipodal": 3.6714833203288055,
+      "flips_only_at_near_ties": true,
+      "eventB_mismatch": 0,
+      "eventB_mismatch_frac": 0.0,
+      "eventB_identical": true,
+      "all_finite": true,
+      "consistency": true
+     }
+    }
+   },
+   "m100_rep1": {
+    "tag": "m100_rep1",
+    "K": 10000,
+    "P_M": 0.004928,
+    "P_I": 0.003704,
+    "CI_widths_5seeds": [
+     0.055251908173935105,
+     0.0543360053625252,
+     0.05591179872397728,
+     0.05350641202233697,
+     0.054817963503987543
+    ],
+    "hits_M": 4928,
+    "hits_I": 3704,
+    "Q": 1.3304535637149029,
+    "logQ": 0.2855199094472857,
+    "se_logQ": 0.01413593903741768,
+    "logCI95": [
+     0.25674647818633495,
+     0.31199838636027005
+    ],
+    "CI95": [
+     1.2927173531643006,
+     1.3661524885497687
+    ],
+    "CI_rel_halfwidth": 0.027597782210610166,
+    "CI_width_CV_5seeds": 0.014886268172929916,
+    "event_positive_clusters_M": 3915,
+    "event_positive_clusters_I": 3111,
+    "precision_gate": true,
+    "P_M_T1_le_obs": 0.017364,
+    "P_I_T1_le_obs": 0.014731,
+    "T1_med_M": 118.70910407564348,
+    "T1_med_I": 120.28809402686163,
+    "T2_med_M": 604.1809437355437,
+    "T2_med_I": 608.1171843702473,
+    "rotation_seconds": 8.8290027930002,
+    "seconds": 256.59790420532227,
+    "sensitivity_float32_selection": {
+     "Q": 1.3304535637149029,
+     "logQ": 0.2855199094472857,
+     "CI95": [
+      1.2927173531643006,
+      1.3661524885497687
+     ],
+     "hits_M": 4928,
+     "hits_I": 3704,
+     "abs_dlogQ_primary_vs_f32": 0.0
+    },
+    "cross_selection": {
+     "model": {
+      "n": 1000000,
+      "flip_frac": 0.008721,
+      "n_flip": 8721,
+      "n_antipodal": 8715,
+      "n_nonantipodal": 6,
+      "T1_rel_max": 4.7083651594532997e-07,
+      "T2_rel_max": 0.06765689744154031,
+      "T1_rel_max_at_flips": 4.7083651594532997e-07,
+      "max_plane_angle_deg_nonantipodal": 5.11310200955204,
+      "flips_only_at_near_ties": true,
+      "eventB_mismatch": 0,
+      "eventB_mismatch_frac": 0.0,
+      "eventB_identical": true,
+      "all_finite": true,
+      "consistency": true
+     },
+     "iso": {
+      "n": 1000000,
+      "flip_frac": 0.008589,
+      "n_flip": 8589,
+      "n_antipodal": 8584,
+      "n_nonantipodal": 5,
+      "T1_rel_max": 4.5015149256605947e-07,
+      "T2_rel_max": 0.11523657832308008,
+      "T1_rel_max_at_flips": 4.5015149256605947e-07,
+      "max_plane_angle_deg_nonantipodal": 59.416685068179454,
+      "flips_only_at_near_ties": true,
+      "eventB_mismatch": 0,
+      "eventB_mismatch_frac": 0.0,
+      "eventB_identical": true,
+      "all_finite": true,
+      "consistency": true
+     }
+    }
+   },
+   "m100_rep2": {
+    "tag": "m100_rep2",
+    "K": 10000,
+    "P_M": 0.004868,
+    "P_I": 0.003732,
+    "CI_widths_5seeds": [
+     0.055280314272595055,
+     0.05464124577308835,
+     0.05627414036010667,
+     0.0559637111582465,
+     0.055499218873963474
+    ],
+    "hits_M": 4868,
+    "hits_I": 3732,
+    "Q": 1.3043944265809218,
+    "logQ": 0.26573889214018337,
+    "se_logQ": 0.014120662005099018,
+    "logCI95": [
+     0.2377594833440907,
+     0.29303979761668575
+    ],
+    "CI95": [
+     1.2684040838259,
+     1.3404961379215887
+    ],
+    "CI_rel_halfwidth": 0.027634300111453368,
+    "CI_width_CV_5seeds": 0.010170809301479051,
+    "event_positive_clusters_M": 3861,
+    "event_positive_clusters_I": 3089,
+    "precision_gate": true,
+    "P_M_T1_le_obs": 0.017157,
+    "P_I_T1_le_obs": 0.01447,
+    "T1_med_M": 118.74736454293722,
+    "T1_med_I": 120.34065589493787,
+    "T2_med_M": 604.7110320884042,
+    "T2_med_I": 608.842876291249,
+    "rotation_seconds": 8.338681983000015,
+    "seconds": 272.5111382007599,
+    "sensitivity_float32_selection": {
+     "Q": 1.3043944265809218,
+     "logQ": 0.26573889214018337,
+     "CI95": [
+      1.2684040838259,
+      1.3404961379215887
+     ],
+     "hits_M": 4868,
+     "hits_I": 3732,
+     "abs_dlogQ_primary_vs_f32": 0.0
+    },
+    "cross_selection": {
+     "model": {
+      "n": 1000000,
+      "flip_frac": 0.008711,
+      "n_flip": 8711,
+      "n_antipodal": 8708,
+      "n_nonantipodal": 3,
+      "T1_rel_max": 5.107537651254473e-07,
+      "T2_rel_max": 0.14232690798219505,
+      "T1_rel_max_at_flips": 5.107537651254473e-07,
+      "max_plane_angle_deg_nonantipodal": 84.98156439481927,
+      "flips_only_at_near_ties": true,
+      "eventB_mismatch": 0,
+      "eventB_mismatch_frac": 0.0,
+      "eventB_identical": true,
+      "all_finite": true,
+      "consistency": true
+     },
+     "iso": {
+      "n": 1000000,
+      "flip_frac": 0.008611,
+      "n_flip": 8611,
+      "n_antipodal": 8607,
+      "n_nonantipodal": 4,
+      "T1_rel_max": 5.77781026750426e-07,
+      "T2_rel_max": 0.019680044618557272,
+      "T1_rel_max_at_flips": 5.77781026750426e-07,
+      "max_plane_angle_deg_nonantipodal": 3.7073128165768647,
+      "flips_only_at_near_ties": true,
+      "eventB_mismatch": 0,
+      "eventB_mismatch_frac": 0.0,
+      "eventB_identical": true,
+      "all_finite": true,
+      "consistency": true
+     }
+    }
+   }
+  },
+  "decision": {
+   "rule": "m=100 iff m10 and m100 are both usable (finite Q, precision gate on both reps, two-rep consistency) AND the m100-m10 logQ difference CI lies within [-DELTA_M, +DELTA_M] for rep1 pair, rep2 pair and the pooled difference; m=10 iff m10 is usable and (m100 not usable OR equivalence not established); otherwise unresolved (fail-closed). A CI containing 0 alone is NOT treated as equivalence.",
+   "DELTA_M": 0.09531017980432493,
+   "DELTA_M_rationale": "Engineering tolerance, not derived: coarsening the orientation clustering to m=100 is accepted if the multiplicative discrepancy of the support ratio Q is within 10%, i.e. below the Phase A Monte Carlo design differences. Near the decision thresholds Q=3/10 a 10% difference can change a verdict; the full grid (Phase B/C) must additionally record that no threshold crossing arises from the m choice.",
+   "per_m": {
+    "10": {
+     "finite": true,
+     "precise": true,
+     "consistent": true,
+     "usable": true
+    },
+    "100": {
+     "finite": true,
+     "precise": true,
+     "consistent": true,
+     "usable": true
+    }
+   },
+   "diff_logCI_rep1": [
+    -0.0501407653365417,
+    0.028151628757441653
+   ],
+   "diff_logCI_rep2": [
+    -0.03616027427374777,
+    0.04297200080234133
+   ],
+   "diff_logCI_pooled": [
+    -0.03274324050386514,
+    0.024416982204176742
+   ],
+   "equivalence_established": true,
+   "equivalence_verdict_5_bootstrap_seeds": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "zero_in_all_CIs": true,
+   "point_diff_rep1": -0.011974179583002842,
+   "point_diff_rep2": 0.0038316186031440713,
+   "replicate_delta_logQ_m10": 0.03558681549324927,
+   "replicate_delta_logQ_m100": 0.019781017307102355,
+   "precision": {
+    "m10_rep1": true,
+    "m10_rep2": true,
+    "m100_rep1": true,
+    "m100_rep2": true
+   },
+   "adopted_m": 100,
+   "reason": "m=100 practically equivalent to m=10 within the pre-registered margin; both usable",
+   "cluster_ESS": "superseded: precision gate = event-positive clusters >= 50 (both systems) AND CI relative half-width <= 0.20 AND 5-seed CI-width CV < 0.2"
+  }
+ },
+ "calibration_pathway": {
+  "status_name": "one_point_one_system_calibration_pathway_prototype",
+  "NOT": "familywise global calibration (requires all families, both systems, family prior integration, n_pseudo >= 2000 or precision stopping; Phase B/C engine)",
+  "model_point": "E7_b1_A x0(1), PR3-power-matched",
+  "m": 100,
+  "n_pseudo": 200,
+  "event": "Event B with 2D pseudo thresholds (T1 <= T1_pseudo and T2 <= T2_pseudo)",
+  "method": "sorted-T1 searchsorted + per-cluster counts; one shared cluster-resampling matrix (B x K) for every pseudo; Q lower CI = 2.5% percentile; D = KDE point estimate (fitting subsample separate from evaluation)",
+  "one_point_false_support_frequency": 0.0,
+  "one_point_false_support_wilson": [
+   0.0,
+   0.018845326668962936
+  ],
+  "one_point_strong_raw_frequency": 0.0,
+  "negative_control": {
+   "support_rate": 0.0,
+   "Q_median": 0.9998529576576392,
+   "bootstrap": "independent numerator/denominator weights"
+  },
+  "bootstrap_fractions": {
+   "valid_min": 1.0,
+   "den_zero_max": 0.0,
+   "num_zero_max": 0.0,
+   "both_zero_max": 0.0
+  },
+  "positive_control": {
+   "support_rate_at_pseudo": 0.15,
+   "Q_median_at_pseudo": 3.5103379076423598,
+   "Q_at_observed": 97.91144708423326,
+   "Q_lowerCI_at_observed": 94.97034769978171,
+   "D_at_observed": 17.58579846029396,
+   "note": "at central pseudo thresholds the ratio is capped by 1/P_iso, so the control is evaluated at the observed (tail) thresholds",
+   "construction": "isotropic sample with T1 and T2 scaled by 0.35 (synthetic boosted Event B), same clusters"
+  },
+  "sensitivity_float32_selection": {
+   "scope": "CONDITIONAL: primary (float64) pseudo thresholds held fixed; model/isotropic hit tables, Q lower CI, D and support recomputed from the float32-selected outputs (same clusters)",
+   "support_mismatch_count": 0,
+   "false_support_frequency_f32": 0.0,
+   "hit_table_cells_changed_M": 7,
+   "hit_table_cells_changed_I": 16,
+   "max_abs_dlogQ_pseudo": 0.00016726603702119092,
+   "max_abs_dlogD_pseudo": 5.702079063807375e-06
+  },
+  "Q_pseudo_median": 1.051195403253442,
+  "pseudo_T1_q": [
+   42.10383747668388,
+   121.843021961679,
+   241.7289534363333
+  ],
+  "pseudo_T2_q": [
+   260.0059838757829,
+   591.9227408772465,
+   1220.3206544202787
+  ],
+  "table_seconds": 3.877617359161377
+ },
+ "w2": {
+  "estimator": "exact 2D W2 (POT emd2, sqeuclidean, sqrt), uniform weights",
+  "pot_version": "0.9.7.post1",
+  "whitening": "calibration sample mean/cov",
+  "positions_mock": {
+   "cov_P1": [
+    0.31,
+    0.21,
+    0.42
+   ],
+   "cov_P2": [
+    0.13,
+    0.44,
+    0.27
+   ],
+   "cov_P3": [
+    0.31,
+    0.32999999999999996,
+    0.42
+   ]
+  },
+  "positions_note": "mock 3-position set from the A11 cache (E7_b1_A base, E7_b2_A base, y-shift 0.12); NOT the registered p^(3) points",
+  "primary": "independent (R,z) streams per position; null = three disjoint isotropic blocks per replicate (same mechanism); finite-pool Monte Carlo exceedance estimate = (1 + #null >= obs)/(B+1) (null replicates re-use one finite isotropic pool, hence NOT an exact exchangeable MC p); threshold quantile method=higher",
+  "diagnostic": "CRN three-position W2 (conservative reference)",
+  "stability_pre_registered": {
+   "seed_decisions_agree": true,
+   "nsub_decisions_agree": true,
+   "max_seed_spread": 0.25,
+   "selection_decision_margin": true
+  },
+  "selection_path_sensitivity": {
+   "full_pool_rms_diagnostic": {
+    "eps_independent": [
+     2.4068582290195494e-07,
+     0.000668225476609745,
+     1.1719003372390441e-05
+    ],
+    "eps_crn": [
+     0.00010289354472809177,
+     0.0003559722929772047,
+     0.0004034972707072728
+    ],
+    "eps_isotropic": 0.0002674512397906846,
+    "note": "engineering diagnostic on the full empirical pools; does NOT bound an arbitrary subsample"
+   },
+   "null_q99_reference": 0.1647143331502289,
+   "exact_subsample": {
+    "rule": "per exact OT subset: eps = paired RMS >= W2(subset_primary, subset_f32); |dW2_max| <= max_pairs(eps_j + eps_k); null q99 shift <= max over replicates of its bound",
+    "per_nsub": {
+     "2000": {
+      "delta_q99_bound": 0.003495235400584127,
+      "observed_bounds": [
+       0.0,
+       1.2459415868413556e-06,
+       3.988858600842238e-09
+      ],
+      "decision_margin_ok": [
+       true,
+       true,
+       true
+      ]
+     },
+     "5000": {
+      "delta_q99_bound": 0.002241750170650586,
+      "observed_bounds": [
+       2.5091340117304635e-08,
+       0.0,
+       0.0
+      ],
+      "decision_margin_ok": [
+       true,
+       true,
+       true
+      ]
+     }
+    }
+   },
+   "primary": "float64",
+   "sensitivity": "float32"
+  },
+  "m": 100,
+  "B_null": 200,
+  "results": {
+   "2000": {
+    "n_sub": 2000,
+    "clusters_per_sample": 20,
+    "selection_sensitivity": {
+     "delta_q99_bound": 0.003495235400584127,
+     "null_bound_median": 0.0,
+     "decision_margin_ok_per_seed": [
+      true,
+      true,
+      true
+     ],
+     "rule": "|W2_max - q99| > observed perturbation bound + delta_q99_bound => the above/below-q99 decision cannot change under the float32 selection path"
+    },
+    "primary_independent": {
+     "observed": {
+      "seed0": {
+       "pairwise": {
+        "P1P2": 0.18753111837137446,
+        "P1P3": 0.22412475009321733,
+        "P2P3": 0.18886401321453503
+       },
+       "W2_max": 0.22412475009321733,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      },
+      "seed1": {
+       "pairwise": {
+        "P1P2": 0.18973606811087101,
+        "P1P3": 0.21224907792143122,
+        "P2P3": 0.19219154972209848
+       },
+       "W2_max": 0.21224907792143122,
+       "eps_subset": [
+        1.2459415868413556e-06,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 1.2459415868413556e-06
+      },
+      "seed2": {
+       "pairwise": {
+        "P1P2": 0.1936258695821488,
+        "P1P3": 0.20054425072485965,
+        "P2P3": 0.1924917330104725
+       },
+       "W2_max": 0.20054425072485965,
+       "eps_subset": [
+        3.988858600842238e-09,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 3.988858600842238e-09
+      }
+     },
+     "finite_pool_exceedance": [
+      0.014925373134328358,
+      0.07462686567164178,
+      0.1791044776119403
+     ],
+     "decision_above_q99": [
+      false,
+      false,
+      false
+     ]
+    },
+    "diagnostic_crn": {
+     "observed": {
+      "seed0": {
+       "pairwise": {
+        "P1P2": 0.1323920333283592,
+        "P1P3": 0.11485227473055078,
+        "P2P3": 0.11918477108541309
+       },
+       "W2_max": 0.1323920333283592,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      },
+      "seed1": {
+       "pairwise": {
+        "P1P2": 0.1493604201652115,
+        "P1P3": 0.13313664138332332,
+        "P2P3": 0.1312319959351131
+       },
+       "W2_max": 0.1493604201652115,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      },
+      "seed2": {
+       "pairwise": {
+        "P1P2": 0.1308300365656053,
+        "P1P3": 0.12373171249910397,
+        "P2P3": 0.13009122315551863
+       },
+       "W2_max": 0.1308300365656053,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      }
+     },
+     "conservative_exceedance": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "note": "CRN estimator vs independent-sample null: conservative scale reference, not an exact MC p"
+    },
+    "binding": "2fac95728466d8f4b4ca37ad1271495930fb4cf413ee354a0fa8c14dbe6e43f8",
+    "binding_payload": {
+     "notebook_source": "2839287e2503620d9d580eb1aef2499c16c475b9257e0205a0c81691d1d25a33",
+     "live_source": "2839287e2503620d9d580eb1aef2499c16c475b9257e0205a0c81691d1d25a33",
+     "versions": {
+      "python": "3.13.15",
+      "numpy": "2.1.3",
+      "scipy": "1.16.3",
+      "healpy": "1.20.0",
+      "pandas": "2.2.3",
+      "pot": "0.9.7.post1"
+     },
+     "threads": 2,
+     "threads_live": [
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 2,
+       "file": "libscipy_openblas64_-ff651d7f.so",
+       "version": "0.3.27"
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp-e985bcbb.so.1.0.0",
+       "version": null
+      },
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 2,
+       "file": "libscipy_openblas-b75cc656.so",
+       "version": "0.3.29.dev"
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp.so.1",
+       "version": null
+      },
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 2,
+       "file": "libopenblasp-r0-59ffcd50.3.15.so",
+       "version": "0.3.15"
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp-a34b3233.so.1.0.0",
+       "version": null
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp-870cb1d0.so.1.0.0",
+       "version": null
+      },
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 1,
+       "file": "libopenblas-r0-11edc3fa.3.15.so",
+       "version": "0.3.15"
+      }
+     ],
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+     "cpu": "x86_64",
+     "asset_sha": {
+      "bstack": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",
+      "a5_null": "d0de2cf6643ff19e134567616f243298b2cc83dd081032949984c1c6abfa2b9e",
+      "a5_prov": "33765464cd4f4bea67e78fddb769e92ccbea38e68f6ec74778a203309971ba80",
+      "a9_prov": "09c03219f43ce69368c238ab61567c3e804a45302386485820b45534539d16ef",
+      "a9_manifest": "4b454a157b0bdbed4a6c8856b750bb0a8951f042c56a596a4971a1bc092e2c9a",
+      "a9_script": "2905c036a04a04e33672a07ba464d95ae6a669c8ea7b918f17a6813e864dde2c",
+      "a8_manifest": "3384c9c5994a8c656ca1c868ff60156ad7e627a038bfeffe320972a6fc72e031",
+      "a8b_prov": "a5314043e025a00ffe7ca6d89985bb1b6064e398bc9ef911de7348d601c85d6a",
+      "a11_manifest": "6000d7b7049dc5232f3e87daab2d4e56cb069cd15145f252ba4a548bf94df981",
+      "cov_P1": "27e2bb589722526a40ddeca1b738f6c58edb1c8efd39672b0f7080d8de133308",
+      "cov_P2": "727772a10af23118f4cb4c725af369578c1d3ac9d52d0cb641e4fc6399c29219",
+      "cov_P3": "dbec1b921c3d74847095d364c04222f795c59ce4eb86686817e70d7d861d53fe",
+      "step0_npz": "5bf6e5167995515c5f0a38f4e126ca252bbf8a28e7e6c90fe0d167481871e0f0",
+      "step0_csv": "6ed885d10a6455995b342152e71cd14f79c87b84ff6fb9539b3ebd4f61e551cb"
+     },
+     "IND_sha": [
+      "90a3b811979881e6b8ff29450bd49b46b67bc4601ca4aa4c2e0809360f400e74",
+      "726ee6ae91a2b3053d3acacec1c0d770388a9e22670287b47065f4bdf41fa688",
+      "e4599f3d9fcd03be5ea109e6f3b0a378b57791ba737e5f21204c7ccf751a4537"
+     ],
+     "CRN_sha": [
+      "0d69548e5abff7e9b5f05f4c53f2aa8e41979eae6c05a096a4e93b36909ffe8e",
+      "3e104f4b3583fafab79e9c3d8f6ba1cdeabfe9c65cc83b62016909060e20514d",
+      "e7cbcda5f1c20179f28461827b0dca5131fcdb852f09757a24da06c9f643cc03"
+     ],
+     "TwI_sha": "5eada67f10e1f68470b875e0e2630936d04fa88917778fe3326ee0b2ce5c4fb3",
+     "config": {
+      "N": 1000000,
+      "N_CAL": 200000,
+      "N_PSEUDO": 200,
+      "B_BOOT": 2000,
+      "B_NULL": 200,
+      "N_SUB_W2": [
+       2000,
+       5000
+      ],
+      "N_W2_POOL": 200000,
+      "N_FIT": 20000
+     },
+     "seed": 20260912,
+     "adopted_m": 100,
+     "production": {
+      "route": "l24_feature231",
+      "selection_dtype": "float64",
+      "evaluation_dtype": "float64",
+      "sample_chunk": 2000,
+      "sample_chunk_sensitivity": 20000,
+      "threads": 2,
+      "primary": "float64",
+      "sensitivity": "float32",
+      "a8b_winners": {
+       "float64": {
+        "chunk": 2000,
+        "N": 1000000,
+        "production_s_median": 76.65821095789943,
+        "peak_increment_GB": 0.09900032
+       },
+       "float32": {
+        "chunk": 20000,
+        "N": 1000000,
+        "production_s_median": 39.30793997899673,
+        "peak_increment_GB": 0.33275904
+       }
+      },
+      "supersede_note": "A10 supersedes the l2-4 selection dtype only (float32 -> float64, cost ~1.3 min/1e6) on stress evidence: non-antipodal near-tie flips and antipodal flips with T2 rel diff up to 5e-3; A8b benchmark stays valid; S2 keeps float32"
+     },
+     "mt_commit": "1bdd9ea8a00891d6dc3622331f6dad5b86c16c89",
+     "mu_c_sha": "dd6bc1f6c47a98549cccf628a703f2d8a9e54880a44c2464748a237508579c83",
+     "Sih_sha": "e5612b794edd569bcb63b651bb42d36f1b566c0795e31de4ba90e6eca7a0448c",
+     "S_POS_sha": [
+      "230e4c6801b32b8a2232cff3290d35b9abfdba17243e817a140a8a163428a499",
+      "776090a459287c268542f9a8756c927011f5ad093856bfddbb296f1d8c2586f7",
+      "6f0fa1d1f1da7ea9308fe14341faa9bcab469cca93553097ff9af832fbbee2ff"
+     ],
+     "S_I_sha": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c",
+     "mode": "official",
+     "n_sub": 2000
+    },
+    "emd_warnings_nsub": 0,
+    "null": {
+     "B": 200,
+     "q99_method_higher": 0.23641931964774493,
+     "q95": 0.21648280177150517,
+     "median": 0.1821832507906888,
+     "max": 0.247247269694959,
+     "pool_reuse": "finite pool; blocks disjoint within a replicate, re-permuted when exhausted"
+    },
+    "emd_warnings": 0
+   },
+   "5000": {
+    "n_sub": 5000,
+    "clusters_per_sample": 50,
+    "selection_sensitivity": {
+     "delta_q99_bound": 0.002241750170650586,
+     "null_bound_median": 0.0,
+     "decision_margin_ok_per_seed": [
+      true,
+      true,
+      true
+     ],
+     "rule": "|W2_max - q99| > observed perturbation bound + delta_q99_bound => the above/below-q99 decision cannot change under the float32 selection path"
+    },
+    "primary_independent": {
+     "observed": {
+      "seed0": {
+       "pairwise": {
+        "P1P2": 0.12287081126101512,
+        "P1P3": 0.13480846750073086,
+        "P2P3": 0.1280032773267147
+       },
+       "W2_max": 0.13480846750073086,
+       "eps_subset": [
+        0.0,
+        2.5091340117304635e-08,
+        0.0
+       ],
+       "W2max_perturbation_bound": 2.5091340117304635e-08
+      },
+      "seed1": {
+       "pairwise": {
+        "P1P2": 0.135759691674776,
+        "P1P3": 0.1390876771458705,
+        "P2P3": 0.15270972433631944
+       },
+       "W2_max": 0.15270972433631944,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      },
+      "seed2": {
+       "pairwise": {
+        "P1P2": 0.13585879708689189,
+        "P1P3": 0.13858485063410528,
+        "P2P3": 0.14873118581752964
+       },
+       "W2_max": 0.14873118581752964,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      }
+     },
+     "finite_pool_exceedance": [
+      0.208955223880597,
+      0.01990049751243781,
+      0.029850746268656716
+     ],
+     "decision_above_q99": [
+      false,
+      false,
+      false
+     ]
+    },
+    "diagnostic_crn": {
+     "observed": {
+      "seed0": {
+       "pairwise": {
+        "P1P2": 0.10146034218270035,
+        "P1P3": 0.09304755467633176,
+        "P2P3": 0.08827210462147148
+       },
+       "W2_max": 0.10146034218270035,
+       "eps_subset": [
+        1.2151206796815052e-08,
+        0.0,
+        0.0019050768836675457
+       ],
+       "W2max_perturbation_bound": 0.0019050890348743426
+      },
+      "seed1": {
+       "pairwise": {
+        "P1P2": 0.09726501816964787,
+        "P1P3": 0.09380557777761837,
+        "P2P3": 0.09107002176594245
+       },
+       "W2_max": 0.09726501816964787,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      },
+      "seed2": {
+       "pairwise": {
+        "P1P2": 0.10937844151488353,
+        "P1P3": 0.09155403332842546,
+        "P2P3": 0.09920782831658781
+       },
+       "W2_max": 0.10937844151488353,
+       "eps_subset": [
+        0.0,
+        0.0,
+        7.568249550865426e-09
+       ],
+       "W2max_perturbation_bound": 7.568249550865426e-09
+      }
+     },
+     "conservative_exceedance": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "note": "CRN estimator vs independent-sample null: conservative scale reference, not an exact MC p"
+    },
+    "binding": "0d9096f14b395ad2f36d970ed06888e6f048ee0255f2c6d8988f8b9fada2ae3d",
+    "binding_payload": {
+     "notebook_source": "2839287e2503620d9d580eb1aef2499c16c475b9257e0205a0c81691d1d25a33",
+     "live_source": "2839287e2503620d9d580eb1aef2499c16c475b9257e0205a0c81691d1d25a33",
+     "versions": {
+      "python": "3.13.15",
+      "numpy": "2.1.3",
+      "scipy": "1.16.3",
+      "healpy": "1.20.0",
+      "pandas": "2.2.3",
+      "pot": "0.9.7.post1"
+     },
+     "threads": 2,
+     "threads_live": [
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 2,
+       "file": "libscipy_openblas64_-ff651d7f.so",
+       "version": "0.3.27"
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp-e985bcbb.so.1.0.0",
+       "version": null
+      },
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 2,
+       "file": "libscipy_openblas-b75cc656.so",
+       "version": "0.3.29.dev"
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp.so.1",
+       "version": null
+      },
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 2,
+       "file": "libopenblasp-r0-59ffcd50.3.15.so",
+       "version": "0.3.15"
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp-a34b3233.so.1.0.0",
+       "version": null
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp-870cb1d0.so.1.0.0",
+       "version": null
+      },
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 1,
+       "file": "libopenblas-r0-11edc3fa.3.15.so",
+       "version": "0.3.15"
+      }
+     ],
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+     "cpu": "x86_64",
+     "asset_sha": {
+      "bstack": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",
+      "a5_null": "d0de2cf6643ff19e134567616f243298b2cc83dd081032949984c1c6abfa2b9e",
+      "a5_prov": "33765464cd4f4bea67e78fddb769e92ccbea38e68f6ec74778a203309971ba80",
+      "a9_prov": "09c03219f43ce69368c238ab61567c3e804a45302386485820b45534539d16ef",
+      "a9_manifest": "4b454a157b0bdbed4a6c8856b750bb0a8951f042c56a596a4971a1bc092e2c9a",
+      "a9_script": "2905c036a04a04e33672a07ba464d95ae6a669c8ea7b918f17a6813e864dde2c",
+      "a8_manifest": "3384c9c5994a8c656ca1c868ff60156ad7e627a038bfeffe320972a6fc72e031",
+      "a8b_prov": "a5314043e025a00ffe7ca6d89985bb1b6064e398bc9ef911de7348d601c85d6a",
+      "a11_manifest": "6000d7b7049dc5232f3e87daab2d4e56cb069cd15145f252ba4a548bf94df981",
+      "cov_P1": "27e2bb589722526a40ddeca1b738f6c58edb1c8efd39672b0f7080d8de133308",
+      "cov_P2": "727772a10af23118f4cb4c725af369578c1d3ac9d52d0cb641e4fc6399c29219",
+      "cov_P3": "dbec1b921c3d74847095d364c04222f795c59ce4eb86686817e70d7d861d53fe",
+      "step0_npz": "5bf6e5167995515c5f0a38f4e126ca252bbf8a28e7e6c90fe0d167481871e0f0",
+      "step0_csv": "6ed885d10a6455995b342152e71cd14f79c87b84ff6fb9539b3ebd4f61e551cb"
+     },
+     "IND_sha": [
+      "90a3b811979881e6b8ff29450bd49b46b67bc4601ca4aa4c2e0809360f400e74",
+      "726ee6ae91a2b3053d3acacec1c0d770388a9e22670287b47065f4bdf41fa688",
+      "e4599f3d9fcd03be5ea109e6f3b0a378b57791ba737e5f21204c7ccf751a4537"
+     ],
+     "CRN_sha": [
+      "0d69548e5abff7e9b5f05f4c53f2aa8e41979eae6c05a096a4e93b36909ffe8e",
+      "3e104f4b3583fafab79e9c3d8f6ba1cdeabfe9c65cc83b62016909060e20514d",
+      "e7cbcda5f1c20179f28461827b0dca5131fcdb852f09757a24da06c9f643cc03"
+     ],
+     "TwI_sha": "5eada67f10e1f68470b875e0e2630936d04fa88917778fe3326ee0b2ce5c4fb3",
+     "config": {
+      "N": 1000000,
+      "N_CAL": 200000,
+      "N_PSEUDO": 200,
+      "B_BOOT": 2000,
+      "B_NULL": 200,
+      "N_SUB_W2": [
+       2000,
+       5000
+      ],
+      "N_W2_POOL": 200000,
+      "N_FIT": 20000
+     },
+     "seed": 20260912,
+     "adopted_m": 100,
+     "production": {
+      "route": "l24_feature231",
+      "selection_dtype": "float64",
+      "evaluation_dtype": "float64",
+      "sample_chunk": 2000,
+      "sample_chunk_sensitivity": 20000,
+      "threads": 2,
+      "primary": "float64",
+      "sensitivity": "float32",
+      "a8b_winners": {
+       "float64": {
+        "chunk": 2000,
+        "N": 1000000,
+        "production_s_median": 76.65821095789943,
+        "peak_increment_GB": 0.09900032
+       },
+       "float32": {
+        "chunk": 20000,
+        "N": 1000000,
+        "production_s_median": 39.30793997899673,
+        "peak_increment_GB": 0.33275904
+       }
+      },
+      "supersede_note": "A10 supersedes the l2-4 selection dtype only (float32 -> float64, cost ~1.3 min/1e6) on stress evidence: non-antipodal near-tie flips and antipodal flips with T2 rel diff up to 5e-3; A8b benchmark stays valid; S2 keeps float32"
+     },
+     "mt_commit": "1bdd9ea8a00891d6dc3622331f6dad5b86c16c89",
+     "mu_c_sha": "dd6bc1f6c47a98549cccf628a703f2d8a9e54880a44c2464748a237508579c83",
+     "Sih_sha": "e5612b794edd569bcb63b651bb42d36f1b566c0795e31de4ba90e6eca7a0448c",
+     "S_POS_sha": [
+      "230e4c6801b32b8a2232cff3290d35b9abfdba17243e817a140a8a163428a499",
+      "776090a459287c268542f9a8756c927011f5ad093856bfddbb296f1d8c2586f7",
+      "6f0fa1d1f1da7ea9308fe14341faa9bcab469cca93553097ff9af832fbbee2ff"
+     ],
+     "S_I_sha": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c",
+     "mode": "official",
+     "n_sub": 5000
+    },
+    "emd_warnings_nsub": 0,
+    "null": {
+     "B": 200,
+     "q99_method_higher": 0.1647143331502289,
+     "q95": 0.14365475507857894,
+     "median": 0.1272621354064254,
+     "max": 0.17927924420438676,
+     "pool_reuse": "finite pool; blocks disjoint within a replicate, re-permuted when exhausted"
+    },
+    "emd_warnings": 0
+   }
+  },
+  "generation_seconds": 245.41228342056274,
+  "caveat": "B=200 99th percentile is coarse (top ~2 values); final trigger threshold requires larger B or precision stopping; this is a pathway result, not a frozen threshold"
+ },
+ "outputs": {
+  "a10a_calibration.npz": "6a8c87889ec1d7a5d35336a3cdc30f9537376f2b3878ac9d1ee12cc34319c5df",
+  "a10b_cluster_hits.npz": "a022b2a1bf258482f16370aacbffcb0138a8a0ba6b3082d772124d332c36dec5",
+  "a10b_flip_evidence.npz": "6b2e70f9ef8c3c6c4491a2533389eaf78fdd065ec295b8002dc93ecd474726e1",
+  "a10b_axes.npz": "f7d759066075d3a0b48d9f4a6dcb6e736583b23bac344403c9420499d05ddbb3",
+  "a10b_m_sensitivity.json": "063dd517d6eeb1f16341708e22e77e493c1228c5586189a6832a0e28bd7f8f4a",
+  "a10c_pathway.npz": "bc28c3b1b1720a84440a4bd0a2e51e46dcac0db2496702fbb2e2c184e050d0ff",
+  "a10c_pathway.json": "94f7ed3afeef37f8a7b81ae5b873063845f98c0a911703937f558ef842d48386",
+  "a10d_w2.npz": "5abbda0af6d2901758245126ded2bb4620183d21d00a872fbb557a499283a0ee",
+  "a10d_w2.json": "b3f1e58c72d00b3f9a38a8796683a71cc9a5fbeac0d2a95865c93144a69b0461",
+  "a10d_w2_nsub2000.json": "dabdd963f17b26e9cf17a0ec15af6246c1cf031d029caa65bcd9d236bc37cf84",
+  "a10d_w2_nsub5000.json": "8c9801b6248a24d434c8cd7bcc7532e5a5f0de16bfeef0c729887d316ec47536"
+ },
+ "superseded": {
+  "v1_0": "central-band event + float64 selection + chunk 10000; Q~1.08-1.11, m=100, FWFSR 0/200 withdrawn",
+  "v1_1": "never run officially: float32 product order differed from the A8b child; m fallback unreachable; zero-numerator bootstrap dropped; W2 observed/null mechanism mismatch",
+  "v1_2": "never run officially: m fallback still blocked by unconditional consistency/finite gates; W2 checkpoint binding without source/whitening; negative-control validity ungated",
+  "v1_2_1": "never run officially: scan() lacked the A8b non-finite fail-fast; positive-control inventory incomplete",
+  "v1_2_2": "never run officially: cross-selection equivalence not gated on the m runs and 1e-6 bound inconsistent with the observed antipodal T2 difference; calibration and pseudo shared one random stream",
+  "v1_2_3": "never run officially: float32 primary with Event-B-only cross-selection gate left W2/pseudo-threshold sensitivity unverified; old exact-antipode probe contradicted the policy",
+  "v1_2_4": "never run officially: calibration sensitivity gate compared float64 with itself; m-run helper arguments and evidence labels reversed; W2 full-pool RMS misused as a subsample decision bound; provenance kept float32-primary wording",
+  "v1_2_5": "pre-run audit PASS but Colab smoke stopped at import (healpy not installed by the notebook); v1.2.6 = v1.2.5 + healpy pin + two comment fixes",
+  "v1_2_6": "Colab smoke stopped at G_a9_quadrature_hashes: bit-level quadrature hashes are NumPy-version dependent; v1.2.7 replaces the bit gate by a mathematical Gauss-Legendre exactness gate (hash match kept as diagnostic)",
+  "v1_2_7": "Colab smoke PASS; official stopped at G_threads_live_registered (several BLAS pools enumerated); v1.2.8 gates the NumPy GEMM pool == 2 and other pools <= 2 and records all pools"
+ }
+}

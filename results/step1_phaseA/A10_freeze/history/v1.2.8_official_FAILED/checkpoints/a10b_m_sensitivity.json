@@ -1,0 +1,408 @@
+{
+ "runs": {
+  "m10_rep1": {
+   "tag": "m10_rep1",
+   "K": 100000,
+   "P_M": 0.004916,
+   "P_I": 0.003651,
+   "CI_widths_5seeds": [
+    0.055579314087753406,
+    0.05465237962807806,
+    0.05574112218208721,
+    0.054859172007453494,
+    0.05635666526152583
+   ],
+   "hits_M": 4916,
+   "hits_I": 3651,
+   "Q": 1.3464804163242947,
+   "logQ": 0.29749408903028857,
+   "se_logQ": 0.014233692178959064,
+   "logCI95": [
+    0.26886024531791497,
+    0.3244395594056684
+   ],
+   "CI95": [
+    1.30847226314259,
+    1.3832551963399706
+   ],
+   "CI_rel_halfwidth": 0.027769781235113568,
+   "CI_width_CV_5seeds": 0.011143028156712195,
+   "event_positive_clusters_M": 4808,
+   "event_positive_clusters_I": 3591,
+   "precision_gate": true,
+   "P_M_T1_le_obs": 0.01718,
+   "P_I_T1_le_obs": 0.014355,
+   "T1_med_M": 118.7361111882015,
+   "T1_med_I": 120.24297538667517,
+   "T2_med_M": 604.2281564301225,
+   "T2_med_I": 607.97629943263,
+   "rotation_seconds": 100.84445181899957,
+   "seconds": 415.79755544662476,
+   "sensitivity_float32_selection": {
+    "Q": 1.3464804163242947,
+    "logQ": 0.29749408903028857,
+    "CI95": [
+     1.30847226314259,
+     1.3832551963399706
+    ],
+    "hits_M": 4916,
+    "hits_I": 3651,
+    "abs_dlogQ_primary_vs_f32": 0.0
+   },
+   "cross_selection": {
+    "model": {
+     "n": 1000000,
+     "flip_frac": 0.008624,
+     "n_flip": 8624,
+     "n_antipodal": 8622,
+     "n_nonantipodal": 2,
+     "T1_rel_max": 6.186327961163409e-07,
+     "T2_rel_max": 0.07105741997383185,
+     "T1_rel_max_at_flips": 6.186327961163409e-07,
+     "max_plane_angle_deg_nonantipodal": 4.526879380615897,
+     "flips_only_at_near_ties": true,
+     "eventB_mismatch": 0,
+     "eventB_mismatch_frac": 0.0,
+     "eventB_identical": true,
+     "all_finite": true,
+     "consistency": true
+    },
+    "iso": {
+     "n": 1000000,
+     "flip_frac": 0.008627,
+     "n_flip": 8627,
+     "n_antipodal": 8622,
+     "n_nonantipodal": 5,
+     "T1_rel_max": 4.922489371171252e-07,
+     "T2_rel_max": 0.04695480462426555,
+     "T1_rel_max_at_flips": 4.922489371171252e-07,
+     "max_plane_angle_deg_nonantipodal": 7.427548288963749,
+     "flips_only_at_near_ties": true,
+     "eventB_mismatch": 0,
+     "eventB_mismatch_frac": 0.0,
+     "eventB_identical": true,
+     "all_finite": true,
+     "consistency": true
+    }
+   }
+  },
+  "m10_rep2": {
+   "tag": "m10_rep2",
+   "K": 100000,
+   "P_M": 0.004813,
+   "P_I": 0.003704,
+   "CI_widths_5seeds": [
+    0.054792284409973635,
+    0.05646412518581828,
+    0.05751826246718514,
+    0.054950504820334006,
+    0.055204751411424446
+   ],
+   "hits_M": 4813,
+   "hits_I": 3704,
+   "Q": 1.2994060475161986,
+   "logQ": 0.2619072735370393,
+   "se_logQ": 0.013855754472752493,
+   "logCI95": [
+    0.2356785666759147,
+    0.2904708510858883
+   ],
+   "CI95": [
+    1.2657673849526572,
+    1.3370568945261587
+   ],
+   "CI_rel_halfwidth": 0.027431575260778076,
+   "CI_width_CV_5seeds": 0.018773144316643467,
+   "event_positive_clusters_M": 4705,
+   "event_positive_clusters_I": 3624,
+   "precision_gate": true,
+   "P_M_T1_le_obs": 0.017095,
+   "P_I_T1_le_obs": 0.014652,
+   "T1_med_M": 118.64464066110244,
+   "T1_med_I": 120.22466800947481,
+   "T2_med_M": 604.0777074059038,
+   "T2_med_I": 608.2243456717797,
+   "rotation_seconds": 85.16901134999989,
+   "seconds": 376.84240436553955,
+   "sensitivity_float32_selection": {
+    "Q": 1.2994060475161986,
+    "logQ": 0.2619072735370393,
+    "CI95": [
+     1.2657673849526572,
+     1.3370568945261587
+    ],
+    "hits_M": 4813,
+    "hits_I": 3704,
+    "abs_dlogQ_primary_vs_f32": 0.0
+   },
+   "cross_selection": {
+    "model": {
+     "n": 1000000,
+     "flip_frac": 0.008882,
+     "n_flip": 8882,
+     "n_antipodal": 8877,
+     "n_nonantipodal": 5,
+     "T1_rel_max": 5.1481873971155e-07,
+     "T2_rel_max": 0.034220993761884755,
+     "T1_rel_max_at_flips": 5.1481873971155e-07,
+     "max_plane_angle_deg_nonantipodal": 3.6830256604132634,
+     "flips_only_at_near_ties": true,
+     "eventB_mismatch": 0,
+     "eventB_mismatch_frac": 0.0,
+     "eventB_identical": true,
+     "all_finite": true,
+     "consistency": true
+    },
+    "iso": {
+     "n": 1000000,
+     "flip_frac": 0.008661,
+     "n_flip": 8661,
+     "n_antipodal": 8659,
+     "n_nonantipodal": 2,
+     "T1_rel_max": 4.976183220611548e-07,
+     "T2_rel_max": 0.03019609854470669,
+     "T1_rel_max_at_flips": 4.976183220611548e-07,
+     "max_plane_angle_deg_nonantipodal": 3.6714833203288055,
+     "flips_only_at_near_ties": true,
+     "eventB_mismatch": 0,
+     "eventB_mismatch_frac": 0.0,
+     "eventB_identical": true,
+     "all_finite": true,
+     "consistency": true
+    }
+   }
+  },
+  "m100_rep1": {
+   "tag": "m100_rep1",
+   "K": 10000,
+   "P_M": 0.004928,
+   "P_I": 0.003704,
+   "CI_widths_5seeds": [
+    0.055251908173935105,
+    0.0543360053625252,
+    0.05591179872397728,
+    0.05350641202233697,
+    0.054817963503987543
+   ],
+   "hits_M": 4928,
+   "hits_I": 3704,
+   "Q": 1.3304535637149029,
+   "logQ": 0.2855199094472857,
+   "se_logQ": 0.01413593903741768,
+   "logCI95": [
+    0.25674647818633495,
+    0.31199838636027005
+   ],
+   "CI95": [
+    1.2927173531643006,
+    1.3661524885497687
+   ],
+   "CI_rel_halfwidth": 0.027597782210610166,
+   "CI_width_CV_5seeds": 0.014886268172929916,
+   "event_positive_clusters_M": 3915,
+   "event_positive_clusters_I": 3111,
+   "precision_gate": true,
+   "P_M_T1_le_obs": 0.017364,
+   "P_I_T1_le_obs": 0.014731,
+   "T1_med_M": 118.70910407564348,
+   "T1_med_I": 120.28809402686163,
+   "T2_med_M": 604.1809437355437,
+   "T2_med_I": 608.1171843702473,
+   "rotation_seconds": 8.8290027930002,
+   "seconds": 256.59790420532227,
+   "sensitivity_float32_selection": {
+    "Q": 1.3304535637149029,
+    "logQ": 0.2855199094472857,
+    "CI95": [
+     1.2927173531643006,
+     1.3661524885497687
+    ],
+    "hits_M": 4928,
+    "hits_I": 3704,
+    "abs_dlogQ_primary_vs_f32": 0.0
+   },
+   "cross_selection": {
+    "model": {
+     "n": 1000000,
+     "flip_frac": 0.008721,
+     "n_flip": 8721,
+     "n_antipodal": 8715,
+     "n_nonantipodal": 6,
+     "T1_rel_max": 4.7083651594532997e-07,
+     "T2_rel_max": 0.06765689744154031,
+     "T1_rel_max_at_flips": 4.7083651594532997e-07,
+     "max_plane_angle_deg_nonantipodal": 5.11310200955204,
+     "flips_only_at_near_ties": true,
+     "eventB_mismatch": 0,
+     "eventB_mismatch_frac": 0.0,
+     "eventB_identical": true,
+     "all_finite": true,
+     "consistency": true
+    },
+    "iso": {
+     "n": 1000000,
+     "flip_frac": 0.008589,
+     "n_flip": 8589,
+     "n_antipodal": 8584,
+     "n_nonantipodal": 5,
+     "T1_rel_max": 4.5015149256605947e-07,
+     "T2_rel_max": 0.11523657832308008,
+     "T1_rel_max_at_flips": 4.5015149256605947e-07,
+     "max_plane_angle_deg_nonantipodal": 59.416685068179454,
+     "flips_only_at_near_ties": true,
+     "eventB_mismatch": 0,
+     "eventB_mismatch_frac": 0.0,
+     "eventB_identical": true,
+     "all_finite": true,
+     "consistency": true
+    }
+   }
+  },
+  "m100_rep2": {
+   "tag": "m100_rep2",
+   "K": 10000,
+   "P_M": 0.004868,
+   "P_I": 0.003732,
+   "CI_widths_5seeds": [
+    0.055280314272595055,
+    0.05464124577308835,
+    0.05627414036010667,
+    0.0559637111582465,
+    0.055499218873963474
+   ],
+   "hits_M": 4868,
+   "hits_I": 3732,
+   "Q": 1.3043944265809218,
+   "logQ": 0.26573889214018337,
+   "se_logQ": 0.014120662005099018,
+   "logCI95": [
+    0.2377594833440907,
+    0.29303979761668575
+   ],
+   "CI95": [
+    1.2684040838259,
+    1.3404961379215887
+   ],
+   "CI_rel_halfwidth": 0.027634300111453368,
+   "CI_width_CV_5seeds": 0.010170809301479051,
+   "event_positive_clusters_M": 3861,
+   "event_positive_clusters_I": 3089,
+   "precision_gate": true,
+   "P_M_T1_le_obs": 0.017157,
+   "P_I_T1_le_obs": 0.01447,
+   "T1_med_M": 118.74736454293722,
+   "T1_med_I": 120.34065589493787,
+   "T2_med_M": 604.7110320884042,
+   "T2_med_I": 608.842876291249,
+   "rotation_seconds": 8.338681983000015,
+   "seconds": 272.5111382007599,
+   "sensitivity_float32_selection": {
+    "Q": 1.3043944265809218,
+    "logQ": 0.26573889214018337,
+    "CI95": [
+     1.2684040838259,
+     1.3404961379215887
+    ],
+    "hits_M": 4868,
+    "hits_I": 3732,
+    "abs_dlogQ_primary_vs_f32": 0.0
+   },
+   "cross_selection": {
+    "model": {
+     "n": 1000000,
+     "flip_frac": 0.008711,
+     "n_flip": 8711,
+     "n_antipodal": 8708,
+     "n_nonantipodal": 3,
+     "T1_rel_max": 5.107537651254473e-07,
+     "T2_rel_max": 0.14232690798219505,
+     "T1_rel_max_at_flips": 5.107537651254473e-07,
+     "max_plane_angle_deg_nonantipodal": 84.98156439481927,
+     "flips_only_at_near_ties": true,
+     "eventB_mismatch": 0,
+     "eventB_mismatch_frac": 0.0,
+     "eventB_identical": true,
+     "all_finite": true,
+     "consistency": true
+    },
+    "iso": {
+     "n": 1000000,
+     "flip_frac": 0.008611,
+     "n_flip": 8611,
+     "n_antipodal": 8607,
+     "n_nonantipodal": 4,
+     "T1_rel_max": 5.77781026750426e-07,
+     "T2_rel_max": 0.019680044618557272,
+     "T1_rel_max_at_flips": 5.77781026750426e-07,
+     "max_plane_angle_deg_nonantipodal": 3.7073128165768647,
+     "flips_only_at_near_ties": true,
+     "eventB_mismatch": 0,
+     "eventB_mismatch_frac": 0.0,
+     "eventB_identical": true,
+     "all_finite": true,
+     "consistency": true
+    }
+   }
+  }
+ },
+ "decision": {
+  "rule": "m=100 iff m10 and m100 are both usable (finite Q, precision gate on both reps, two-rep consistency) AND the m100-m10 logQ difference CI lies within [-DELTA_M, +DELTA_M] for rep1 pair, rep2 pair and the pooled difference; m=10 iff m10 is usable and (m100 not usable OR equivalence not established); otherwise unresolved (fail-closed). A CI containing 0 alone is NOT treated as equivalence.",
+  "DELTA_M": 0.09531017980432493,
+  "DELTA_M_rationale": "Engineering tolerance, not derived: coarsening the orientation clustering to m=100 is accepted if the multiplicative discrepancy of the support ratio Q is within 10%, i.e. below the Phase A Monte Carlo design differences. Near the decision thresholds Q=3/10 a 10% difference can change a verdict; the full grid (Phase B/C) must additionally record that no threshold crossing arises from the m choice.",
+  "per_m": {
+   "10": {
+    "finite": true,
+    "precise": true,
+    "consistent": true,
+    "usable": true
+   },
+   "100": {
+    "finite": true,
+    "precise": true,
+    "consistent": true,
+    "usable": true
+   }
+  },
+  "diff_logCI_rep1": [
+   -0.0501407653365417,
+   0.028151628757441653
+  ],
+  "diff_logCI_rep2": [
+   -0.03616027427374777,
+   0.04297200080234133
+  ],
+  "diff_logCI_pooled": [
+   -0.03274324050386514,
+   0.024416982204176742
+  ],
+  "equivalence_established": true,
+  "equivalence_verdict_5_bootstrap_seeds": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "zero_in_all_CIs": true,
+  "point_diff_rep1": -0.011974179583002842,
+  "point_diff_rep2": 0.0038316186031440713,
+  "replicate_delta_logQ_m10": 0.03558681549324927,
+  "replicate_delta_logQ_m100": 0.019781017307102355,
+  "precision": {
+   "m10_rep1": true,
+   "m10_rep2": true,
+   "m100_rep1": true,
+   "m100_rep2": true
+  },
+  "adopted_m": 100,
+  "reason": "m=100 practically equivalent to m=10 within the pre-registered margin; both usable",
+  "cluster_ESS": "superseded: precision gate = event-positive clusters >= 50 (both systems) AND CI relative half-width <= 0.20 AND 5-seed CI-width CV < 0.2"
+ },
+ "gates": {
+  "G_m_run_inventory": true,
+  "G_m_f32_f64_selection_consistency_all_runs": true,
+  "G_m10_usable": true,
+  "G_m_decision_policy": true,
+  "G_m_decision_resolved": true
+ }
+}

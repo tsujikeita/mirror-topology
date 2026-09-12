@@ -1,0 +1,380 @@
+{
+ "schema": "freeze_manifest_v2",
+ "stage": "Step 1 Phase A-10 (v1.2.9) — W2 estimator / orientation-cluster m / calibration pathway — official",
+ "date": "2026-09-12T12:52:02.067248+00:00",
+ "git": {
+  "origin": "https://github.com/tsujikeita/mirror-topology",
+  "path": "results/step1_phaseA/A10_freeze/",
+  "archive_tag": "step1-phaseA-A10-freeze-v1.0",
+  "archive_commit": "resolved externally from the annotated tag",
+  "dependency_commit": "1bdd9ea8a00891d6dc3622331f6dad5b86c16c89",
+  "notebook_commit": {
+   "basename": "MirrorTopology_Step1_A10_v1.2.9.ipynb",
+   "head_copy": "731cb898c777d909c1d310e66731dcb78aeb1caefbf1be5582eaf0a3c97eb0a0",
+   "live": "731cb898c777d909c1d310e66731dcb78aeb1caefbf1be5582eaf0a3c97eb0a0"
+  }
+ },
+ "notebook_source_only_sha256": "731cb898c777d909c1d310e66731dcb78aeb1caefbf1be5582eaf0a3c97eb0a0",
+ "official": {
+  "status": "A10_VALID",
+  "required": 61,
+  "components": {
+   "ENGINE_VALID": true,
+   "M_SENSITIVITY_RESOLVED": true,
+   "CALIBRATION_PATH_VALID": true,
+   "W2_PATHWAY_VALID": true
+  },
+  "adopted_m": 100,
+  "production_path": {
+   "route": "l24_feature231",
+   "selection_dtype": "float64",
+   "evaluation_dtype": "float64",
+   "sample_chunk": 2000,
+   "sample_chunk_sensitivity": 20000,
+   "threads": 2,
+   "primary": "float64",
+   "sensitivity": "float32",
+   "a8b_winners": {
+    "float64": {
+     "chunk": 2000,
+     "N": 1000000,
+     "production_s_median": 76.65821095789943,
+     "peak_increment_GB": 0.09900032
+    },
+    "float32": {
+     "chunk": 20000,
+     "N": 1000000,
+     "production_s_median": 39.30793997899673,
+     "peak_increment_GB": 0.33275904
+    }
+   },
+   "supersede_note": "A10 supersedes the l2-4 selection dtype only (float32 -> float64, cost ~1.3 min/1e6) on stress evidence: non-antipodal near-tie flips and antipodal flips with T2 rel diff up to 5e-3; A8b benchmark stays valid; S2 keeps float32"
+  },
+  "environment": {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "pandas": "2.2.3",
+   "pot": "0.9.7.post1"
+  }
+ },
+ "smoke": {
+  "status": "SMOKE_PASS",
+  "required": 54
+ },
+ "scope": "Phase A design/implementation/estimator freeze; global false-support rate and final W2 trigger threshold NOT frozen",
+ "cross_checks": {
+  "official_status": true,
+  "smoke_status": true,
+  "official_outputs_sha": true,
+  "smoke_outputs_sha": true,
+  "notebook_source_only_sha": true,
+  "notebook_file_sha": true,
+  "provenance_sha_vs_auditor": true,
+  "environment_expected": true,
+  "m_decision": true,
+  "production_path": true,
+  "v1_2_8_failed_history": true,
+  "received_list_matches_checkpoints_and_provenances": true
+ },
+ "files": {
+  "A10_design_note_v1.0.md": {
+   "size": 13302,
+   "sha256": "5b21e4bf06bf181748179af4dfde6321736da4baadcd473ee1ee10475cd10782"
+  },
+  "A10_rules_v1.0.md": {
+   "size": 5763,
+   "sha256": "8b0547568884ad1df9e4d152cb9630127a0424f81124f6726984efbd4f3452f3"
+  },
+  "A10_v1.2.9_received_artifacts_SHA256.txt": {
+   "size": 3588,
+   "sha256": "8ec903755e76fd0695e8cfc3e8d7ffd6ce2b073f80d281bd14c120a4d886eda6"
+  },
+  "ChatGPT_audit_A10_v1.2.9_A10_VALID_FREEZE_GO.md": {
+   "size": 14751,
+   "sha256": "e905f6e6c693fc8c51fdc09cffc2e1b330c1ed12a379044c0f9410b0617ab0ae"
+  },
+  "MirrorTopology_Step1_A10_v1.2.9.ipynb": {
+   "size": 89400,
+   "sha256": "c11c41413e33754444118401c8c102b69ca430650619d409bef568f94bba1209"
+  },
+  "Step1_PhaseA_A10_final_report.md": {
+   "size": 3924,
+   "sha256": "602852dad8b61bb3f614b522aaab1340def1d0825aa3431c8766dc25904e435a"
+  },
+  "Step1_PhaseA_A10_v1.2.9_independent_verification.md": {
+   "size": 7002,
+   "sha256": "6dc3723fe75b1431df7a001357154bf7a376a25fc988ea957b8982bb313b8e49"
+  },
+  "a10_w2_benchmark.json": {
+   "size": 1527,
+   "sha256": "04a8ec93d46291ecf756b9d4c7cf3d7b4b35ddd59de466ac67a434775d2a30ae"
+  },
+  "history/A10_version_history.md": {
+   "size": 1866,
+   "sha256": "a57dddd32b786d69def04134fad1bb50bb97c54814f3f3fab2aa6403e450bbf2"
+  },
+  "history/audits/ChatGPT逶｣譟ｻ_Step1_PhaseA_A10_v1_0_Claude莨晞＃逕ｨ.md": {
+   "size": 17569,
+   "sha256": "671b8a28c31cc1f0aa254dcf6f86293d18dacfbff8cd14b29c55a18768990233"
+  },
+  "history/audits/ChatGPT逶｣譟ｻ_Step1_PhaseA_A10_v1_1_Claude莨晞＃逕ｨ.md": {
+   "size": 17117,
+   "sha256": "a023ef800c9a2e1f7fd631295e8c173624492a8e53df805886cd715ad3759b90"
+  },
+  "history/audits/ChatGPT逶｣譟ｻ_Step1_PhaseA_A10_v1_2_1_Claude莨晞＃逕ｨ.md": {
+   "size": 14130,
+   "sha256": "78da40e3fd808a19348b474f963a2760119e05435a6c561c7185d6a8d91a27ff"
+  },
+  "history/audits/ChatGPT逶｣譟ｻ_Step1_PhaseA_A10_v1_2_2_Claude莨晞＃逕ｨ.md": {
+   "size": 12649,
+   "sha256": "89aa9979ce666035864e3de9301afcf7e0c004bb0717f980df465336d1ebce6f"
+  },
+  "history/audits/ChatGPT逶｣譟ｻ_Step1_PhaseA_A10_v1_2_3_Claude莨晞＃逕ｨ.md": {
+   "size": 13447,
+   "sha256": "de6763e17df24558676a9c805e6fb893fc4e4e320e17ea11e594e0fc0669792d"
+  },
+  "history/audits/ChatGPT逶｣譟ｻ_Step1_PhaseA_A10_v1_2_4_Claude莨晞＃逕ｨ.md": {
+   "size": 16215,
+   "sha256": "4aa480e2673afeaee651786a30b939360dff7b15e6ef35838437142498bfc8d4"
+  },
+  "history/audits/ChatGPT逶｣譟ｻ_Step1_PhaseA_A10_v1_2_5_螳溯｡悟燕譛邨ょ愛螳喟Claude莨晞＃逕ｨ.md": {
+   "size": 12482,
+   "sha256": "5eed8c9e54aa3e6cb39902060f5c0b88486706c6065eb419d4717b8d2dfcc469"
+  },
+  "history/audits/ChatGPT逶｣譟ｻ_Step1_PhaseA_A10_v1_2_Claude莨晞＃逕ｨ.md": {
+   "size": 14512,
+   "sha256": "a000847969841df7643bd8e07896dea176f91682aa3373d44324c6b348d4b63c"
+  },
+  "history/implementation_reports/Step1_PhaseA_A10_v1.1_螳溯｣・ｱ蜻・md": {
+   "size": 5389,
+   "sha256": "9e9922274297ca76f07f130e1dd0831a85f0aaa3994557811788018272b58e03"
+  },
+  "history/implementation_reports/Step1_PhaseA_A10_v1.2.1_螳溯｣・ｱ蜻・md": {
+   "size": 3211,
+   "sha256": "903d84526120735e66cf3c57034ce2957cd3f8af2a917878e118a5a84eb22dea"
+  },
+  "history/implementation_reports/Step1_PhaseA_A10_v1.2.2_螳溯｣・ｱ蜻・md": {
+   "size": 3133,
+   "sha256": "0fa6bba4d191e59c24777d83f1b45a17f35d69061cb2ff7383ff3df25e152608"
+  },
+  "history/implementation_reports/Step1_PhaseA_A10_v1.2.3_螳溯｣・ｱ蜻・md": {
+   "size": 4253,
+   "sha256": "4f928dbd3d51d8764b23ac7168e3e36f564b8dd5363237085cb0d6753fa3e783"
+  },
+  "history/implementation_reports/Step1_PhaseA_A10_v1.2.4_螳溯｣・ｱ蜻・md": {
+   "size": 3734,
+   "sha256": "1a43a5a56ba6ffa940145b797943583577f2c76c6bdfc2a67910f8d937c24bca"
+  },
+  "history/implementation_reports/Step1_PhaseA_A10_v1.2.5_螳溯｣・ｱ蜻・md": {
+   "size": 3827,
+   "sha256": "759ebb727eb4619e6fa62a34e08b0ab9f55aa6dcb2c11136ebe6ae7cdb656456"
+  },
+  "history/implementation_reports/Step1_PhaseA_A10_v1.2_螳溯｣・ｱ蜻・md": {
+   "size": 5385,
+   "sha256": "22e67cf90632f891119e93b3d0b4474a604b5aa8ce271be67c764d59d47d2092"
+  },
+  "history/implementation_reports/Step1_PhaseA_A10_繝弱・繝医ヶ繝・け螳溯｣・ｱ蜻垣v1.0.md": {
+   "size": 3260,
+   "sha256": "5752f7aebd899fbede20ca3f881e4960e2771ae7fbfc025d43e079aabfc22355"
+  },
+  "history/notebooks/MirrorTopology_Step1_A10_v1.0.ipynb": {
+   "size": 27695,
+   "sha256": "a571132b5d899d76af40752db2547d8a80bcc0a769680e35ad23ebc480cec1cc"
+  },
+  "history/notebooks/MirrorTopology_Step1_A10_v1.1.ipynb": {
+   "size": 44477,
+   "sha256": "16f8d84c94f1cf60c1c7118405154af946a8c55c0832bd74007af5c3ea2eeff0"
+  },
+  "history/notebooks/MirrorTopology_Step1_A10_v1.2.1.ipynb": {
+   "size": 60716,
+   "sha256": "b4d7aa0d99f12b2d0eaa5d2cb888d6715dc707387f37a1fd434716622e6a5741"
+  },
+  "history/notebooks/MirrorTopology_Step1_A10_v1.2.2.ipynb": {
+   "size": 63374,
+   "sha256": "0eed680bc433241bd904faf762751cf326e49aeafd1e1c5749088e8ba679ddb8"
+  },
+  "history/notebooks/MirrorTopology_Step1_A10_v1.2.3.ipynb": {
+   "size": 70322,
+   "sha256": "b2f180ad57d340bb676860828cea516a1f627371eb4b9e3b5e596dcec3123759"
+  },
+  "history/notebooks/MirrorTopology_Step1_A10_v1.2.4.ipynb": {
+   "size": 77482,
+   "sha256": "49b37152f4bae8f065dbd7218c4da69929c514b5ea3da66557a33e0b8ef95f4d"
+  },
+  "history/notebooks/MirrorTopology_Step1_A10_v1.2.5.ipynb": {
+   "size": 83585,
+   "sha256": "feaa44eb0eb5c255d1c92090da956d22201d9971c4e4b94887b6c57446e18e06"
+  },
+  "history/notebooks/MirrorTopology_Step1_A10_v1.2.6.ipynb": {
+   "size": 84208,
+   "sha256": "66a8a142ce898d2f2ae3821f5cb7b6eb6b758ddcc7d6ae89e6951fd4a8654f9d"
+  },
+  "history/notebooks/MirrorTopology_Step1_A10_v1.2.7.ipynb": {
+   "size": 86195,
+   "sha256": "c0588ded1a291e907e1ef4fc9c4844a01a0baaf5100ec96c8025b67ddd1de5cb"
+  },
+  "history/notebooks/MirrorTopology_Step1_A10_v1.2.8.ipynb": {
+   "size": 87882,
+   "sha256": "94618b5f59f53341a3093e389653129673af9327b4cb1b0072a8145218194572"
+  },
+  "history/notebooks/MirrorTopology_Step1_A10_v1.2.ipynb": {
+   "size": 56728,
+   "sha256": "93b15891dd8104cb8b987ef9efa167fbb234f714e20d43ff365f8b630f614565"
+  },
+  "history/v1.2.8_official_FAILED/a10_provenance.json": {
+   "size": 53655,
+   "sha256": "afd35734625d5dc86da713cc2b9366f6bd61702108c566e6b0ddd98cc9912d04"
+  },
+  "history/v1.2.8_official_FAILED/checkpoints/a10a_calibration.npz": {
+   "size": 7198331,
+   "sha256": "6a8c87889ec1d7a5d35336a3cdc30f9537376f2b3878ac9d1ee12cc34319c5df"
+  },
+  "history/v1.2.8_official_FAILED/checkpoints/a10b_axes.npz": {
+   "size": 25045278,
+   "sha256": "f7d759066075d3a0b48d9f4a6dcb6e736583b23bac344403c9420499d05ddbb3"
+  },
+  "history/v1.2.8_official_FAILED/checkpoints/a10b_cluster_hits.npz": {
+   "size": 401858,
+   "sha256": "a022b2a1bf258482f16370aacbffcb0138a8a0ba6b3082d772124d332c36dec5"
+  },
+  "history/v1.2.8_official_FAILED/checkpoints/a10b_flip_evidence.npz": {
+   "size": 2476158,
+   "sha256": "6b2e70f9ef8c3c6c4491a2533389eaf78fdd065ec295b8002dc93ecd474726e1"
+  },
+  "history/v1.2.8_official_FAILED/checkpoints/a10b_m_sensitivity.json": {
+   "size": 11458,
+   "sha256": "063dd517d6eeb1f16341708e22e77e493c1228c5586189a6832a0e28bd7f8f4a"
+  },
+  "history/v1.2.8_official_FAILED/checkpoints/a10c_pathway.json": {
+   "size": 2522,
+   "sha256": "94f7ed3afeef37f8a7b81ae5b873063845f98c0a911703937f558ef842d48386"
+  },
+  "history/v1.2.8_official_FAILED/checkpoints/a10c_pathway.npz": {
+   "size": 15528,
+   "sha256": "bc28c3b1b1720a84440a4bd0a2e51e46dcac0db2496702fbb2e2c184e050d0ff"
+  },
+  "history/v1.2.8_official_FAILED/checkpoints/a10d_w2.json": {
+   "size": 20230,
+   "sha256": "b3f1e58c72d00b3f9a38a8796683a71cc9a5fbeac0d2a95865c93144a69b0461"
+  },
+  "history/v1.2.8_official_FAILED/checkpoints/a10d_w2.npz": {
+   "size": 3505,
+   "sha256": "5abbda0af6d2901758245126ded2bb4620183d21d00a872fbb557a499283a0ee"
+  },
+  "history/v1.2.8_official_FAILED/checkpoints/a10d_w2_nsub2000.json": {
+   "size": 12307,
+   "sha256": "dabdd963f17b26e9cf17a0ec15af6246c1cf031d029caa65bcd9d236bc37cf84"
+  },
+  "history/v1.2.8_official_FAILED/checkpoints/a10d_w2_nsub5000.json": {
+   "size": 12380,
+   "sha256": "8c9801b6248a24d434c8cd7bcc7532e5a5f0de16bfeef0c729887d316ec47536"
+  },
+  "official/Console_log_of_official_A10_v1.2.9.txt": {
+   "size": 6119,
+   "sha256": "85c8aa0b16007bf973acc66015a86865e397f86f61ceadeb7c887900035a64ee"
+  },
+  "official/a10_provenance.json": {
+   "size": 54257,
+   "sha256": "bf5deec02568fa5c6a0ef42dc8d9d66f51278e67a39fe9ca2dc8d1a069f801f7"
+  },
+  "official/checkpoints/a10a_calibration.npz": {
+   "size": 7198331,
+   "sha256": "6a8c87889ec1d7a5d35336a3cdc30f9537376f2b3878ac9d1ee12cc34319c5df"
+  },
+  "official/checkpoints/a10b_axes.npz": {
+   "size": 25045278,
+   "sha256": "f7d759066075d3a0b48d9f4a6dcb6e736583b23bac344403c9420499d05ddbb3"
+  },
+  "official/checkpoints/a10b_cluster_hits.npz": {
+   "size": 401858,
+   "sha256": "a022b2a1bf258482f16370aacbffcb0138a8a0ba6b3082d772124d332c36dec5"
+  },
+  "official/checkpoints/a10b_flip_evidence.npz": {
+   "size": 2476158,
+   "sha256": "6b2e70f9ef8c3c6c4491a2533389eaf78fdd065ec295b8002dc93ecd474726e1"
+  },
+  "official/checkpoints/a10b_m_sensitivity.json": {
+   "size": 11460,
+   "sha256": "bd3502800007cd700b5144167beb530a5555e159a8f4300f25085e948c131086"
+  },
+  "official/checkpoints/a10c_pathway.json": {
+   "size": 2830,
+   "sha256": "37cc235eb4c428730ca0a2eb0fc23fa9fc6e26886bc13482ccaadb2ed82cb5ec"
+  },
+  "official/checkpoints/a10c_pathway.npz": {
+   "size": 21527,
+   "sha256": "ae706d776e0592f0863f4537a7cdef5c1a2198a40f7bdfb37731e74430271c7b"
+  },
+  "official/checkpoints/a10d_w2.json": {
+   "size": 20230,
+   "sha256": "befc6c35218d0438b7a3b92c454b27e48ecee97ca728971553ce809d1fb341b7"
+  },
+  "official/checkpoints/a10d_w2.npz": {
+   "size": 3505,
+   "sha256": "5abbda0af6d2901758245126ded2bb4620183d21d00a872fbb557a499283a0ee"
+  },
+  "official/checkpoints/a10d_w2_nsub2000.json": {
+   "size": 12307,
+   "sha256": "36f58d86a3bbf3323c2ff8a121b7c2df4b3f1f894d9eb049453e17d46d11f900"
+  },
+  "official/checkpoints/a10d_w2_nsub5000.json": {
+   "size": 12380,
+   "sha256": "d7bff395beb5cfe3bf042dfe6cdb4586386e7bc120fe04669c14adcee9c63d95"
+  },
+  "smoke/Console_log_of_smoke_A10_v1.2.9.txt": {
+   "size": 6059,
+   "sha256": "878122e154853198d30a3b8c9e067ec2e52f347014dc52382388d87880490a5c"
+  },
+  "smoke/a10_provenance.json": {
+   "size": 53294,
+   "sha256": "a2a5fcae64e20f403306cc19e1cebcd15c01ba1894887350223513bc313ac719"
+  },
+  "smoke/checkpoints/a10a_calibration.npz": {
+   "size": 726817,
+   "sha256": "8bdc52553b75ac9e8b6adf10682f528d37183ec3e1f180d622547da380251932"
+  },
+  "smoke/checkpoints/a10b_axes.npz": {
+   "size": 504918,
+   "sha256": "06c3a8e2688766d83681a116c24bef6d7be99d28186818d019dd7c5eaf9c60b2"
+  },
+  "smoke/checkpoints/a10b_cluster_hits.npz": {
+   "size": 50713,
+   "sha256": "5bda8cfed7e056f9afdf19e90d4e34cca0f1bdd607abb0363f68daf97729cb36"
+  },
+  "smoke/checkpoints/a10b_flip_evidence.npz": {
+   "size": 74918,
+   "sha256": "7d1f51426a8a636108dcdc91ce504b9fcc53ced01271faa5bb135576d7737724"
+  },
+  "smoke/checkpoints/a10b_m_sensitivity.json": {
+   "size": 10850,
+   "sha256": "94e942ff4db7849ac63bd028a8eeac6be6346a630f88dd7775b2f6e015eb0c66"
+  },
+  "smoke/checkpoints/a10c_pathway.json": {
+   "size": 2793,
+   "sha256": "3f3147e205d7357558711f3bc2b22c422a5e1ebd64c5c9c5b82f8e6c9add2b5f"
+  },
+  "smoke/checkpoints/a10c_pathway.npz": {
+   "size": 8093,
+   "sha256": "11046fd67724e0e6d72977224156f6e9168754f75504c3053473b4e3a0063e1c"
+  },
+  "smoke/checkpoints/a10d_w2.json": {
+   "size": 19784,
+   "sha256": "ea36834c5be38a7954ad0808dd7899444a7c5921b2d945016bf2b6b7f4f32925"
+  },
+  "smoke/checkpoints/a10d_w2.npz": {
+   "size": 590,
+   "sha256": "bf4c3a1ce1457a5426c825eeaf365cc28300dba6b91fc814b5d2d0b72a9b2794"
+  },
+  "smoke/checkpoints/a10d_w2_nsub1000.json": {
+   "size": 7923,
+   "sha256": "ac3a07bd5b59b87335d6e697bfaf2de177034f056b3024ee16324a5b9326f3e5"
+  },
+  "smoke/checkpoints/a10d_w2_nsub2000.json": {
+   "size": 7969,
+   "sha256": "20a1eb1fd5174097dac72a1defb173fe8b2f61e3bc94bf776cb65bf177b4f37b"
+  }
+ },
+ "n_files": 74
+}

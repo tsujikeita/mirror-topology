@@ -1,0 +1,669 @@
+{
+ "w2": {
+  "estimator": "exact 2D W2 (POT emd2, sqeuclidean, sqrt), uniform weights",
+  "pot_version": "0.9.7.post1",
+  "whitening": "calibration sample mean/cov",
+  "positions_mock": {
+   "cov_P1": [
+    0.31,
+    0.21,
+    0.42
+   ],
+   "cov_P2": [
+    0.13,
+    0.44,
+    0.27
+   ],
+   "cov_P3": [
+    0.31,
+    0.32999999999999996,
+    0.42
+   ]
+  },
+  "positions_note": "mock 3-position set from the A11 cache (E7_b1_A base, E7_b2_A base, y-shift 0.12); NOT the registered p^(3) points",
+  "primary": "independent (R,z) streams per position; null = three disjoint isotropic blocks per replicate (same mechanism); finite-pool Monte Carlo exceedance estimate = (1 + #null >= obs)/(B+1) (null replicates re-use one finite isotropic pool, hence NOT an exact exchangeable MC p); threshold quantile method=higher",
+  "diagnostic": "CRN three-position W2 (conservative reference)",
+  "stability_pre_registered": {
+   "seed_decisions_agree": true,
+   "nsub_decisions_agree": true,
+   "max_seed_spread": 0.25,
+   "selection_decision_margin": true
+  },
+  "selection_path_sensitivity": {
+   "full_pool_rms_diagnostic": {
+    "eps_independent": [
+     2.4068582290195494e-07,
+     0.000668225476609745,
+     1.1719003372390441e-05
+    ],
+    "eps_crn": [
+     0.00010289354472809177,
+     0.0003559722929772047,
+     0.0004034972707072728
+    ],
+    "eps_isotropic": 0.0002674512397906846,
+    "note": "engineering diagnostic on the full empirical pools; does NOT bound an arbitrary subsample"
+   },
+   "null_q99_reference": 0.1647143331502289,
+   "exact_subsample": {
+    "rule": "per exact OT subset: eps = paired RMS >= W2(subset_primary, subset_f32); |dW2_max| <= max_pairs(eps_j + eps_k); null q99 shift <= max over replicates of its bound",
+    "per_nsub": {
+     "2000": {
+      "delta_q99_bound": 0.003495235400584127,
+      "observed_bounds": [
+       0.0,
+       1.2459415868413556e-06,
+       3.988858600842238e-09
+      ],
+      "decision_margin_ok": [
+       true,
+       true,
+       true
+      ]
+     },
+     "5000": {
+      "delta_q99_bound": 0.002241750170650586,
+      "observed_bounds": [
+       2.5091340117304635e-08,
+       0.0,
+       0.0
+      ],
+      "decision_margin_ok": [
+       true,
+       true,
+       true
+      ]
+     }
+    }
+   },
+   "primary": "float64",
+   "sensitivity": "float32"
+  },
+  "m": 100,
+  "B_null": 200,
+  "results": {
+   "2000": {
+    "n_sub": 2000,
+    "clusters_per_sample": 20,
+    "selection_sensitivity": {
+     "delta_q99_bound": 0.003495235400584127,
+     "null_bound_median": 0.0,
+     "decision_margin_ok_per_seed": [
+      true,
+      true,
+      true
+     ],
+     "rule": "|W2_max - q99| > observed perturbation bound + delta_q99_bound => the above/below-q99 decision cannot change under the float32 selection path"
+    },
+    "primary_independent": {
+     "observed": {
+      "seed0": {
+       "pairwise": {
+        "P1P2": 0.18753111837137446,
+        "P1P3": 0.22412475009321733,
+        "P2P3": 0.18886401321453503
+       },
+       "W2_max": 0.22412475009321733,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      },
+      "seed1": {
+       "pairwise": {
+        "P1P2": 0.18973606811087101,
+        "P1P3": 0.21224907792143122,
+        "P2P3": 0.19219154972209848
+       },
+       "W2_max": 0.21224907792143122,
+       "eps_subset": [
+        1.2459415868413556e-06,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 1.2459415868413556e-06
+      },
+      "seed2": {
+       "pairwise": {
+        "P1P2": 0.1936258695821488,
+        "P1P3": 0.20054425072485965,
+        "P2P3": 0.1924917330104725
+       },
+       "W2_max": 0.20054425072485965,
+       "eps_subset": [
+        3.988858600842238e-09,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 3.988858600842238e-09
+      }
+     },
+     "finite_pool_exceedance": [
+      0.014925373134328358,
+      0.07462686567164178,
+      0.1791044776119403
+     ],
+     "decision_above_q99": [
+      false,
+      false,
+      false
+     ]
+    },
+    "diagnostic_crn": {
+     "observed": {
+      "seed0": {
+       "pairwise": {
+        "P1P2": 0.1323920333283592,
+        "P1P3": 0.11485227473055078,
+        "P2P3": 0.11918477108541309
+       },
+       "W2_max": 0.1323920333283592,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      },
+      "seed1": {
+       "pairwise": {
+        "P1P2": 0.1493604201652115,
+        "P1P3": 0.13313664138332332,
+        "P2P3": 0.1312319959351131
+       },
+       "W2_max": 0.1493604201652115,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      },
+      "seed2": {
+       "pairwise": {
+        "P1P2": 0.1308300365656053,
+        "P1P3": 0.12373171249910397,
+        "P2P3": 0.13009122315551863
+       },
+       "W2_max": 0.1308300365656053,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      }
+     },
+     "conservative_exceedance": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "note": "CRN estimator vs independent-sample null: conservative scale reference, not an exact MC p"
+    },
+    "binding": "2fac95728466d8f4b4ca37ad1271495930fb4cf413ee354a0fa8c14dbe6e43f8",
+    "binding_payload": {
+     "notebook_source": "2839287e2503620d9d580eb1aef2499c16c475b9257e0205a0c81691d1d25a33",
+     "live_source": "2839287e2503620d9d580eb1aef2499c16c475b9257e0205a0c81691d1d25a33",
+     "versions": {
+      "python": "3.13.15",
+      "numpy": "2.1.3",
+      "scipy": "1.16.3",
+      "healpy": "1.20.0",
+      "pandas": "2.2.3",
+      "pot": "0.9.7.post1"
+     },
+     "threads": 2,
+     "threads_live": [
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 2,
+       "file": "libscipy_openblas64_-ff651d7f.so",
+       "version": "0.3.27"
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp-e985bcbb.so.1.0.0",
+       "version": null
+      },
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 2,
+       "file": "libscipy_openblas-b75cc656.so",
+       "version": "0.3.29.dev"
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp.so.1",
+       "version": null
+      },
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 2,
+       "file": "libopenblasp-r0-59ffcd50.3.15.so",
+       "version": "0.3.15"
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp-a34b3233.so.1.0.0",
+       "version": null
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp-870cb1d0.so.1.0.0",
+       "version": null
+      },
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 1,
+       "file": "libopenblas-r0-11edc3fa.3.15.so",
+       "version": "0.3.15"
+      }
+     ],
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+     "cpu": "x86_64",
+     "asset_sha": {
+      "bstack": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",
+      "a5_null": "d0de2cf6643ff19e134567616f243298b2cc83dd081032949984c1c6abfa2b9e",
+      "a5_prov": "33765464cd4f4bea67e78fddb769e92ccbea38e68f6ec74778a203309971ba80",
+      "a9_prov": "09c03219f43ce69368c238ab61567c3e804a45302386485820b45534539d16ef",
+      "a9_manifest": "4b454a157b0bdbed4a6c8856b750bb0a8951f042c56a596a4971a1bc092e2c9a",
+      "a9_script": "2905c036a04a04e33672a07ba464d95ae6a669c8ea7b918f17a6813e864dde2c",
+      "a8_manifest": "3384c9c5994a8c656ca1c868ff60156ad7e627a038bfeffe320972a6fc72e031",
+      "a8b_prov": "a5314043e025a00ffe7ca6d89985bb1b6064e398bc9ef911de7348d601c85d6a",
+      "a11_manifest": "6000d7b7049dc5232f3e87daab2d4e56cb069cd15145f252ba4a548bf94df981",
+      "cov_P1": "27e2bb589722526a40ddeca1b738f6c58edb1c8efd39672b0f7080d8de133308",
+      "cov_P2": "727772a10af23118f4cb4c725af369578c1d3ac9d52d0cb641e4fc6399c29219",
+      "cov_P3": "dbec1b921c3d74847095d364c04222f795c59ce4eb86686817e70d7d861d53fe",
+      "step0_npz": "5bf6e5167995515c5f0a38f4e126ca252bbf8a28e7e6c90fe0d167481871e0f0",
+      "step0_csv": "6ed885d10a6455995b342152e71cd14f79c87b84ff6fb9539b3ebd4f61e551cb"
+     },
+     "IND_sha": [
+      "90a3b811979881e6b8ff29450bd49b46b67bc4601ca4aa4c2e0809360f400e74",
+      "726ee6ae91a2b3053d3acacec1c0d770388a9e22670287b47065f4bdf41fa688",
+      "e4599f3d9fcd03be5ea109e6f3b0a378b57791ba737e5f21204c7ccf751a4537"
+     ],
+     "CRN_sha": [
+      "0d69548e5abff7e9b5f05f4c53f2aa8e41979eae6c05a096a4e93b36909ffe8e",
+      "3e104f4b3583fafab79e9c3d8f6ba1cdeabfe9c65cc83b62016909060e20514d",
+      "e7cbcda5f1c20179f28461827b0dca5131fcdb852f09757a24da06c9f643cc03"
+     ],
+     "TwI_sha": "5eada67f10e1f68470b875e0e2630936d04fa88917778fe3326ee0b2ce5c4fb3",
+     "config": {
+      "N": 1000000,
+      "N_CAL": 200000,
+      "N_PSEUDO": 200,
+      "B_BOOT": 2000,
+      "B_NULL": 200,
+      "N_SUB_W2": [
+       2000,
+       5000
+      ],
+      "N_W2_POOL": 200000,
+      "N_FIT": 20000
+     },
+     "seed": 20260912,
+     "adopted_m": 100,
+     "production": {
+      "route": "l24_feature231",
+      "selection_dtype": "float64",
+      "evaluation_dtype": "float64",
+      "sample_chunk": 2000,
+      "sample_chunk_sensitivity": 20000,
+      "threads": 2,
+      "primary": "float64",
+      "sensitivity": "float32",
+      "a8b_winners": {
+       "float64": {
+        "chunk": 2000,
+        "N": 1000000,
+        "production_s_median": 76.65821095789943,
+        "peak_increment_GB": 0.09900032
+       },
+       "float32": {
+        "chunk": 20000,
+        "N": 1000000,
+        "production_s_median": 39.30793997899673,
+        "peak_increment_GB": 0.33275904
+       }
+      },
+      "supersede_note": "A10 supersedes the l2-4 selection dtype only (float32 -> float64, cost ~1.3 min/1e6) on stress evidence: non-antipodal near-tie flips and antipodal flips with T2 rel diff up to 5e-3; A8b benchmark stays valid; S2 keeps float32"
+     },
+     "mt_commit": "1bdd9ea8a00891d6dc3622331f6dad5b86c16c89",
+     "mu_c_sha": "dd6bc1f6c47a98549cccf628a703f2d8a9e54880a44c2464748a237508579c83",
+     "Sih_sha": "e5612b794edd569bcb63b651bb42d36f1b566c0795e31de4ba90e6eca7a0448c",
+     "S_POS_sha": [
+      "230e4c6801b32b8a2232cff3290d35b9abfdba17243e817a140a8a163428a499",
+      "776090a459287c268542f9a8756c927011f5ad093856bfddbb296f1d8c2586f7",
+      "6f0fa1d1f1da7ea9308fe14341faa9bcab469cca93553097ff9af832fbbee2ff"
+     ],
+     "S_I_sha": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c",
+     "mode": "official",
+     "n_sub": 2000
+    },
+    "emd_warnings_nsub": 0,
+    "null": {
+     "B": 200,
+     "q99_method_higher": 0.23641931964774493,
+     "q95": 0.21648280177150517,
+     "median": 0.1821832507906888,
+     "max": 0.247247269694959,
+     "pool_reuse": "finite pool; blocks disjoint within a replicate, re-permuted when exhausted"
+    },
+    "emd_warnings": 0
+   },
+   "5000": {
+    "n_sub": 5000,
+    "clusters_per_sample": 50,
+    "selection_sensitivity": {
+     "delta_q99_bound": 0.002241750170650586,
+     "null_bound_median": 0.0,
+     "decision_margin_ok_per_seed": [
+      true,
+      true,
+      true
+     ],
+     "rule": "|W2_max - q99| > observed perturbation bound + delta_q99_bound => the above/below-q99 decision cannot change under the float32 selection path"
+    },
+    "primary_independent": {
+     "observed": {
+      "seed0": {
+       "pairwise": {
+        "P1P2": 0.12287081126101512,
+        "P1P3": 0.13480846750073086,
+        "P2P3": 0.1280032773267147
+       },
+       "W2_max": 0.13480846750073086,
+       "eps_subset": [
+        0.0,
+        2.5091340117304635e-08,
+        0.0
+       ],
+       "W2max_perturbation_bound": 2.5091340117304635e-08
+      },
+      "seed1": {
+       "pairwise": {
+        "P1P2": 0.135759691674776,
+        "P1P3": 0.1390876771458705,
+        "P2P3": 0.15270972433631944
+       },
+       "W2_max": 0.15270972433631944,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      },
+      "seed2": {
+       "pairwise": {
+        "P1P2": 0.13585879708689189,
+        "P1P3": 0.13858485063410528,
+        "P2P3": 0.14873118581752964
+       },
+       "W2_max": 0.14873118581752964,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      }
+     },
+     "finite_pool_exceedance": [
+      0.208955223880597,
+      0.01990049751243781,
+      0.029850746268656716
+     ],
+     "decision_above_q99": [
+      false,
+      false,
+      false
+     ]
+    },
+    "diagnostic_crn": {
+     "observed": {
+      "seed0": {
+       "pairwise": {
+        "P1P2": 0.10146034218270035,
+        "P1P3": 0.09304755467633176,
+        "P2P3": 0.08827210462147148
+       },
+       "W2_max": 0.10146034218270035,
+       "eps_subset": [
+        1.2151206796815052e-08,
+        0.0,
+        0.0019050768836675457
+       ],
+       "W2max_perturbation_bound": 0.0019050890348743426
+      },
+      "seed1": {
+       "pairwise": {
+        "P1P2": 0.09726501816964787,
+        "P1P3": 0.09380557777761837,
+        "P2P3": 0.09107002176594245
+       },
+       "W2_max": 0.09726501816964787,
+       "eps_subset": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "W2max_perturbation_bound": 0.0
+      },
+      "seed2": {
+       "pairwise": {
+        "P1P2": 0.10937844151488353,
+        "P1P3": 0.09155403332842546,
+        "P2P3": 0.09920782831658781
+       },
+       "W2_max": 0.10937844151488353,
+       "eps_subset": [
+        0.0,
+        0.0,
+        7.568249550865426e-09
+       ],
+       "W2max_perturbation_bound": 7.568249550865426e-09
+      }
+     },
+     "conservative_exceedance": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "note": "CRN estimator vs independent-sample null: conservative scale reference, not an exact MC p"
+    },
+    "binding": "0d9096f14b395ad2f36d970ed06888e6f048ee0255f2c6d8988f8b9fada2ae3d",
+    "binding_payload": {
+     "notebook_source": "2839287e2503620d9d580eb1aef2499c16c475b9257e0205a0c81691d1d25a33",
+     "live_source": "2839287e2503620d9d580eb1aef2499c16c475b9257e0205a0c81691d1d25a33",
+     "versions": {
+      "python": "3.13.15",
+      "numpy": "2.1.3",
+      "scipy": "1.16.3",
+      "healpy": "1.20.0",
+      "pandas": "2.2.3",
+      "pot": "0.9.7.post1"
+     },
+     "threads": 2,
+     "threads_live": [
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 2,
+       "file": "libscipy_openblas64_-ff651d7f.so",
+       "version": "0.3.27"
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp-e985bcbb.so.1.0.0",
+       "version": null
+      },
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 2,
+       "file": "libscipy_openblas-b75cc656.so",
+       "version": "0.3.29.dev"
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp.so.1",
+       "version": null
+      },
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 2,
+       "file": "libopenblasp-r0-59ffcd50.3.15.so",
+       "version": "0.3.15"
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp-a34b3233.so.1.0.0",
+       "version": null
+      },
+      {
+       "api": "openmp",
+       "lib": "openmp",
+       "n": 2,
+       "file": "libgomp-870cb1d0.so.1.0.0",
+       "version": null
+      },
+      {
+       "api": "blas",
+       "lib": "openblas",
+       "n": 1,
+       "file": "libopenblas-r0-11edc3fa.3.15.so",
+       "version": "0.3.15"
+      }
+     ],
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+     "cpu": "x86_64",
+     "asset_sha": {
+      "bstack": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",
+      "a5_null": "d0de2cf6643ff19e134567616f243298b2cc83dd081032949984c1c6abfa2b9e",
+      "a5_prov": "33765464cd4f4bea67e78fddb769e92ccbea38e68f6ec74778a203309971ba80",
+      "a9_prov": "09c03219f43ce69368c238ab61567c3e804a45302386485820b45534539d16ef",
+      "a9_manifest": "4b454a157b0bdbed4a6c8856b750bb0a8951f042c56a596a4971a1bc092e2c9a",
+      "a9_script": "2905c036a04a04e33672a07ba464d95ae6a669c8ea7b918f17a6813e864dde2c",
+      "a8_manifest": "3384c9c5994a8c656ca1c868ff60156ad7e627a038bfeffe320972a6fc72e031",
+      "a8b_prov": "a5314043e025a00ffe7ca6d89985bb1b6064e398bc9ef911de7348d601c85d6a",
+      "a11_manifest": "6000d7b7049dc5232f3e87daab2d4e56cb069cd15145f252ba4a548bf94df981",
+      "cov_P1": "27e2bb589722526a40ddeca1b738f6c58edb1c8efd39672b0f7080d8de133308",
+      "cov_P2": "727772a10af23118f4cb4c725af369578c1d3ac9d52d0cb641e4fc6399c29219",
+      "cov_P3": "dbec1b921c3d74847095d364c04222f795c59ce4eb86686817e70d7d861d53fe",
+      "step0_npz": "5bf6e5167995515c5f0a38f4e126ca252bbf8a28e7e6c90fe0d167481871e0f0",
+      "step0_csv": "6ed885d10a6455995b342152e71cd14f79c87b84ff6fb9539b3ebd4f61e551cb"
+     },
+     "IND_sha": [
+      "90a3b811979881e6b8ff29450bd49b46b67bc4601ca4aa4c2e0809360f400e74",
+      "726ee6ae91a2b3053d3acacec1c0d770388a9e22670287b47065f4bdf41fa688",
+      "e4599f3d9fcd03be5ea109e6f3b0a378b57791ba737e5f21204c7ccf751a4537"
+     ],
+     "CRN_sha": [
+      "0d69548e5abff7e9b5f05f4c53f2aa8e41979eae6c05a096a4e93b36909ffe8e",
+      "3e104f4b3583fafab79e9c3d8f6ba1cdeabfe9c65cc83b62016909060e20514d",
+      "e7cbcda5f1c20179f28461827b0dca5131fcdb852f09757a24da06c9f643cc03"
+     ],
+     "TwI_sha": "5eada67f10e1f68470b875e0e2630936d04fa88917778fe3326ee0b2ce5c4fb3",
+     "config": {
+      "N": 1000000,
+      "N_CAL": 200000,
+      "N_PSEUDO": 200,
+      "B_BOOT": 2000,
+      "B_NULL": 200,
+      "N_SUB_W2": [
+       2000,
+       5000
+      ],
+      "N_W2_POOL": 200000,
+      "N_FIT": 20000
+     },
+     "seed": 20260912,
+     "adopted_m": 100,
+     "production": {
+      "route": "l24_feature231",
+      "selection_dtype": "float64",
+      "evaluation_dtype": "float64",
+      "sample_chunk": 2000,
+      "sample_chunk_sensitivity": 20000,
+      "threads": 2,
+      "primary": "float64",
+      "sensitivity": "float32",
+      "a8b_winners": {
+       "float64": {
+        "chunk": 2000,
+        "N": 1000000,
+        "production_s_median": 76.65821095789943,
+        "peak_increment_GB": 0.09900032
+       },
+       "float32": {
+        "chunk": 20000,
+        "N": 1000000,
+        "production_s_median": 39.30793997899673,
+        "peak_increment_GB": 0.33275904
+       }
+      },
+      "supersede_note": "A10 supersedes the l2-4 selection dtype only (float32 -> float64, cost ~1.3 min/1e6) on stress evidence: non-antipodal near-tie flips and antipodal flips with T2 rel diff up to 5e-3; A8b benchmark stays valid; S2 keeps float32"
+     },
+     "mt_commit": "1bdd9ea8a00891d6dc3622331f6dad5b86c16c89",
+     "mu_c_sha": "dd6bc1f6c47a98549cccf628a703f2d8a9e54880a44c2464748a237508579c83",
+     "Sih_sha": "e5612b794edd569bcb63b651bb42d36f1b566c0795e31de4ba90e6eca7a0448c",
+     "S_POS_sha": [
+      "230e4c6801b32b8a2232cff3290d35b9abfdba17243e817a140a8a163428a499",
+      "776090a459287c268542f9a8756c927011f5ad093856bfddbb296f1d8c2586f7",
+      "6f0fa1d1f1da7ea9308fe14341faa9bcab469cca93553097ff9af832fbbee2ff"
+     ],
+     "S_I_sha": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c",
+     "mode": "official",
+     "n_sub": 5000
+    },
+    "emd_warnings_nsub": 0,
+    "null": {
+     "B": 200,
+     "q99_method_higher": 0.1647143331502289,
+     "q95": 0.14365475507857894,
+     "median": 0.1272621354064254,
+     "max": 0.17927924420438676,
+     "pool_reuse": "finite pool; blocks disjoint within a replicate, re-permuted when exhausted"
+    },
+    "emd_warnings": 0
+   }
+  },
+  "generation_seconds": 245.41228342056274,
+  "caveat": "B=200 99th percentile is coarse (top ~2 values); final trigger threshold requires larger B or precision stopping; this is a pathway result, not a frozen threshold"
+ },
+ "gates": {
+  "G_w2_solver_clean": true,
+  "G_w2_nsub_inventory": true,
+  "G_w2_observed_finite": true,
+  "G_w2_all_pair_values_finite": true,
+  "G_w2_pair_seed_inventory": true,
+  "G_w2_null_length_exact": true,
+  "G_w2_seed_decision_agree": true,
+  "G_w2_nsub_decision_agree": true,
+  "G_w2_seed_spread": true,
+  "G_w2_selection_decision_margin": true
+ }
+}

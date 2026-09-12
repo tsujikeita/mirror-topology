@@ -1,0 +1,80 @@
+{
+ "proxy": "a5_null_selection.npz band l16, 2D Gaussian KDE of whitened (T1,T2)",
+ "environment": "sandbox 1 core / 3 GB (upper bound for Colab)",
+ "exact_scaling": [
+  {
+   "n": 1000,
+   "seconds": 0.3
+  },
+  {
+   "n": 2000,
+   "seconds": 1.1
+  },
+  {
+   "n": 4000,
+   "seconds": 4.4
+  },
+  {
+   "n": 8000,
+   "seconds": 18.6
+  }
+ ],
+ "time_exponent": "2.05-2.27 (two runs)",
+ "projected_n20000_seconds": "121-154",
+ "cost_matrix_GB_n20000": 3.2,
+ "sliced_n20000_500proj_seconds": 5.3,
+ "agreement_n4000": {
+  "exact": 0.1061,
+  "sliced": 0.0305
+ },
+ "null": {
+  "exact_n2000_iid": {
+   "B": 200,
+   "q99": 0.21522,
+   "median": 0.16395
+  },
+  "exact_n2000_cluster100_f0_1": {
+   "B": 200,
+   "q99": 0.32391,
+   "median": 0.19856
+  },
+  "exact_n2000_cluster100_f0_3": {
+   "B": 200,
+   "q99": 0.5975,
+   "median": 0.31262
+  },
+  "exact_n5000_iid": {
+   "B": 100,
+   "q99": 0.1431167187392824,
+   "q95": 0.13474165245128647,
+   "median": 0.11231984532317377,
+   "max": 0.1450849687669395
+  },
+  "exact_n5000_cluster100_f0_1": {
+   "B": 50,
+   "q99": 0.21285103335171696,
+   "q95": 0.1857995489192426,
+   "median": 0.13111868326743725,
+   "max": 0.21467881118863744
+  },
+  "sliced_n20000_iid": {
+   "B": 30,
+   "q99": 0.03197582822057694,
+   "q95": 0.029052475646853183,
+   "median": 0.02150005061732951,
+   "max": 0.03215103765931417
+  }
+ },
+ "power_exact_n5000_vs_iid_q99": {
+  "0.1": {
+   "exact_n5000": 0.55
+  },
+  "0.2": {
+   "exact_n5000": 1.0
+  },
+  "0.3": {
+   "exact_n5000": 1.0
+  }
+ },
+ "pot_version": "0.9.7.post1"
+}
