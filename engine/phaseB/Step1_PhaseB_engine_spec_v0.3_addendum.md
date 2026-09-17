@@ -1,5 +1,5 @@
 # Step1_PhaseB_engine_spec v0.3 追補 — B-2 実装受入 packet（第 35 tranche 監査を反映）
-2026-09-16。Claude作成。engine `step1_engine 0.43.0`（module／test／fixture／reference／doc の SHA inventory は `B2_completion_inventory.json`＋監査側 `B2_inventory_audit_supplement.json`）。
+2026-09-16。Claude作成。engine `step1_engine 0.44.0`（module／test／fixture／reference／doc の SHA inventory は `B2_completion_inventory.json`＋監査側 `B2_inventory_audit_supplement.json`）。
 
 **判定ラベル（監査 §5 の提案どおり）**：`B2_implementation_acceptance=accepted`／`B2_original_Colab_acceptance=pending_explicit_carryover_to_B3`／`B3_notebook_preparation=go`／`ENGINE_VALID=not_evaluated`／`Phase_C_freeze=not_authorized`。規則本文 `Step1_rules_v1.0_draft4.1.md`（SHA `5f02c970…`）・`rules_tables_v1.json`（SHA `522751be…`）・spec v0.2 追補は不変。
 

@@ -30,6 +30,18 @@ def test_legacy_kernel_bit_identical_to_frozen_notebook_cell():
     nb = json.loads(nb_bytes); src = ''.join(nb['cells'][1]['source']); cut = src.find("CFG = dict(smoke=")
     assert cut > 0, 'A10a extraction boundary not found' 
     ns = {'A10_MODE': 'smoke'}; os.environ['A10_BASE'] = '/tmp/a10w/base'; os.environ['A10_WORK'] = '/tmp/a10w'
+    # Headless execution of a frozen INTERACTIVE cell: on Colab the prefix detects the runtime (`/content` exists) and calls google.colab.drive.mount, which needs a live
+    # kernel and fails inside a pytest subprocess. The mount is irrelevant to the bit-identity comparison (assets are read from the pinned repo clone), so the harness substitutes a
+    # no-op stub for google.colab.drive ONLY when no live kernel is present; the frozen cell bytes are unchanged (SHA asserted above) and the substitution is recorded.
+    import types, sys as _sys
+    stubbed = False
+    try:
+        import IPython; live_kernel = IPython.get_ipython() is not None
+    except Exception: live_kernel = False
+    if os.path.exists('/content') and not live_kernel:
+        g = types.ModuleType('google.colab'); d = types.ModuleType('google.colab.drive'); d.mount = lambda *a, **k: None; g.drive = d
+        _sys.modules['google.colab'] = g; _sys.modules['google.colab.drive'] = d; stubbed = True
+    ns['_HARNESS_DRIVE_MOUNT_STUBBED'] = stubbed
     with contextlib.redirect_stdout(io.StringIO()): exec(compile(src[:cut], 'a10a', 'exec'), ns)                      # frozen notebook code (smoke mode; repo pinned at the A8 commit)
     required_reference_gates = (
         'G_live_modules', 'G_asset_file_sha', 'G_bstack_array_sha', 'G_cvec_sha',
