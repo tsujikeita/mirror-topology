@@ -1,0 +1,85 @@
+{
+ "profile": {
+  "n_families": 4,
+  "evaluations_matched": 30,
+  "evaluations_native": 30,
+  "N0": 1000000,
+  "N_max": 4000000,
+  "m": 100,
+  "B": 2000,
+  "seeds": 5,
+  "n_pseudo": 2000,
+  "N_fit": 200000,
+  "B_KDE": 2000,
+  "w2_families_sizes": 9,
+  "w2_solves_per_family_size": 6018,
+  "n_sub": [
+   2000,
+   5000
+  ]
+ },
+ "unit_costs": {
+  "kde_logpdf_2e5_rows_seconds": 0.03527841333332541,
+  "kde_batched_seconds_per_replicate": 0.007746824539999579,
+  "emd2_n2000_seconds": 0.5650029180000047,
+  "emd2_n5000_seconds": 4.6279045250000195,
+  "e2_full_lattice_pass_seconds": 185.7709861660933,
+  "scan_f64_seconds_per_1e6": 31.799088300002154
+ },
+ "lifecycle": {
+  "single_target": {
+   "kde_point_and_sensitivity_hours": 0.003527841333332541,
+   "kde_ci_all_matched_families_hours": 1.175947111110847,
+   "kde_ci_all_matched_families_hours_batched": 0.25822748466665263,
+   "note": "CI only for strong/unsupported candidates under the registered short circuit; upper row assumes CI for all"
+  },
+  "pseudo_2000_naive": {
+   "kde_point_and_sensitivity_hours": 7.055682666665082,
+   "kde_ci_all_matched_families_hours": 2351.8942222216942,
+   "kde_ci_all_matched_families_hours_batched": 516.4549693333053,
+   "note": "naive repetition; batched evaluation / KDE-fit reuse not credited until implemented"
+  },
+  "w2_primary_exact_ot": {
+   "null_recomputed_9_cases_hours": 39.06364623996768,
+   "shared_null_only_hours": 4.3274228691666865,
+   "observed_9_cases_hours": 0.11684041746750054,
+   "shared_null_plus_observed_hours": 4.444263286634188,
+   "solves_shared_plus_observed": 6162
+  },
+  "e2_generation": {
+   "full_lattice_pass_seconds_extrapolated": 185.7709861660933,
+   "generation_hours_extrapolated": 0.9288549308304666,
+   "note": "12-point unit on the first rows, extrapolated; 2 passes x 9 steps; verify re-runs not included"
+  },
+  "scan": {
+   "N0_hours": 1.0599696100000717,
+   "worst_case_4N0_hours": 4.239878440000287,
+   "note": "60 evaluations x 2 roles (model/reference)"
+  },
+  "not_included": [
+   "Q 5-seed bootstrap",
+   "N adaptation logistics",
+   "plan generation/save/restore",
+   "control batteries",
+   "bank generation (covariance intake, rotations)",
+   "CRN diagnostic W2",
+   "coupling bounds, SHA, I/O, re-verification",
+   "12-position stage"
+  ]
+ },
+ "formulas": {
+  "kde_point": "kde_unit * 30 matched configs * 12 calls",
+  "kde_ci": "kde_unit * 30 * 2 * B_KDE",
+  "w2_shared": "(3000 + 81) * (t2000 + t5000)",
+  "w2_recomputed": "9 * (3000 + 9) * (t2000 + t5000)",
+  "e2": "pass_unit * 2 * 9",
+  "scan": "scan_unit * 60 * 2 [* 4]"
+ },
+ "environment": {
+  "python": "3.12.3",
+  "numpy": "2.4.4",
+  "platform": "Linux-6.18.44-fc-v33-x86_64-with-glibc2.39"
+ },
+ "note": "planning estimates in THIS environment (single-thread); Colab-official measurements replace the unit costs; the formulas stay",
+ "note_diagnostics": "diagnostic KDE (per-size standalone cores at the 3-position stage) can be skipped with with_diagnostics=False; the 12-position per_size_diagnostic is still computed by evaluate_twelve_family_mixture (not credited as a saving)"
+}

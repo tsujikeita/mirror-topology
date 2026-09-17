@@ -1,0 +1,29 @@
+{
+ "rows": 20000,
+ "seconds": 1.9,
+ "f64": {
+  "raw_AX_agreement": 1.0,
+  "PL_agreement": 1.0,
+  "max_rel_T1": 2.6915884591028103e-15,
+  "max_rel_T2": 1.8999174654486903e-15,
+  "all_finite": true
+ },
+ "f32_sensitivity": {
+  "raw_AX_agreement": 0.99075,
+  "PL_agreement": 1.0,
+  "max_rel_T1": 2.6915884591028103e-15,
+  "max_rel_T2": 1.8999174654486903e-15
+ },
+ "cid_identical": true,
+ "assets": {
+  "checkpoint_sha256": "6a8c87889ec1d7a5d35336a3cdc30f9537376f2b3878ac9d1ee12cc34319c5df",
+  "bridge_sha256": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872",
+  "notebook_sha256": "c11c41413e33754444118401c8c102b69ca430650619d409bef568f94bba1209"
+ },
+ "environment": {
+  "python": "3.12.3",
+  "numpy": "2.4.4",
+  "blas_threads": 1
+ },
+ "note": "cross-environment (Colab official -> sandbox) agreement of the legacy kernel port; sandbox is not the registered lock"
+}
