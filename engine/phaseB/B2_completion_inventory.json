@@ -1,12 +1,13 @@
 {
- "engine_version": "0.44.0",
+ "engine_version": "0.47.0",
  "modules": {
-  "__init__.py": "f42c1daa55e3855158c192f46bab488bdbb26ce6a7c86b6713f11372f5ef2f44",
+  "__init__.py": "e8163a4e51909c8513a9c9269530aa7abe16e6e7dae9da2233540c77b1c1584e",
   "archive.py": "354e75e3f89e3477c4b1bd05e7423ddd735431984bb27301cf3d60162cedeee6",
   "bootstrap_plan.py": "6941a7ac19fddfd9d3ca465632e3c68f18809d55e8e82cefa0a206fac2dcd3f7",
   "calibration.py": "1cc25d502021025191f3181b454b999555998884964f3c3dfe915bc9e0db18ea",
-  "checkpoint.py": "1fd87e80f0250325090da2e8d4f71fa7bf5c0277c5284ee38cb772507057f1a8",
+  "checkpoint.py": "b225db996026c5b171de1ab2efd2ee05c9bba97de03252ced3be4196f2d7cb95",
   "ci.py": "6703257bcd9337a0b07eb440f9096c46a7cc8d51ac7e1c4056f2f7b043a8f597",
+  "controls.py": "8e330c7fdd68533cb9c2668983f171d3b1ed48dd4755eefcdee1c95e358de848",
   "coordinator.py": "c8274ebccd3dde12e57666ff4a18eff8e1d9da073362d2711a6e8f41dbb8ae98",
   "decision.py": "9bd01a136ea6b4a3a51db0fe20e3552058a91b8558d7b041d0ec37aefd786f88",
   "density.py": "c1273a0723b3c9501d6625f689367c1e4463f6289dbeb1e150774197dc796735",
@@ -80,6 +81,7 @@
   "test_audit_b2_tranche7_chatgpt.py": 8,
   "test_audit_b2_tranche8_chatgpt.py": 15,
   "test_audit_b2_tranche9_chatgpt.py": 13,
+  "test_audit_b3_1_v02_chatgpt.py": 12,
   "test_audit_contracts_chatgpt.py": 22,
   "test_audit_v02_priority_chatgpt.py": 14,
   "test_audit_v03_b2_intake_chatgpt.py": 4,
@@ -106,9 +108,10 @@
   "test_b2_tranche34.py": 2,
   "test_b2_tranche4.py": 6,
   "test_b2_tranche5.py": 4,
-  "test_b2_tranche8.py": 3
+  "test_b2_tranche8.py": 3,
+  "test_b3_controls.py": 4
  },
- "total_test_functions": 619,
+ "total_test_functions": 635,
  "tests_sha256": {
   "test_audit_b2_tranche10_chatgpt.py": "304ee655483cc9780e9bf778fb2aa659b6eb6ab017c69b01481db6f56efe2603",
   "test_audit_b2_tranche11_chatgpt.py": "d1aaa931fab2572a9ac8f007bde23bc426f4071f0e1054356ead14061f4f5c4a",
@@ -146,6 +149,7 @@
   "test_audit_b2_tranche7_chatgpt.py": "b84fdc949b7b708f1514b92b2ddd25e1ea2781e3b446662e6f4a6bf57ee15d2a",
   "test_audit_b2_tranche8_chatgpt.py": "6d2d0b7451504c58ead25166ed33f0f13876a84fe7149a87a62baf12f73c7a56",
   "test_audit_b2_tranche9_chatgpt.py": "18b4d97b8404b091563a8e411c217e5affbe328c71073fb8935f7059ea100e5f",
+  "test_audit_b3_1_v02_chatgpt.py": "a413bd1e47f1cb9644f05f362523683ae38a534b9821e23ed31cfd36a78bc507",
   "test_audit_contracts_chatgpt.py": "7df95d435b05d0963c23813a14b5516a5773565d0cd6e3ea6223c8c56c1bc33a",
   "test_audit_v02_priority_chatgpt.py": "090a8efcb0747d8c0f66c2619e28351cd7567dd2b4a2cf8058389e811f4e0f11",
   "test_audit_v03_b2_intake_chatgpt.py": "85e0513cf8000761cf8fe3f718c74e7a0e7b29621e172aaa9da8fb9c5cacf788",
@@ -172,7 +176,8 @@
   "test_b2_tranche34.py": "e4fc56f42c5e2a5349891163a5b2629aa04316188ddcd8507bbf89127028ba2d",
   "test_b2_tranche4.py": "5af2c9547cb3321b4c52386365e6012166b1d87e777995b3690f57f3b7241dfc",
   "test_b2_tranche5.py": "8b40819f965957dba55262a8831c42f67534977f319200a59ee2022622b926b9",
-  "test_b2_tranche8.py": "0e3a080de87d39f38fb8bf5d667d89248847d09c3b50975c0f979885eae37ddc"
+  "test_b2_tranche8.py": "0e3a080de87d39f38fb8bf5d667d89248847d09c3b50975c0f979885eae37ddc",
+  "test_b3_controls.py": "f018dcdf7f75d4e39f84f2084e9c7e07d4f8ffa40306959ab73db3b56db9fe51"
  },
  "fixtures_sha256": {
   "audit_fixture30.py": "ef2217297a9b89b7a7ebb146f26564c5f48fc7ac62240dfc90e9aa2be0477930",
@@ -196,6 +201,8 @@
   "tests/reference_assets/provenance_binding_excerpt.json": "f74126abeaf403ed57f6983f5847f59b043f95707f1c7493b57413f0a5687d60",
   "tests/reference_assets/sha256.json": "7179110439c5742cfafffa1142eaa44137f5801041c84a1f0014222bd12d8ad8",
   "tests/reference_assets/t2b2_bridge.py": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872",
+  "regression_logs/B3_0_executed_27c3b022f905_first_attempt.ipynb": "0fff60b0592828a86d393aba077afc04a77e2cc5781c1e1daf2f627610fe1e54",
+  "regression_logs/b3_1_selftest_run_manifest_sandbox_scale0.1.json": "a1b2f60961cb637da572868db3d0ae728c9485c473381023a1be917a56b14c24",
   "regression_logs/legacy_cross_environment_summary.json": "5a39bb9bcb047e4e8d3079f2466fe56152bc934463d43c6d262b373762d430a6",
   "regression_logs/legacy_regression_tranche24.txt": "3d1be014442dff23052d1c0cc8da80db43aceb3f9753dda35db2c72bed6358ac",
   "regression_logs/performance_budget_sandbox.json": "b269c526dd1c5e70456518b4428d9499bfcd982dca7853445773b0311d4c797c"
@@ -204,18 +211,21 @@
   "Step1_rules_v1.0_draft4.1.md": "5f02c970eb39f9b3e7f7b17b48eb2d3daa16434517cf4442bac339f5ab719615",
   "rules_tables_v1.json": "522751be134aa3ff4fdf33c6be0d7397fb7bd3c89a6c67e26a67bd32dceeb0b4",
   "Step1_PhaseB_engine_spec_v0.2_addendum.md": "ed9b02858df08b3d2acec990b61ab0626f1a9c05cb88f267051bcc33f39ba21d",
-  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "d1f80f719b423aa6dd3446de4a7172954091c94d602e4c9d442a2b43ef7e2c57"
+  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "2312d626cba48380aebd4b1c57f412294d52a79c3a18253b0aa97515cadf9add"
  },
  "counts": {
-  "modules": 41,
-  "test_files": 63,
-  "test_functions": 619,
-  "test_b_files": 23,
-  "test_audit_files": 40
+  "modules": 42,
+  "test_files": 65,
+  "test_functions": 635,
+  "test_b_files": 24,
+  "test_audit_files": 41
  },
  "b3_sha256": {
   "b3/MirrorTopology_Step1_B3_0_smoke_v0.3.ipynb": "c62537e5ce20210b15394b63a3a212a7c1cb3b14df277f481a86f928c1d6cde6",
-  "b3/b3_0_pins.json": "2b4d0e65c4a68e7d83c109546dd2a5cc824eb67e6db3f9924528c89ccbbc5ba7",
-  "b3/b3_0_smoke.py": "9c2d125f93487a55bb74c020d7803843054b550ec36163012dac6ffc9e485dae"
+  "b3/MirrorTopology_Step1_B3_1_control_v0.1.ipynb": "b665793fd12e745d765c510dc42c5c345fe80c0801d88b536bb4ccdf615d832d",
+  "b3/b3_0_pins.json": "d32b56274eade36ac62fa05abecee2c6b9e9567396393e4d0ab853cadb5ca87d",
+  "b3/b3_0_smoke.py": "9c2d125f93487a55bb74c020d7803843054b550ec36163012dac6ffc9e485dae",
+  "b3/b3_1_control.py": "d62a77502ad6efdc8bb65df8b8bcb44d66a390c884eaf0a0ad885dd3f9db4eeb",
+  "b3/b3_1_pins.json": "1b63906cd472c9dc18c474e11d455bb4d9b23b3359d314c1a54d79c131d056d4"
  }
 }

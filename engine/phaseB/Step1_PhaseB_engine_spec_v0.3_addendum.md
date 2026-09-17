@@ -1,5 +1,5 @@
 # Step1_PhaseB_engine_spec v0.3 追補 — B-2 実装受入 packet（第 35 tranche 監査を反映）
-2026-09-16。Claude作成。engine `step1_engine 0.44.0`（module／test／fixture／reference／doc の SHA inventory は `B2_completion_inventory.json`＋監査側 `B2_inventory_audit_supplement.json`）。
+2026-09-16。Claude作成。engine `step1_engine 0.47.0`（module／test／fixture／reference／doc の SHA inventory は `B2_completion_inventory.json`＋監査側 `B2_inventory_audit_supplement.json`）。
 
 **判定ラベル（監査 §5 の提案どおり）**：`B2_implementation_acceptance=accepted`／`B2_original_Colab_acceptance=pending_explicit_carryover_to_B3`／`B3_notebook_preparation=go`／`ENGINE_VALID=not_evaluated`／`Phase_C_freeze=not_authorized`。規則本文 `Step1_rules_v1.0_draft4.1.md`（SHA `5f02c970…`）・`rules_tables_v1.json`（SHA `522751be…`）・spec v0.2 追補は不変。
 
@@ -15,7 +15,7 @@
 | 統合 | threshold_evaluator／integrated_runner／archive／checkpoint | 共通 evaluator（親必要量→位置→coordinator→12 位置→eligible truth）・pseudo 完全性・content-addressed archive・意味検証 reader（t29–34） |
 | 回帰 | legacy_kernel／performance | A10 kernel の同一環境 bit 一致・Colab official との 1e-15 一致・性能 unit（t23–25） |
 
-受入テスト（実体）：41 module・63 test file（自作 `test_b*` 23・監査 `test_audit*` 40）・619 test 関数定義・827 pytest case（parametrize 展開）。監査原本の同梱区分：**原本保持**／**path 適応のみ**／**fixture 再生成**（t34・t35：配布しない pickle cache を in-process 生成に置換；assert 不変。t35 の12位置 fixture は `TwelveFixture` による原検査用入力から `twelve_from_cases` による入力へ変更しており、同じ数値標本の再現とは区別する）／**API 追従**（t29：result_ref→diagnostic_ref・injection hook を共通 evaluator へ）／**比較 oracle 訂正**（t28：高 offset KDE の literal 基準）——いずれも監査で承認済みの差分で，テスト緩和ではない。「意味検証 reader」の scope は core（保存 replicate・密度に条件付き）であり，外部 W₂/context 参照・run/coordinator を含む再利用契約の認証ではない。
+受入テスト（実体，B-3-1 v0.3 時点）：42 module・65 test file（自作 `test_b*` 24・監査 `test_audit*` 41）・635 test 関数定義・846 pytest case（parametrize 展開；B-2 受入時は 41／63／619／827）。監査原本の同梱区分：**原本保持**／**path 適応のみ**／**fixture 再生成**（t34・t35：配布しない pickle cache を in-process 生成に置換；assert 不変。t35 の12位置 fixture は `TwelveFixture` による原検査用入力から `twelve_from_cases` による入力へ変更しており、同じ数値標本の再現とは区別する）／**API 追従**（t29：result_ref→diagnostic_ref・injection hook を共通 evaluator へ）／**比較 oracle 訂正**（t28：高 offset KDE の literal 基準）——いずれも監査で承認済みの差分で，テスト緩和ではない。「意味検証 reader」の scope は core（保存 replicate・密度に条件付き）であり，外部 W₂/context 参照・run/coordinator を含む再利用契約の認証ではない。
 
 **inventory の適用範囲**：現提出版の照合には `B2_completion_inventory.json` を用いる。`B2_inventory_audit_supplement.json` と `docs_B2_scope_and_B3_handoff_proposal_ChatGPT.md` は第35 tranche（engine 0.39.0）の監査時点の履歴資料として原bytesを保持し、現版0.40.0のSHAや件数の代用にはしない。
 

@@ -1,14 +1,54 @@
 {
- "schema": "b3_0_pins_v1",
+ "schema": "b3_1_pins_v1",
  "engine_version": "0.47.0",
- "profile": "smoke",
- "smoke_profile": {
-  "N": 20000,
+ "profile": "control_official",
+ "control_profile": {
+  "N": 1000000,
   "m": 100,
-  "B": 200,
-  "Nfit": 20000,
-  "Bkde": 200,
-  "kind": "test"
+  "B": 2000,
+  "Nfit": 200000,
+  "Bkde": 2000,
+  "kind": "control",
+  "scope": "ONE configuration (mock E7 covariance) x two systems at the registered N0/m/B/N_fit/B_KDE; NOT the production full surviving-size family"
+ },
+ "controls": {
+  "negative": {
+   "purpose": "negative_control",
+   "model": "isotropic model from an independent stream (own CRN group; independent numerator/denominator resampling; own fitting bank and fitting plans)",
+   "reference": "isotropic reference of the evaluation purpose",
+   "fixed_target": {
+    "expectation": "technical ok AND definite False for support and strong (unknown is recorded, never success)"
+   },
+   "n_pseudo": 200,
+   "rate_check": {
+    "rule": "Wilson(c+u, n) <= 0.05 over n independent isotropic pseudo thresholds (m=1, pseudo stream 9); unknown counted as possible false support; any technical failure fails",
+    "scope": "one configuration control profile; not the production global calibration"
+   }
+  },
+  "positive_registered": {
+   "boost": {
+    "T1": 0.35,
+    "T2": 0.35
+   },
+   "rule": "rules \u00a79.3 / A10c: the isotropic REFERENCE bank scaled by 0.35 in T1 and T2 (same clusters, paired), both systems; fitting model = scaled reference fitting bank",
+   "expectation": "strong full predicate True with precision pass; conjunct battery (registered decider passes, one-conjunct-removed mutants detected)"
+  },
+  "positive_mock_diagnostic": {
+   "boost": {
+    "T1": 0.6,
+    "T2": 0.6
+   },
+   "rule": "DIAGNOSTIC ONLY (not a gate): the mock-E7 model banks scaled by 0.6, both systems",
+   "expectation": "recorded; no acceptance condition"
+  },
+  "brute_force": {
+   "thresholds": "target + 5 isotropic quantile pairs (0.005,0.01,0.02,0.05,0.1)",
+   "rule": "pure-Python row-loop oracle per cluster vs the actual aggregation path (ConfigBank.hit_tables -> HitTable -> literal resampling sums) for matched and native; detector self-test (zeroed and cluster-permuted aggregations must be caught)"
+  },
+  "a5_cross_check": {
+   "calibration_N": 200000,
+   "expectation": "T1/T2 medians and P(T1<=obs), P(E_B) within the pinned A5 intervals"
+  }
  },
  "target": {
   "T1_obs": 39.67178834527284,
@@ -88,5 +128,5 @@
   "notebook_sha256": "c11c41413e33754444118401c8c102b69ca430650619d409bef568f94bba1209",
   "calibration_checkpoint_sha256": "6a8c87889ec1d7a5d35336a3cdc30f9537376f2b3878ac9d1ee12cc34319c5df"
  },
- "note": "science pins: profile, environment lock, target, frozen assets, mock covariance, A5 reference; NO self-referencing commit/inventory hashes (those live in the outer launcher lock)"
+ "note": "science pins for the B-3-1 official-scale control battery; no self-referencing commit/inventory hashes (outer launcher lock)"
 }
