@@ -1,0 +1,96 @@
+{
+ "schema": "b3_2_pins_v1",
+ "engine_version": "0.52.0",
+ "profile": "assets_official",
+ "environment": {
+  "python": "3.13.15",
+  "numpy": "2.1.3",
+  "scipy": "1.16.3",
+  "healpy": "1.20.0",
+  "pot": "0.9.7.post1",
+  "camb": "2.0.4",
+  "numpy_openblas_threads": 2,
+  "other_pools_max": 2
+ },
+ "assets": {
+  "a5_bstack": "results/step1_phaseA/A5_freeze/s1_Bstack_l2_4_N16_common_v1.npz",
+  "a5_bstack_sha256": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",
+  "step0_bpm": "docs/step0_frozen_Bpm_v1.npz",
+  "step0_bpm_sha256": "5bf6e5167995515c5f0a38f4e126ca252bbf8a28e7e6c90fe0d167481871e0f0",
+  "t1_engine": "t1_engine.py",
+  "t1_engine_sha256": "87bf8424073af021264b12fe312ab5255b71008bdd5fe874d164d48daf034dc8",
+  "t2b2_bridge": "t2b2_bridge.py",
+  "t2b2_bridge_sha256": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872"
+ },
+ "a10_frozen": {
+  "notebook": "results/step1_phaseA/A10_freeze/MirrorTopology_Step1_A10_v1.2.9.ipynb",
+  "notebook_sha256": "c11c41413e33754444118401c8c102b69ca430650619d409bef568f94bba1209",
+  "calibration_checkpoint_sha256": "6a8c87889ec1d7a5d35336a3cdc30f9537376f2b3878ac9d1ee12cc34319c5df"
+ },
+ "target": {
+  "T1_obs": 39.67178834527284,
+  "T2_obs": 259.3375006282747,
+  "source": "rules draft4.1 \u00a72.1 / Step0 v0.7 unique row",
+  "step0_csv": "results/step0_v0.7/step0_official_v0_7.csv",
+  "step0_csv_sha256": "6ed885d10a6455995b342152e71cd14f79c87b84ff6fb9539b3ebd4f61e551cb"
+ },
+ "a7_script": {
+  "path": "results/step1_phaseA/A6A7_freeze/s1_phaseA6A7_v1.4.2.py",
+  "sha256": "661ed0b01f35853263d9374f56960dd8f87d7bdf68070f2493d5576e702e2b2e",
+  "cmbtopology_commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+  "cmbtopology_url": "https://github.com/CompactCollaboration/CMBtopology",
+  "note": "frozen A7 procedure (family_data / lift / nearest_clone / witness_search / statuses / add_row) executed as a prefix; the new 9 points per family x surviving size are classified with the SAME code as the 3 frozen anchors"
+ },
+ "twelve_assets": {
+  "families": [
+   "E2",
+   "E7",
+   "E8"
+  ],
+  "rule": "build_twelve_assets on the source-bound registry (registered generator; E2 streamed two-pass at 1e-4); intake by regeneration; asset SHA"
+ },
+ "geometry_acceptance": {
+  "rule": "every one of the 12 points of every surviving size must have observational_status == no_nondegenerate_circles (the registered surviving status) and the first 3 points must reproduce the frozen A7 primary rows (d_clone, statuses) exactly; prior weights 1/12 recorded",
+  "excluded_if": "any new point has circles geometrically present or an exclusion witness -> that family x size design is NOT accepted (recorded; no automatic re-design)"
+ },
+ "shared_null": {
+  "calibration": {
+   "N": 200000,
+   "m": 100,
+   "purpose": "calibration",
+   "stream": 0,
+   "selections": [
+    "float64",
+    "float32"
+   ],
+   "role": "whitening (mu, W = L^-1 from the f64 calibration bank; rules \u00a710.1) and A10 official cross-check; NOT the null pool"
+  },
+  "null_pool": {
+   "N": 600000,
+   "m": 100,
+   "K": 6000,
+   "purpose": "w2_isotropic",
+   "stream": 0,
+   "selections": [
+    "float64",
+    "float32"
+   ],
+   "role": "the registered isotropic null pool (3 x N_W2 rows, 6000 clusters; rules \u00a710.1); f64 primary and paired f32 for the selection bounds; whitened with the calibration mu/W"
+  },
+  "whitening": "mu, W = L^-1 from the f64 CALIBRATION bank applied to both null pool paths",
+  "distance": "exact_pot_w2 (POT emd2, log=True, result_code==1)",
+  "n_subs": [
+   2000,
+   5000
+  ],
+  "B_max": 1000,
+  "master_seed": 20260912,
+  "checkpoint_every": 25,
+  "a10_cross_check": {
+   "rule": "T1 and T2 relative error < 1e-9 on all compared rows, plane identity 100%, cid/rows/shape identical, compared prefix == min(N_cal, reference rows) recorded; failure stops before whitening / OT",
+   "tolerance": 1e-09
+  },
+  "expected_runtime_hours": "2.5-4 (Colab 2 threads; 6000 exact solves)"
+ },
+ "note": "science pins for B-3-2 (registered assets); no self-referencing commit/inventory hashes"
+}

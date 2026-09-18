@@ -1,12 +1,13 @@
 {
- "engine_version": "0.47.0",
+ "engine_version": "0.52.0",
  "modules": {
-  "__init__.py": "e8163a4e51909c8513a9c9269530aa7abe16e6e7dae9da2233540c77b1c1584e",
+  "__init__.py": "b6356546249d3cf27e9d46cd4f07ec2dcc80cb13d2ad028620658bab4fcd9f7e",
   "archive.py": "354e75e3f89e3477c4b1bd05e7423ddd735431984bb27301cf3d60162cedeee6",
   "bootstrap_plan.py": "6941a7ac19fddfd9d3ca465632e3c68f18809d55e8e82cefa0a206fac2dcd3f7",
   "calibration.py": "1cc25d502021025191f3181b454b999555998884964f3c3dfe915bc9e0db18ea",
-  "checkpoint.py": "b225db996026c5b171de1ab2efd2ee05c9bba97de03252ced3be4196f2d7cb95",
+  "checkpoint.py": "53fc9ad875459b524680549bae198d52c6eaa2f858aba62f2067b7c36897ede3",
   "ci.py": "6703257bcd9337a0b07eb440f9096c46a7cc8d51ac7e1c4056f2f7b043a8f597",
+  "ckpt_persist.py": "438eeaa162d4cf276e537941350da64b02c46f2e76eb7462309405652153d428",
   "controls.py": "8e330c7fdd68533cb9c2668983f171d3b1ed48dd4755eefcdee1c95e358de848",
   "coordinator.py": "c8274ebccd3dde12e57666ff4a18eff8e1d9da073362d2711a6e8f41dbb8ae98",
   "decision.py": "9bd01a136ea6b4a3a51db0fe20e3552058a91b8558d7b041d0ec37aefd786f88",
@@ -42,6 +43,7 @@
   "w2_context.py": "6e51282a30a9665e82125ed4899f2d3386351d4e096181625d2d6c35c98b5a2d",
   "w2_manifest.py": "41116d3f483b238d1ebc33f189697232bb2cb6552853397b061b6de186697528",
   "w2_shared.py": "150fdb9f1244a474af03118db24f7641470632e7020d655a998b78f7d3065900",
+  "w2_shared_build.py": "7e0a63464754f62980b7f42a327df5505430a95877511674b6253c1a32f72050",
   "w2_stop.py": "768cf18c256a026ca97e06cebc0a9efed5565cde6df48fed228f14a38a811d8b"
  },
  "tests": {
@@ -82,6 +84,8 @@
   "test_audit_b2_tranche8_chatgpt.py": 15,
   "test_audit_b2_tranche9_chatgpt.py": 13,
   "test_audit_b3_1_v02_chatgpt.py": 12,
+  "test_audit_b3_2_v03_persistence_chatgpt.py": 14,
+  "test_audit_b3_2_v04_independent_chatgpt.py": 12,
   "test_audit_contracts_chatgpt.py": 22,
   "test_audit_v02_priority_chatgpt.py": 14,
   "test_audit_v03_b2_intake_chatgpt.py": 4,
@@ -109,9 +113,12 @@
   "test_b2_tranche4.py": 6,
   "test_b2_tranche5.py": 4,
   "test_b2_tranche8.py": 3,
+  "test_b3_2_build.py": 2,
+  "test_b3_2_launcher_v04.py": 4,
+  "test_b3_2_persist.py": 2,
   "test_b3_controls.py": 4
  },
- "total_test_functions": 635,
+ "total_test_functions": 669,
  "tests_sha256": {
   "test_audit_b2_tranche10_chatgpt.py": "304ee655483cc9780e9bf778fb2aa659b6eb6ab017c69b01481db6f56efe2603",
   "test_audit_b2_tranche11_chatgpt.py": "d1aaa931fab2572a9ac8f007bde23bc426f4071f0e1054356ead14061f4f5c4a",
@@ -150,6 +157,8 @@
   "test_audit_b2_tranche8_chatgpt.py": "6d2d0b7451504c58ead25166ed33f0f13876a84fe7149a87a62baf12f73c7a56",
   "test_audit_b2_tranche9_chatgpt.py": "18b4d97b8404b091563a8e411c217e5affbe328c71073fb8935f7059ea100e5f",
   "test_audit_b3_1_v02_chatgpt.py": "a413bd1e47f1cb9644f05f362523683ae38a534b9821e23ed31cfd36a78bc507",
+  "test_audit_b3_2_v03_persistence_chatgpt.py": "9770dff6dd351800edf8ed339552e77aa8c4f30de478f979c17dd12df0e2624a",
+  "test_audit_b3_2_v04_independent_chatgpt.py": "f31ae2e2089ffabef626ffdb1af0467fd0647e8dbabe1bc738cb6613a15cf48c",
   "test_audit_contracts_chatgpt.py": "7df95d435b05d0963c23813a14b5516a5773565d0cd6e3ea6223c8c56c1bc33a",
   "test_audit_v02_priority_chatgpt.py": "090a8efcb0747d8c0f66c2619e28351cd7567dd2b4a2cf8058389e811f4e0f11",
   "test_audit_v03_b2_intake_chatgpt.py": "85e0513cf8000761cf8fe3f718c74e7a0e7b29621e172aaa9da8fb9c5cacf788",
@@ -177,6 +186,9 @@
   "test_b2_tranche4.py": "5af2c9547cb3321b4c52386365e6012166b1d87e777995b3690f57f3b7241dfc",
   "test_b2_tranche5.py": "8b40819f965957dba55262a8831c42f67534977f319200a59ee2022622b926b9",
   "test_b2_tranche8.py": "0e3a080de87d39f38fb8bf5d667d89248847d09c3b50975c0f979885eae37ddc",
+  "test_b3_2_build.py": "472485e35b103180274dd412ebc0e1824b641baa529016671c46f0ea44035757",
+  "test_b3_2_launcher_v04.py": "081691ec6cf69287a2def1bc80133346287fd098645b46bb02d8e9861f385bb6",
+  "test_b3_2_persist.py": "2522e2ff7f32aa6cec2d0df46ab4881352dec4a3b881932a8ca39b3f0cce4aac",
   "test_b3_controls.py": "f018dcdf7f75d4e39f84f2084e9c7e07d4f8ffa40306959ab73db3b56db9fe51"
  },
  "fixtures_sha256": {
@@ -203,29 +215,43 @@
   "tests/reference_assets/t2b2_bridge.py": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872",
   "regression_logs/B3_0_executed_27c3b022f905_first_attempt.ipynb": "0fff60b0592828a86d393aba077afc04a77e2cc5781c1e1daf2f627610fe1e54",
   "regression_logs/b3_1_selftest_run_manifest_sandbox_scale0.1.json": "a1b2f60961cb637da572868db3d0ae728c9485c473381023a1be917a56b14c24",
+  "regression_logs/b3_2B_selftest_run_manifest_sandbox_scale0.1.json": "bcf660febeccb1ab9dd5191771ecb0b5f6c09a76ff6abe287a0b3488243e3b6e",
   "regression_logs/legacy_cross_environment_summary.json": "5a39bb9bcb047e4e8d3079f2466fe56152bc934463d43c6d262b373762d430a6",
   "regression_logs/legacy_regression_tranche24.txt": "3d1be014442dff23052d1c0cc8da80db43aceb3f9753dda35db2c72bed6358ac",
-  "regression_logs/performance_budget_sandbox.json": "b269c526dd1c5e70456518b4428d9499bfcd982dca7853445773b0311d4c797c"
+  "regression_logs/performance_budget_sandbox.json": "b269c526dd1c5e70456518b4428d9499bfcd982dca7853445773b0311d4c797c",
+  "regression_logs/b3_2_v0.5_pytest/chunks_stdout.txt": "c27d5e4a1b6dfa1ce0850192df0dcb72422388921e5a62b0c98e8a7d51d47b77",
+  "regression_logs/b3_2_v0.5_pytest/j1.xml": "02f9598c44baf27700309ff86ec0bd5d090fdd85589e852390926939c335a453",
+  "regression_logs/b3_2_v0.5_pytest/j2.xml": "043e6f4dae40ee7743f47856602a7c45d3f7f8d00703dbf831d047679b7010bc",
+  "regression_logs/b3_2_v0.5_pytest/j3.xml": "77b20f75a56beacbd5adba6d61145e8206fb563f36c512b046de70a860f64dd6",
+  "regression_logs/b3_2_v0.5_pytest/j4.xml": "9d352eac4781082072868a995e096a4307e28737c9da7d578fa0cde1e15dd654",
+  "regression_logs/b3_2_v0.5_pytest/j5.xml": "6ddee5b56d2fa814cc851a6b579475573c1903b244fbd6bb00afcfceb2bd7472",
+  "regression_logs/b3_2_v0.5_pytest/j6.xml": "85bb82f480ae25e08936b35a666b4c5dd0134a5e3470f5b85e2719c2ab92c098",
+  "regression_logs/b3_2_v0.5_pytest/j7.xml": "2390882900c1bba354cdda141ecaebb150eb99280ceffeb847d6f1f1011de871"
  },
  "documents_sha256": {
   "Step1_rules_v1.0_draft4.1.md": "5f02c970eb39f9b3e7f7b17b48eb2d3daa16434517cf4442bac339f5ab719615",
   "rules_tables_v1.json": "522751be134aa3ff4fdf33c6be0d7397fb7bd3c89a6c67e26a67bd32dceeb0b4",
   "Step1_PhaseB_engine_spec_v0.2_addendum.md": "ed9b02858df08b3d2acec990b61ab0626f1a9c05cb88f267051bcc33f39ba21d",
-  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "2312d626cba48380aebd4b1c57f412294d52a79c3a18253b0aa97515cadf9add"
+  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "40a3f7f709c855efe003a0bc4cea6df535f32369bf287aa6fba969b46deaf9c8"
  },
  "counts": {
-  "modules": 42,
-  "test_files": 65,
-  "test_functions": 635,
-  "test_b_files": 24,
-  "test_audit_files": 41
+  "modules": 44,
+  "test_files": 70,
+  "test_functions": 669,
+  "test_b_files": 27,
+  "test_audit_files": 43
  },
  "b3_sha256": {
   "b3/MirrorTopology_Step1_B3_0_smoke_v0.3.ipynb": "c62537e5ce20210b15394b63a3a212a7c1cb3b14df277f481a86f928c1d6cde6",
   "b3/MirrorTopology_Step1_B3_1_control_v0.1.ipynb": "b665793fd12e745d765c510dc42c5c345fe80c0801d88b536bb4ccdf615d832d",
-  "b3/b3_0_pins.json": "d32b56274eade36ac62fa05abecee2c6b9e9567396393e4d0ab853cadb5ca87d",
+  "b3/MirrorTopology_Step1_B3_2A_assets_v0.2.ipynb": "b3400aca97a6bc5f6355324135e3a5b9e0a2094ccf1956716a8364a1c0f9b4bc",
+  "b3/MirrorTopology_Step1_B3_2B_shared_null_v0.5.ipynb": "3fdeddb940694e777b2473742428df8fff68ff4192cbdf1bc78ee4949cc69135",
+  "b3/b3_0_pins.json": "59906ac580bd4c5994f156b4219ef874c4b122b67eede3f4e10ac2d40cb3c056",
   "b3/b3_0_smoke.py": "9c2d125f93487a55bb74c020d7803843054b550ec36163012dac6ffc9e485dae",
   "b3/b3_1_control.py": "d62a77502ad6efdc8bb65df8b8bcb44d66a390c884eaf0a0ad885dd3f9db4eeb",
-  "b3/b3_1_pins.json": "1b63906cd472c9dc18c474e11d455bb4d9b23b3359d314c1a54d79c131d056d4"
+  "b3/b3_1_pins.json": "fa2c8550caee0ba156f5ab85df08ee67d725de51fa01cfe96fe6c70b20a4b5b4",
+  "b3/b3_2_assets.py": "ed500397091966d2ff3dfeac8226c7bbd2688dae1b5a68a2440ce09b0a7fb1c6",
+  "b3/b3_2_pins.json": "b7b44f3bc7f7c5539eea7d825521beaaa03b2ccccb949e9818411ebc3379636e",
+  "b3/b3_2_shared_null.py": "fc1c3d81cb4e1d22edd246a78cbd801a6a16024dca57ed1b0bc35ae9d47c09c6"
  }
 }

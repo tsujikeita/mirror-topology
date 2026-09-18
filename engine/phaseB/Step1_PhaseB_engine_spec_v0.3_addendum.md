@@ -1,5 +1,5 @@
 # Step1_PhaseB_engine_spec v0.3 追補 — B-2 実装受入 packet（第 35 tranche 監査を反映）
-2026-09-16。Claude作成。engine `step1_engine 0.47.0`（module／test／fixture／reference／doc の SHA inventory は `B2_completion_inventory.json`＋監査側 `B2_inventory_audit_supplement.json`）。
+2026-09-16。Claude作成。engine `step1_engine 0.52.0`（module／test／fixture／reference／doc の SHA inventory は `B2_completion_inventory.json`＋監査側 `B2_inventory_audit_supplement.json`）。
 
 **判定ラベル（監査 §5 の提案どおり）**：`B2_implementation_acceptance=accepted`／`B2_original_Colab_acceptance=pending_explicit_carryover_to_B3`／`B3_notebook_preparation=go`／`ENGINE_VALID=not_evaluated`／`Phase_C_freeze=not_authorized`。規則本文 `Step1_rules_v1.0_draft4.1.md`（SHA `5f02c970…`）・`rules_tables_v1.json`（SHA `522751be…`）・spec v0.2 追補は不変。
 
@@ -15,7 +15,7 @@
 | 統合 | threshold_evaluator／integrated_runner／archive／checkpoint | 共通 evaluator（親必要量→位置→coordinator→12 位置→eligible truth）・pseudo 完全性・content-addressed archive・意味検証 reader（t29–34） |
 | 回帰 | legacy_kernel／performance | A10 kernel の同一環境 bit 一致・Colab official との 1e-15 一致・性能 unit（t23–25） |
 
-受入テスト（実体，B-3-1 v0.3 時点）：42 module・65 test file（自作 `test_b*` 24・監査 `test_audit*` 41）・635 test 関数定義・846 pytest case（parametrize 展開；B-2 受入時は 41／63／619／827）。監査原本の同梱区分：**原本保持**／**path 適応のみ**／**fixture 再生成**（t34・t35：配布しない pickle cache を in-process 生成に置換；assert 不変。t35 の12位置 fixture は `TwelveFixture` による原検査用入力から `twelve_from_cases` による入力へ変更しており、同じ数値標本の再現とは区別する）／**API 追従**（t29：result_ref→diagnostic_ref・injection hook を共通 evaluator へ）／**比較 oracle 訂正**（t28：高 offset KDE の literal 基準）——いずれも監査で承認済みの差分で，テスト緩和ではない。「意味検証 reader」の scope は core（保存 replicate・密度に条件付き）であり，外部 W₂/context 参照・run/coordinator を含む再利用契約の認証ではない。
+受入テスト（実体，B-3-2 v0.5 時点）：44 module・70 test file（自作 `test_b*` 27・監査 `test_audit*` 43）・669 test 関数定義・888 pytest case（parametrize 展開；B-2 受入時は 41／63／619／827）。監査原本の同梱区分：**原本保持**／**path 適応のみ**／**fixture 再生成**（t34・t35：配布しない pickle cache を in-process 生成に置換；assert 不変。t35 の12位置 fixture は `TwelveFixture` による原検査用入力から `twelve_from_cases` による入力へ変更しており、同じ数値標本の再現とは区別する）／**API 追従**（t29：result_ref→diagnostic_ref・injection hook を共通 evaluator へ）／**比較 oracle 訂正**（t28：高 offset KDE の literal 基準）——いずれも監査で承認済みの差分で，テスト緩和ではない。「意味検証 reader」の scope は core（保存 replicate・密度に条件付き）であり，外部 W₂/context 参照・run/coordinator を含む再利用契約の認証ではない。
 
 **inventory の適用範囲**：現提出版の照合には `B2_completion_inventory.json` を用いる。`B2_inventory_audit_supplement.json` と `docs_B2_scope_and_B3_handoff_proposal_ChatGPT.md` は第35 tranche（engine 0.39.0）の監査時点の履歴資料として原bytesを保持し、現版0.40.0のSHAや件数の代用にはしない。
 
@@ -45,6 +45,17 @@
 - **B-3-2**（正式資産）：共有 null（exact OT・n_sub 2000/5000・B_max=1000）・E2/E7/E8 正式 12 位置 asset の生成・照合・保存；新規 9 点の circle coverage／clone／prior 受入。
 - **B-3-3**：未実装項目（B'）の受入期限を明記して Phase C packet へ。現 commit は「B-3 検証対象を固定する commit」であり ENGINE_VALID・rules v1.0 の科学的 freeze と同義ではない。
 
-## D. 更新履歴（tranche 35／36）
+## D. 受入れ receipt と更新履歴
+
+### D.0 独立監査による受入れ receipt（履歴表 §B は当時の記述として保持；現在の状態はここ）
+| 工程 | 検証対象 commit（engine） | run | 監査書 | 判定 |
+|---|---|---|---|---|
+| B-2 実装受入れ | 初回受入れ：tranche 35/36 packet（0.39.0→0.40.0）；後続維持：B-3-0 準備時の packet v0.4（0.43.0，inventory `13c7f89a…`） | — | `ChatGPT_audit_Step1_PhaseB_B2_tranche35.md`／`tranche36.md` | accepted（sandbox 実装の範囲） |
+| B-3-0 Colab smoke | `7045fc1a…`（0.44.0） | `20260917T092845Z` | `ChatGPT_audit_Step1_PhaseB_B3_0_Colab_7045fc1a17b6.md` | **PASS**（mock-grid smoke・T10 実 bank・T19/A5・legacy 3 回帰を B-3-0 の規模で完了） |
+| B-3-1 official 規模 control | `903458d7…`（0.47.0） | `20260917T154350Z` | `ChatGPT_audit_Step1_PhaseB_B3_1_Colab_903458d71e94.md` | **PASS**（1 配置 control profile；ENGINE_VALID・production 較正ではない） |
+| B-3-2 A（12 位置 asset・circle 幾何） | v0.2 packet inventory `253fcefd…`（A の script／notebook は以後 bytes 不変） | 未実行 | `ChatGPT_audit_Step1_PhaseB_B3_2_v0.2.md`／`v0.3.md`（GO 維持） | 実行前 GO（実行後受入れは未） |
+| B-3-2 B（共有 W₂ null） | 本版（v0.5） | 未実行 | `ChatGPT_audit_Step1_PhaseB_B3_2_v0.4.md`（R323-B/C 承認・R324-A/B HOLD → 本版で参考修正を採用） | 実行前監査待ち |
+
+### D.1 更新履歴（tranche 35／36 以降）
 - tranche 36：第 35 tranche 監査の inventory・provenance・性能・実行範囲の訂正と B-3 移管表を反映（本版）。監査の受入試験 12 件を同梱。
 第 34 tranche 監査 R34-A/B の候補 patch（twelve_assets／threshold_evaluator／integrated_runner）を採用：asset 全体の validate と receipt（source-bound registry・exact inventory・member identity／anchor・asset SHA），atomic cache publication（失敗した intake から verified set へ登録しない），`regenerate=False` の cache miss 拒否，evaluator の asset↔registry 照合，runner の asset snapshot／pin と終了時の whole-asset 検査，期待 asset SHA の省略可能引数。
