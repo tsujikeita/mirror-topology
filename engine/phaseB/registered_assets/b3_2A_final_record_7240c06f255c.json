@@ -1,0 +1,79 @@
+{
+ "launcher": {
+  "launcher_id": "MirrorTopology_Step1_B3_2A_assets_v0.1",
+  "repo_url": "https://github.com/tsujikeita/mirror-topology.git",
+  "commit": "7240c06f255cd206ae3e2db6210ce7efd66e1b32",
+  "inventory_sha256": "857b2f371b856d0dcdda6f87ef96b66fad752636d3599617e0fcb6af887753f4",
+  "pins_sha256": "b7b44f3bc7f7c5539eea7d825521beaaa03b2ccccb949e9818411ebc3379636e",
+  "engine_version": "0.52.0",
+  "run_dir": "/content/b3_2A_runs/20260918T094339Z"
+ },
+ "B3_2A_PASS": true,
+ "stages": {
+  "checkout": true,
+  "environment": {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "pot": "0.9.7.post1",
+   "camb": "2.0.4"
+  },
+  "script_returncode": 0,
+  "script_pass": true,
+  "script_gates": {
+   "G_pins_loaded": true,
+   "G_engine_inventory": true,
+   "G_script_sha": true,
+   "G_env_lock": true,
+   "G_assets_sha": true,
+   "G_a7_script_sha": true,
+   "G_cmbtopology_commit": true,
+   "G_registry_source_bound": true,
+   "G_twelve_assets_intake": true,
+   "G_geometry_anchor_reproduction": true,
+   "G_geometry_all_points_surviving": true,
+   "G_prior_weights": true,
+   "G_evidence_saved": true
+  },
+  "script_failures": [],
+  "timings": {
+   "twelve_assets_build_and_intake": 18290.95087647438,
+   "geometry": 0.6888458728790283
+  }
+ },
+ "output_inventory": {
+  "launcher_script_stdout.txt": {
+   "sha256": "7acc382d5e0f2b3643591a20beee2576e04899173b2539d4e6a00beb552015ec",
+   "bytes": 453
+  },
+  "launcher_lock.json": {
+   "sha256": "5f9a65370908edbb16a3cf21a6202198b495f8e714a52127b42d5316fcc983d9",
+   "bytes": 435
+  },
+  "launcher_script_stderr.txt": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "external_checkout_lock.json": {
+   "sha256": "5d018ab0fbc80fcb046402611dfa68103e4506ac0614ffe1c0b5a8398f3e830b",
+   "bytes": 238
+  },
+  "assets/b3_2_twelve_geometry.csv": {
+   "sha256": "c0f0bf0eb7ca3fadee70d2437443e926bed65ac5a89685b7a2c712a7dffab641",
+   "bytes": 27605
+  },
+  "assets/b3_2_twelve_assets.json": {
+   "sha256": "be6860ba2ffbdd798d8a300b2268281bbade1d2b7f33b5b0748dc550ef90d557",
+   "bytes": 18086
+  },
+  "assets/b3_2_assets_stdout.log": {
+   "sha256": "a46380bd3391c037f365cacaea1afedaa5899338cfd0f3313a6ed351c3479e9b",
+   "bytes": 413
+  },
+  "assets/b3_2_assets_run_manifest.json": {
+   "sha256": "f5525e9db4d30d7afa79215f648fcc29d722de659a0488d907a14685b6fda9db",
+   "bytes": 8755
+  }
+ }
+}

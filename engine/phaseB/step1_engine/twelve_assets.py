@@ -122,3 +122,35 @@ def asset_from_dict(d:dict) -> TwelveManifestAsset:
         out=TwelveManifestAsset(d['registry_sha256'],d['generator'],mans,d['families'],d['sha256'])
     except (TypeError,AttributeError) as e: raise InputContractError('invalid serialized manifest') from e
     out.validate(require_intake=False);return out  # no process receipt is deserialized
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Registered-asset intake by RECEIPT (B-3-3 / Phase C). The regeneration intake of the formal E2/E7/E8 asset was performed once on Colab (B-3-2A, commit 7240c06f…, run
+# 20260918T094339Z; independently re-derived by the audit: all 12 points x 3 sizes x 3 families identical) and is not repeated at every use (E2 alone takes ~5 h). A registered
+# asset file is accepted when: its bytes hash to the receipt's file SHA, the asset payload SHA equals the receipt's asset SHA, every manifest passes the structural checks and its
+# anchors equal the source-bound registry, and the receipt itself is the registered one. Only then are the manifest SHAs marked verified for this process. Scope: structural +
+# receipt-bound; the regeneration proof is the receipt (run manifest + audit), not a re-execution here.
+REGISTERED_RECEIPTS = {
+    "B3_2A_7240c06f255c": dict(commit="7240c06f255cd206ae3e2db6210ce7efd66e1b32", run_id="20260918T094339Z", engine_version="0.52.0", asset_sha256="1d05e6b3afc86f8da94765cebe128f2b291bc523c10599dcb6e54ff7be01d89c",
+                                file_sha256="be6860ba2ffbdd798d8a300b2268281bbade1d2b7f33b5b0748dc550ef90d557", families=["E2", "E7", "E8"], audit="ChatGPT_audit_Step1_PhaseB_B3_2_Colab_7240c06f255c.md"),
+}
+
+
+def intake_registered_twelve_assets(path: str, reg: GridRegistry, receipt_id: str) -> TwelveManifestAsset:
+    import os
+    if receipt_id not in REGISTERED_RECEIPTS: raise InputContractError(f"unknown registered receipt {receipt_id!r}")
+    rc = REGISTERED_RECEIPTS[receipt_id]; b = open(path, "rb").read()
+    if hashlib.sha256(b).hexdigest() != rc["file_sha256"]: raise InputContractError("registered twelve-asset file bytes differ from the receipt")
+    a = asset_from_dict(json.loads(b.decode("utf-8"))); _registry(reg)
+    if a.sha256 != rc["asset_sha256"] or a.payload_sha() != a.sha256: raise InputContractError("registered twelve-asset SHA differs from the receipt / payload")
+    if a.registry_sha256 != reg.registry_sha256 or list(a.families) != rc["families"] or a.generator != dict(stage12.GENERATOR, streamed_families=list(stage12.STREAMED_FAMILIES)): raise InputContractError("registered twelve-asset binding (registry / families / generator) differs")
+    n = 0
+    for f in a.families:
+        if set(a.manifests.get(f, {})) != set(reg.surviving[f]): raise InputContractError(f"{f}: size inventory differs from the registry")
+        for s, m in a.manifests[f].items():
+            if (m.family, m.size_id) != (f, s) or m.anchors != [[float(x) for x in p] for p in reg.anchors[f]]: raise InputContractError(f"{f}/{s}: identity/anchors differ from the registry")
+            stage12._structural_checks(m); n += 1
+    for f in a.families:
+        for m in a.manifests[f].values(): _VERIFIED.add(m.sha256)
+    a._intake_sha256 = a.sha256                                                                      # whole-asset intake marker (same semantics as the regeneration intake, proof = receipt)
+    a.verification = dict(intake="receipt-bound structural intake (regeneration proof = registered receipt)", receipt=receipt_id, manifests=n, registry_sha256=reg.registry_sha256); return a
