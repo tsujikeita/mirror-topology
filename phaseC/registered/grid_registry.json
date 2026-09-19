@@ -1,0 +1,242 @@
+{
+ "schema": "grid_registry_v1",
+ "a6_sha256": "a5ea1ae69fe7a899af0f3cada0deca2abd9e04a49a10cf131f6c522857a35109",
+ "a7_sha256": "47b2d910a00bcb1ecdbf644291dbe9e9507ea69162aa3ebc74df3fa02acb085e",
+ "sizes": {
+  "E1": [
+   "L0.70",
+   "L0.85",
+   "L1.00",
+   "L1.20",
+   "L1.50"
+  ],
+  "E2": [
+   "L0.70",
+   "L0.85",
+   "L1.00",
+   "L1.20",
+   "L1.50"
+  ],
+  "E7": [
+   "L0.70",
+   "L0.85",
+   "L1.00",
+   "L1.20",
+   "L1.50"
+  ],
+  "E8": [
+   "L0.70",
+   "L0.85",
+   "L1.00",
+   "L1.20",
+   "L1.50"
+  ]
+ },
+ "status": {
+  "E1": {
+   "L0.70": {
+    "L": 0.7,
+    "observational_status": "excluded_by_published_search",
+    "geometric_status": "circles_geometrically_present"
+   },
+   "L0.85": {
+    "L": 0.85,
+    "observational_status": "excluded_by_published_search",
+    "geometric_status": "circles_geometrically_present"
+   },
+   "L1.00": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "L1.20": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "L1.50": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   }
+  },
+  "E2": {
+   "L0.70": {
+    "L": 0.7,
+    "observational_status": "excluded_by_published_search",
+    "geometric_status": "circles_geometrically_present"
+   },
+   "L0.85": {
+    "L": 0.85,
+    "observational_status": "excluded_by_published_search",
+    "geometric_status": "circles_geometrically_present"
+   },
+   "L1.00": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "L1.20": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "L1.50": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   }
+  },
+  "E7": {
+   "L0.70": {
+    "L": 0.7,
+    "observational_status": "excluded_by_published_search",
+    "geometric_status": "circles_geometrically_present"
+   },
+   "L0.85": {
+    "L": 0.85,
+    "observational_status": "excluded_by_published_search",
+    "geometric_status": "circles_geometrically_present"
+   },
+   "L1.00": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "L1.20": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "L1.50": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   }
+  },
+  "E8": {
+   "L0.70": {
+    "L": 0.7,
+    "observational_status": "excluded_by_published_search",
+    "geometric_status": "circles_geometrically_present"
+   },
+   "L0.85": {
+    "L": 0.85,
+    "observational_status": "excluded_by_published_search",
+    "geometric_status": "circles_geometrically_present"
+   },
+   "L1.00": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "L1.20": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "L1.50": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   }
+  }
+ },
+ "surviving": {
+  "E1": [
+   "L1.00",
+   "L1.20",
+   "L1.50"
+  ],
+  "E2": [
+   "L1.00",
+   "L1.20",
+   "L1.50"
+  ],
+  "E7": [
+   "L1.00",
+   "L1.20",
+   "L1.50"
+  ],
+  "E8": [
+   "L1.00",
+   "L1.20",
+   "L1.50"
+  ]
+ },
+ "size_prior": {
+  "E1": {
+   "L1.00": 0.3333333333333333,
+   "L1.20": 0.3333333333333333,
+   "L1.50": 0.3333333333333333
+  },
+  "E2": {
+   "L1.00": 0.3333333333333333,
+   "L1.20": 0.3333333333333333,
+   "L1.50": 0.3333333333333333
+  },
+  "E7": {
+   "L1.00": 0.3333333333333333,
+   "L1.20": 0.3333333333333333,
+   "L1.50": 0.3333333333333333
+  },
+  "E8": {
+   "L1.00": 0.3333333333333333,
+   "L1.20": 0.3333333333333333,
+   "L1.50": 0.3333333333333333
+  }
+ },
+ "anchors": {
+  "E1": [],
+  "E2": [
+   [
+    0.2452274712376159,
+    0.3429926323318836
+   ],
+   [
+    0.07150075549277313,
+    0.24162711619922894
+   ],
+   [
+    0.8951290935216393,
+    0.2514647338918028
+   ]
+  ],
+  "E7": [
+   [
+    0.11278702805018147
+   ],
+   [
+    0.04504442885635738
+   ],
+   [
+    0.17608175443077442
+   ]
+  ],
+  "E8": [
+   [
+    0.21609142351830096,
+    0.1388778490467109
+   ],
+   [
+    0.10991624390681737,
+    0.06676051199330066
+   ],
+   [
+    0.4225612190131215,
+    0.125548183938205
+   ]
+  ]
+ },
+ "observer_design": {
+  "version": "pilot_v2_reduced",
+  "seed_sequence": [
+   20260905,
+   7
+  ],
+  "lift_rule": "irrelevant coordinates fixed at generic fractions (0.31, 0.37, 0.42)"
+ },
+ "n_configurations": 30,
+ "registry_sha256": "ba48214585c50348a9f43ef82ba33c3b7fcb982ebc89d0ba38985969c48ec851",
+ "verification_scope": "constructed_from_verified_assets"
+}

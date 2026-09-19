@@ -1,0 +1,265 @@
+{
+ "schema": "step1_rules_v1.0_freeze_manifest_v1",
+ "method": "A: the adopted rules text and tables are the draft4.1 bytes; registration references, the adoption declaration and process-change proposals live in this manifest and the adoption addendum (the rules text SHA is unchanged)",
+ "adopted_rules": {
+  "document": "originals/Step1_rules_v1.0_draft4.1.md",
+  "sha256": "5f02c970eb39f9b3e7f7b17b48eb2d3daa16434517cf4442bac339f5ab719615",
+  "tables": "originals/rules_tables_v1.json",
+  "tables_sha256": "522751be134aa3ff4fdf33c6be0d7397fb7bd3c89a6c67e26a67bd32dceeb0b4",
+  "binding": "rules_tables_v1.json.rules_document.sha256 == document sha256 (verified by step1_engine.rules_config.verify_binding at import)",
+  "adopted_as": "Step1_rules_v1.0 (text identical to draft4.1; no textual, numerical or predicate change)"
+ },
+ "research_plan_originals": {
+  "v0_4": {
+   "file": "originals/Step1_research_plan_v0.4.md",
+   "sha256": "0569ae2f9cbd3003d1f08840b43f20c14e8da3e07ca7718743929ee138235371",
+   "expected": "0569ae2f9cbd3003d1f08840b43f20c14e8da3e07ca7718743929ee138235371"
+  },
+  "v0_5": {
+   "file": "originals/Step1_research_plan_v0.5.md",
+   "sha256": "357e4d7d0325e3284bd3dcf062a4c5e5bf7599b14032e90ab3da6912da5e9f18",
+   "expected": "357e4d7d0325e3284bd3dcf062a4c5e5bf7599b14032e90ab3da6912da5e9f18"
+  },
+  "correspondence": "v0.4/v0.5: Phase C v0.1 audit (33 items); v0.3: Phase C v0.4 audit (34 items); all originals bundled with SHAs",
+  "open_item_noise_stress_test": {
+   "policy_status": "AUDIT_ACCEPTABLE_WITH_PRE_SPECIFICATION_GATE",
+   "author_adoption_status": "CONFIRMED_BY_AUTHOR_2026-09-19",
+   "author_statement": "transfer to the Phase E descriptive robustness qualifier with the audit conditions (recorded from the author in the Claude conversation of 2026-09-19)",
+   "implementation_status": "NOT_IMPLEMENTED_OR_NOT_YET_ACCEPTED",
+   "execution_status": "NOT_RUN",
+   "scope": "descriptive_noise_robustness_qualifier_outside_core_and_calibration",
+   "source_basis": [
+    "Step1 research plan v0.3 section 14: one-point additive low-ell noise test (E7, L=1.0, first observer point)",
+    "Step1 research plan v0.5 line 91: effect-size/category/margin criteria"
+   ],
+   "specification_gate": "freeze and audit before generating or inspecting previously unseen official full-grid or noise-added outcomes",
+   "execution_gate": "complete execution and result audit in Phase E before observational result/label release",
+   "scope_limit": "one registered E7 point; no automatic claim for all families/positions/sizes",
+   "effect_on_core": "no retroactive change to sealed core labels, calibration usable, thresholds, target, priors or accepted assets",
+   "failure_reporting": "report sensitive, unresolved, technical failure and not-run separately; do not confer noise-insensitive on failure"
+  },
+  "v0_3": {
+   "file": "originals/Step1_research_plan_v0.3.md",
+   "sha256": "bac9dbfe7dfb70baa4a6ca5f1d3dc8f24c65641ebf01e3693171a4022c2abfb8",
+   "expected": "bac9dbfe7dfb70baa4a6ca5f1d3dc8f24c65641ebf01e3693171a4022c2abfb8",
+   "bytes": 14387,
+   "bundled": true,
+   "section14_verbatim_recorded": true,
+   "full_correspondence": "COMPLETED by the Phase C v0.4 audit (2026-09-19; 34-item table bundled); earlier \"REQUESTED\" status retained in the v0.4 audit record"
+  }
+ },
+ "first_wave_grid": {
+  "registry": "registered/grid_registry.json",
+  "registry_sha256": "ba48214585c50348a9f43ef82ba33c3b7fcb982ebc89d0ba38985969c48ec851",
+  "registry_file_sha256": "1c90f0d4369a59387cfa0a96e0ec91179e56156cfddc3756e5172565242cf11b",
+  "configuration_manifest": "registered/first_wave_configuration_manifest.json",
+  "manifest_sha256": "75e85b6d8bca15e1cd7e2048bea7f6bb02a1d0d22dfa02422e802ecfea2d90a1",
+  "manifest_file_sha256": "5efc3a5dc3142f012ea4211a38d8ce00968f86232b7c80a9eacb616d6793b5d1",
+  "n_configurations": 30,
+  "a7_cross_check": "30/30 rows agree (shape JSON, r_obs_LLSS, circle status)",
+  "sources": {
+   "a6_sha256": "a5ea1ae69fe7a899af0f3cada0deca2abd9e04a49a10cf131f6c522857a35109",
+   "a7_sha256": "47b2d910a00bcb1ecdbf644291dbe9e9507ea69162aa3ebc74df3fa02acb085e"
+  }
+ },
+ "registered_assets": {
+  "twelve_position": {
+   "file": "registered/b3_2_twelve_assets.json",
+   "file_sha256": "be6860ba2ffbdd798d8a300b2268281bbade1d2b7f33b5b0748dc550ef90d557",
+   "asset_sha256": "1d05e6b3afc86f8da94765cebe128f2b291bc523c10599dcb6e54ff7be01d89c",
+   "registry_sha256": "ba48214585c50348a9f43ef82ba33c3b7fcb982ebc89d0ba38985969c48ec851",
+   "manifests": {
+    "E2": {
+     "L1.00": "fa229fbb780571a3eea7891eb52b13c1b97e03cd7a7f1abf7e739366eae7062d",
+     "L1.20": "ae1266ac295f234ec2d7ad5a6c7edff8835c9651690551bd6cd50bef8fcfe76d",
+     "L1.50": "745a2e5985ef884590fc22ad3024ad346a0cca67a907b07e77f4a8656b6a158c"
+    },
+    "E7": {
+     "L1.00": "2353449e1c63e3e86e1c3d2edc0632ae548fd7ab62d5755bc0f98a65e70a6711",
+     "L1.20": "2897e1d7659b3ec418718fbe28343946f0b806c2a86b00e05c8fcfd8de36f2aa",
+     "L1.50": "7c11f8f69c3f9c6f659d6a19d271e2db5b8d96a68ab0e7a9fa89926fd6122d5b"
+    },
+    "E8": {
+     "L1.00": "2819142c94c6e249bdd2fe8b45de9a65700269a2c5ff48be3dd981d76d91f1d2",
+     "L1.20": "835190ec83eb2accca539e3a49a82e953a04b200c296bd7b492089fd55ae6b39",
+     "L1.50": "a72f2b2544f8bb6952a218419b460074b9bf9e58f9638a9ee67e9b458fa8c7ef"
+    }
+   },
+   "receipt": "B3_2A_7240c06f255c",
+   "intake": "step1_engine.twelve_assets.intake_registered_twelve_assets (receipt-bound; regeneration proof = B-3-2A run + audit)"
+  },
+  "twelve_geometry": {
+   "file": "registered/b3_2_twelve_geometry.csv",
+   "file_sha256": "c0f0bf0eb7ca3fadee70d2437443e926bed65ac5a89685b7a2c712a7dffab641",
+   "rows": 108,
+   "note": "geometric nearest-clone / circle status / prior; A11 physical covariance clone equivalence NOT included (process-change proposal below)"
+  },
+  "shared_w2_null": {
+   "file": "registered/b3_2_shared_null_asset.json",
+   "file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+   "asset_sha256": "8348d5f4733ae5a37e39f4aa88109626e5caab312b55bd108be7ec9e5daff3ba",
+   "identity": {
+    "m": 100,
+    "iso_K": 6000,
+    "n_subs": [
+     2000,
+     5000
+    ],
+    "B_max": 1000,
+    "distance_kind": "exact_pot_w2",
+    "master_seed": 20260912
+   },
+   "receipt": "B3_2B (commit 7240c06f…, run 20260918T152513Z)",
+   "intake": "SharedNullAsset.validate (payload) + w2_manifest / w2_context formal intake with the trusted asset SHA; case-level stop/B_final/trigger are NOT part of the asset"
+  },
+  "external_large_assets": {
+   "null_and_calibration_pools": {
+    "member": "null/b3_2_pools.npz inside b3_2B_out_7240c06f255c.zip",
+    "sha256": "451f8bc5446c03956ba5598b326532584805488326b0623b009c5e7dc530c987",
+    "bytes": 42573325,
+    "custody": "author archive outside the repository; re-verify by SHA before use",
+    "receipt_ref": "registered/b3_3_receipts.json: B-3-2B outputs.pools_npz_sha256"
+   },
+   "control_battery_banks": {
+    "member": "b3_1_out_903458d71e94.zip",
+    "bytes": 133229666,
+    "custody": "author archive",
+    "receipt_ref": "registered/b3_3_receipts.json: B-3-1 outputs"
+   },
+   "checkpoints_and_run_records": "inside the B-3 output zips (SHAs in registered/b3_3_receipts.json)"
+  }
+ },
+ "accepted_sources": {
+  "handoff_commit": "1db30cd1678d40340cd445204ec97a08590c24d5",
+  "handoff_inventory_sha256": "0ece0a3d1e991d37b7bbc51d15c1a89c0d96d40920f3b79a404cede5bad2943e",
+  "engine_version": "0.54.0",
+  "numerical_sources": [
+   {
+    "stage": "B-3-0",
+    "commit": "7045fc1a17b63755d66671c97882a32d7c2309c7",
+    "engine": "0.44.0"
+   },
+   {
+    "stage": "B-3-1",
+    "commit": "903458d71e9478e409ecba9273375cdac8d92d4f",
+    "engine": "0.47.0"
+   },
+   {
+    "stage": "B-3-2 A/B",
+    "commit": "7240c06f255cd206ae3e2db6210ce7efd66e1b32",
+    "engine": "0.52.0"
+   }
+  ],
+  "receipts": "registered/b3_3_receipts.json",
+  "receipts_sha256": "d5e513f7539cdac2b644e840f3a06441ac3f117346522cda5a1e27bf16401af4",
+  "note": "the handoff commit is the fixed accepted base source; it is NOT a completed production engine (see pre_use_gates)"
+ },
+ "process_change_proposals": [
+  {
+   "id": "PC-1",
+   "topic": "A11 physical-covariance clone equivalence for the 9 new observer positions",
+   "original": "B-3 / before Phase C (migration table; retained historically)",
+   "decision": "APPROVED_SCHEDULING_SPLIT_WITH_PRE_USE_GATE (Phase C audit 2026-09-19)",
+   "physical_validation_status": "PHYSICAL_VALIDATION_PENDING",
+   "conditions": [
+    "geometric nearest-clone/circle/prior retained as the B-3-2A acceptance; not conflated with physical equivalence",
+    "scope: 9 new positions x all applicable surviving sizes; no transfer of anchor successes; existing A11 formulas/tolerances/identity contracts retained",
+    "verify when the covariances are generated in Phase D; accept before those covariances/banks enter any formal processing incl. calibration; numerical verification in an isolated verification scope",
+    "no deletion/renormalisation of points or prior mass on technical failure or unverified status",
+    "store source/environment/covariance-transform/output SHAs and results"
+   ],
+   "reference_audit": "audits/ChatGPT_audit_Step1_PhaseC_freeze_packet_v0_1.md"
+  }
+ ],
+ "pre_use_gates": [
+  {
+   "feature": "formal 12-position profile gate",
+   "deadline": "before Phase D twelve-position bank generation"
+  },
+  {
+   "feature": "pseudo-side full 12-position Result archive",
+   "deadline": "before any formal global full-procedure calibration, including any 12-position branch"
+  },
+  {
+   "feature": "calibration-first driver",
+   "deadline": "implement and accept before formal global calibration; do not compute the observed full-grid target before calibration usable is sealed"
+  },
+  {
+   "feature": "production covariance intake (run profile, array SHA recomputation, PSD) and Phase D bank generator",
+   "deadline": "Phase D start"
+  },
+  {
+   "feature": "checkpoint reuse of external W2/context/run/coordinator records",
+   "deadline": "before first formal reuse, including calibration; not deferred solely because an operation is labelled Phase D rather than E"
+  },
+  {
+   "feature": "integrated runner: registered twelve-asset reuse without unconditional regeneration",
+   "deadline": "before formal reuse of the integrated runner"
+  },
+  {
+   "feature": "case-level W2 stop/B_final/trigger on real banks",
+   "deadline": "before those decisions are first used in calibration or classification"
+  },
+  {
+   "feature": "Drive generation restore (actual)",
+   "deadline": "record at the first real resume"
+  },
+  {
+   "feature": "noise stress test: specification and implementation pre-verification",
+   "deadline": "before generating or inspecting previously unseen official full-grid or noise-added outcomes"
+  },
+  {
+   "feature": "noise stress test: execution and result audit",
+   "deadline": "Phase E, before observational result/label release"
+  }
+ ],
+ "audits": {
+  "ChatGPT_audit_Step1_PhaseB_B2_tranche35.md": "cb7a33503c8fa9b8aae986e0e5de172d6ca37e22ad56661b4e30e36625a3b846",
+  "ChatGPT_audit_Step1_PhaseB_B2_tranche36.md": "26366c62bad50d493c4d995dbbed9e9b593013f4168bbf3b0d752fc04e6a8269",
+  "ChatGPT_audit_Step1_PhaseB_B3_0_Colab_7045fc1a17b6.md": "39540a91d6689dc5f93a265022dac5dc56b131fccf06cca4462351ae5052ec34",
+  "ChatGPT_audit_Step1_PhaseB_B3_1_Colab_903458d71e94.md": "1fd0dc6fddfd11726b97977bb87acb948c44c856542872d9bdf6dcc0e073df48",
+  "ChatGPT_audit_Step1_PhaseB_B3_2_Colab_7240c06f255c.md": "ff472924f52d20c68aa6479aef9eb4d5ed2838a597fb1f763d3e88d3957bf399",
+  "ChatGPT_audit_Step1_PhaseB_B3_3_packet.md": "4269e13f4c7aceaca5f6215da559ebaad546a24ef4d0e7dfedd6a6a02557d8aa",
+  "ChatGPT_audit_Step1_PhaseB_B3_3_v2.md": "347dd025c457ef17d52adbece2f4a4c564dbc107c9fc5c1d140bdb30fbd3ed30",
+  "ChatGPT_audit_Step1_PhaseC_freeze_packet_v0_1.md": "c9b1783af48335e9274eb6996c57b2c116854af7314a3679955759252c6f78ef",
+  "ChatGPT_audit_Step1_PhaseC_freeze_packet_v0_2.md": "8ab99741272c22de733a825e85ac59c87adf22860709ccd8e9a0db52ba522e25",
+  "ChatGPT_audit_Step1_PhaseC_freeze_packet_v0_4.md": "6d6f7b1f41c96a130431f4dbbd8f9f92672739dd44331a3db6f78fa717ed0c76",
+  "ChatGPT_originals_correspondence_2026-09-19.md": "869d6ee492f1ee8fd0fa04f6de68d9936c5004692ada1090252b5810a19e838f",
+  "ChatGPT_v03_correspondence_2026-09-19.json": "f21104942f74b8d870c2f30d88cf5cd32e29d02e2e518e02b46536a094d9a971",
+  "ChatGPT_v03_original_correspondence_2026-09-19.md": "b4d95e5ad9ed2054490764c152c5a70ea8ab0dace17189f301b14e66de77419c",
+  "Step1_PhaseC_noise_policy_recommendation.md": "4a011996d88444c02d68e0ea4ac5f250341ad6a5c1bf0d846c25f875dc2473be",
+  "Step1_PhaseC_v0_3_original_correspondence_audit.md": "b4d95e5ad9ed2054490764c152c5a70ea8ab0dace17189f301b14e66de77419c"
+ },
+ "environment_lock": {
+  "python": "3.13.15",
+  "numpy": "2.1.3",
+  "scipy": "1.16.3",
+  "healpy": "1.20.0",
+  "pot": "0.9.7.post1",
+  "camb": "2.0.4",
+  "numpy_openblas_threads": 2,
+  "other_pools_max": 2,
+  "note": "rules §12.1 / pins; not a measured PASS in any new runtime"
+ },
+ "not_approved_by_this_packet": [
+  "ENGINE_VALID",
+  "B-3 overall completion",
+  "completed production engine",
+  "global calibration",
+  "calibration usable",
+  "observational label release",
+  "PC-1 physical validation (pending)",
+  "noise stress test implementation/execution/PASS (policy confirmed; not run)"
+ ],
+ "manifest_revision": "final (audited v0.4 content; v0.4 audit + v0.3 correspondence table bundled as evidence; no policy change)",
+ "phase_c_approval": {
+  "status": "APPROVED_AS_ADOPTION_TARGET",
+  "audit": "audits/ChatGPT_audit_Step1_PhaseC_freeze_packet_v0_4.md",
+  "approved_packet": {
+   "inner_zip_sha256": "3beaf98286a3c8dd3f099052fd2743a14d8acab60cec758ad627354b9ca3c28c",
+   "packet_inventory_sha256": "7bf6bfc3a395cd945595cd8675f5756337c75706013710861bb0553dd86c075d"
+  },
+  "scope": "rules text/tables (draft4.1 bytes), registered design/assets, accepted base source; NOT ENGINE_VALID, production engine completion, noise implementation, global calibration, calibration usable or label release",
+  "commit_and_tag": "to be recorded in the outer receipt after the actual repository commit/tag"
+ }
+}

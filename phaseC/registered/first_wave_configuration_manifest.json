@@ -1,0 +1,1051 @@
+{
+ "schema": "configuration_manifest_v1",
+ "registry_sha256": "ba48214585c50348a9f43ef82ba33c3b7fcb982ebc89d0ba38985969c48ec851",
+ "lift_source": {
+  "script": "s1_phaseA6A7_v1.4.2.py",
+  "frozen_in": "results/step1_phaseA/A6A7_freeze/",
+  "note": "E2 [q0*Lx, q1*Ly, 0.37*2*Lz]; E7 [0.31*LAx, q0*L1y, 0.42*L2z]; E8 [q0*LAx, q1*LCy, 0.42*LBz]; E1 homogeneous r_obs=(0,0,0)"
+ },
+ "configurations": [
+  {
+   "config_id": 10101,
+   "family": "E1",
+   "size_id": "L1.00",
+   "L": 1.0,
+   "position_index": 0,
+   "observer_id": 0,
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "reduced_coords": [],
+   "r_obs": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "x0_CT": [
+    -0.0,
+    -0.0,
+    -0.0
+   ],
+   "cache_key": "cfc7eeef5ad73ab251965735d9804585f5af9acb622b4ddf81a9de27e02d2c00",
+   "circle_status": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "weight": 0.3333333333333333
+  },
+  {
+   "config_id": 10201,
+   "family": "E1",
+   "size_id": "L1.20",
+   "L": 1.2,
+   "position_index": 0,
+   "observer_id": 0,
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "reduced_coords": [],
+   "r_obs": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "x0_CT": [
+    -0.0,
+    -0.0,
+    -0.0
+   ],
+   "cache_key": "4cb6b1ecb378398ab870e7d1e89bcfbaa924f655481fa6d454d2fafee36ea2d4",
+   "circle_status": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.3333333333333333
+  },
+  {
+   "config_id": 10301,
+   "family": "E1",
+   "size_id": "L1.50",
+   "L": 1.5,
+   "position_index": 0,
+   "observer_id": 0,
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "reduced_coords": [],
+   "r_obs": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "x0_CT": [
+    -0.0,
+    -0.0,
+    -0.0
+   ],
+   "cache_key": "f1980556bc86809bdaa6b74a1288c9f42940b7eea3c6e63cff1bcdb72019126e",
+   "circle_status": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.3333333333333333
+  },
+  {
+   "config_id": 20101,
+   "family": "E2",
+   "size_id": "L1.00",
+   "L": 1.0,
+   "position_index": 0,
+   "observer_id": 1,
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "reduced_coords": [
+    0.2452274712376159,
+    0.3429926323318836
+   ],
+   "r_obs": [
+    0.2452274712376159,
+    0.3429926323318836,
+    0.74
+   ],
+   "x0_CT": [
+    -0.2452274712376159,
+    -0.3429926323318836,
+    -0.74
+   ],
+   "cache_key": "057d2669bca9384dcf52e9f4ce63d1e3a0dec8399ac50d0a610b1baf61ed0d5d",
+   "circle_status": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 20102,
+   "family": "E2",
+   "size_id": "L1.00",
+   "L": 1.0,
+   "position_index": 1,
+   "observer_id": 2,
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "reduced_coords": [
+    0.07150075549277313,
+    0.24162711619922894
+   ],
+   "r_obs": [
+    0.07150075549277313,
+    0.24162711619922894,
+    0.74
+   ],
+   "x0_CT": [
+    -0.07150075549277313,
+    -0.24162711619922894,
+    -0.74
+   ],
+   "cache_key": "b4dcccbaf5c26505ac1b5978b3bf2f5d3cc57ecb629729201456f1dc16fc71ec",
+   "circle_status": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 20103,
+   "family": "E2",
+   "size_id": "L1.00",
+   "L": 1.0,
+   "position_index": 2,
+   "observer_id": 3,
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "reduced_coords": [
+    0.8951290935216393,
+    0.2514647338918028
+   ],
+   "r_obs": [
+    0.8951290935216393,
+    0.2514647338918028,
+    0.74
+   ],
+   "x0_CT": [
+    -0.8951290935216393,
+    -0.2514647338918028,
+    -0.74
+   ],
+   "cache_key": "71d4949dc81d94c076c9cca166152f728243095ea8fb708ad189695ad97eee94",
+   "circle_status": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 20201,
+   "family": "E2",
+   "size_id": "L1.20",
+   "L": 1.2,
+   "position_index": 0,
+   "observer_id": 1,
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "reduced_coords": [
+    0.2452274712376159,
+    0.3429926323318836
+   ],
+   "r_obs": [
+    0.2942729654851391,
+    0.4115911587982603,
+    0.888
+   ],
+   "x0_CT": [
+    -0.2942729654851391,
+    -0.4115911587982603,
+    -0.888
+   ],
+   "cache_key": "c0e42dfb20509f005daba5c0f4db3c2be7e9809fd979ca25f6bf3264811bd4d3",
+   "circle_status": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 20202,
+   "family": "E2",
+   "size_id": "L1.20",
+   "L": 1.2,
+   "position_index": 1,
+   "observer_id": 2,
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "reduced_coords": [
+    0.07150075549277313,
+    0.24162711619922894
+   ],
+   "r_obs": [
+    0.08580090659132775,
+    0.28995253943907473,
+    0.888
+   ],
+   "x0_CT": [
+    -0.08580090659132775,
+    -0.28995253943907473,
+    -0.888
+   ],
+   "cache_key": "68c1c0df0be149005de6bbf356e1e0d07e0044c1f27583b7f5213a4b01549b6f",
+   "circle_status": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 20203,
+   "family": "E2",
+   "size_id": "L1.20",
+   "L": 1.2,
+   "position_index": 2,
+   "observer_id": 3,
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "reduced_coords": [
+    0.8951290935216393,
+    0.2514647338918028
+   ],
+   "r_obs": [
+    1.074154912225967,
+    0.30175768067016334,
+    0.888
+   ],
+   "x0_CT": [
+    -1.074154912225967,
+    -0.30175768067016334,
+    -0.888
+   ],
+   "cache_key": "fb55f1812a57c92ff69d166feb18fc241fff6aa0ae99fe8dd3c8c861e6dc0ab0",
+   "circle_status": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 20301,
+   "family": "E2",
+   "size_id": "L1.50",
+   "L": 1.5,
+   "position_index": 0,
+   "observer_id": 1,
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "reduced_coords": [
+    0.2452274712376159,
+    0.3429926323318836
+   ],
+   "r_obs": [
+    0.36784120685642385,
+    0.5144889484978254,
+    1.1099999999999999
+   ],
+   "x0_CT": [
+    -0.36784120685642385,
+    -0.5144889484978254,
+    -1.1099999999999999
+   ],
+   "cache_key": "ab587bc29728697fae2b68c9fac8b916ef23934ea2b5c4267c157d2104aff769",
+   "circle_status": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 20302,
+   "family": "E2",
+   "size_id": "L1.50",
+   "L": 1.5,
+   "position_index": 1,
+   "observer_id": 2,
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "reduced_coords": [
+    0.07150075549277313,
+    0.24162711619922894
+   ],
+   "r_obs": [
+    0.10725113323915969,
+    0.3624406742988434,
+    1.1099999999999999
+   ],
+   "x0_CT": [
+    -0.10725113323915969,
+    -0.3624406742988434,
+    -1.1099999999999999
+   ],
+   "cache_key": "15a1a24bea26b793936f05e4ef92cf360141825a8636b6ede0e2f8f99942c6c0",
+   "circle_status": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 20303,
+   "family": "E2",
+   "size_id": "L1.50",
+   "L": 1.5,
+   "position_index": 2,
+   "observer_id": 3,
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "reduced_coords": [
+    0.8951290935216393,
+    0.2514647338918028
+   ],
+   "r_obs": [
+    1.342693640282459,
+    0.3771971008377042,
+    1.1099999999999999
+   ],
+   "x0_CT": [
+    -1.342693640282459,
+    -0.3771971008377042,
+    -1.1099999999999999
+   ],
+   "cache_key": "eefc41f18649820442e6f0dfbf7df6044d567d615877d68c654b56f257dc0a86",
+   "circle_status": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 30101,
+   "family": "E7",
+   "size_id": "L1.00",
+   "L": 1.0,
+   "position_index": 0,
+   "observer_id": 1,
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "reduced_coords": [
+    0.11278702805018147
+   ],
+   "r_obs": [
+    0.31,
+    0.11278702805018147,
+    0.42
+   ],
+   "x0_CT": [
+    -0.31,
+    -0.11278702805018147,
+    -0.42
+   ],
+   "cache_key": "98b41573957846237301e35d1761a8a9abb1be3e23a90e510ba6876e02c78e62",
+   "circle_status": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 30102,
+   "family": "E7",
+   "size_id": "L1.00",
+   "L": 1.0,
+   "position_index": 1,
+   "observer_id": 2,
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "reduced_coords": [
+    0.04504442885635738
+   ],
+   "r_obs": [
+    0.31,
+    0.04504442885635738,
+    0.42
+   ],
+   "x0_CT": [
+    -0.31,
+    -0.04504442885635738,
+    -0.42
+   ],
+   "cache_key": "318d3be2f84664741bc72fc77a05e5f49e703c5b56a013c1ecec0d747ce0cd7b",
+   "circle_status": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 30103,
+   "family": "E7",
+   "size_id": "L1.00",
+   "L": 1.0,
+   "position_index": 2,
+   "observer_id": 3,
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "reduced_coords": [
+    0.17608175443077442
+   ],
+   "r_obs": [
+    0.31,
+    0.17608175443077442,
+    0.42
+   ],
+   "x0_CT": [
+    -0.31,
+    -0.17608175443077442,
+    -0.42
+   ],
+   "cache_key": "5176bd5ecc1d30932330af4c5ef670a542b69fb0dc52b47f39a26f14e41bb306",
+   "circle_status": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 30201,
+   "family": "E7",
+   "size_id": "L1.20",
+   "L": 1.2,
+   "position_index": 0,
+   "observer_id": 1,
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "reduced_coords": [
+    0.11278702805018147
+   ],
+   "r_obs": [
+    0.372,
+    0.13534443366021776,
+    0.504
+   ],
+   "x0_CT": [
+    -0.372,
+    -0.13534443366021776,
+    -0.504
+   ],
+   "cache_key": "6558eebc29b34d309821724bef2564190546400608bc0f8657af0ddc048c58e3",
+   "circle_status": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 30202,
+   "family": "E7",
+   "size_id": "L1.20",
+   "L": 1.2,
+   "position_index": 1,
+   "observer_id": 2,
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "reduced_coords": [
+    0.04504442885635738
+   ],
+   "r_obs": [
+    0.372,
+    0.05405331462762885,
+    0.504
+   ],
+   "x0_CT": [
+    -0.372,
+    -0.05405331462762885,
+    -0.504
+   ],
+   "cache_key": "5278ed93f13f85c2a8bd7264a11c1308c38782e7d6640a5a2dcca232a0305422",
+   "circle_status": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 30203,
+   "family": "E7",
+   "size_id": "L1.20",
+   "L": 1.2,
+   "position_index": 2,
+   "observer_id": 3,
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "reduced_coords": [
+    0.17608175443077442
+   ],
+   "r_obs": [
+    0.372,
+    0.2112981053169293,
+    0.504
+   ],
+   "x0_CT": [
+    -0.372,
+    -0.2112981053169293,
+    -0.504
+   ],
+   "cache_key": "bbd1d221ebec88ccae0dfe780bda59ae67f558971d2031d50d80e5dcd15138f5",
+   "circle_status": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 30301,
+   "family": "E7",
+   "size_id": "L1.50",
+   "L": 1.5,
+   "position_index": 0,
+   "observer_id": 1,
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "reduced_coords": [
+    0.11278702805018147
+   ],
+   "r_obs": [
+    0.46499999999999997,
+    0.1691805420752722,
+    0.63
+   ],
+   "x0_CT": [
+    -0.46499999999999997,
+    -0.1691805420752722,
+    -0.63
+   ],
+   "cache_key": "fc80aea9c2ff1f3a94187ff55ada165441a611a64a3b444e9866f7b6c71d4360",
+   "circle_status": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 30302,
+   "family": "E7",
+   "size_id": "L1.50",
+   "L": 1.5,
+   "position_index": 1,
+   "observer_id": 2,
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "reduced_coords": [
+    0.04504442885635738
+   ],
+   "r_obs": [
+    0.46499999999999997,
+    0.06756664328453607,
+    0.63
+   ],
+   "x0_CT": [
+    -0.46499999999999997,
+    -0.06756664328453607,
+    -0.63
+   ],
+   "cache_key": "16f2e7a81bcb92761ba1fdae96feea4e38ed3c8e617f84a86d14665a8b4efd66",
+   "circle_status": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 30303,
+   "family": "E7",
+   "size_id": "L1.50",
+   "L": 1.5,
+   "position_index": 2,
+   "observer_id": 3,
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "reduced_coords": [
+    0.17608175443077442
+   ],
+   "r_obs": [
+    0.46499999999999997,
+    0.2641226316461616,
+    0.63
+   ],
+   "x0_CT": [
+    -0.46499999999999997,
+    -0.2641226316461616,
+    -0.63
+   ],
+   "cache_key": "8b41124d4b3a3e53cccc36e9feb23908374e95ea7274c6b9bc6a2443bc5f91ad",
+   "circle_status": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 40101,
+   "family": "E8",
+   "size_id": "L1.00",
+   "L": 1.0,
+   "position_index": 0,
+   "observer_id": 1,
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "reduced_coords": [
+    0.21609142351830096,
+    0.1388778490467109
+   ],
+   "r_obs": [
+    0.21609142351830096,
+    0.1388778490467109,
+    0.42
+   ],
+   "x0_CT": [
+    -0.21609142351830096,
+    -0.1388778490467109,
+    -0.42
+   ],
+   "cache_key": "1be902b3d673a6b8c744652a856c7b9495179ee4bb428e52e812a459eeae0d4c",
+   "circle_status": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 40102,
+   "family": "E8",
+   "size_id": "L1.00",
+   "L": 1.0,
+   "position_index": 1,
+   "observer_id": 2,
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "reduced_coords": [
+    0.10991624390681737,
+    0.06676051199330066
+   ],
+   "r_obs": [
+    0.10991624390681737,
+    0.06676051199330066,
+    0.42
+   ],
+   "x0_CT": [
+    -0.10991624390681737,
+    -0.06676051199330066,
+    -0.42
+   ],
+   "cache_key": "f1317811a2deb764feaf486ead255e32e6170e50ac96fecef5977fcd225c724b",
+   "circle_status": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 40103,
+   "family": "E8",
+   "size_id": "L1.00",
+   "L": 1.0,
+   "position_index": 2,
+   "observer_id": 3,
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "reduced_coords": [
+    0.4225612190131215,
+    0.125548183938205
+   ],
+   "r_obs": [
+    0.4225612190131215,
+    0.125548183938205,
+    0.42
+   ],
+   "x0_CT": [
+    -0.4225612190131215,
+    -0.125548183938205,
+    -0.42
+   ],
+   "cache_key": "2f4e806a59d0f98200d30eb8ac7e1d6d40e8548f0ab2f8fdb88b73f1e64ea4d0",
+   "circle_status": {
+    "L": 1.0,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "zero_radius_boundary"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 40201,
+   "family": "E8",
+   "size_id": "L1.20",
+   "L": 1.2,
+   "position_index": 0,
+   "observer_id": 1,
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "reduced_coords": [
+    0.21609142351830096,
+    0.1388778490467109
+   ],
+   "r_obs": [
+    0.25930970822196114,
+    0.1666534188560531,
+    0.504
+   ],
+   "x0_CT": [
+    -0.25930970822196114,
+    -0.1666534188560531,
+    -0.504
+   ],
+   "cache_key": "17928b1b385b5bb95f6d69eda30e41f5c8d0770f445ad32ca86d1d8cae30232b",
+   "circle_status": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 40202,
+   "family": "E8",
+   "size_id": "L1.20",
+   "L": 1.2,
+   "position_index": 1,
+   "observer_id": 2,
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "reduced_coords": [
+    0.10991624390681737,
+    0.06676051199330066
+   ],
+   "r_obs": [
+    0.13189949268818082,
+    0.08011261439196078,
+    0.504
+   ],
+   "x0_CT": [
+    -0.13189949268818082,
+    -0.08011261439196078,
+    -0.504
+   ],
+   "cache_key": "d6befa32ee53af44efc2f4741eb94578d983ed6169b73d80c96b7145263cdd70",
+   "circle_status": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 40203,
+   "family": "E8",
+   "size_id": "L1.20",
+   "L": 1.2,
+   "position_index": 2,
+   "observer_id": 3,
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "reduced_coords": [
+    0.4225612190131215,
+    0.125548183938205
+   ],
+   "r_obs": [
+    0.5070734628157457,
+    0.150657820725846,
+    0.504
+   ],
+   "x0_CT": [
+    -0.5070734628157457,
+    -0.150657820725846,
+    -0.504
+   ],
+   "cache_key": "526301577659b7f48ec0aae4693882e9de710a74c063942e43cbf91a7f27c3ad",
+   "circle_status": {
+    "L": 1.2,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 40301,
+   "family": "E8",
+   "size_id": "L1.50",
+   "L": 1.5,
+   "position_index": 0,
+   "observer_id": 1,
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "reduced_coords": [
+    0.21609142351830096,
+    0.1388778490467109
+   ],
+   "r_obs": [
+    0.32413713527745147,
+    0.20831677357006637,
+    0.63
+   ],
+   "x0_CT": [
+    -0.32413713527745147,
+    -0.20831677357006637,
+    -0.63
+   ],
+   "cache_key": "be597a04f152c2a68c96e99f9718d0f143c283922e6154b6734ed506779e141f",
+   "circle_status": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 40302,
+   "family": "E8",
+   "size_id": "L1.50",
+   "L": 1.5,
+   "position_index": 1,
+   "observer_id": 2,
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "reduced_coords": [
+    0.10991624390681737,
+    0.06676051199330066
+   ],
+   "r_obs": [
+    0.16487436586022605,
+    0.10014076798995099,
+    0.63
+   ],
+   "x0_CT": [
+    -0.16487436586022605,
+    -0.10014076798995099,
+    -0.63
+   ],
+   "cache_key": "adc1725d7a254c094ba7b9ee6290b1aaadbf3140f874f83684d2349185f8f4d8",
+   "circle_status": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  },
+  {
+   "config_id": 40303,
+   "family": "E8",
+   "size_id": "L1.50",
+   "L": 1.5,
+   "position_index": 2,
+   "observer_id": 3,
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "reduced_coords": [
+    0.4225612190131215,
+    0.125548183938205
+   ],
+   "r_obs": [
+    0.6338418285196823,
+    0.1883222759073075,
+    0.63
+   ],
+   "x0_CT": [
+    -0.6338418285196823,
+    -0.1883222759073075,
+    -0.63
+   ],
+   "cache_key": "6b40c64d61d0f65253236ecd8316a3e35177e1e3f824ab4019215ddfbebcf02d",
+   "circle_status": {
+    "L": 1.5,
+    "observational_status": "no_nondegenerate_circles",
+    "geometric_status": "no_nondegenerate_circles"
+   },
+   "weight": 0.1111111111111111
+  }
+ ],
+ "n_configurations": 30,
+ "manifest_sha256": "75e85b6d8bca15e1cd7e2048bea7f6bb02a1d0d22dfa02422e802ecfea2d90a1"
+}

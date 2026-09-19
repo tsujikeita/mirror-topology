@@ -1,0 +1,283 @@
+{
+  "kind": "manual_original_document_correspondence",
+  "packet_version": "PhaseC v0.4",
+  "research_plan_version": "v0.3",
+  "original_sha256": "bac9dbfe7dfb70baa4a6ca5f1d3dc8f24c65641ebf01e3693171a4022c2abfb8",
+  "original_bytes": 14387,
+  "physical_line_count": 209,
+  "scope": "full supplied v0.3 text read and compared with current declared rules and v0.4/v0.5 amendments; not a complete historical implementation audit or v0.2 textual audit",
+  "items": [
+    {
+      "id": "V3-01",
+      "topic": "差分文書という原文の性質",
+      "v03_source": "冒頭 L1–3",
+      "current_source": "draft4.1 §0.5／採用追補§2",
+      "status": "照合範囲の限定",
+      "finding": "v0.3はv0.2からの変更点のみを記し、無変更節はv0.2が有効とする。本対照は同梱v0.3全文を読むが、v0.2以前の原文まで通読・再承認したという意味ではない。"
+    },
+    {
+      "id": "V3-02",
+      "topic": "HaarサンプラーのAPI・暫定環境",
+      "v03_source": "§1 L32–42",
+      "current_source": "draft4.1 §6.1、§12.1、凍結A9/A10参照",
+      "status": "趣旨維持・後続具体化",
+      "finding": "個数をseedと取り違えないAPIとHaar検査が原文の趣旨。原文のSciPy 1.17.1はPhase Aで固定する暫定指定であり、現在の1.16.3等の受入れ済み環境へ戻す要求はない。今回実サンプラー・全Haar試験を再実行したわけではない。"
+    },
+    {
+      "id": "V3-03",
+      "topic": "中央帯eventとDへの主判定移行",
+      "v03_source": "§2 L44–53",
+      "current_source": "v0.4 §1；draft4.1 §1.2、§1.7、付録B/C",
+      "status": "後続の明示的変更",
+      "finding": "旧E_selはT2中央帯。旧版の観測が中央帯外ならDへ重心を移す手順はv0.4で撤回され、A5以降の主eventは二変量左下のEvent B。旧記述を現行規則として復活させない。"
+    },
+    {
+      "id": "V3-04",
+      "topic": "校正と評価の独立",
+      "v03_source": "§2 L49–50",
+      "current_source": "draft4.1 §6.3用途表",
+      "status": "原則継承・用途更新",
+      "finding": "校正と評価を分離する原則は一致。中央帯分位を主eventへ使う用途自体は後続変更されているため、同じ統計量の無変更継承とは呼ばない。"
+    },
+    {
+      "id": "V3-05",
+      "topic": "四つの模型族",
+      "v03_source": "§3 L57",
+      "current_source": "draft4.1 §4.1、付録B family行",
+      "status": "直接一致",
+      "finding": "E1・E2・E7・E8が原文に明記されている。現在の「v0.3の登録どおり」は支持できる。E1を等方nullへ置き換えない。"
+    },
+    {
+      "id": "V3-06",
+      "topic": "familyの混合と比",
+      "v03_source": "§3 L59–60",
+      "current_source": "draft4.1 §0.5、§8.1",
+      "status": "原則継承・一般化",
+      "finding": "原文は重み付き確率／密度を混合してreferenceとの比を取る。現行はnativeの点依存referenceも混合する一般式で、各点Qの単純平均を一般式にはしない。完全に同じ分母の式が両系統へ無変更で継承されたとは記さない。"
+    },
+    {
+      "id": "V3-07",
+      "topic": "点診断と任意Q_mix",
+      "v03_source": "§3 L61–62",
+      "current_source": "draft4.1 §8.2；v0.5 定義2",
+      "status": "scope限定",
+      "finding": "Q_j等は点診断、正式主張はfamily単位という区別は継承。任意Q_mixは現在の必須coreではない。原文の任意併記を必須の正式判定へ格上げしない。"
+    },
+    {
+      "id": "V3-08",
+      "topic": "supportのD点条件",
+      "v03_source": "§3 L66",
+      "current_source": "draft4.1 §1.4 表1、付録B support行",
+      "status": "直接一致",
+      "finding": "L_Q>=3、logD点推定>0、estimator auditが原文にある。supportのD条件をCI下端へ変更していないという現在の出典説明を確認した。現行は必要量別にauditを具体化する。"
+    },
+    {
+      "id": "V3-09",
+      "topic": "strongとD下側CI",
+      "v03_source": "§3 L67–68",
+      "current_source": "draft4.1 §1.4；v0.5 定義4",
+      "status": "判定量の継承・条件の後続整理",
+      "finding": "L_Q>=10とD下側CI>1はv0.3に既に存在する。v0.5で初出とは言わない。旧strongはrobustness許容も正式条件だったが、v0.5以降はcoreから分離。native positiveのCI条件・監査も後続で具体化されている。"
+    },
+    {
+      "id": "V3-10",
+      "topic": "unsupportedのD条件",
+      "v03_source": "§3 L70",
+      "current_source": "v0.4 §8 L134；draft4.1 §1.4",
+      "status": "後続の明示的強化",
+      "finding": "v0.3はD点値<=1。v0.4ではD上側CI<=1へ、現行はU_logD<=0と必要auditへ変更。「v0.3とそのまま一致」と扱わない。"
+    },
+    {
+      "id": "V3-11",
+      "topic": "固定軸条件付きfitとinconclusive",
+      "v03_source": "§3 L69–73",
+      "current_source": "draft4.1 §1.4、§2.1、§11",
+      "status": "主判定との分離",
+      "finding": "監査・精度不成立をunsupportedとしない方向は継承。旧fixed-axis conditional-fitの分類を、現在のS1 family coreの追加labelとして自動採用しない。固定軸診断とhistorical targetのscopeは現行定義による。"
+    },
+    {
+      "id": "V3-12",
+      "topic": "離散size prior",
+      "v03_source": "§4 L77–83",
+      "current_source": "draft4.1 §0.5、§4.2–4.5；v0.5 定義2",
+      "status": "原則継承・conditional明文化",
+      "finding": "5サイズの離散設計、台形積分をしない点は一致。現行は円制約後の3サイズ、s_M=0.6の表示、E1 1/3・他族1/9を具体化。連続priorの積分とは呼ばない。"
+    },
+    {
+      "id": "V3-13",
+      "topic": "shapeパラメータ",
+      "v03_source": "§4 L79–82",
+      "current_source": "draft4.1 §4.2／A6/A7採用slice",
+      "status": "後続資産による変更",
+      "finding": "E7原文はLAy=L2x=Lを含むが、現行の採用sliceはLAy=L2x=0。現行本文はA6/A7凍結を出典にしている。旧E7パラメータを現gridへ再入力しない。"
+    },
+    {
+      "id": "V3-14",
+      "topic": "family priorとfamily内重み",
+      "v03_source": "§4 L83",
+      "current_source": "draft4.1 §4.5、§8.1、§9",
+      "status": "scope限定",
+      "finding": "原文は四族equal priorをfamily内重みと区別。現行の主判定とany-family較正は各familyの判定であり、四族の平均を主判定に置換しない。"
+    },
+    {
+      "id": "V3-15",
+      "topic": "p^(3)とE1一位置",
+      "v03_source": "§5 L87–93",
+      "current_source": "draft4.1 §0.5、§4.4",
+      "status": "直接対応・位置値は後続確定",
+      "finding": "3位置に各1/3の離散混合、連続周辺化と呼ばない、E1はhomogeneousで1点という骨格は原文にある。位置の具体値とliftはA6/A11凍結を使う。"
+    },
+    {
+      "id": "V3-16",
+      "topic": "全族共有uと現在のreduced座標",
+      "v03_source": "§5 L91–92",
+      "current_source": "draft4.1 §4.4、§10.4",
+      "status": "後続の明示的置換",
+      "finding": "旧全族共通u・基本領域への単純な成分積は、family固有のpilot_v2_reducedと凍結lift・x0_CT=-r_obsに置換。旧第1点やmockを現在の第1点と無条件に同一視しない。"
+    },
+    {
+      "id": "V3-17",
+      "topic": "位置拡張のtriggerと第一波結果",
+      "v03_source": "§5 L94–96",
+      "current_source": "v0.4 §4.2–4.3；draft4.1 §10.1–10.4",
+      "status": "後続の明示的変更",
+      "finding": "旧W2 10% scaleはfinite-sample q99へ、その後3-block最大・同prefix停止へ変更。「第一波判定は変更しない」はv0.4で撤回され、3位置結果をarchiveし12位置で最終判定する現記述と対応する。"
+    },
+    {
+      "id": "V3-18",
+      "topic": "registered all-axis surrogate",
+      "v03_source": "§6 L98–104",
+      "current_source": "draft4.1 §2.1、§5",
+      "status": "名称・限定継承",
+      "finding": "歴史的選択を再現したexact補正と、registered surrogateを区別し、無条件にconservativeと呼ばない。現行は歴史的targetに対するS1実験と較正scopeをさらに限定している。"
+    },
+    {
+      "id": "V3-19",
+      "topic": "非可向模型のcircle幾何",
+      "v03_source": "§7 L106–113",
+      "current_source": "draft4.1 §3、§4.3；B-3-2A受入れ",
+      "status": "方向継承・実装済み部分は既往証拠",
+      "finding": "E7/E8に可向模型の探索範囲を無条件転用しないという原則は保持。今回の対照は過去の幾何108行を再探索した証拠ではない。"
+    },
+    {
+      "id": "V3-20",
+      "topic": "circle-undeterminedのmass",
+      "v03_source": "§7 L114–116",
+      "current_source": "v0.4 §2；v0.5 定義2；draft4.1 §4.3",
+      "status": "後続の明示的撤回",
+      "finding": "v0.3の未確定族除外・再正規化は撤回。現行はmassを残しpartial coverageとし、点を消して支持を有利にしない。"
+    },
+    {
+      "id": "V3-21",
+      "topic": "event精度条件",
+      "v03_source": "§8 L120–122",
+      "current_source": "v0.4 §6；v0.5 強化；draft4.1 §7.3",
+      "status": "後続の明示的変更",
+      "finding": "旧hits>=100からevent-positive cluster>=50、Q相対半幅<=0.20、5-seed log幅CV<0.2へ変更。raw hit数とcluster数を同一の条件として扱わない。"
+    },
+    {
+      "id": "V3-22",
+      "topic": "一回4倍拡張とimportance sampling",
+      "v03_source": "§8 L121–122",
+      "current_source": "v0.4 §3；draft4.1 §6.5",
+      "status": "後続の明示的変更",
+      "finding": "総Nを4倍へ一回拡張する構成を保持し、importance samplingはv0.4で撤回。最大N未達はprecision-unresolvedであり、支持閾値を越すまで乱数を変えて継続しない。"
+    },
+    {
+      "id": "V3-23",
+      "topic": "pseudo数・較正対象",
+      "v03_source": "§8 L123–125",
+      "current_source": "v0.5 定義4；draft4.1 §9",
+      "status": "後続の明示的固定",
+      "finding": ">=2000またはprecision stoppingから固定2000へ。旧max-Rの記法をそのまま使わず、現在のsupport/strong any-familyとunknownを保守的に含む較正を採用する。"
+    },
+    {
+      "id": "V3-24",
+      "topic": "乱数keyとCRN群",
+      "v03_source": "§9 L129–130",
+      "current_source": "draft4.1 §6.3–6.4",
+      "status": "後続の明示的変更",
+      "finding": "旧keyにfamily/parameter/observerを入れる表現から、evaluation IDと共有CRN groupを分離する現在の設計へ。元の独立/共有関係を考えず行番号でjoinしない。"
+    },
+    {
+      "id": "V3-25",
+      "topic": "orientation cluster・bootstrap",
+      "v03_source": "§9 L131–136",
+      "current_source": "draft4.1 §6.2、§6.5、§7.1",
+      "status": "単位継承・反復数とstratum具体化",
+      "finding": "1R:100z・N0=1e6とorientation-cluster復元抽出の骨格は継承。Bは1000から2000へ、長さの異なるprefixはstratifiedに処理する。"
+    },
+    {
+      "id": "V3-26",
+      "topic": "旧補助検算・batch CI",
+      "v03_source": "§9 L136–137",
+      "current_source": "現packet／draft4.1 §6–7、§14",
+      "status": "個別の実施完了は判定していない",
+      "finding": "原文にはCRNなし1点の検算、10batch×1e5、batch間分散CIの併記がある。今回のpacketだけからこれら個別の実行証拠・全履歴を特定したとはしない。negativeの独立bootstrap、W2-CRN比較、5-seed CIを自動的に同じ検査とみなさない。本対照は現coreの直接出典と後続規則の対応を扱い、旧補助診断全件の実装完了を宣言しない。"
+    },
+    {
+      "id": "V3-27",
+      "topic": "231次元特徴・計算予算・dtype",
+      "v03_source": "§10 L139–148",
+      "current_source": "draft4.1 §5.2、§6.6、§12.5／A8-A10",
+      "status": "算術構想継承・環境別実測へ置換",
+      "finding": "特徴231の考え方は継承。軸数・chunk・f64 primary/f32 sensitivity・時間は凍結された後続測定に従う。v0.3の0.7分や70分を現在環境での実測値として転記しない。"
+    },
+    {
+      "id": "V3-28",
+      "topic": "Haar・二次モーメント診断",
+      "v03_source": "§11 L152–160",
+      "current_source": "draft4.1 §6.1、§11、§12.2／A9",
+      "status": "診断系譜の対応・再実行ではない",
+      "finding": "回転・モーメント検査の系譜はある。原文の各数値閾値・sample数の全実行を今回再証明したものではなく、既受入れのA9系統と現在の明示gateを区別して参照する。"
+    },
+    {
+      "id": "V3-29",
+      "topic": "Imhof/Daviesと現在のGP",
+      "v03_source": "§11 L158",
+      "current_source": "draft4.1 §11／A9採用経路",
+      "status": "異なる補助経路として区別",
+      "finding": "原文はImhofとDavies、現行本文はImhof–Gil–Pelaez。現在のGP経路の受入れを、Davies検算の実施証拠へ読み替えない。今回の原文照合で新しい積分計算や両方法の同値性を証明していない。"
+    },
+    {
+      "id": "V3-30",
+      "topic": "matchedとCT-nativeの名称",
+      "v03_source": "§12 L162–176",
+      "current_source": "draft4.1 §4.6；v0.4 §8",
+      "status": "名称継承・分類を精密化",
+      "finding": "CT-native-unscaledはPR3宇宙論での物理再計算ではなく、matchedが主解析という区別は一致。現在の系統方向はCIのpositive/neutral/oppositeであり、旧表のsupportという語を機械的に同一視しない。"
+    },
+    {
+      "id": "V3-31",
+      "topic": "成分分離mapのrobustness",
+      "v03_source": "§13 L178–182",
+      "current_source": "v0.5 定義4；draft4.1 §1.8、§9.1",
+      "status": "記述性を維持・coreから分離",
+      "finding": "3/4のsign一致という旧診断と、同一skyゆえ独立binomial evidenceにしない限定を確認。v0.3 strongの正式robustness条件は後続でcoreから外される。noiseは自動的にこのmap比較に含まれたのではなく今回の明示採用。"
+    },
+    {
+      "id": "V3-32",
+      "topic": "noiseの原定義・対象",
+      "v03_source": "§14 L184–189",
+      "current_source": "採用追補§2.1、manifest noise.source_basis",
+      "status": "直接対応・scope/工程を明示採用",
+      "finding": "E7 L=1.0第1観測点へ低ellノイズ共分散を加算しQ_j変化を報告。候補half-mission差分/NPIPE simsの入手確認は未実施として残る。現行ID/座標との対応を事前specで固定し、1点結果を全familyへ一般化しない。"
+    },
+    {
+      "id": "V3-33",
+      "topic": "noiseの判定基準",
+      "v03_source": "§14 L188–189",
+      "current_source": "v0.5 L91；採用追補§2.1",
+      "status": "後続強化を維持",
+      "finding": "旧MC CI内のみでnoise-insensitiveという判定はv0.5で更新。abs delta logQ<0.1、category不変、marginの20%未満のANDを保持し、MC CIは併記。category/margin等の詳細と例外規則は結果前のspec受入れgateへ残す。"
+    },
+    {
+      "id": "V3-34",
+      "topic": "Phase Aタスク・未決事項・参照先",
+      "v03_source": "§15–16 L191–209、§13 L182",
+      "current_source": "採用追補§7–9、現manifest pre_use_gates",
+      "status": "実装・実測の未了を区別",
+      "finding": "工程は後続の受入れreceiptと使用前gateへ対応付ける。noise方針の採用はnoise仕様/実装/実測の完了ではない。v0.2 §9を参照するPR4・単一周波数の詳細も、今回v0.2原文を読まずに補完しない。"
+    }
+  ]
+}

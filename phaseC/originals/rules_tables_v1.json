@@ -1,0 +1,249 @@
+{
+ "schema": "rules_tables_v1.1",
+ "rules_document": {
+  "name": "Step1_rules_v1.0_draft4.1.md",
+  "sha256": "5f02c970eb39f9b3e7f7b17b48eb2d3daa16434517cf4442bac339f5ab719615",
+  "semantic_parent": {
+   "name": "Step1_rules_v1.0_draft4.md",
+   "sha256": "72305bbfef22842a345ac02f88264b0aada7e97b05457d5b2648edb5bbce40e1"
+  }
+ },
+ "table1_decision_predicates": {
+  "support_core": {
+   "and": [
+    "audit_Q_matched",
+    "audit_Dpoint_matched",
+    "L_Q_matched >= 3",
+    "logD_point_matched > 0"
+   ],
+   "required_ci": [
+    "Q_matched"
+   ]
+  },
+  "strong_core": {
+   "and": [
+    "support_core",
+    "audit_DCI_matched",
+    "L_Q_matched >= 10",
+    "L_logD_matched > 0",
+    "audit_Q_native",
+    "L_Q_native > 1"
+   ],
+   "required_ci": [
+    "Q_matched",
+    "Q_native",
+    "logD_matched"
+   ]
+  },
+  "unsupported_core": {
+   "and": [
+    "audit_Q_matched",
+    "audit_Dpoint_matched",
+    "audit_DCI_matched",
+    "U_Q_matched < 1",
+    "U_logD_matched <= 0"
+   ],
+   "required_ci": [
+    "Q_matched",
+    "logD_matched"
+   ]
+  },
+  "inconclusive": "none of the above or a required audit fails (audit failure is symmetric: neither support nor unsupported)",
+  "display_priority": [
+   "strong",
+   "support",
+   "unsupported",
+   "inconclusive"
+  ],
+  "logD_ci_required_when": [
+   "L_Q_matched >= 10",
+   "U_Q_matched < 1"
+  ],
+  "not_computed_marker": "not_computed_by_registered_short_circuit",
+  "direction_native": {
+   "positive": "L_Q > 1",
+   "neutral": "interval contains 1",
+   "opposite": "U_Q < 1"
+  },
+  "thresholds": {
+   "Q_support": 3.0,
+   "Q_strong": 10.0,
+   "logD_point": 0.0,
+   "logD_lower": 0.0,
+   "native_lower": 1.0
+  }
+ },
+ "table1b_replicate_states": {
+  "finite_positive": "den>0 and num>0",
+  "zero": "den>0 and num==0 -> valid boundary Q=0 (logQ=-inf), never dropped",
+  "inf": "den==0 and num>0 -> valid extended value Q=+inf, never dropped",
+  "undefined": "den==0 and num==0 -> unknown slot (counted)",
+  "technical_invalid": "NaN / negative / shape / P>1 -> technical_fail for the whole CI (even 1 replicate; no imputation)",
+  "quantile_methods": {
+   "finite": "linear on logQ",
+   "boundary": "inverted_cdf (order statistic on extended reals)",
+   "undefined_completed": "lower on -inf-completed, higher on +inf-completed"
+  },
+  "P_domain": "log upper bound capped at 0",
+  "alpha": 0.05,
+  "B": 2000,
+  "seeds": 5,
+  "formal_interval_seed": 0,
+  "rel_halfwidth": "(exp(U)-exp(L))/(2Q)",
+  "width_cv": "std(ddof=0)/mean of (U-L) in logQ space over 5 seeds"
+ },
+ "table2_crn_dependence": {
+  "rng_key": [
+   "MASTER_SEED",
+   "wave_id",
+   "purpose_id",
+   "crn_group_id",
+   "batch_id",
+   "stream_id"
+  ],
+  "evaluation_id_in_rng_key": false,
+  "cluster_uid": [
+   "wave_id",
+   "purpose_id",
+   "crn_group_id",
+   "batch_id",
+   "rotation_index"
+  ],
+  "crn_group_id_globally_unique": true,
+  "groups": {
+   "evaluation": "all configurations of a family, both systems, model/reference",
+   "fitting": "corresponding model/reference of a family, both systems",
+   "w2_independent": "each position independent (exception to family sharing)",
+   "w2_crn": "three positions share",
+   "calibration": "isotropic only",
+   "pseudo": "m=1, independent",
+   "negative_control": "independent of the compared reference"
+  },
+  "sqrt": {
+   "factor": "principal symmetric",
+   "official_acceptance": {
+    "clip": 0,
+    "lambda_min_raw": "> 0"
+   },
+   "diagnostic_threshold": "1e-12 * lambda_max"
+  }
+ },
+ "table3_eligibility": {
+  "coverage": {
+   "labels": [
+    "allowed",
+    "excluded",
+    "undetermined"
+   ],
+   "undetermined_family": "support status not evaluable; mass retained",
+   "first_wave_surviving": 30,
+   "s_M": 0.6
+  },
+  "precision": {
+   "positive_clusters_min": 50,
+   "rel_halfwidth_max": 0.2,
+   "width_cv_max": 0.2,
+   "family_level": "same conditions on the mixed Q; any precision-unresolved point -> family precision-unresolved (no deletion/renormalisation)"
+  },
+  "calibration": {
+   "usable_support": "WilsonUpper(c+u, n) <= 0.05",
+   "usable_strong": "WilsonUpper(c+u, n) <= 0.01",
+   "strong_label_requires_both": true,
+   "decided_after_aggregation": true,
+   "usable_support_value": 0.05,
+   "usable_strong_value": 0.01
+  },
+  "position": {
+   "provisional_until_12_positions": true,
+   "E1_exempt": true
+  }
+ },
+ "table4_expansion": {
+  "N0": 1000000,
+  "m": 100,
+  "N_max": 4000000,
+  "expand_condition": "precision gate not met only",
+  "once": true,
+  "prefix_bootstrap": "stratified: shared prefix stratum + extension stratum, stratum weights e.g. 1/4,3/4, per-evaluation denominators preserved (Phase B reference required)",
+  "zero_hits": "expand first; remaining zero -> precision-unresolved; W2 trigger via zero hits recorded as expansion_due_to_zero_hits (ratio not set to inf)"
+ },
+ "table5_calibration_aggregation": {
+  "n_pseudo": 2000,
+  "per_pseudo": {
+   "any_true": [
+    1,
+    1
+   ],
+   "all_false": [
+    0,
+    0
+   ],
+   "no_true_some_unknown": [
+    0,
+    1
+   ]
+  },
+  "technical_invalid": "technical audit FAIL (no value)",
+  "usable_rule": "WilsonUpper(c+u, n) <= threshold",
+  "sequential_stopping": false
+ },
+ "table6_position_trigger": {
+  "precedence": [
+   "technical_fail",
+   "valid_true",
+   "both_false",
+   "unresolved"
+  ],
+  "triggers": {
+   "w2": "W2_max > q99 (B_final chosen on float64 only)",
+   "ratio": "max_k P_k / min_k P_k > 2 after precision gate"
+  },
+  "twelve_position_completion_resolves": "old position status only"
+ },
+ "w2_stop": {
+  "B_levels": [
+   200,
+   400,
+   600,
+   800,
+   1000
+  ],
+  "first_comparison": [
+   200,
+   400
+  ],
+  "rel_tol": 0.05,
+  "both_n_sub": true,
+  "n_sub": [
+   2000,
+   5000
+  ],
+  "quantile_method": "higher",
+  "seed_spread_max": 0.25,
+  "missing_bound_is_zero": false,
+  "seed_ids": [
+   0,
+   1,
+   2
+  ]
+ },
+ "observers12": {
+  "nested": true,
+  "grid_resolution": 0.0001,
+  "min_sep": {
+   "E7": 0.015,
+   "E2": 0.05,
+   "E8": 0.04
+  },
+  "tie_break": "lexicographic",
+  "weights": "1/12 each",
+  "fail_fast": true,
+  "E1_exempt": true,
+  "tie_tol": 1e-12,
+  "lattice_endpoints": "box endpoints must lie on the grid (assert), lower/higher rounding is not applied"
+ },
+ "binding": {
+  "modules_read_this_file": true,
+  "python_golden_constants_verified_at_import": true
+ }
+}
