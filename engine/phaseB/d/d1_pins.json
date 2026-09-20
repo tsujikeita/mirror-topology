@@ -1,0 +1,89 @@
+{
+ "schema": "d1_pins_v1",
+ "engine_version": "0.57.0",
+ "profile": "production_official",
+ "cmbtopology": {
+  "url": "https://github.com/CompactCollaboration/CMBtopology",
+  "commit": "0cc65e34f03df85e92f738686bff0a476132f337"
+ },
+ "run_config": {
+  "l_max": 4,
+  "do_polarization": false,
+  "normalize": false,
+  "l_range": [
+   [
+    2,
+    4
+   ]
+  ],
+  "lp_range": [
+   [
+    2,
+    4
+   ]
+  ]
+ },
+ "a11_freeze": {
+  "notebook": {
+   "path": "results/step1_phaseA/A11_freeze/MirrorTopology_Step1_A11_x0bridge_v1.4.1.ipynb",
+   "sha256": "791a5abb74beb2370e036519283ca64ab34a886cc4267147c104c1cd604191a1"
+  },
+  "env_lock": {
+   "path": "results/step1_phaseA/A11_freeze/a11_env_lock.json",
+   "sha256": "c3f528bddccd29c75abbe8739fd37ec0681d3d4185d3da7724f3df7d56ef2eec"
+  },
+  "rules": {
+   "path": "results/step1_phaseA/A11_freeze/A11_rules_v1.0.md",
+   "sha256": "5c6d9cd33e9ee2ac1573f0c2c492b5900d7b04edcd1c4eb9cc144081dc56d631"
+  },
+  "generator_cell4_sha256": "ab1fc4dc62f9cd01b4c6025969d0bd321aeacf64655eb4e3ea7d724c5321fcfa",
+  "generator_cell_index": 4
+ },
+ "a11_cross_check": {
+  "manifest": "results/step1_phaseA/A11_freeze/official/cov_cache/cov_E7_061a13f7103fc11cf.npy.manifest.json",
+  "npy": "results/step1_phaseA/A11_freeze/official/cov_cache/cov_E7_061a13f7103fc11cf.npy",
+  "manifest_sha256": "16fd056a1a3d4dc42c1599713b043a39bfaaeb8f651b7dc1bb8641293e6236d8",
+  "npy_sha256": "53313025e51efde6126986b77ab266407681d5ffe1d06c5ebbb0964725a2b9d3",
+  "array_sha256": "93c9edb49a3af014da0e26375015f4369cdb65266145a75da4190f3341c7fdad",
+  "rel_tolerance": 1e-10,
+  "note": "frozen A11 official E7 tilted entry (also pinned in b3/b3_1_pins.json::mock_cov); trusted identity verified BEFORE regeneration"
+ },
+ "first_wave": {
+  "manifest_sha256": "75e85b6d8bca15e1cd7e2048bea7f6bb02a1d0d22dfa02422e802ecfea2d90a1",
+  "registry_sha256": "ba48214585c50348a9f43ef82ba33c3b7fcb982ebc89d0ba38985969c48ec851",
+  "n_configurations": 30,
+  "phaseC_commit": "50825cc781f78c22e48b27299edf477359023433",
+  "phaseC_inventory_sha256": "e08a6391357376037eb5c3230e602c1f491bf62543a1136d057d3dd84edbc56d",
+  "phaseC_handoff_commit": "1db30cd1678d40340cd445204ec97a08590c24d5"
+ },
+ "intake_gates": [
+  "geometry binding (topology/params/x0/file SHA)",
+  "run profile == registered",
+  "commit / requirements / env fingerprint == this run",
+  "array SHA recomputed",
+  "load_cov_full (reality, real basis, symmetry) + PSD",
+  "principal sqrt matched/native: clip=0, lambda_min>0, sym<1e-12, recon<1e-10"
+ ],
+ "expected_runtime_hours": "3-4 (A11: ~400 s per covariance at l_max=4)",
+ "environment": {
+  "python": "3.13.15",
+  "numpy": "2.1.3",
+  "scipy": "1.16.3",
+  "healpy": "1.20.0",
+  "pot": "0.9.7.post1",
+  "camb": "2.0.4",
+  "numpy_openblas_threads": 2,
+  "other_pools_max": 2,
+  "note": "rules \u00a712.1 hard gate (checked live in the generating process); A11-style fingerprint/lock diff recorded as metadata only"
+ },
+ "external_sources": {
+  "t1_engine": {
+   "path": "t1_engine.py",
+   "sha256": "87bf8424073af021264b12fe312ab5255b71008bdd5fe874d164d48daf034dc8"
+  },
+  "t2b2_bridge": {
+   "path": "t2b2_bridge.py",
+   "sha256": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872"
+  }
+ }
+}

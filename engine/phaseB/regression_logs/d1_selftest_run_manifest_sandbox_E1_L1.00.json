@@ -1,0 +1,238 @@
+{
+ "stage": "complete",
+ "failures": [],
+ "timings": {},
+ "pins_sha256": "d39eccc2ff12121da3bccd7c7cf48d87192ce02964b741d7acb8ecfdb03882f9",
+ "engine_version": "0.57.0",
+ "phaseC_members": {
+  "inventory_sha_ok": true,
+  "n_listed": 29,
+  "n_present": 29,
+  "all_match": true
+ },
+ "external_sources": {
+  "t1_engine": true,
+  "t2b2_bridge": true
+ },
+ "a11_generator_cell4_sha256": "ab1fc4dc62f9cd01b4c6025969d0bd321aeacf64655eb4e3ea7d724c5321fcfa",
+ "env": {
+  "python": "3.12.3",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "healpy": "1.20.0",
+  "camb": "2.0.4",
+  "pot": "0.9.7.post1",
+  "blas_threads": [
+   {
+    "api": "blas",
+    "n": 1,
+    "owner": "numpy",
+    "lib": "openblas",
+    "filepath": "/usr/local/lib/python3.12/dist-packages/numpy.libs/libscipy_openblas64_-32a4b2a6.so",
+    "version": "0.3.31.188.0"
+   },
+   {
+    "api": "blas",
+    "n": 1,
+    "owner": "other",
+    "lib": "openblas",
+    "filepath": "/usr/local/lib/python3.12/dist-packages/scipy.libs/libscipy_openblas-6cdc3b4a.so",
+    "version": "0.3.30"
+   }
+  ]
+ },
+ "env_gate": {
+  "versions_ok": false,
+  "pools_ok": false,
+  "expected": {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "pot": "0.9.7.post1",
+   "camb": "2.0.4",
+   "numpy_openblas_threads": 2,
+   "other_pools_max": 2,
+   "note": "rules §12.1 hard gate (checked live in the generating process); A11-style fingerprint/lock diff recorded as metadata only"
+  },
+  "threadpoolctl": true
+ },
+ "ct_git_probes": [
+  {
+   "args": [
+    "rev-parse",
+    "HEAD"
+   ],
+   "returncode": 0,
+   "stdout": "0cc65e34f03df85e92f738686bff0a476132f337",
+   "stderr": ""
+  },
+  {
+   "args": [
+    "remote",
+    "get-url",
+    "origin"
+   ],
+   "returncode": 0,
+   "stdout": "https://github.com/CompactCollaboration/CMBtopology",
+   "stderr": ""
+  },
+  {
+   "args": [
+    "status",
+    "--porcelain",
+    "--untracked-files=all"
+   ],
+   "returncode": 0,
+   "stdout": "",
+   "stderr": ""
+  }
+ ],
+ "env_lock": {
+  "schema": "d1_env_lock_v1",
+  "python": "3.12.3",
+  "versions": {
+   "numpy": "2.4.4",
+   "scipy": "1.17.1",
+   "matplotlib": "3.10.8",
+   "healpy": "1.20.0",
+   "camb": "2.0.4",
+   "tqdm": "4.70.1",
+   "numba": "0.67.0",
+   "quaternionic": "1.0.18",
+   "spherical": "1.1.4",
+   "pandas": "3.0.2"
+  },
+  "requirements_sha256": "c8c985d01620f7b0d13cc6ab84b7f40f1024d9c3764c2bc6c3d566949e40b7b2",
+  "platform": {
+   "machine": "x86_64",
+   "platform": "Linux-6.18.44-fc-v37-x86_64-with-glibc2.39"
+  },
+  "blas_lapack": "{'blas': 'scipy-openblas', 'lapack': 'scipy-openblas'}",
+  "cmbtopology_commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+  "ct_src_sha256": {
+   "E1.py": "27e9a0e8ddc8c0da298d9feddea737edcb703fd16fafec801d065ed0b225e23b",
+   "E2.py": "ea13ff16e8a9072c8d6fa2c8a3e64f1b56ef7f6fbe1db2250fd5475b1a703776",
+   "E7.py": "34cb0b19b32cca8ef5db4d96f5df9d977517d8eadef9bb6d95c90e687753d84d",
+   "E8.py": "3979deca5f06734882cd767c055f89d7dc10d6e89393b5537b9ad963dff76f5d",
+   "run_topology.py": "2431b905fbe82ac6f2badab1263a4e2c6a238d1a25e2e3062b9ce83dc655d45f"
+  },
+  "env_fingerprint": "122bd122c7c767d002b04c042dae2a8d2061650524fa66fbf836cedc50c20b72",
+  "identical_to_a11_lock": false,
+  "a11_lock_diff": {
+   "python": [
+    "3.13.15",
+    "3.12.3"
+   ],
+   "versions": [
+    {
+     "numpy": "2.1.3",
+     "scipy": "1.16.3",
+     "matplotlib": "3.10.0",
+     "healpy": "1.20.0",
+     "camb": "2.0.4",
+     "tqdm": "4.67.3",
+     "numba": "0.61.2",
+     "quaternionic": "1.0.17",
+     "spherical": "1.1.4",
+     "pandas": "2.2.3"
+    },
+    {
+     "numpy": "2.4.4",
+     "scipy": "1.17.1",
+     "matplotlib": "3.10.8",
+     "healpy": "1.20.0",
+     "camb": "2.0.4",
+     "tqdm": "4.70.1",
+     "numba": "0.67.0",
+     "quaternionic": "1.0.18",
+     "spherical": "1.1.4",
+     "pandas": "3.0.2"
+    }
+   ],
+   "platform": [
+    {
+     "machine": "x86_64",
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.35"
+    },
+    {
+     "machine": "x86_64",
+     "platform": "Linux-6.18.44-fc-v37-x86_64-with-glibc2.39"
+    }
+   ]
+  }
+ },
+ "a11_cross_check": {
+  "skipped": "selftest"
+ },
+ "a11_cell4_sha256": "ab1fc4dc62f9cd01b4c6025969d0bd321aeacf64655eb4e3ea7d724c5321fcfa",
+ "n_generated": 1,
+ "n_intake_pass": 1,
+ "gates": {
+  "G_pins_loaded": true,
+  "G_engine_inventory": true,
+  "G_script_sha": true,
+  "G_phaseC_members": true,
+  "G_external_loader_sha": true,
+  "G_a11_freeze_sha": true,
+  "G_a11_generator_cell_sha": true,
+  "G_env_lock": false,
+  "G_ct_commit": true,
+  "G_ct_origin": true,
+  "G_ct_clean": true,
+  "G_ct_dependencies_present": true,
+  "G_registry_source_bound": true,
+  "G_grid_manifest_bound": true,
+  "G_a11_cross_check_target": true,
+  "G_a11_cross_check": null,
+  "G_all_configurations_generated": true,
+  "G_all_intakes_pass": true,
+  "G_evidence_saved": true
+ },
+ "required_inventory": [
+  "G_pins_loaded",
+  "G_engine_inventory",
+  "G_script_sha",
+  "G_phaseC_members",
+  "G_external_loader_sha",
+  "G_a11_freeze_sha",
+  "G_a11_generator_cell_sha",
+  "G_env_lock",
+  "G_ct_commit",
+  "G_ct_origin",
+  "G_ct_clean",
+  "G_ct_dependencies_present",
+  "G_registry_source_bound",
+  "G_grid_manifest_bound",
+  "G_a11_cross_check_target",
+  "G_a11_cross_check",
+  "G_all_configurations_generated",
+  "G_all_intakes_pass",
+  "G_evidence_saved"
+ ],
+ "required_all_true": false,
+ "D1_PASS": false,
+ "seconds": 268.7111141681671,
+ "output_inventory": {
+  "d1_covgen_stdout.log": {
+   "sha256": "1aa6b1dcb88c3eb7007dacacfa35d3fc8bcc50a43b4bd98726741531aba2de8c",
+   "bytes": 658
+  },
+  "d1_cov_registry.json": {
+   "sha256": "1ec5ba82eb6b9cc6a7f2c013ba81448517e0117a5e7e57d3c1e199ae47d1e5d4",
+   "bytes": 3369
+  },
+  "d1_env_lock.json": {
+   "sha256": "cdc38a6e1bbd5b062630e48495acf960a9b506c17010b604465a001c54716cf0",
+   "bytes": 1975
+  },
+  "cov_cache/cov_E1_ffa3c90b1fc46c0e7.npy": {
+   "sha256": "8f9ad7ca5bd48af497d3c3ea0dfe08ad39c752a0778102dc2f99f7f6ae667f66",
+   "bytes": 7184
+  },
+  "cov_cache/cov_E1_ffa3c90b1fc46c0e7.npy.manifest.json": {
+   "sha256": "19136a11f6aa313c94f57d0ade1af960e918e58973f756b3d4d38d0d46d66f2d",
+   "bytes": 961
+  }
+ }
+}

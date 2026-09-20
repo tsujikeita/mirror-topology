@@ -28,7 +28,7 @@ def read_packet(path:Path)->dict[str,bytes]:
 
 def check(data:dict[str,bytes])->dict:
     inv=json.loads(data['B2_completion_inventory.json']);failures=[];sha_results=[]
-    for category,prefix in [('modules','step1_engine/'),('tests_sha256','tests/'),('fixtures_sha256','tests/'),('assets_sha256',''),('documents_sha256',''),('b3_sha256',''),('registered_assets_sha256','')]:
+    for category,prefix in [('modules','step1_engine/'),('tests_sha256','tests/'),('fixtures_sha256','tests/'),('assets_sha256',''),('documents_sha256',''),('b3_sha256',''),('registered_assets_sha256',''),('d_sha256','')]:
         for name,expected in inv[category].items():
             key=prefix+name;actual=hashlib.sha256(data[key]).hexdigest() if key in data else None
             sha_results.append({'category':category,'path':key,'expected':expected,'actual':actual,'ok':actual==expected})
