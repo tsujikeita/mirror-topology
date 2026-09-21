@@ -95,26 +95,46 @@ def assemble_parent(reg: GridRegistry, man: ConfigurationManifest, family: str, 
 
 
 def run_first_wave(reg: GridRegistry, man: ConfigurationManifest, cases: Dict[str, Tuple[FamilyInput, Optional[FamilyInput], Dict[int, int]]], w2_context: W2Context, expected_context_sha256: str,
-                   t_target, pseudo_T1, pseudo_T2, archive: Archive, mode: str = "smoke", twelve_anchors: Optional[dict] = None, require_all_families: bool = False, twelve_inputs: Optional[dict] = None, twelve_assets=None, expected_twelve_assets_sha256: Optional[str] = None) -> RunManifest:
+                   t_target, pseudo_T1, pseudo_T2, archive: Archive, mode: str = "smoke", twelve_anchors: Optional[dict] = None, require_all_families: bool = False, twelve_inputs: Optional[dict] = None, twelve_assets=None, expected_twelve_assets_sha256: Optional[str] = None, twelve_assets_receipt: Optional[str] = None, _stage: str = "full", _commitment: Optional[str] = None, _sealed: Optional[dict] = None) -> RunManifest:
+    """_stage: 'full' (target then calibration; development/smoke order), 'calibrate_sealed' (D4-1: NO target; t_target must be None; calibration only, sealed with the target
+    commitment), 'sealed_target' (D4-1: target only, after verifying the sealed calibration record and the commitment; calibration copied from the sealed record). Use the
+    calibration_first module for the D4-1 entries; do not call the private stages directly."""
     if mode not in ("official", "smoke"): raise InputContractError("mode must be 'official' or 'smoke'")
+    if _stage not in ("full", "calibrate_sealed", "sealed_target"): raise InputContractError("stage")
+    if _stage == "calibrate_sealed" and (t_target is not None or _commitment is None): raise InputContractError("calibrate_sealed takes no target; a target commitment is required")
+    if _stage == "sealed_target" and _sealed is None: raise InputContractError("sealed_target requires the sealed calibration record")
+    if mode == "official":
+        if _stage == "full": raise InputContractError("mode='official' is only reachable through the calibration-first driver (calibrate_sealed -> evaluate_sealed_target); the target-first stage is development/smoke only")
+        require_all_families = True                                                                          # formal scope: all registered families
+        if _stage == "calibrate_sealed" and len(np.asarray(pseudo_T1)) != RULES.n_pseudo: raise InputContractError(f"official calibration requires the fixed n_pseudo={RULES.n_pseudo} thresholds (got {len(np.asarray(pseudo_T1))})")
     reg.validate(); man.validate()
     if man.registry_sha256 != reg.registry_sha256: raise InputContractError("manifest not bound to the registry")
     if not isinstance(cases, dict) or not cases: raise InputContractError("no cases")
-    t1, t2 = _check_threshold2(t_target); ps = _pseudo_snapshot(pseudo_T1, pseudo_T2)
+    t1, t2 = (None, None) if _stage == "calibrate_sealed" else _check_threshold2(t_target); ps = _pseudo_snapshot(pseudo_T1, pseudo_T2)
     if twelve_anchors is not None:
         for fam, A in twelve_anchors.items():
             if fam not in reg.anchors or not np.array_equal(np.asarray(A, float), np.asarray(reg.anchors[fam], float)): raise InputContractError(f"twelve_anchors for {fam} differ from the registry anchors (the registry is the only anchor source)")
     snap = w2_context.snapshot(); snap.validate(expected_context_sha256)
-    if twelve_assets is None and expected_twelve_assets_sha256 is not None:
-        raise InputContractError("expected twelve asset SHA supplied without an asset")
-    pinned_twelve_sha = None
+    if twelve_assets is None and (expected_twelve_assets_sha256 is not None or twelve_assets_receipt is not None):
+        raise InputContractError("expected twelve asset SHA / registered receipt supplied without an asset (an explicit reuse request is never silently ignored)")   # RD4T1-D
+    pinned_twelve_sha = None; twelve_intake_mode = None
     if twelve_assets is not None:
-        from .twelve_assets import verify_twelve_assets
-        verify_twelve_assets(twelve_assets, reg, expected_twelve_assets_sha256)
-        pinned_twelve_sha = twelve_assets.sha256
+        from .twelve_assets import verify_twelve_assets, REGISTERED_RECEIPTS, TwelveManifestAsset
+        if twelve_assets_receipt is not None:
+            # D4-3: REGISTERED asset reuse — the asset object must already have passed the receipt-bound intake (intake_registered_twelve_assets) in this process,
+            # its SHA must equal the registered receipt's asset SHA and the caller's expected SHA; no regeneration is performed here (regeneration proof = receipt).
+            if twelve_assets_receipt not in REGISTERED_RECEIPTS: raise InputContractError(f"unknown registered twelve-asset receipt {twelve_assets_receipt!r}")
+            rc = REGISTERED_RECEIPTS[twelve_assets_receipt]
+            if not isinstance(twelve_assets, TwelveManifestAsset) or twelve_assets.sha256 != rc["asset_sha256"] or (expected_twelve_assets_sha256 is not None and expected_twelve_assets_sha256 != rc["asset_sha256"]): raise InputContractError("twelve asset does not match the registered receipt / expected SHA")
+            if getattr(twelve_assets, "_intake_sha256", None) != twelve_assets.sha256 or not str((twelve_assets.verification or {}).get("intake", "")).startswith("receipt-bound"): raise InputContractError("registered twelve asset must pass intake_registered_twelve_assets in this process before reuse (no regenerate=False bypass)")
+            twelve_assets.validate(reg, rc["asset_sha256"])                                               # whole-asset validate against the source-bound registry (no regeneration)
+            pinned_twelve_sha = twelve_assets.sha256; twelve_intake_mode = dict(mode="registered_receipt", receipt=twelve_assets_receipt, regeneration="none (receipt)")
+        else:
+            verify_twelve_assets(twelve_assets, reg, expected_twelve_assets_sha256)                       # legacy path: regeneration intake (kept for unregistered assets)
+            pinned_twelve_sha = twelve_assets.sha256; twelve_intake_mode = dict(mode="regeneration", receipt=None, regeneration="all manifests")
         twelve_assets = twelve_assets.snapshot(reg, pinned_twelve_sha)
-    rm = RunManifest(__version__, mode, reg.registry_sha256, man.manifest_sha256, expected_context_sha256, snap.asset_sha256, binding=dict(binding_manifest(), twelve_assets_sha256=(None if twelve_assets is None else twelve_assets.sha256)))
-    rm.thresholds = dict(target=[t1, t2], pseudo=dict(n=ps["n"], shape=ps["shape"], sha256_T1=ps["sha256_T1"], sha256_T2=ps["sha256_T2"], T1=ps["T1"].tolist(), T2=ps["T2"].tolist(), dtype="float64", note="full-precision pseudo threshold columns (float64 -> JSON repr round-trips exactly)"))
+    rm = RunManifest(__version__, mode, reg.registry_sha256, man.manifest_sha256, expected_context_sha256, snap.asset_sha256, binding=dict(binding_manifest(), twelve_assets_sha256=(None if twelve_assets is None else twelve_assets.sha256), twelve_assets_intake=twelve_intake_mode))
+    rm.thresholds = dict(target=(None if _stage == "calibrate_sealed" else [t1, t2]), target_commitment=_commitment, pseudo=dict(n=ps["n"], shape=ps["shape"], sha256_T1=ps["sha256_T1"], sha256_T2=ps["sha256_T2"], T1=ps["T1"].tolist(), T2=ps["T2"].tolist(), dtype="float64", note="full-precision pseudo threshold columns (float64 -> JSON repr round-trips exactly)"))
     # (1) case identity, per-family views, parents
     by_fam: Dict[str, Dict[str, tuple]] = {}
     for key, (fm, fn, pmap) in cases.items():
@@ -148,7 +168,17 @@ def run_first_wave(reg: GridRegistry, man: ConfigurationManifest, cases: Dict[st
     def _archive_diag(key, diag):
         fam, size = canonical_case_key(key, {}); dd = ser.from_jsonable(diag.as_dict()); dd["size_id"] = size; dd["family"] = fam
         return archive.put("family_result", dd, dict(family=fam, size_id=size, kind="case_core_diagnostic")).as_dict()
-    full = {fam: evaluate_family_full(reg, man, fam, parents[fam], views_by_fam[fam], (snap if fam != "E1" else None), expected_context_sha256, t1, t2, (twelve_inputs or {}).get(fam), with_diagnostics=True, diagnostic_ref_fn=_archive_diag, twelve_assets=twelve_assets) for fam in by_fam}
+    deps = dict(mode=mode, engine_version=__version__, registry_sha256=reg.registry_sha256, manifest_sha256=man.manifest_sha256, w2_context_sha256=expected_context_sha256, w2_asset_sha256=snap.asset_sha256, twelve_assets_sha256=pinned_twelve_sha, twelve_assets_intake=twelve_intake_mode, families=sorted(by_fam), sizes={f: sorted(v) for f, v in by_fam.items()}, require_all_families=bool(require_all_families), pseudo=dict(n=ps["n"], sha256_T1=ps["sha256_T1"], sha256_T2=ps["sha256_T2"]), source_binding=binding_manifest(), fingerprints_at_gate=fp0)
+    rm.binding["sealed_dependencies"] = deps
+    if _stage == "sealed_target":                                                                              # D4-1 (RD4T2-B): EVERY dependency of the sealed calibration must be identical at the target stage
+        sd = _sealed.get("binding", {}).get("sealed_dependencies")
+        if not isinstance(sd, dict): raise InputContractError("sealed calibration lacks the dependency snapshot")
+        diff = {k: (sd.get(k), deps.get(k)) for k in deps if k not in ("fingerprints_at_gate",) and sd.get(k) != deps.get(k)}
+        if diff: raise InputContractError(f"sealed calibration dependencies differ from the target run: {sorted(diff)}")
+        if _sealed.get("fingerprints", {}).get("at_end") != fp0: raise InputContractError("sealed calibration was made on different inputs (fingerprint mismatch)")
+        if _sealed.get("thresholds", {}).get("pseudo", {}).get("sha256_T1") != ps["sha256_T1"] or _sealed["thresholds"]["pseudo"].get("sha256_T2") != ps["sha256_T2"]: raise InputContractError("sealed calibration used different pseudo thresholds")
+        if _sealed.get("mode") != mode: raise InputContractError("sealed calibration mode differs from the target mode")
+    full = {} if _stage == "calibrate_sealed" else {fam: evaluate_family_full(reg, man, fam, parents[fam], views_by_fam[fam], (snap if fam != "E1" else None), expected_context_sha256, t1, t2, (twelve_inputs or {}).get(fam), with_diagnostics=True, diagnostic_ref_fn=_archive_diag, twelve_assets=twelve_assets) for fam in by_fam}
     fam_res = {fam: fr.parent for fam, fr in full.items()}; case_status = {}
     for fam, fr in full.items():
         for key, rec in fr.case_records.items():
@@ -176,15 +206,57 @@ def run_first_wave(reg: GridRegistry, man: ConfigurationManifest, cases: Dict[st
     #     diagnostics: core_only (3-position family core, no eligibility) and any_case_core_diagnostic (OR of per-size standalone cores)
     ctx_ref = dict(asset_sha256=snap.asset_sha256, context_sha256=expected_context_sha256, scope=snap.scope, cases=sorted(k for k in cases if canonical_case_key(k, {})[0] != "E1"))
     elig, core_only, any_case, statuses = [], [], [], []
-    for x, y in zip(ps["T1"], ps["T2"]):
+    if _stage == "sealed_target":
+        rm.calibration = ser.from_jsonable(_sealed["calibration"]); rm.per_pseudo_family_status = ser.from_jsonable(_sealed["per_pseudo_family_status"]); rm.branch_completeness = ser.from_jsonable(_sealed["branch_completeness"])
+        # Reusing calibration includes every manifest referenced ONLY by pseudo
+        # branches. Target and pseudo need not choose the same position branch.
+        for key, ref in _sealed.get("archive_refs", {}).items():
+            if key.startswith("twelve_manifest:"):
+                if key in rm.archive_refs and rm.archive_refs[key] != ref:
+                    raise InputContractError("target and sealed calibration disagree on " + key)
+                rm.archive_refs[key] = ser.from_jsonable(ser.to_jsonable(ref))
+        rm.binding["sealed_calibration"] = dict(sha256=_sealed["_sha256"], commitment=_sealed["thresholds"]["target_commitment"], copied="calibration / per-pseudo status / branch completeness copied verbatim from the sealed record; not recomputed")
+    for x, y in (zip(ps["T1"], ps["T2"]) if _stage != "sealed_target" else ()):
         fx = {fam: evaluate_family_full(reg, man, fam, parents[fam], views_by_fam[fam], (snap if fam != "E1" else None), expected_context_sha256, float(x), float(y), (twelve_inputs or {}).get(fam), with_diagnostics=True, twelve_assets=twelve_assets) for fam in by_fam}
         elig.append({lvl: any_family_truth([f.eligible_truths[lvl] for f in fx.values()]) for lvl in ("support", "strong")})
         core_only.append({lvl: any_family_truth([f.parent.truths[lvl] for f in fx.values()]) for lvl in ("support", "strong")})
         any_case.append({lvl: any_family_truth([d.truths[lvl] for f in fx.values() for d in f.diagnostics.values()] or [UNKNOWN]) for lvl in ("support", "strong")})
-        statuses.append({fam: f.summary() for fam, f in fx.items()})
+        st_i = {}
+        for fam, f in fx.items():
+            sm = f.summary()
+            # D4-4 v4 (R2V3-B): pseudo-side EVIDENCE archived content-addressed: the 3-position parent FamilyResult and the position plan (transitions / status / expand / manifests)
+            pd = ser.from_jsonable(ser.to_jsonable(f.parent.as_dict())); pd["family"] = fam; pd["evidence"]["threshold"] = [float(x), float(y)]; pd["evidence"]["pseudo_index"] = len(statuses); pd["evidence"]["scope"] = "family-mixture core over all surviving sizes (3-position stage; pseudo)"
+            pref = archive.put("family_result", pd, dict(family=fam, stage="3-position family mixture (pseudo)", pseudo_index=len(statuses))); sm["parent_ref"] = pref.as_dict()
+            plan_rec = dict(kind="pseudo_family_plan", family=fam, pseudo_index=len(statuses), threshold=[float(x), float(y)], transitions=f.transitions, plan_status=f.plan_status, expand_family=(False if f.core_technical else f.expand_family), required_manifests=f.required_manifests, core_technical=f.core_technical, surviving_sizes=sorted(f.transitions))
+            # Archive the EXACT records already hashed by the transitions. Do
+            # not add a pseudo index to their bytes; the plan binds the index.
+            plan_rec["case_refs"] = {}
+            for size in sorted(f.transitions):
+                pos = f.case_records[f"{fam}/{size}"]
+                pos_ref = archive_three_position_result(archive, pos, fam, size)
+                if pos_ref.sha256 != f.transitions[size]["three_position_result_sha256"]:
+                    raise InputContractError("pseudo position source differs from its transition")
+                plan_rec["case_refs"][size] = pos_ref.as_dict()
+            plref = archive.put("transition", plan_rec, dict(kind="pseudo_family_plan", family=fam, pseudo_index=len(statuses))); sm["plan_ref"] = plref.as_dict()
+            if plan_rec["expand_family"] and plan_rec["plan_status"] != "technical_fail":                                # the registered 12-position manifests referenced by the pseudo plan are archived too (content-addressed; idempotent)
+                for size, sha_ in (f.required_manifests or {}).items():
+                    if sha_ is None or f"twelve_manifest:{fam}/{size}" in rm.archive_refs: continue
+                    tm = twelve_assets.get(fam, size, sha_) if twelve_assets is not None else generate_twelve(fam, size, np.asarray(reg.anchors[fam], float)); body = ser.from_jsonable(tm.as_dict()); mref = archive.put("twelve_manifest", body, dict(family=fam, size_id=size, payload_sha256=tm.sha256)); rm.archive_refs[f"twelve_manifest:{fam}/{size}"] = mref.as_dict()
+            if f.twelve is not None:                                                                        # D4-2: pseudo-side FULL 12-position Result archived (content-addressed), not only the summary
+                g = ser.from_jsonable(ser.to_jsonable(f.twelve["full_result"])); g["family"] = fam; g["evidence"]["threshold"] = [float(x), float(y)]; g["evidence"]["pseudo_index"] = len(statuses)
+                ref = archive.put("family_result", g, dict(family=fam, stage="12-position family mixture (pseudo)", pseudo_index=len(statuses))); sm["twelve_full_result_ref"] = ref.as_dict(); sm["twelve_full_result_sha256"] = ref.sha256
+            st_i[fam] = sm
+        statuses.append(st_i)
     if fps_all() != fp0: raise InputContractError("inputs changed during the pseudo calibration")
     if ps["sha256_T1"] != hashlib.sha256(np.ascontiguousarray(ps["T1"]).tobytes()).hexdigest() or ps["sha256_T2"] != hashlib.sha256(np.ascontiguousarray(ps["T2"]).tobytes()).hexdigest(): raise InputContractError("pseudo thresholds changed during the calibration")
     rm.fingerprints["at_end"] = fps_all()
+    if _stage == "sealed_target":
+        tmiss = [dict(where="target", family=fam, reason="triggered 12-position stage not evaluated") for fam, f in rm.families.items() if f["expand_family"] and f.get("twelve_stage") != "evaluated in this run"]
+        rm.branch_completeness = dict(rm.branch_completeness, target_missing_branches=tmiss, full_procedure_including_target=bool(not tmiss and not rm.branch_completeness.get("missing_branches") and rm.branch_completeness.get("all_registered_families")), note_target="target-side accounting added at the sealed target stage; the sealed calibration itself is unchanged")
+        rm.binding["order_record"] = dict(sealed_calibration_ref=_sealed.get("_ref"), sealed_calibration_sha256=_sealed["_sha256"], commitment=_sealed["thresholds"]["target_commitment"], target=[t1, t2], scope="dependency order inside this verified driver; not a proof about computations outside it")
+        rm.archive_refs["registry"] = archive.put("registry", reg.as_dict(), dict(registry_sha256=reg.registry_sha256)).as_dict(); rm.binding["run_manifest_sha256"] = rm.payload_sha()
+        ref = archive.put("transition", ser.from_jsonable(rm.as_dict()), dict(kind="sealed_target_run", payload_sha256=rm.binding["run_manifest_sha256"], sealed_calibration_sha256=_sealed["_sha256"])); rm.binding["run_manifest_file_sha256"] = ref.sha256; rm.binding["run_manifest_ref"] = ref.as_dict()
+        return rm
     # full-procedure accounting: target AND every pseudo — every triggered 12-position stage must have been supplied and evaluated; missing branches are listed
     missing = []
     for fam, f in rm.families.items():
@@ -204,5 +276,6 @@ def run_first_wave(reg: GridRegistry, man: ConfigurationManifest, cases: Dict[st
     rm.per_pseudo_family_status = statuses
     rm.archive_refs["registry"] = archive.put("registry", reg.as_dict(), dict(registry_sha256=reg.registry_sha256)).as_dict()
     rm.binding["run_manifest_sha256"] = rm.payload_sha()
-    ref = archive.put("transition", ser.from_jsonable(rm.as_dict()), dict(kind="run_manifest", payload_sha256=rm.binding["run_manifest_sha256"])); rm.binding["run_manifest_file_sha256"] = ref.sha256; rm.binding["run_manifest_ref"] = ref.as_dict()
+    kind = "sealed_calibration" if _stage == "calibrate_sealed" else "run_manifest"
+    ref = archive.put("transition", ser.from_jsonable(rm.as_dict()), dict(kind=kind, payload_sha256=rm.binding["run_manifest_sha256"])); rm.binding["run_manifest_file_sha256"] = ref.sha256; rm.binding["run_manifest_ref"] = ref.as_dict()
     return rm

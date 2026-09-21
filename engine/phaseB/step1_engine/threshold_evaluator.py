@@ -72,30 +72,43 @@ def evaluate_family_full(reg: GridRegistry, man: ConfigurationManifest, family: 
         for s in sizes:
             if s not in mans: mans[s] = (twelve_assets.get(family, s) if twelve_assets is not None else generate_twelve(family, s, np.asarray(reg.anchors[family], float)))
     plan = plan_family_expansion(family, sizes, trans, manifests=(mans if mans else None))
-    twelve = None; elig = None
-    if core_tech: elig, truths = "technical_fail (family core)", dict(support=TECH, strong=TECH, unsupported=TECH)
-    elif plan.status == "technical_fail": elig, truths = "technical_fail (position branch)", {k: TECH for k in ("support", "strong", "unsupported")}
-    elif plan.expand_family:
-        if twelve_inputs is None: elig, truths = "provisional: family expanded to 12 positions, 12-position inputs not supplied", {k: (TECH if v == TECH else UNKNOWN) for k, v in fr.truths.items()}
-        else:
-            from .twelve_eval import evaluate_twelve_family_mixture
-            g = evaluate_twelve_family_mixture(twelve_inputs["size_inputs"], mans, twelve_inputs["position_ids"], {s: reg.size_prior[family][s] for s in sizes}, t1, t2, staged=True, native_position_ids=twelve_inputs.get("native_position_ids"), expected_sizes=sizes)
-            # completion records derived from the 12-position PARENT (required quantities only): per-size coverage, technical status, point-precision of that size's 12 configurations;
-            # the standalone per-size diagnostics (own Q/KDE/CI) are kept separately and never enter the completion condition (same design as the 3-position case records)
-            per_cfg = g["per_config"]; pos_ids = twelve_inputs["position_ids"]; tech12 = g["decision"]["technical_status"] == "technical_fail"; crecs = {}
-            for s in sizes:
-                ids = list(pos_ids[s]); states = [per_cfg[e]["precision"]["state"] for e in ids]
-                prec = "technical_fail" if any(st == "technical_fail" for st in states) else ("pass" if all(st == "pass" for st in states) else "precision-unresolved")
-                if g["precision"]["state"] != "pass" and prec == "pass": prec = g["precision"]["state"]            # family-level gate (mixed Q) also applies
-                crecs[s] = dict(family=family, size_id=s, kind="twelve_completion_record", decision=dict(technical_status=g["decision"]["technical_status"], display_label=g["decision"]["display_label"]), truths=g["truths"], precision=dict(state=prec, per_configuration=dict(zip(ids, states))),
-                                  evidence=dict(stage="12-position", twelve_manifest_sha256=mans[s].sha256, coverage_ok=bool(twelve_inputs["size_inputs"][s][0].coverage_ok), parent="12-position-family", scope="completion record derived from the 12-position family parent's required quantities; per-size standalone diagnostics excluded"))
-            comp = family_completion(plan, crecs, {s: "not-expanded" for s in sizes}, mans)
-            twelve = dict(family_mixture=dict(truths=g["truths"], decision=g["decision"], precision=g["precision"], Q_point=g["Q_point"]), family_local_completion=comp["family_local_completion"], per_size=comp["per_size"], completion_records=crecs,
-                          per_size_diagnostic={s: dict(truths=d["truths"], technical_status=d["decision"]["technical_status"], precision=d["precision"]["state"], Q_point=d["Q_point"]) for s, d in g["per_size_diagnostic"].items()}, twelve_manifests={s: mans[s].sha256 for s in sizes},
-                          full_result=g)                                                                   # the complete evaluated 12-position family Result (36 configurations, CIs, evidence) is returned, never dropped
-            if tech12: elig, truths = "technical_fail (12-position family core)", {k: TECH for k in ("support", "strong", "unsupported")}
-            elif comp["family_local_completion"]: elig, truths = "eligible: 12-position family mixture (local completion passed)", dict(g["truths"])
-            else: elig, truths = "provisional: 12-position local completion not passed", {k: (TECH if v == TECH else UNKNOWN) for k, v in g["truths"].items()}
-    elif plan.status.startswith("provisional"): elig, truths = "provisional: position-unresolved", {k: (TECH if v == TECH else UNKNOWN) for k, v in fr.truths.items()}
-    else: elig, truths = "eligible: final at 3 positions" if family != "E1" else "eligible: E1 (observer-homogeneous)", dict(fr.truths)
+    twelve = None; tw_in = None
+    if plan.expand_family and not core_tech and plan.status != "technical_fail" and twelve_inputs is not None:
+        from .twelve_eval import evaluate_twelve_family_mixture
+        g = evaluate_twelve_family_mixture(twelve_inputs["size_inputs"], mans, twelve_inputs["position_ids"], {s: reg.size_prior[family][s] for s in sizes}, t1, t2, staged=True, native_position_ids=twelve_inputs.get("native_position_ids"), expected_sizes=sizes)
+        # completion records derived from the 12-position PARENT (required quantities only): per-size coverage, technical status, point-precision of that size's 12 configurations;
+        # the standalone per-size diagnostics (own Q/KDE/CI) are kept separately and never enter the completion condition (same design as the 3-position case records)
+        cf = completion_from_full12(family, sizes, g, mans, plan); comp = cf["completion"]; crecs = cf["completion_records"]
+        twelve = dict(family_mixture=dict(truths=g["truths"], decision=g["decision"], precision=g["precision"], Q_point=g["Q_point"]), family_local_completion=comp["family_local_completion"], per_size=comp["per_size"], completion_records=crecs,
+                      per_size_diagnostic={s: dict(truths=d["truths"], technical_status=d["decision"]["technical_status"], precision=d["precision"]["state"], Q_point=d["Q_point"]) for s, d in g["per_size_diagnostic"].items()}, twelve_manifests={s: mans[s].sha256 for s in sizes},
+                      full_result=g)                                                                   # the complete evaluated 12-position family Result (36 configurations, CIs, evidence) is returned, never dropped
+        tw_in = dict(tech12=cf["tech12"], completion=comp["family_local_completion"], truths=g["truths"])
+    elig, truths = derive_outcome(family, fr.truths, core_tech, plan.status, plan.expand_family, tw_in)
     return FamilyThresholdResult(family, fr, records, diags, {s: t.as_dict() for s, t in trans.items()}, plan.status, plan.expand_family, plan.required_manifests, twelve, truths, elig, core_tech)
+
+
+def completion_from_full12(family: str, sizes, g: dict, mans: dict, plan) -> dict:
+    """Completion records + family completion derived from a (verified) 12-position family Result dict g and the registered manifests (shared by evaluator and reader)."""
+    per_cfg = g["per_config"]; tech12 = g["decision"]["technical_status"] == "technical_fail"; crecs = {}
+    for s in sizes:
+        ids = list(g["per_size_diagnostic"][s]["per_config"]); states = [per_cfg[e]["precision"]["state"] for e in ids]
+        prec = "technical_fail" if any(st == "technical_fail" for st in states) else ("pass" if all(st == "pass" for st in states) else "precision-unresolved")
+        if g["precision"]["state"] != "pass" and prec == "pass": prec = g["precision"]["state"]            # family-level gate (mixed Q) also applies
+        crecs[s] = dict(family=family, size_id=s, kind="twelve_completion_record", decision=dict(technical_status=g["decision"]["technical_status"], display_label=g["decision"]["display_label"]), truths=g["truths"], precision=dict(state=prec, per_configuration=dict(zip(ids, states))),
+                        evidence=dict(stage="12-position", twelve_manifest_sha256=mans[s].sha256, coverage_ok=bool(g["per_size_diagnostic"][s].get("evidence", {}).get("coverage_ok", True)), parent="12-position-family", scope="completion record derived from the 12-position family parent's required quantities; per-size standalone diagnostics excluded"))
+    comp = family_completion(plan, crecs, {s: "not-expanded" for s in sizes}, mans)
+    return dict(tech12=tech12, completion=comp, completion_records=crecs)
+
+
+def derive_outcome(family: str, core_truths: dict, core_tech: bool, plan_status: str, expand_family: bool, twelve) -> tuple:
+    """Single source of the family eligibility / eligible truths from VERIFIED inputs: core (3-position family mixture) truths + technical state, the position plan, and the
+    12-position stage: twelve is None (not supplied / not evaluated) or dict(tech12=bool, completion=bool, truths=dict). Used by the evaluator and re-derived by the run reader."""
+    if core_tech: return "technical_fail (family core)", dict(support=TECH, strong=TECH, unsupported=TECH)
+    if plan_status == "technical_fail": return "technical_fail (position branch)", {k: TECH for k in ("support", "strong", "unsupported")}
+    if expand_family:
+        if twelve is None: return "provisional: family expanded to 12 positions, 12-position inputs not supplied", {k: (TECH if v == TECH else UNKNOWN) for k, v in core_truths.items()}
+        if twelve["tech12"]: return "technical_fail (12-position family core)", {k: TECH for k in ("support", "strong", "unsupported")}
+        if twelve["completion"]: return "eligible: 12-position family mixture (local completion passed)", dict(twelve["truths"])
+        return "provisional: 12-position local completion not passed", {k: (TECH if v == TECH else UNKNOWN) for k, v in twelve["truths"].items()}
+    if str(plan_status).startswith("provisional"): return "provisional: position-unresolved", {k: (TECH if v == TECH else UNKNOWN) for k, v in core_truths.items()}
+    return ("eligible: final at 3 positions" if family != "E1" else "eligible: E1 (observer-homogeneous)"), dict(core_truths)

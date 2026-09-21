@@ -183,3 +183,100 @@ def validate_grid_archive(res):
         validate_grid_identity(gn,res.get("family"),"native",nv.get("per_config",{}),ne.get("prior"))
         validate_grid_pair(gm,gn)
     return True
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# D4-5 (v2; audit RD4T1-A/B/C): production covariance intake entry (Phase D-2 supply). A registered D-1 covariance is accepted ONLY after re-verification at load time, anchored
+# to TRUSTED constants recorded from the accepted D-1 run (receipt file SHA and registry SHA below) — local JSON self-consistency alone never inherits the acceptance:
+#   (A) receipt/registry bytes == trusted constants (before any local SHA value is used); run/commit/run profile/CMBtopology commit == constants;
+#   (B) the frozen numerical loader: t1_engine (and its t2b2_bridge dependency) are verified by REAL path + file SHA before use; a different already-loaded module of the same
+#       name is rejected (no silent substitution); the source identity used is returned in the provenance;
+#   (C) the configuration is taken from the SOURCE-BOUND registry (production context: registry validate + scope + manifest re-derivation) by a strict integer config_id; the
+#       full canonical spec is used (never a caller-supplied spec object); registry entry (cache_key / x0_CT / family / size_id / observer_id) must match it;
+#   then: file + sidecar bytes == receipt == registry, sidecar manifest (topology/params/x0/run_config/commit/env), geometry binding (verify_cov_manifest), array SHA recomputed,
+#   loader meta, symmetry/reality/PSD, matched/native principal roots with the registered hard conditions. The registry's stored pass_ flags are NOT trusted.
+import json as _json, hashlib as _hashlib
+D1_REGISTERED_RECEIPT = dict(id="D1_aa089fa492bc", commit="aa089fa492bc094492d1a425c7a91bb7bfa4a150", run_id="20260920T081931Z", engine_version="0.57.0", cmbtopology_commit="0cc65e34f03df85e92f738686bff0a476132f337",
+                             run_config=dict(l_max=4, do_polarization=False, normalize=False, l_range=[[2, 4]], lp_range=[[2, 4]]), audit="ChatGPT_audit_Step1_PhaseD_D1_Colab_aa089fa492bc.md",
+                             receipt_file_sha256="34acbfd3adf89d0e1dd93c16491edec063414f72250bb0102f669d10a6a29d24",     # registered_assets/d1/d1_receipt.json (accepted D-1 packet)
+                             registry_sha256="3b32c91fa8f3e88270261a4e0350be92602130c07f3ee3e9233c9c80d34ed1a3",         # d1_cov_registry.json (accepted D-1 output; audit-verified)
+                             frozen_loaders=dict(t1_engine="87bf8424073af021264b12fe312ab5255b71008bdd5fe874d164d48daf034dc8", t2b2_bridge="45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872"))
+
+
+def _verified_frozen_loader(mt_root: str, expected: dict):
+    """Verify the files AND the actual loader/bridge objects before numerical use.
+    A root already later in sys.path is promoted during import; t1.br must be
+    the verified bridge object, including when t1_engine was already cached.
+    """
+    import os, sys, importlib
+    root = os.path.realpath(os.fspath(mt_root))
+    p1 = os.path.realpath(os.path.join(root, "t1_engine.py")); p2 = os.path.realpath(os.path.join(root, "t2b2_bridge.py"))
+    sha = lambda p: _hashlib.sha256(open(p, "rb").read()).hexdigest()
+    if not (os.path.exists(p1) and os.path.exists(p2)): raise InputContractError("frozen loader files missing at mt_root")
+    if sha(p1) != expected["t1_engine"] or sha(p2) != expected["t2b2_bridge"]: raise InputContractError("frozen loader / bridge bytes differ from the registered SHAs")
+    for name, path in (("t1_engine", p1), ("t2b2_bridge", p2)):
+        module = sys.modules.get(name)
+        if module is not None and os.path.realpath(getattr(module, "__file__", "") or "") != path:
+            raise InputContractError(f"a different {name} module is already loaded ({getattr(module, '__file__', None)}); refusing to substitute the frozen loader")
+    before_path = sys.path[:]
+    try:
+        # Always prioritise the checked root, even if it already occurs later.
+        sys.path.insert(0, root)
+        bridge = importlib.import_module("t2b2_bridge")
+        if os.path.realpath(getattr(bridge, "__file__", "") or "") != p2:
+            raise InputContractError("imported t2b2_bridge is not the frozen file at mt_root")
+        t1 = importlib.import_module("t1_engine")
+        if os.path.realpath(getattr(t1, "__file__", "") or "") != p1:
+            raise InputContractError("imported t1_engine is not the frozen file at mt_root")
+        # Checking only sys.modules would miss a cached t1 retaining an old br.
+        if getattr(t1, "br", None) is not bridge:
+            raise InputContractError("t1_engine retains a different bridge dependency; refusing numerical use")
+        s1, s2 = sha(p1), sha(p2)
+        if s1 != expected["t1_engine"] or s2 != expected["t2b2_bridge"]:
+            raise InputContractError("frozen loader / bridge changed during import")
+    finally:
+        sys.path[:] = before_path
+    return t1, dict(t1_engine_path=p1, t1_engine_sha256=s1, t2b2_bridge_path=p2, t2b2_bridge_sha256=s2)
+
+
+def intake_registered_covariance(config_id, reg, d1_dir: str, mt_root: str, receipt_id: str = "D1_aa089fa492bc") -> dict:
+    """config_id: strict integer (bool/float rejected); reg: SOURCE-BOUND GridRegistry (the configuration spec is derived here, never supplied by the caller);
+    d1_dir: registered_assets/d1; mt_root: the frozen mirror-topology checkout. Raises InputContractError on any mismatch; never returns partial results."""
+    import os
+    from .grid_manifest import verify_cov_manifest
+    cid = _integer(config_id, "config_id"); RC = D1_REGISTERED_RECEIPT
+    if receipt_id != RC["id"]: raise InputContractError(f"unknown registered covariance receipt {receipt_id!r}")
+    sha = lambda p: _hashlib.sha256(open(p, "rb").read()).hexdigest()
+    # (A) trusted anchors BEFORE any local SHA value is used
+    rpath = os.path.join(d1_dir, "d1_receipt.json"); gpath = os.path.join(d1_dir, "d1_cov_registry.json")
+    if not (os.path.exists(rpath) and os.path.exists(gpath)): raise InputContractError("D-1 receipt / registry missing")
+    if sha(rpath) != RC["receipt_file_sha256"]: raise InputContractError("D-1 receipt bytes differ from the trusted accepted receipt SHA")
+    if sha(gpath) != RC["registry_sha256"]: raise InputContractError("D-1 registry bytes differ from the trusted accepted registry SHA")
+    rc = _json.load(open(rpath)); reg1 = _json.load(open(gpath))
+    if rc.get("source_commit") != RC["commit"] or rc.get("run_id") != RC["run_id"] or rc["outputs"].get("cov_registry_sha256") != RC["registry_sha256"] or reg1.get("cmbtopology_commit") != RC["cmbtopology_commit"] or reg1.get("run_config") != RC["run_config"]: raise InputContractError("D-1 receipt / registry metadata differ from the registered constants")
+    # (C) configuration from the source-bound registry
+    man = _production_context(reg); by = man.by_id()
+    if cid not in by: raise InputContractError(f"config {cid} is not in the source-bound first-wave manifest")
+    spec = by[cid]; c = reg1["configurations"].get(str(cid))
+    if c is None: raise InputContractError(f"config {cid} not in the D-1 registry")
+    if c["cache_key"] != spec.cache_key or [float(v) for v in c["x0_CT"]] != [float(v) for v in spec.x0_CT] or c["family"] != spec.family or c["size_id"] != spec.size_id or _integer(c["observer_id"], "observer_id") != spec.observer_id or c["shape_params"] != spec.shape_params: raise InputContractError("registry entry does not match the source-bound configuration spec")
+    # files / sidecar bound to receipt + registry
+    p = os.path.join(d1_dir, c["cov_file"]); mf = p + ".manifest.json"
+    if not (os.path.exists(p) and os.path.exists(mf)): raise InputContractError("registered covariance file / sidecar missing")
+    fsha = sha(p)
+    if fsha != c["cov_file_sha256"] or rc["registered"]["files"].get(os.path.basename(p)) != fsha or rc["registered"]["files"].get(os.path.basename(mf)) != sha(mf): raise InputContractError("covariance file / sidecar bytes differ from the receipt or registry")
+    rec = _json.load(open(mf)); geo = verify_cov_manifest(spec, rec, p)
+    if not (geo["bound"] and geo["file_sha_verified"]): raise InputContractError(f"geometry binding failed: {geo}")
+    if rec["manifest"]["run_config"] != RC["run_config"] or rec["manifest"]["cmbtopology_commit"] != RC["cmbtopology_commit"] or rec["manifest"]["env_fingerprint"] != reg1["env_fingerprint"]: raise InputContractError("sidecar run profile / source / environment differ from the D-1 registry")
+    arr = np.load(p); asha = _hashlib.sha256(arr.tobytes()).hexdigest()
+    if asha != rec["cov_array_sha256"] or asha != c["cov_array_sha256"] or arr.shape != (21, 21): raise InputContractError("array SHA / shape differ from the sidecar")
+    # (B) frozen loader verified BEFORE use
+    t1, loader_id = _verified_frozen_loader(mt_root, RC["frozen_loaders"]); from .legacy_kernel import LegacyKernel
+    Mx, Cr, meta = t1.load_cov_full(p, 4)
+    if meta.get("cov_array_sha256") != asha: raise InputContractError("loader array SHA differs")
+    ev = np.linalg.eigvalsh((Cr + Cr.T) / 2)
+    if not (np.isfinite(Cr).all() and np.abs(Cr - Cr.T).max() < 1e-12 * max(1.0, np.abs(Cr).max()) and ev.min() > -1e-12 * ev.max()): raise InputContractError("real-basis covariance not symmetric / PSD")
+    k = LegacyKernel(mt_root); C_M, c_ct = k.matched(Cr); S_M, iM = k.psqrt(C_M); S_N, iN = k.psqrt(Cr)
+    for name, info in (("matched", iM), ("native", iN)):
+        if not (info["clip"] == 0 and info["lambda_min"] > 0 and info["sym"] < 1e-12 and info["recon"] < 1e-10): raise InputContractError(f"principal root hard gate failed ({name}): {info}")
+    return dict(config_id=cid, family=spec.family, size_id=spec.size_id, observer_id=spec.observer_id, cache_key=spec.cache_key, spec=spec, cov_file_sha256=fsha, cov_array_sha256=asha, receipt=receipt_id, trusted_anchors=dict(receipt_file_sha256=RC["receipt_file_sha256"], registry_sha256=RC["registry_sha256"]), loader=loader_id, C_real=Cr, C_matched=C_M, c_ct=c_ct, S_matched=S_M, S_native=S_N, roots_info=dict(matched=iM, native=iN), eig=dict(min=float(ev.min()), max=float(ev.max())), scope="re-verified at load (trusted receipt/registry anchors, source-bound spec, sidecar, geometry, array SHA, verified frozen loader, symmetry/PSD, principal roots)")

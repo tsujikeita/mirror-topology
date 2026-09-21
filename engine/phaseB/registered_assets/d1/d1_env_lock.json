@@ -1,0 +1,70 @@
+{
+ "schema": "d1_env_lock_v1",
+ "python": "3.13.15",
+ "versions": {
+  "numpy": "2.1.3",
+  "scipy": "1.16.3",
+  "matplotlib": "3.10.0",
+  "healpy": "1.20.0",
+  "camb": "2.0.4",
+  "tqdm": "4.67.3",
+  "numba": "0.61.2",
+  "quaternionic": "1.0.18",
+  "spherical": "1.1.4",
+  "pandas": "2.2.3"
+ },
+ "requirements_sha256": "c8c985d01620f7b0d13cc6ab84b7f40f1024d9c3764c2bc6c3d566949e40b7b2",
+ "platform": {
+  "machine": "x86_64",
+  "platform": "Linux-6.6.122+-x86_64-with-glibc2.39"
+ },
+ "blas_lapack": "{'blas': 'scipy-openblas', 'lapack': 'scipy-openblas'}",
+ "cmbtopology_commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+ "ct_src_sha256": {
+  "E1.py": "27e9a0e8ddc8c0da298d9feddea737edcb703fd16fafec801d065ed0b225e23b",
+  "E2.py": "ea13ff16e8a9072c8d6fa2c8a3e64f1b56ef7f6fbe1db2250fd5475b1a703776",
+  "E7.py": "34cb0b19b32cca8ef5db4d96f5df9d977517d8eadef9bb6d95c90e687753d84d",
+  "E8.py": "3979deca5f06734882cd767c055f89d7dc10d6e89393b5537b9ad963dff76f5d",
+  "run_topology.py": "2431b905fbe82ac6f2badab1263a4e2c6a238d1a25e2e3062b9ce83dc655d45f"
+ },
+ "env_fingerprint": "bcfae7ed2c800a18e7a5e6bac03916b70f54cd330bc7f16a5210b1605250df0b",
+ "identical_to_a11_lock": false,
+ "a11_lock_diff": {
+  "versions": [
+   {
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "matplotlib": "3.10.0",
+    "healpy": "1.20.0",
+    "camb": "2.0.4",
+    "tqdm": "4.67.3",
+    "numba": "0.61.2",
+    "quaternionic": "1.0.17",
+    "spherical": "1.1.4",
+    "pandas": "2.2.3"
+   },
+   {
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "matplotlib": "3.10.0",
+    "healpy": "1.20.0",
+    "camb": "2.0.4",
+    "tqdm": "4.67.3",
+    "numba": "0.61.2",
+    "quaternionic": "1.0.18",
+    "spherical": "1.1.4",
+    "pandas": "2.2.3"
+   }
+  ],
+  "platform": [
+   {
+    "machine": "x86_64",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35"
+   },
+   {
+    "machine": "x86_64",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39"
+   }
+  ]
+ }
+}

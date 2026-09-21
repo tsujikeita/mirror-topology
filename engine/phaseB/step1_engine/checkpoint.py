@@ -20,7 +20,7 @@ from . import __version__
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 MODULES = ("__init__.py", "errors.py", "types.py", "truth.py", "rules_config.py", "serialization.py", "ci.py", "precision.py", "decision.py", "family.py", "bootstrap_plan.py", "calibration.py",
-           "quantity.py", "density.py", "orchestrator.py", "positions.py", "expansion.py", "w2_stop.py", "position_state.py", "registry.py", "observers12.py", "observers12_stream.py", "w2_manifest.py", "stage12.py", "coordinator.py", "twelve_eval.py", "plan_io.py", "grid_registry.py", "grid_manifest.py", "production.py", "official_gate.py", "formal_runner.py", "legacy_kernel.py", "performance.py", "w2_shared.py", "w2_context.py", "integrated_runner.py", "threshold_evaluator.py", "twelve_assets.py", "controls.py", "w2_shared_build.py", "ckpt_persist.py", "archive.py", "checkpoint.py")
+           "quantity.py", "density.py", "orchestrator.py", "positions.py", "expansion.py", "w2_stop.py", "position_state.py", "registry.py", "observers12.py", "observers12_stream.py", "w2_manifest.py", "stage12.py", "coordinator.py", "twelve_eval.py", "plan_io.py", "grid_registry.py", "grid_manifest.py", "production.py", "official_gate.py", "formal_runner.py", "legacy_kernel.py", "performance.py", "w2_shared.py", "w2_context.py", "integrated_runner.py", "threshold_evaluator.py", "twelve_assets.py", "controls.py", "w2_shared_build.py", "ckpt_persist.py", "calibration_first.py", "run_reader.py", "archive.py", "checkpoint.py")
 
 
 def module_shas() -> dict:
@@ -375,16 +375,22 @@ def read_family_result(path: str, expected_sha256: str = None) -> dict:
     if b.get("modules") != cur["modules"]: raise InputContractError("checkpoint module SHAs differ from the current engine modules (full fixed inventory)")
     if b.get("registered_profile") != cur["registered_profile"]: raise InputContractError("checkpoint registered profile differs from the registered rules profile")
     res = payload["result"]
+    if b.get("execution_profile") != execution_profile_from_result(res): raise InputContractError("stored execution profile does not describe the stored result")
+    return payload | dict(verified=verify_family_result_dict(res, payload.get("extra")))
+
+
+def verify_family_result_dict(res: dict, extra=None) -> str:
+    """Semantic re-verification of a stored FamilyResult DICT from its own stored evidence (grid archive, 12-position identity/prior/inventory, stored gate, Q side(s) reproduced from
+    configuration probabilities + prior + replicate CIs, logD, decision). Shared by the checkpoint reader and the D4-4 run reader; no bank re-evaluation."""
     from .production import validate_grid_archive
     validate_grid_archive(res)
     from .twelve_eval import validate_twelve_archive
     validate_twelve_archive(res)
     for k in ("family", "Q_point", "Q_ci_seed0", "precision", "per_config", "logD", "decision", "truths", "evidence"):
         if k not in res: raise InputContractError(f"checkpoint result lacks '{k}'")
-    if b.get("execution_profile") != execution_profile_from_result(res): raise InputContractError("stored execution profile does not describe the stored result")
-    _verify_stored_gate(res, payload.get("extra"))
+    _verify_stored_gate(res, extra)
     if (res.get("evidence") or {}).get("failed_record") or (res["Q_ci_seed0"] or {}).get("math_state") == "technical_fail":
-        return payload | dict(verified=_verify_failed_record(res))
+        return _verify_failed_record(res)
     ev = res["evidence"]
     for k in ("matched", "cis_all_seeds", "quantities"):
         if k not in ev: raise InputContractError(f"evidence lacks '{k}' (not verifiable)")
@@ -403,4 +409,4 @@ def read_family_result(path: str, expected_sha256: str = None) -> dict:
             StopResult(**{k: w2["stop"][k] for k in ("B_final", "stop_reason", "trace", "null_prefix_id", "state", "observed_hash", "observed")}).validate()
     gate = ev.get("gate")
     ps = (res.get("position_status") or {}).get("state", "not-integrated")
-    return payload | dict(verified="verified (core, conditional on stored replicate values/densities; position scope: %s; gate: %s)" % (ps, (gate or {}).get("mode", "none")))
+    return "verified (core, conditional on stored replicate values/densities; position scope: %s; gate: %s)" % (ps, (gate or {}).get("mode", "none"))
