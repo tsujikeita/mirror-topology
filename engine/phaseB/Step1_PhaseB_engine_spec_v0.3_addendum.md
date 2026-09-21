@@ -59,8 +59,8 @@
 | Phase C（rules v1.0 freeze） | `50825cc7…`・tag `step1-rules-v1.0-freeze` | — | `ChatGPT_audit_Step1_PhaseC_freeze_packet_v0_4.md`；outer receipt | 採用対象として承認・保存済み |
 | Phase D-1（第 1 波 30 配置の production 共分散） | `aa089fa492bc094492d1a425c7a91bb7bfa4a150`（0.57.0，inventory `9c7e37af…`） | `20260920T081931Z`（3.30 h） | `ChatGPT_audit_Step1_PhaseD_D1_Colab_aa089fa492bc.md` | **PASS**（30 共分散＋intake；A11 entry 再生成 rel 1.3e-20；`registered_assets/d1/` に登録・receipt `d1_receipt.json`） |
 | Phase D-4 tranche 1（D4-2/3/5） | 0.60.0 | — | `ChatGPT_audit_Step1_PhaseD_D4_tranche1_v3.md` | **実装・接続として受入れ**（RD4T1-A/B/C/D 閉鎖） |
-| Phase D-4 tranche 2（D4-4 参照鎖・D4-1 較正先行 driver） | 0.66.0（v6） | — | `ChatGPT_audit_Step1_PhaseD_D4_tranche2_v6.md` | **実装・接続として受入れ PASS**（R2V3-A・R2V4-A/B/C・R2V5-A 閉鎖）；完了記録 `Step1_PhaseD_D4_completion.md` |
-| Phase D-2（第 1 波 bank 生成器） | 設計 v0.1 | — | `Step1_PhaseD_D2_design_v0.1.md` | 設計（監査待ち） |
+| Phase D-4 tranche 2（D4-4 参照鎖・D4-1 較正先行 driver） | 0.66.0（v6） | — | `ChatGPT_audit_Step1_PhaseD_D4_tranche2_v6.md` | **実装・接続として受入れ PASS**（R2V3-A・R2V4-A/B/C・R2V5-A 閉鎖）；完了記録 `Step1_PhaseD_D4_completion.md` v2（監査 §2 の文言訂正を採用） |
+| Phase D-2（第 1 波 bank 生成器） | 設計 v0.2 | — | `ChatGPT_audit_Step1_PhaseD_D4completion_D2design_v0.1.md`／`Step1_PhaseD_D2_design_v0.2.md` | 大枠は監査で支持；D2-A〜F（reference・RNG/ID・stratum・W₂ identity／dtype・再開／供給・費用）を v0.2 で明文化（設計確定待ち） |
 
 ### D.1 更新履歴（tranche 35／36 以降）
 - tranche 36：第 35 tranche 監査の inventory・provenance・性能・実行範囲の訂正と B-3 移管表を反映（本版）。監査の受入試験 12 件を同梱。
