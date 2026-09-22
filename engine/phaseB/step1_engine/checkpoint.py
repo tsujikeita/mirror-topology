@@ -20,7 +20,7 @@ from . import __version__
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 MODULES = ("__init__.py", "errors.py", "types.py", "truth.py", "rules_config.py", "serialization.py", "ci.py", "precision.py", "decision.py", "family.py", "bootstrap_plan.py", "calibration.py",
-           "quantity.py", "density.py", "orchestrator.py", "positions.py", "expansion.py", "w2_stop.py", "position_state.py", "registry.py", "observers12.py", "observers12_stream.py", "w2_manifest.py", "stage12.py", "coordinator.py", "twelve_eval.py", "plan_io.py", "grid_registry.py", "grid_manifest.py", "production.py", "official_gate.py", "formal_runner.py", "legacy_kernel.py", "performance.py", "w2_shared.py", "w2_context.py", "integrated_runner.py", "threshold_evaluator.py", "twelve_assets.py", "controls.py", "w2_shared_build.py", "ckpt_persist.py", "calibration_first.py", "run_reader.py", "archive.py", "checkpoint.py")
+           "quantity.py", "density.py", "orchestrator.py", "positions.py", "expansion.py", "w2_stop.py", "position_state.py", "registry.py", "observers12.py", "observers12_stream.py", "w2_manifest.py", "stage12.py", "coordinator.py", "twelve_eval.py", "plan_io.py", "grid_registry.py", "grid_manifest.py", "production.py", "official_gate.py", "formal_runner.py", "legacy_kernel.py", "performance.py", "w2_shared.py", "w2_context.py", "integrated_runner.py", "threshold_evaluator.py", "twelve_assets.py", "controls.py", "w2_shared_build.py", "ckpt_persist.py", "calibration_first.py", "run_reader.py", "d2_rng.py", "archive.py", "checkpoint.py")
 
 
 def module_shas() -> dict:

@@ -1,0 +1,493 @@
+{
+ "schema": "d2_crn_table_v1",
+ "master_seed": 20260912,
+ "wave_id": 1,
+ "batches": {
+  "0": [
+   0,
+   1000000
+  ],
+  "1": [
+   1000000,
+   4000000
+  ]
+ },
+ "N0": 1000000,
+ "N_max": 4000000,
+ "m": 100,
+ "chunk_clusters": 2000,
+ "rng_key": "(MASTER_SEED, wave_id, purpose_id, crn_group_id, batch_id, stream_id)",
+ "cluster_uid": "(wave_id, purpose_id, crn_group_id, batch_id, rotation_index within batch)",
+ "groups": {
+  "1001": {
+   "purpose": "evaluation",
+   "wave_id": 1,
+   "label": "{\"family\": \"E1\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E1"
+   }
+  },
+  "1002": {
+   "purpose": "evaluation",
+   "wave_id": 1,
+   "label": "{\"family\": \"E2\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2"
+   }
+  },
+  "1003": {
+   "purpose": "evaluation",
+   "wave_id": 1,
+   "label": "{\"family\": \"E7\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7"
+   }
+  },
+  "1004": {
+   "purpose": "evaluation",
+   "wave_id": 1,
+   "label": "{\"family\": \"E8\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8"
+   }
+  },
+  "2001": {
+   "purpose": "fitting",
+   "wave_id": 1,
+   "label": "{\"family\": \"E1\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E1"
+   }
+  },
+  "2002": {
+   "purpose": "fitting",
+   "wave_id": 1,
+   "label": "{\"family\": \"E2\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2"
+   }
+  },
+  "2003": {
+   "purpose": "fitting",
+   "wave_id": 1,
+   "label": "{\"family\": \"E7\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7"
+   }
+  },
+  "2004": {
+   "purpose": "fitting",
+   "wave_id": 1,
+   "label": "{\"family\": \"E8\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8"
+   }
+  },
+  "4021": {
+   "purpose": "w2_crn",
+   "wave_id": 1,
+   "label": "{\"family\": \"E2\", \"reserved\": true, \"size_id\": \"L1.00\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2",
+    "size_id": "L1.00",
+    "reserved": true
+   }
+  },
+  "4022": {
+   "purpose": "w2_crn",
+   "wave_id": 1,
+   "label": "{\"family\": \"E2\", \"reserved\": true, \"size_id\": \"L1.20\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2",
+    "size_id": "L1.20",
+    "reserved": true
+   }
+  },
+  "4023": {
+   "purpose": "w2_crn",
+   "wave_id": 1,
+   "label": "{\"family\": \"E2\", \"reserved\": true, \"size_id\": \"L1.50\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2",
+    "size_id": "L1.50",
+    "reserved": true
+   }
+  },
+  "4031": {
+   "purpose": "w2_crn",
+   "wave_id": 1,
+   "label": "{\"family\": \"E7\", \"reserved\": true, \"size_id\": \"L1.00\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7",
+    "size_id": "L1.00",
+    "reserved": true
+   }
+  },
+  "4032": {
+   "purpose": "w2_crn",
+   "wave_id": 1,
+   "label": "{\"family\": \"E7\", \"reserved\": true, \"size_id\": \"L1.20\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7",
+    "size_id": "L1.20",
+    "reserved": true
+   }
+  },
+  "4033": {
+   "purpose": "w2_crn",
+   "wave_id": 1,
+   "label": "{\"family\": \"E7\", \"reserved\": true, \"size_id\": \"L1.50\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7",
+    "size_id": "L1.50",
+    "reserved": true
+   }
+  },
+  "4041": {
+   "purpose": "w2_crn",
+   "wave_id": 1,
+   "label": "{\"family\": \"E8\", \"reserved\": true, \"size_id\": \"L1.00\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8",
+    "size_id": "L1.00",
+    "reserved": true
+   }
+  },
+  "4042": {
+   "purpose": "w2_crn",
+   "wave_id": 1,
+   "label": "{\"family\": \"E8\", \"reserved\": true, \"size_id\": \"L1.20\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8",
+    "size_id": "L1.20",
+    "reserved": true
+   }
+  },
+  "4043": {
+   "purpose": "w2_crn",
+   "wave_id": 1,
+   "label": "{\"family\": \"E8\", \"reserved\": true, \"size_id\": \"L1.50\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8",
+    "size_id": "L1.50",
+    "reserved": true
+   }
+  },
+  "50101": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 20101, \"family\": \"E2\", \"size_id\": \"L1.00\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2",
+    "size_id": "L1.00",
+    "config_id": 20101
+   }
+  },
+  "50102": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 20102, \"family\": \"E2\", \"size_id\": \"L1.00\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2",
+    "size_id": "L1.00",
+    "config_id": 20102
+   }
+  },
+  "50103": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 20103, \"family\": \"E2\", \"size_id\": \"L1.00\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2",
+    "size_id": "L1.00",
+    "config_id": 20103
+   }
+  },
+  "50201": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 20201, \"family\": \"E2\", \"size_id\": \"L1.20\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2",
+    "size_id": "L1.20",
+    "config_id": 20201
+   }
+  },
+  "50202": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 20202, \"family\": \"E2\", \"size_id\": \"L1.20\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2",
+    "size_id": "L1.20",
+    "config_id": 20202
+   }
+  },
+  "50203": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 20203, \"family\": \"E2\", \"size_id\": \"L1.20\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2",
+    "size_id": "L1.20",
+    "config_id": 20203
+   }
+  },
+  "50301": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 20301, \"family\": \"E2\", \"size_id\": \"L1.50\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2",
+    "size_id": "L1.50",
+    "config_id": 20301
+   }
+  },
+  "50302": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 20302, \"family\": \"E2\", \"size_id\": \"L1.50\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2",
+    "size_id": "L1.50",
+    "config_id": 20302
+   }
+  },
+  "50303": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 20303, \"family\": \"E2\", \"size_id\": \"L1.50\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E2",
+    "size_id": "L1.50",
+    "config_id": 20303
+   }
+  },
+  "60101": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 30101, \"family\": \"E7\", \"size_id\": \"L1.00\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7",
+    "size_id": "L1.00",
+    "config_id": 30101
+   }
+  },
+  "60102": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 30102, \"family\": \"E7\", \"size_id\": \"L1.00\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7",
+    "size_id": "L1.00",
+    "config_id": 30102
+   }
+  },
+  "60103": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 30103, \"family\": \"E7\", \"size_id\": \"L1.00\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7",
+    "size_id": "L1.00",
+    "config_id": 30103
+   }
+  },
+  "60201": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 30201, \"family\": \"E7\", \"size_id\": \"L1.20\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7",
+    "size_id": "L1.20",
+    "config_id": 30201
+   }
+  },
+  "60202": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 30202, \"family\": \"E7\", \"size_id\": \"L1.20\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7",
+    "size_id": "L1.20",
+    "config_id": 30202
+   }
+  },
+  "60203": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 30203, \"family\": \"E7\", \"size_id\": \"L1.20\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7",
+    "size_id": "L1.20",
+    "config_id": 30203
+   }
+  },
+  "60301": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 30301, \"family\": \"E7\", \"size_id\": \"L1.50\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7",
+    "size_id": "L1.50",
+    "config_id": 30301
+   }
+  },
+  "60302": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 30302, \"family\": \"E7\", \"size_id\": \"L1.50\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7",
+    "size_id": "L1.50",
+    "config_id": 30302
+   }
+  },
+  "60303": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 30303, \"family\": \"E7\", \"size_id\": \"L1.50\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E7",
+    "size_id": "L1.50",
+    "config_id": 30303
+   }
+  },
+  "70101": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 40101, \"family\": \"E8\", \"size_id\": \"L1.00\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8",
+    "size_id": "L1.00",
+    "config_id": 40101
+   }
+  },
+  "70102": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 40102, \"family\": \"E8\", \"size_id\": \"L1.00\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8",
+    "size_id": "L1.00",
+    "config_id": 40102
+   }
+  },
+  "70103": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 40103, \"family\": \"E8\", \"size_id\": \"L1.00\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8",
+    "size_id": "L1.00",
+    "config_id": 40103
+   }
+  },
+  "70201": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 40201, \"family\": \"E8\", \"size_id\": \"L1.20\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8",
+    "size_id": "L1.20",
+    "config_id": 40201
+   }
+  },
+  "70202": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 40202, \"family\": \"E8\", \"size_id\": \"L1.20\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8",
+    "size_id": "L1.20",
+    "config_id": 40202
+   }
+  },
+  "70203": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 40203, \"family\": \"E8\", \"size_id\": \"L1.20\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8",
+    "size_id": "L1.20",
+    "config_id": 40203
+   }
+  },
+  "70301": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 40301, \"family\": \"E8\", \"size_id\": \"L1.50\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8",
+    "size_id": "L1.50",
+    "config_id": 40301
+   }
+  },
+  "70302": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 40302, \"family\": \"E8\", \"size_id\": \"L1.50\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8",
+    "size_id": "L1.50",
+    "config_id": 40302
+   }
+  },
+  "70303": {
+   "purpose": "w2_independent",
+   "wave_id": 1,
+   "label": "{\"config_id\": 40303, \"family\": \"E8\", \"size_id\": \"L1.50\", \"wave_id\": 1}",
+   "scope": {
+    "wave_id": 1,
+    "family": "E8",
+    "size_id": "L1.50",
+    "config_id": 40303
+   }
+  }
+ },
+ "rule": "group integers are fixed by scope, never by execution order; evaluation/fitting share by family (all configurations, both systems, 4 roles, paired selections); w2_independent: one group per position (config_id)",
+ "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72"
+}

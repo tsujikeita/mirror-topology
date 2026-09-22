@@ -1,16 +1,17 @@
 {
- "engine_version": "0.66.0",
+ "engine_version": "0.68.0",
  "modules": {
-  "__init__.py": "db83b91d4ea37b896cb5c2661f6a6c766dbd83ecd6497ffd77d83910029f1686",
+  "__init__.py": "7437439f241dcfdd46f879cf8db9cd4774c611f613dc9eb1d76566e77401d949",
   "archive.py": "354e75e3f89e3477c4b1bd05e7423ddd735431984bb27301cf3d60162cedeee6",
   "bootstrap_plan.py": "6941a7ac19fddfd9d3ca465632e3c68f18809d55e8e82cefa0a206fac2dcd3f7",
   "calibration.py": "1cc25d502021025191f3181b454b999555998884964f3c3dfe915bc9e0db18ea",
   "calibration_first.py": "e024c44de07597866124bba558a0634b3832d6a6fbd9a7b44de207e463a572a1",
-  "checkpoint.py": "88b9ec253eadf263aa3ce5b11b5b10ee2e3df6367dfe3e84d35f174cf98c994e",
+  "checkpoint.py": "0c976c1a70dc2809362fb627ddc4c8d5497db8fa588398c64604d2c462427717",
   "ci.py": "6703257bcd9337a0b07eb440f9096c46a7cc8d51ac7e1c4056f2f7b043a8f597",
   "ckpt_persist.py": "438eeaa162d4cf276e537941350da64b02c46f2e76eb7462309405652153d428",
   "controls.py": "8e330c7fdd68533cb9c2668983f171d3b1ed48dd4755eefcdee1c95e358de848",
   "coordinator.py": "c8274ebccd3dde12e57666ff4a18eff8e1d9da073362d2711a6e8f41dbb8ae98",
+  "d2_rng.py": "321d3602efaf76b4d83b182da1edc35d607112b61acfae2427e9e2ba78a60e11",
   "decision.py": "9bd01a136ea6b4a3a51db0fe20e3552058a91b8558d7b041d0ec37aefd786f88",
   "density.py": "c1273a0723b3c9501d6625f689367c1e4463f6289dbeb1e150774197dc796735",
   "errors.py": "8dcb6c4c165b6e094ce5f5696e236452a7a51d9ca7b840f5e36b704443f2011e",
@@ -92,6 +93,7 @@
   "test_audit_b3_3_receipt_review_chatgpt.py": 15,
   "test_audit_contracts_chatgpt.py": 22,
   "test_audit_d1_v02_independent_chatgpt.py": 11,
+  "test_audit_d2_tranche1_review_chatgpt.py": 15,
   "test_audit_d4_intake_v2_review_chatgpt.py": 15,
   "test_audit_v02_priority_chatgpt.py": 14,
   "test_audit_v03_b2_intake_chatgpt.py": 4,
@@ -126,11 +128,12 @@
   "test_b3_controls.py": 4,
   "test_d1_contracts.py": 7,
   "test_d1_registered.py": 1,
+  "test_d2_tranche1.py": 4,
   "test_d4_calibration_first.py": 2,
   "test_d4_intake.py": 5,
   "test_d4_run_reader.py": 8
  },
- "total_test_functions": 737,
+ "total_test_functions": 756,
  "tests_sha256": {
   "test_audit_b2_tranche10_chatgpt.py": "304ee655483cc9780e9bf778fb2aa659b6eb6ab017c69b01481db6f56efe2603",
   "test_audit_b2_tranche11_chatgpt.py": "d1aaa931fab2572a9ac8f007bde23bc426f4071f0e1054356ead14061f4f5c4a",
@@ -175,6 +178,7 @@
   "test_audit_b3_3_receipt_review_chatgpt.py": "881813026d82e777dec1a2eaa723c53a3c17eae5750c68855f40f9cb1cc70304",
   "test_audit_contracts_chatgpt.py": "7df95d435b05d0963c23813a14b5516a5773565d0cd6e3ea6223c8c56c1bc33a",
   "test_audit_d1_v02_independent_chatgpt.py": "36dc37d24a8262c7489667e5f19387709fca10afd534b4ddc0b83926a19cfd78",
+  "test_audit_d2_tranche1_review_chatgpt.py": "4d6266e925e39016e255a6a1aab33926046f9b8892b35ba680b99b78c1aa7191",
   "test_audit_d4_intake_v2_review_chatgpt.py": "ff5b2ae268e6d05f29b5f7e71d11010d4954e0ba5890b3314b4755b4649d04fe",
   "test_audit_v02_priority_chatgpt.py": "090a8efcb0747d8c0f66c2619e28351cd7567dd2b4a2cf8058389e811f4e0f11",
   "test_audit_v03_b2_intake_chatgpt.py": "85e0513cf8000761cf8fe3f718c74e7a0e7b29621e172aaa9da8fb9c5cacf788",
@@ -209,6 +213,7 @@
   "test_b3_controls.py": "f018dcdf7f75d4e39f84f2084e9c7e07d4f8ffa40306959ab73db3b56db9fe51",
   "test_d1_contracts.py": "982be240ac956bde2471f0e43e52d8de9afaab35d6c5b116f4296c4bd447c1be",
   "test_d1_registered.py": "8a4e223f685f3ff4c249873a1ea9e84d1afb1a00320459e63890c4402fbc72dc",
+  "test_d2_tranche1.py": "6770c25981f39780b14d18c2052bfa9d8c0064c2e9561d430a7862fab2be888b",
   "test_d4_calibration_first.py": "36acfbdc12263adad1cd49727f1d70c65a06f224de12cfe371dae578386d5656",
   "test_d4_intake.py": "38fb82bbe28f11efb480326e5cf182fda63ee56766b2bb1161d338f7a4bb9104",
   "test_d4_run_reader.py": "1075375688d89b0fe2dcd6c3625032db89ec1eeca3fd5b1aa8f03b08bc90893e"
@@ -242,22 +247,22 @@
   "regression_logs/legacy_cross_environment_summary.json": "5a39bb9bcb047e4e8d3079f2466fe56152bc934463d43c6d262b373762d430a6",
   "regression_logs/legacy_regression_tranche24.txt": "3d1be014442dff23052d1c0cc8da80db43aceb3f9753dda35db2c72bed6358ac",
   "regression_logs/performance_budget_sandbox.json": "b269c526dd1c5e70456518b4428d9499bfcd982dca7853445773b0311d4c797c",
-  "regression_logs/d4_t2v6_pytest/chunks_stdout.txt": "c95ff19c3b574ac40dc2f10c1f2c70b6f4f946dfe1ec9279130d607c12ed0678",
-  "regression_logs/d4_t2v6_pytest/j1.xml": "bd13fc55f1ef02aaf34c6b6dd969662fc49127fbf947fa73243c51a14d49ab69",
-  "regression_logs/d4_t2v6_pytest/j2.xml": "5ab8125dd8a25e5f93bd97d399e131d51584514d1ebf2763d6bbbf7097dd30d7",
-  "regression_logs/d4_t2v6_pytest/j3.xml": "bf6f325e687972706a5ec338ad9103bc96b0ac5ac73fac4c519beb658dd99e60",
-  "regression_logs/d4_t2v6_pytest/j4.xml": "2557df36177b55473b7a6ebde850a1a206305676bcb13a873e33a663ccfe42f6",
-  "regression_logs/d4_t2v6_pytest/j5.xml": "9ecab1105f73b506a5c19c50bc75a57a4093b53ae36c2749e92accfc10795c7d",
-  "regression_logs/d4_t2v6_pytest/j6.xml": "b600700f626accd547cf04efa899fa4f29ab729a62ea190247f6fdfa033d181d",
-  "regression_logs/d4_t2v6_pytest/j7.xml": "137e20d926dd40c597f17a840951bbb511f5b1f130ffc3ab8eae662c9514d382",
-  "regression_logs/d4_t2v6_pytest/j8.xml": "c5699ecc857a605117cc73027e2e649e8ee8e4c78a574740b78cb8783df0b72a",
-  "regression_logs/d4_t2v6_pytest/j9.xml": "142a42067eb18ed15cdf7f8c624f7ecffae2f4563cf3eeca99cc719a03c110fd"
+  "regression_logs/d2_t1v2_pytest/chunks_stdout.txt": "10f0d14b2506ed91ac1343cb01848e5d73786314be47e2b25ef4dee810f58681",
+  "regression_logs/d2_t1v2_pytest/j1.xml": "88de10339a95ddb3e750e25ad1f7c32437232af243ed18a6745b8b6abf3cb3a0",
+  "regression_logs/d2_t1v2_pytest/j2.xml": "e58b489dd628d25d4866d1367e141c150ef372dd4dff186c114bd02b8206edfb",
+  "regression_logs/d2_t1v2_pytest/j3.xml": "bcf96cc419452574c72dcf2229c70e6aabae1629f4fbb6d7e6fa6337586985c5",
+  "regression_logs/d2_t1v2_pytest/j4.xml": "fd719523148384d5dea0cf8501d25c4386cb9591955ebc984efb3bbd6de76a00",
+  "regression_logs/d2_t1v2_pytest/j5.xml": "fba60fb751afbc57015dce7b789bb5b28e13e6b07c10ced05277e46bad911e7c",
+  "regression_logs/d2_t1v2_pytest/j6.xml": "79c4c1be66b5c1892e0a3172fe6b8a5e8e0af91a00bdcf63b593a7b68b66b07b",
+  "regression_logs/d2_t1v2_pytest/j7.xml": "76892b8e8d26ee104b91e55ef7bce8e953c752e01620e3420fc2ca5758bb9539",
+  "regression_logs/d2_t1v2_pytest/j8.xml": "6ef951f669eed7c892aaf2ba6c19811f1366f4192e450895106ed11f6bfb0617",
+  "regression_logs/d2_t1v2_pytest/j9.xml": "385cdf8c1b2ed64bed03577d4985d493e4044f7488a72cf8bca1209840b0fe93"
  },
  "documents_sha256": {
   "Step1_rules_v1.0_draft4.1.md": "5f02c970eb39f9b3e7f7b17b48eb2d3daa16434517cf4442bac339f5ab719615",
   "rules_tables_v1.json": "522751be134aa3ff4fdf33c6be0d7397fb7bd3c89a6c67e26a67bd32dceeb0b4",
   "Step1_PhaseB_engine_spec_v0.2_addendum.md": "ed9b02858df08b3d2acec990b61ab0626f1a9c05cb88f267051bcc33f39ba21d",
-  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "76a3ba978a7992066e7fd1b5ce9c2b41257365e7bc396c38b7cd7baccc078650",
+  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "884cce84fbaf480687525638429b584a8146d7670081c66b914a828f455b416f",
   "Step1_PhaseB_B3_3_receipts_and_deadlines.md": "407bbca8b872e88415921dcf7f244b8ff7a72a4e9c7308478f59641c6cdd42ae",
   "Step1_PhaseD_design_v0.3.md": "6be8ae30f5da27c22e711379f23de1b8a74f094238d7a06334f70b64acef2d75",
   "Step1_PhaseD_D4_design_v0.1.md": "5c329210b13e12213597cc9198e6d9f09e628655979709613d5ffb7ca78da290",
@@ -265,23 +270,23 @@
   "Step1_PhaseD_D2_design_v0.2.md": "49080074c4dc74c5b56bd9aed3da44e80e0c1d927a11f4dcaabdd58d923ef374"
  },
  "counts": {
-  "modules": 46,
-  "test_files": 80,
-  "test_functions": 737,
+  "modules": 47,
+  "test_files": 82,
+  "test_functions": 756,
   "test_b_files": 28,
-  "test_audit_files": 47
+  "test_audit_files": 48
  },
  "b3_sha256": {
   "b3/MirrorTopology_Step1_B3_0_smoke_v0.3.ipynb": "c62537e5ce20210b15394b63a3a212a7c1cb3b14df277f481a86f928c1d6cde6",
   "b3/MirrorTopology_Step1_B3_1_control_v0.1.ipynb": "b665793fd12e745d765c510dc42c5c345fe80c0801d88b536bb4ccdf615d832d",
   "b3/MirrorTopology_Step1_B3_2A_assets_v0.2.ipynb": "b3400aca97a6bc5f6355324135e3a5b9e0a2094ccf1956716a8364a1c0f9b4bc",
   "b3/MirrorTopology_Step1_B3_2B_shared_null_v0.5.ipynb": "3fdeddb940694e777b2473742428df8fff68ff4192cbdf1bc78ee4949cc69135",
-  "b3/b3_0_pins.json": "92b60aabf4881140d647c7cb13743105f390b3df08c03ade627dc7a7ed6b82bb",
+  "b3/b3_0_pins.json": "0ed7dc3618212be0fdd235069cd208df813f5fcc238f431f0a954dffccc5c3eb",
   "b3/b3_0_smoke.py": "9c2d125f93487a55bb74c020d7803843054b550ec36163012dac6ffc9e485dae",
   "b3/b3_1_control.py": "d62a77502ad6efdc8bb65df8b8bcb44d66a390c884eaf0a0ad885dd3f9db4eeb",
-  "b3/b3_1_pins.json": "2310d50e9e3b36d0cc570713d35cd648dd4ac6d802536a35e25ac688f4721dbd",
+  "b3/b3_1_pins.json": "6e46cfb83aa776f8be5a10551e3683ed3224793680dd64fa182e4bae6b6800b0",
   "b3/b3_2_assets.py": "ed500397091966d2ff3dfeac8226c7bbd2688dae1b5a68a2440ce09b0a7fb1c6",
-  "b3/b3_2_pins.json": "13e3290ba25b5b4760c6efeefcd32fac08b2462defad29d267d8c402091ccc4a",
+  "b3/b3_2_pins.json": "4d572f4a93a675d6dfcb42e04ab1bce16daa1b6079dcbd511fab4cfe89fb5252",
   "b3/b3_2_shared_null.py": "fc1c3d81cb4e1d22edd246a78cbd801a6a16024dca57ed1b0bc35ae9d47c09c6"
  },
  "registered_assets_sha256": {
@@ -362,6 +367,7 @@
  "d_sha256": {
   "d/MirrorTopology_Step1_D1_covgen_v0.3.ipynb": "5ad2213d68160ef30db154add21b233e5d22978d0d5ef2a636044e0f55055d6f",
   "d/d1_covgen.py": "ec0dce90ec05e97a26ca43c5396195b9b1f796afdb5f2784d3459c91ec3b3400",
-  "d/d1_pins.json": "3180affdad383e35d80c736cce04e8af7b133b109df2082a37a58ab0a4a43e2c"
+  "d/d1_pins.json": "d68e2fe3916c4562013bb74b46129d1f5b4762ad5fb2d0e424a542d52bc8dca9",
+  "d/d2_crn_table.json": "99b68d8e78b741c918d4375c60cd64472c148316855bdeac19766faecf503f61"
  }
 }
