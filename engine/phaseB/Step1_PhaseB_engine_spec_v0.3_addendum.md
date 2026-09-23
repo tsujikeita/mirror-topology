@@ -1,5 +1,5 @@
 # Step1_PhaseB_engine_spec v0.3 追補 — B-2 実装受入 packet（第 35 tranche 監査を反映）
-初版：2026-09-16（Claude）。B-3-3 v2整理：2026-09-19。Phase D-1 起草：2026-09-20。以下の現行engineは `step1_engine 0.68.0（数値 kernel は 0.54.0 基盤の継承；D-2 tranche ① v2：RD2T1-A/B 反映）`（数値 kernel は 0.54.0＝受入れ済み基盤 `1db30cd1…` と同一；`d/` の追加のみ）（module／test／fixture／reference／doc の SHA inventory は `B2_completion_inventory.json`＋監査側 `B2_inventory_audit_supplement.json`）。
+初版：2026-09-16（Claude）。B-3-3 v2整理：2026-09-19。Phase D-1 起草：2026-09-20。以下の現行engineは `step1_engine 0.78.0（数値 kernel は 0.54.0 基盤の継承；D-2 tranche ③b v4：同一 snapshot による要求照合・出力後照合（監査参考補強の採用））`（数値 kernel は 0.54.0＝受入れ済み基盤 `1db30cd1…` と同一；`d/` の追加のみ）（module／test／fixture／reference／doc の SHA inventory は `B2_completion_inventory.json`＋監査側 `B2_inventory_audit_supplement.json`）。
 
 **B-2受入れ当時の判定ラベル（歴史的記録。現在の状態は§D.0とB-3-3文書を参照）**：`B2_implementation_acceptance=accepted`／`B2_original_Colab_acceptance=pending_explicit_carryover_to_B3`／`B3_notebook_preparation=go`／`ENGINE_VALID=not_evaluated`／`Phase_C_freeze=not_authorized`。規則本文 `Step1_rules_v1.0_draft4.1.md`（SHA `5f02c970…`）・`rules_tables_v1.json`（SHA `522751be…`）・spec v0.2 追補は不変。
 
@@ -15,7 +15,7 @@
 | 統合 | threshold_evaluator／integrated_runner／archive／checkpoint | 共通 evaluator（親必要量→位置→coordinator→12 位置→eligible truth）・pseudo 完全性・content-addressed archive・意味検証 reader（t29–34） |
 | 回帰 | legacy_kernel／performance | A10 kernel の同一環境 bit 一致・Colab official との 1e-15 一致・性能 unit（t23–25） |
 
-受入テスト（実体，D-2 tranche ① v2）：47 module・82 test file（自作 `test_b*` 28・`test_d*` 6・監査 `test_audit*` 48）・756 test 関数定義・1058 pytest case（parametrize 展開；B-2 受入時は 41／63／619／827）。監査原本の同梱区分：**原本保持**／**path 適応のみ**／**fixture 再生成**（t34・t35：配布しない pickle cache を in-process 生成に置換；assert 不変。t35 の12位置 fixture は `TwelveFixture` による原検査用入力から `twelve_from_cases` による入力へ変更しており、同じ数値標本の再現とは区別する）／**API 追従**（t29：result_ref→diagnostic_ref・injection hook を共通 evaluator へ）／**比較 oracle 訂正**（t28：高 offset KDE の literal 基準）——いずれも監査で承認済みの差分で，テスト緩和ではない。「意味検証 reader」の scope は core（保存 replicate・密度に条件付き）であり，外部 W₂/context 参照・run/coordinator を含む再利用契約の認証ではない。
+受入テスト（実体，D-2 tranche ③b v4）：48 module・92 test file（自作 `test_b*` 28・`test_d*` 9・監査 `test_audit*` 55）・834 test 関数定義・1269 pytest case（parametrize 展開；B-2 受入時は 41／63／619／827）。監査原本の同梱区分：**原本保持**／**path 適応のみ**／**fixture 再生成**（t34・t35：配布しない pickle cache を in-process 生成に置換；assert 不変。t35 の12位置 fixture は `TwelveFixture` による原検査用入力から `twelve_from_cases` による入力へ変更しており、同じ数値標本の再現とは区別する）／**API 追従**（t29：result_ref→diagnostic_ref・injection hook を共通 evaluator へ）／**比較 oracle 訂正**（t28：高 offset KDE の literal 基準）——いずれも監査で承認済みの差分で，テスト緩和ではない。「意味検証 reader」の scope は core（保存 replicate・密度に条件付き）であり，外部 W₂/context 参照・run/coordinator を含む再利用契約の認証ではない。
 
 **inventory の適用範囲**：現提出版の照合には `B2_completion_inventory.json` を用いる。`B2_inventory_audit_supplement.json` と `docs_B2_scope_and_B3_handoff_proposal_ChatGPT.md` は第35 tranche（engine 0.39.0）の監査時点の履歴資料として原bytesを保持し、現版のSHAや件数の代用にはしない。
 
@@ -60,7 +60,10 @@
 | Phase D-1（第 1 波 30 配置の production 共分散） | `aa089fa492bc094492d1a425c7a91bb7bfa4a150`（0.57.0，inventory `9c7e37af…`） | `20260920T081931Z`（3.30 h） | `ChatGPT_audit_Step1_PhaseD_D1_Colab_aa089fa492bc.md` | **PASS**（30 共分散＋intake；A11 entry 再生成 rel 1.3e-20；`registered_assets/d1/` に登録・receipt `d1_receipt.json`） |
 | Phase D-4 tranche 1（D4-2/3/5） | 0.60.0 | — | `ChatGPT_audit_Step1_PhaseD_D4_tranche1_v3.md` | **実装・接続として受入れ**（RD4T1-A/B/C/D 閉鎖） |
 | Phase D-4 tranche 2（D4-4 参照鎖・D4-1 較正先行 driver） | 0.66.0（v6） | — | `ChatGPT_audit_Step1_PhaseD_D4_tranche2_v6.md` | **実装・接続として受入れ PASS**（R2V3-A・R2V4-A/B/C・R2V5-A 閉鎖）；完了記録 `Step1_PhaseD_D4_completion.md` v2（監査 §2 の文言訂正を採用） |
-| Phase D-2（第 1 波 bank 生成器） | 設計 v0.2（監査で方針受入れ）；tranche ① v2（0.68.0） | — | `ChatGPT_audit_Step1_PhaseD_D4completion_D2design_v0.2.md`／`Step1_PhaseD_D2_tranche1_report.md` | ① v1 の正常経路は監査で確認，RD2T1-A（入力検査）／B（表の内容検証）を v2 で採用（閉鎖確認待ち）；② 生成器・③ intake／供給は次 |
+| Phase D-2 tranche ①（CRN 表・adapter） | 0.68.0（v2） | — | `ChatGPT_audit_Step1_PhaseD_D2_tranche1_v2.md` | **実装・接続の受入れ PASS**（RD2T1-A/B 閉鎖） |
+| Phase D-2 tranche ②（仕様固定・生成器 core） | 0.72.0（v4） | — | `ChatGPT_audit_Step1_PhaseD_D2_tranche2_v4.md` | **実装受入れ PASS**（RD2T2-A〜D・V3-A 閉鎖） |
+| Phase D-2 tranche ③a（fitting wrapper・強い intake・BankSupply） | 0.74.0（v2） | — | `ChatGPT_audit_Step1_PhaseD_D2_tranche3a_v2.md` | **実装受入れ PASS**（RD2T3A-A/B/C 閉鎖） |
+| Phase D-2 tranche ③b（W₂ bank・生成 script・notebook・計時） | 本版（0.78.0；v4） | 未実行 | `ChatGPT_audit_Step1_PhaseD_D2_tranche3b_v3.md`／`Step1_PhaseD_D2_tranche3b_report.md` | v3 で B／D の改善を確認（前回 51 対照全 PASS）；RD2T3BV3-A（同一 snapshot の要求照合・出力後照合）を v4 で参考補強採用（実行前監査待ち） |
 
 ### D.1 更新履歴（tranche 35／36 以降）
 - tranche 36：第 35 tranche 監査の inventory・provenance・性能・実行範囲の訂正と B-3 移管表を反映（本版）。監査の受入試験 12 件を同梱。
