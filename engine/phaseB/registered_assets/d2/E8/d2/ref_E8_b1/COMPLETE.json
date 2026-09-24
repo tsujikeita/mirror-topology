@@ -1,0 +1,97 @@
+{
+ "schema": "d2_bank_manifest_v1",
+ "family": "E8",
+ "config_id": null,
+ "evaluation_ids": null,
+ "purpose": "evaluation",
+ "crn_group": 1004,
+ "wave_id": 1,
+ "batch_id": 1,
+ "shards": [
+  {
+   "file": "ref_b1_s1.npz",
+   "sidecar": "ref_b1_s1.npz.sidecar.json",
+   "file_sha256": "1035eea7001bed22c42c7275c6cf3cd3619eb907ab89e7981bd3ee088790724c",
+   "sidecar_sha256": "78571bc56fb0c65fd49e5b2aabdd894ab6550ec8305d30e242870ef40edafe2f",
+   "rows": [
+    0,
+    1000000
+   ]
+  },
+  {
+   "file": "ref_b1_s2.npz",
+   "sidecar": "ref_b1_s2.npz.sidecar.json",
+   "file_sha256": "2f8b10450891f43adfd5307e2f39b15c5eec8f73d443cb1cc54ae30f0177ba5f",
+   "sidecar_sha256": "544ae2f96cd1936722a9bce17592a085148332e44e76b3b91bab17be7073042f",
+   "rows": [
+    1000000,
+    2000000
+   ]
+  },
+  {
+   "file": "ref_b1_s3.npz",
+   "sidecar": "ref_b1_s3.npz.sidecar.json",
+   "file_sha256": "bbdd5afddc2b3ef19b168c48a15812578832eff8dfdd0da7917199e5d254322b",
+   "sidecar_sha256": "d0c1582976a29d702e4bf41959362c2598102a147dcaa227d334a8e47feaedcc",
+   "rows": [
+    2000000,
+    3000000
+   ]
+  }
+ ],
+ "roles": [
+  "ref_matched"
+ ],
+ "root_sha256": {
+  "ref_matched": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c"
+ },
+ "selections": [
+  "float64"
+ ],
+ "n_rows": 3000000,
+ "n_clusters": 30000,
+ "m": 100,
+ "complete": true,
+ "scale": 1.0,
+ "formal": true,
+ "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+ "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+ "master_seed": 20260912,
+ "calls": [
+  {
+   "purpose": "evaluation",
+   "group": 1004,
+   "batch_id": 1,
+   "key_rotation": [
+    20260912,
+    1,
+    200,
+    1004,
+    1,
+    1
+   ],
+   "key_gaussian": [
+    20260912,
+    1,
+    200,
+    1004,
+    1,
+    0
+   ],
+   "clusters": [
+    0,
+    30000
+   ],
+   "roles": [
+    "ref_matched"
+   ],
+   "selections": [
+    "float64"
+   ],
+   "chunk_clusters": 2000,
+   "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+   "t": 1790185935.3784807
+  }
+ ],
+ "manifest_sha256": "1432fa6910905f255c73697cbee39bdc05182093f7ebac25b0d09f85393d59d3"
+}

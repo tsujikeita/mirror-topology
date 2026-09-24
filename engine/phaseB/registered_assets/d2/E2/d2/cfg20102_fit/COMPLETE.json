@@ -1,0 +1,86 @@
+{
+ "schema": "d2_bank_manifest_v1",
+ "family": "E2",
+ "config_id": 20102,
+ "evaluation_ids": {
+  "matched": 20102,
+  "native": 70102
+ },
+ "purpose": "fitting",
+ "crn_group": 2002,
+ "wave_id": 1,
+ "batch_id": 0,
+ "shards": [
+  {
+   "file": "cfg20102_fit_s0.npz",
+   "sidecar": "cfg20102_fit_s0.npz.sidecar.json",
+   "file_sha256": "65eadd375414a730e78c62be7bca03f49b508bfa29ad62b598f75283bda45e30",
+   "sidecar_sha256": "1e5be483a1b036983dc0d967a5b1233b65f207aa2a5ed2bd4772db96d9f9cec7",
+   "rows": [
+    0,
+    200000
+   ]
+  }
+ ],
+ "roles": [
+  "model_matched",
+  "model_native",
+  "ref_native"
+ ],
+ "root_sha256": {
+  "model_matched": "2b3c3bdc79040dea7f040de9d318f0410f08576d79b35ff692594836a6ad58ae",
+  "model_native": "8719caf14261e3f862a6902455a7dbd15f2156c76bd0bee1c090622dacbe7f83",
+  "ref_native": "57abebcc707a5c02d42280285e251696097c838b2519ca9b212232f01115fcc6"
+ },
+ "selections": [
+  "float64"
+ ],
+ "n_rows": 200000,
+ "n_clusters": 2000,
+ "m": 100,
+ "complete": true,
+ "scale": 1.0,
+ "formal": true,
+ "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+ "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+ "master_seed": 20260912,
+ "calls": [
+  {
+   "purpose": "fitting",
+   "group": 2002,
+   "batch_id": 0,
+   "key_rotation": [
+    20260912,
+    1,
+    300,
+    2002,
+    0,
+    1
+   ],
+   "key_gaussian": [
+    20260912,
+    1,
+    300,
+    2002,
+    0,
+    0
+   ],
+   "clusters": [
+    0,
+    2000
+   ],
+   "roles": [
+    "model_matched",
+    "model_native",
+    "ref_native"
+   ],
+   "selections": [
+    "float64"
+   ],
+   "chunk_clusters": 2000,
+   "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+   "t": 1790157501.6160073
+  }
+ ],
+ "manifest_sha256": "bc09fbae1b1c200b3c8451456388d13facee8f723cb2f02c5f2ea3297f5298cf"
+}

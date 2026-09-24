@@ -1,0 +1,875 @@
+{
+ "stage": "complete",
+ "family": "E1",
+ "failures": [],
+ "timings": {
+  "10101": 1201.9486782550812,
+  "10201": 1078.9422013759613,
+  "10301": 1079.9648218154907
+ },
+ "directories": {
+  "ref_E1_b0": {
+   "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/ref_E1_b0",
+   "reused": false,
+   "manifest_sha256": "f36f6c9a00a9a7b9a905229fcb3738f93d2b316832c6e9327f3bd23eca42a1bd",
+   "n_rows": 1000000,
+   "n_clusters": 10000,
+   "formal": true,
+   "purpose": "evaluation",
+   "seconds": 131.8570101261139,
+   "request": {
+    "name": "ref_E1_b0",
+    "kind": "family_reference",
+    "family": "E1",
+    "config_id": null,
+    "evaluation_ids": null,
+    "purpose": "evaluation",
+    "crn_group": 1001,
+    "wave_id": 1,
+    "batch_id": 0,
+    "roles": [
+     "ref_matched"
+    ],
+    "selections": [
+     "float64",
+     "float32"
+    ],
+    "n_clusters": 10000,
+    "n_rows": 1000000,
+    "m": 100,
+    "scale": 1.0,
+    "formal": true,
+    "root_sha256": {
+     "ref_matched": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c"
+    },
+    "covariance": null,
+    "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+    "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+    "master_seed": 20260912,
+    "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+    "engine": "0.78.0"
+   }
+  },
+  "ref_E1_b1": {
+   "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/ref_E1_b1",
+   "reused": false,
+   "manifest_sha256": "cadf7003e934c088e213fad56550fcefd384285cf0c15bbd0e252c4953ebb138",
+   "n_rows": 3000000,
+   "n_clusters": 30000,
+   "formal": true,
+   "purpose": "evaluation",
+   "seconds": 275.82191014289856,
+   "request": {
+    "name": "ref_E1_b1",
+    "kind": "family_reference",
+    "family": "E1",
+    "config_id": null,
+    "evaluation_ids": null,
+    "purpose": "evaluation",
+    "crn_group": 1001,
+    "wave_id": 1,
+    "batch_id": 1,
+    "roles": [
+     "ref_matched"
+    ],
+    "selections": [
+     "float64"
+    ],
+    "n_clusters": 30000,
+    "n_rows": 3000000,
+    "m": 100,
+    "scale": 1.0,
+    "formal": true,
+    "root_sha256": {
+     "ref_matched": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c"
+    },
+    "covariance": null,
+    "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+    "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+    "master_seed": 20260912,
+    "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+    "engine": "0.78.0"
+   }
+  },
+  "ref_E1_fit": {
+   "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/ref_E1_fit",
+   "reused": false,
+   "manifest_sha256": "ee1b54badf7bd92d19481aa194da49df1a0d4f416f0eea93aa70d78bef43d1f4",
+   "n_rows": 200000,
+   "n_clusters": 2000,
+   "formal": true,
+   "purpose": "fitting",
+   "seconds": 18.645158767700195,
+   "request": {
+    "name": "ref_E1_fit",
+    "kind": "family_reference",
+    "family": "E1",
+    "config_id": null,
+    "evaluation_ids": null,
+    "purpose": "fitting",
+    "crn_group": 2001,
+    "wave_id": 1,
+    "batch_id": 0,
+    "roles": [
+     "ref_matched"
+    ],
+    "selections": [
+     "float64"
+    ],
+    "n_clusters": 2000,
+    "n_rows": 200000,
+    "m": 100,
+    "scale": 1.0,
+    "formal": true,
+    "root_sha256": {
+     "ref_matched": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c"
+    },
+    "covariance": null,
+    "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+    "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+    "master_seed": 20260912,
+    "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+    "engine": "0.78.0"
+   }
+  },
+  "cfg10101_b0": {
+   "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10101_b0",
+   "reused": false,
+   "manifest_sha256": "360b4feeb47854a9b77aecf27a7212c0749b908ba7a015c349f93b25588b74fc",
+   "n_rows": 1000000,
+   "n_clusters": 10000,
+   "formal": true,
+   "purpose": "evaluation",
+   "seconds": 383.0908405780792,
+   "request": {
+    "name": "cfg10101_b0",
+    "kind": "configuration",
+    "family": "E1",
+    "config_id": 10101,
+    "evaluation_ids": {
+     "matched": 10101,
+     "native": 60101
+    },
+    "purpose": "evaluation",
+    "crn_group": 1001,
+    "wave_id": 1,
+    "batch_id": 0,
+    "roles": [
+     "model_matched",
+     "model_native",
+     "ref_native"
+    ],
+    "selections": [
+     "float64",
+     "float32"
+    ],
+    "n_clusters": 10000,
+    "n_rows": 1000000,
+    "m": 100,
+    "scale": 1.0,
+    "formal": true,
+    "root_sha256": {
+     "model_matched": "079eb30c4d0ee5673a376e668025c4ee820cb8cad2ff141c2ef9c35bab9fe28e",
+     "model_native": "b94dc0a1f19e4d78ac586592d309398c449f32973fd726c7d6f7d15aec6b41dd",
+     "ref_native": "a934fe06d1b39f729f23e338c1cd0cecacd181081da81d0850113bc116777a0f"
+    },
+    "covariance": {
+     "cov_file": "cov_cache/cov_E1_32558d6c86af06f27.npy",
+     "cov_file_sha256": "0e3d273667685ccbd9676c7d208c8679b75efdb88ee104e1e34bead09446653f",
+     "cov_array_sha256": "984690d5e4f6e1a4723498d6bbf91f325a1bedaaacf86a51520b8dcffb5eee26",
+     "intake_receipt": "D1_aa089fa492bc"
+    },
+    "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+    "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+    "master_seed": 20260912,
+    "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+    "engine": "0.78.0"
+   }
+  },
+  "cfg10101_b1": {
+   "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10101_b1",
+   "reused": false,
+   "manifest_sha256": "287cc863c9e85fbbb6bbc86263895f99bb9e699ce64fb7eb373cf39cc6f4229c",
+   "n_rows": 3000000,
+   "n_clusters": 30000,
+   "formal": true,
+   "purpose": "evaluation",
+   "seconds": 766.2575569152832,
+   "request": {
+    "name": "cfg10101_b1",
+    "kind": "configuration",
+    "family": "E1",
+    "config_id": 10101,
+    "evaluation_ids": {
+     "matched": 10101,
+     "native": 60101
+    },
+    "purpose": "evaluation",
+    "crn_group": 1001,
+    "wave_id": 1,
+    "batch_id": 1,
+    "roles": [
+     "model_matched",
+     "model_native",
+     "ref_native"
+    ],
+    "selections": [
+     "float64"
+    ],
+    "n_clusters": 30000,
+    "n_rows": 3000000,
+    "m": 100,
+    "scale": 1.0,
+    "formal": true,
+    "root_sha256": {
+     "model_matched": "079eb30c4d0ee5673a376e668025c4ee820cb8cad2ff141c2ef9c35bab9fe28e",
+     "model_native": "b94dc0a1f19e4d78ac586592d309398c449f32973fd726c7d6f7d15aec6b41dd",
+     "ref_native": "a934fe06d1b39f729f23e338c1cd0cecacd181081da81d0850113bc116777a0f"
+    },
+    "covariance": {
+     "cov_file": "cov_cache/cov_E1_32558d6c86af06f27.npy",
+     "cov_file_sha256": "0e3d273667685ccbd9676c7d208c8679b75efdb88ee104e1e34bead09446653f",
+     "cov_array_sha256": "984690d5e4f6e1a4723498d6bbf91f325a1bedaaacf86a51520b8dcffb5eee26",
+     "intake_receipt": "D1_aa089fa492bc"
+    },
+    "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+    "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+    "master_seed": 20260912,
+    "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+    "engine": "0.78.0"
+   }
+  },
+  "cfg10101_fit": {
+   "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10101_fit",
+   "reused": false,
+   "manifest_sha256": "bc7d3d233919d6aaa7d8418124d6e8a1981c6cfa691ec2cb0bdeb827accc9518",
+   "n_rows": 200000,
+   "n_clusters": 2000,
+   "formal": true,
+   "purpose": "fitting",
+   "seconds": 52.236576557159424,
+   "request": {
+    "name": "cfg10101_fit",
+    "kind": "configuration",
+    "family": "E1",
+    "config_id": 10101,
+    "evaluation_ids": {
+     "matched": 10101,
+     "native": 60101
+    },
+    "purpose": "fitting",
+    "crn_group": 2001,
+    "wave_id": 1,
+    "batch_id": 0,
+    "roles": [
+     "model_matched",
+     "model_native",
+     "ref_native"
+    ],
+    "selections": [
+     "float64"
+    ],
+    "n_clusters": 2000,
+    "n_rows": 200000,
+    "m": 100,
+    "scale": 1.0,
+    "formal": true,
+    "root_sha256": {
+     "model_matched": "079eb30c4d0ee5673a376e668025c4ee820cb8cad2ff141c2ef9c35bab9fe28e",
+     "model_native": "b94dc0a1f19e4d78ac586592d309398c449f32973fd726c7d6f7d15aec6b41dd",
+     "ref_native": "a934fe06d1b39f729f23e338c1cd0cecacd181081da81d0850113bc116777a0f"
+    },
+    "covariance": {
+     "cov_file": "cov_cache/cov_E1_32558d6c86af06f27.npy",
+     "cov_file_sha256": "0e3d273667685ccbd9676c7d208c8679b75efdb88ee104e1e34bead09446653f",
+     "cov_array_sha256": "984690d5e4f6e1a4723498d6bbf91f325a1bedaaacf86a51520b8dcffb5eee26",
+     "intake_receipt": "D1_aa089fa492bc"
+    },
+    "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+    "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+    "master_seed": 20260912,
+    "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+    "engine": "0.78.0"
+   }
+  },
+  "cfg10201_b0": {
+   "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10201_b0",
+   "reused": false,
+   "manifest_sha256": "c14b06b627e0e052dc448ddf1946ed17548db4aeb2641232b5abff282dbd9c78",
+   "n_rows": 1000000,
+   "n_clusters": 10000,
+   "formal": true,
+   "purpose": "evaluation",
+   "seconds": 255.60891675949097,
+   "request": {
+    "name": "cfg10201_b0",
+    "kind": "configuration",
+    "family": "E1",
+    "config_id": 10201,
+    "evaluation_ids": {
+     "matched": 10201,
+     "native": 60201
+    },
+    "purpose": "evaluation",
+    "crn_group": 1001,
+    "wave_id": 1,
+    "batch_id": 0,
+    "roles": [
+     "model_matched",
+     "model_native",
+     "ref_native"
+    ],
+    "selections": [
+     "float64"
+    ],
+    "n_clusters": 10000,
+    "n_rows": 1000000,
+    "m": 100,
+    "scale": 1.0,
+    "formal": true,
+    "root_sha256": {
+     "model_matched": "5984ff37886763e5578e397efb9096bc439e79539e121263268bc5d842f75b2b",
+     "model_native": "a7b6053f26629a544a3689a86d7aa27a75bddb2dff686bb2ff9435ed9bbc83c9",
+     "ref_native": "eff675f5bab53fc3e15a1a20931bcb2c0e33b2c0199745877b2e36283dd82ba5"
+    },
+    "covariance": {
+     "cov_file": "cov_cache/cov_E1_a150bbdb1699ecf79.npy",
+     "cov_file_sha256": "a12e83083d08397c5fa4c7b21cc0308000a9dba3b7db6ce6fda6585db35826f3",
+     "cov_array_sha256": "d354977a2543ac1e97b071b38170e9b523715100dcee2b8f52dd80b24eafd7fc",
+     "intake_receipt": "D1_aa089fa492bc"
+    },
+    "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+    "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+    "master_seed": 20260912,
+    "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+    "engine": "0.78.0"
+   }
+  },
+  "cfg10201_b1": {
+   "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10201_b1",
+   "reused": false,
+   "manifest_sha256": "03b7b76432a4b0b6c52588a69b560dabea929f4e11a6ff95aaffbda44404461f",
+   "n_rows": 3000000,
+   "n_clusters": 30000,
+   "formal": true,
+   "purpose": "evaluation",
+   "seconds": 769.4248316287994,
+   "request": {
+    "name": "cfg10201_b1",
+    "kind": "configuration",
+    "family": "E1",
+    "config_id": 10201,
+    "evaluation_ids": {
+     "matched": 10201,
+     "native": 60201
+    },
+    "purpose": "evaluation",
+    "crn_group": 1001,
+    "wave_id": 1,
+    "batch_id": 1,
+    "roles": [
+     "model_matched",
+     "model_native",
+     "ref_native"
+    ],
+    "selections": [
+     "float64"
+    ],
+    "n_clusters": 30000,
+    "n_rows": 3000000,
+    "m": 100,
+    "scale": 1.0,
+    "formal": true,
+    "root_sha256": {
+     "model_matched": "5984ff37886763e5578e397efb9096bc439e79539e121263268bc5d842f75b2b",
+     "model_native": "a7b6053f26629a544a3689a86d7aa27a75bddb2dff686bb2ff9435ed9bbc83c9",
+     "ref_native": "eff675f5bab53fc3e15a1a20931bcb2c0e33b2c0199745877b2e36283dd82ba5"
+    },
+    "covariance": {
+     "cov_file": "cov_cache/cov_E1_a150bbdb1699ecf79.npy",
+     "cov_file_sha256": "a12e83083d08397c5fa4c7b21cc0308000a9dba3b7db6ce6fda6585db35826f3",
+     "cov_array_sha256": "d354977a2543ac1e97b071b38170e9b523715100dcee2b8f52dd80b24eafd7fc",
+     "intake_receipt": "D1_aa089fa492bc"
+    },
+    "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+    "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+    "master_seed": 20260912,
+    "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+    "engine": "0.78.0"
+   }
+  },
+  "cfg10201_fit": {
+   "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10201_fit",
+   "reused": false,
+   "manifest_sha256": "23e2495cc2b30b79375d1612b430917ea4ccfe19c3e5e0363646cc34718f355c",
+   "n_rows": 200000,
+   "n_clusters": 2000,
+   "formal": true,
+   "purpose": "fitting",
+   "seconds": 53.56376934051514,
+   "request": {
+    "name": "cfg10201_fit",
+    "kind": "configuration",
+    "family": "E1",
+    "config_id": 10201,
+    "evaluation_ids": {
+     "matched": 10201,
+     "native": 60201
+    },
+    "purpose": "fitting",
+    "crn_group": 2001,
+    "wave_id": 1,
+    "batch_id": 0,
+    "roles": [
+     "model_matched",
+     "model_native",
+     "ref_native"
+    ],
+    "selections": [
+     "float64"
+    ],
+    "n_clusters": 2000,
+    "n_rows": 200000,
+    "m": 100,
+    "scale": 1.0,
+    "formal": true,
+    "root_sha256": {
+     "model_matched": "5984ff37886763e5578e397efb9096bc439e79539e121263268bc5d842f75b2b",
+     "model_native": "a7b6053f26629a544a3689a86d7aa27a75bddb2dff686bb2ff9435ed9bbc83c9",
+     "ref_native": "eff675f5bab53fc3e15a1a20931bcb2c0e33b2c0199745877b2e36283dd82ba5"
+    },
+    "covariance": {
+     "cov_file": "cov_cache/cov_E1_a150bbdb1699ecf79.npy",
+     "cov_file_sha256": "a12e83083d08397c5fa4c7b21cc0308000a9dba3b7db6ce6fda6585db35826f3",
+     "cov_array_sha256": "d354977a2543ac1e97b071b38170e9b523715100dcee2b8f52dd80b24eafd7fc",
+     "intake_receipt": "D1_aa089fa492bc"
+    },
+    "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+    "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+    "master_seed": 20260912,
+    "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+    "engine": "0.78.0"
+   }
+  },
+  "cfg10301_b0": {
+   "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10301_b0",
+   "reused": false,
+   "manifest_sha256": "c7411df99b4acf300308302e136727f85a0fd21c88de609b359086a3333be0a1",
+   "n_rows": 1000000,
+   "n_clusters": 10000,
+   "formal": true,
+   "purpose": "evaluation",
+   "seconds": 254.11065554618835,
+   "request": {
+    "name": "cfg10301_b0",
+    "kind": "configuration",
+    "family": "E1",
+    "config_id": 10301,
+    "evaluation_ids": {
+     "matched": 10301,
+     "native": 60301
+    },
+    "purpose": "evaluation",
+    "crn_group": 1001,
+    "wave_id": 1,
+    "batch_id": 0,
+    "roles": [
+     "model_matched",
+     "model_native",
+     "ref_native"
+    ],
+    "selections": [
+     "float64"
+    ],
+    "n_clusters": 10000,
+    "n_rows": 1000000,
+    "m": 100,
+    "scale": 1.0,
+    "formal": true,
+    "root_sha256": {
+     "model_matched": "a5d926bb8891c3f2932fd0478156fa745716b5cdad5325cf530cc8a668547f45",
+     "model_native": "25de3d954fd602036ae130ebcc32385b9045f5bdbb7d3695dfec43e7d09de257",
+     "ref_native": "bd88291ef373fa9677e8857105e8d853be497c94fc4815f00cf8af209fd99652"
+    },
+    "covariance": {
+     "cov_file": "cov_cache/cov_E1_cc31c32f37a3b579f.npy",
+     "cov_file_sha256": "67f8741582bcbb2bc8d322b774beb3a11eb42e094701d7988f2997cfa884a1d8",
+     "cov_array_sha256": "7183ca49fb3426742a97ec21e482f77172309544670fc84c62cc9d5fdc197e39",
+     "intake_receipt": "D1_aa089fa492bc"
+    },
+    "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+    "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+    "master_seed": 20260912,
+    "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+    "engine": "0.78.0"
+   }
+  },
+  "cfg10301_b1": {
+   "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10301_b1",
+   "reused": false,
+   "manifest_sha256": "e608013437430d776fbbe6fb918484088174739ad5706d596396380c3bccc53c",
+   "n_rows": 3000000,
+   "n_clusters": 30000,
+   "formal": true,
+   "purpose": "evaluation",
+   "seconds": 772.6778235435486,
+   "request": {
+    "name": "cfg10301_b1",
+    "kind": "configuration",
+    "family": "E1",
+    "config_id": 10301,
+    "evaluation_ids": {
+     "matched": 10301,
+     "native": 60301
+    },
+    "purpose": "evaluation",
+    "crn_group": 1001,
+    "wave_id": 1,
+    "batch_id": 1,
+    "roles": [
+     "model_matched",
+     "model_native",
+     "ref_native"
+    ],
+    "selections": [
+     "float64"
+    ],
+    "n_clusters": 30000,
+    "n_rows": 3000000,
+    "m": 100,
+    "scale": 1.0,
+    "formal": true,
+    "root_sha256": {
+     "model_matched": "a5d926bb8891c3f2932fd0478156fa745716b5cdad5325cf530cc8a668547f45",
+     "model_native": "25de3d954fd602036ae130ebcc32385b9045f5bdbb7d3695dfec43e7d09de257",
+     "ref_native": "bd88291ef373fa9677e8857105e8d853be497c94fc4815f00cf8af209fd99652"
+    },
+    "covariance": {
+     "cov_file": "cov_cache/cov_E1_cc31c32f37a3b579f.npy",
+     "cov_file_sha256": "67f8741582bcbb2bc8d322b774beb3a11eb42e094701d7988f2997cfa884a1d8",
+     "cov_array_sha256": "7183ca49fb3426742a97ec21e482f77172309544670fc84c62cc9d5fdc197e39",
+     "intake_receipt": "D1_aa089fa492bc"
+    },
+    "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+    "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+    "master_seed": 20260912,
+    "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+    "engine": "0.78.0"
+   }
+  },
+  "cfg10301_fit": {
+   "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10301_fit",
+   "reused": false,
+   "manifest_sha256": "06a90347ada412ca09e8a4743652c51cce32ff5e2877383cd6f1c20e2dcb9cce",
+   "n_rows": 200000,
+   "n_clusters": 2000,
+   "formal": true,
+   "purpose": "fitting",
+   "seconds": 52.830228328704834,
+   "request": {
+    "name": "cfg10301_fit",
+    "kind": "configuration",
+    "family": "E1",
+    "config_id": 10301,
+    "evaluation_ids": {
+     "matched": 10301,
+     "native": 60301
+    },
+    "purpose": "fitting",
+    "crn_group": 2001,
+    "wave_id": 1,
+    "batch_id": 0,
+    "roles": [
+     "model_matched",
+     "model_native",
+     "ref_native"
+    ],
+    "selections": [
+     "float64"
+    ],
+    "n_clusters": 2000,
+    "n_rows": 200000,
+    "m": 100,
+    "scale": 1.0,
+    "formal": true,
+    "root_sha256": {
+     "model_matched": "a5d926bb8891c3f2932fd0478156fa745716b5cdad5325cf530cc8a668547f45",
+     "model_native": "25de3d954fd602036ae130ebcc32385b9045f5bdbb7d3695dfec43e7d09de257",
+     "ref_native": "bd88291ef373fa9677e8857105e8d853be497c94fc4815f00cf8af209fd99652"
+    },
+    "covariance": {
+     "cov_file": "cov_cache/cov_E1_cc31c32f37a3b579f.npy",
+     "cov_file_sha256": "67f8741582bcbb2bc8d322b774beb3a11eb42e094701d7988f2997cfa884a1d8",
+     "cov_array_sha256": "7183ca49fb3426742a97ec21e482f77172309544670fc84c62cc9d5fdc197e39",
+     "intake_receipt": "D1_aa089fa492bc"
+    },
+    "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+    "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+    "master_seed": 20260912,
+    "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+    "engine": "0.78.0"
+   }
+  }
+ },
+ "pins_sha256": "2a603e9256db124ce64c1131cc117d6967276cce4e02a01e28bb36882d24aef8",
+ "engine_version": "0.78.0",
+ "env": {
+  "python": "3.13.15",
+  "numpy": "2.1.3",
+  "scipy": "1.16.3",
+  "healpy": "1.20.0",
+  "camb": "2.0.4",
+  "pot": "0.9.7.post1",
+  "blas_threads": [
+   {
+    "api": "blas",
+    "n": 2,
+    "owner": "numpy",
+    "lib": "openblas",
+    "filepath": "/usr/local/lib/python3.13/dist-packages/numpy.libs/libscipy_openblas64_-ff651d7f.so",
+    "version": "0.3.27"
+   },
+   {
+    "api": "blas",
+    "n": 2,
+    "owner": "other",
+    "lib": "openblas",
+    "filepath": "/usr/local/lib/python3.13/dist-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+    "version": "0.3.29.dev"
+   },
+   {
+    "api": "blas",
+    "n": 2,
+    "owner": "other",
+    "lib": "openblas",
+    "filepath": "/usr/local/lib/python3.13/dist-packages/opencv_python_headless.libs/libopenblasp-r0-59ffcd50.3.15.so",
+    "version": "0.3.15"
+   },
+   {
+    "api": "blas",
+    "n": 1,
+    "owner": "other",
+    "lib": "openblas",
+    "filepath": "/usr/local/lib/python3.13/dist-packages/cvxopt.libs/libopenblas-r0-11edc3fa.3.15.so",
+    "version": "0.3.15"
+   }
+  ]
+ },
+ "env_gate": {
+  "versions_ok": true,
+  "pools_ok": true,
+  "expected": {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "pot": "0.9.7.post1",
+   "camb": "2.0.4",
+   "numpy_openblas_threads": 2,
+   "other_pools_max": 2,
+   "note": "rules §12.1 hard gate (checked live in the generating process); A11-style fingerprint/lock diff recorded as metadata only"
+  }
+ },
+ "loader": {
+  "t1_engine_path": "/content/d2_scratch/t1_engine.py",
+  "t1_engine_sha256": "87bf8424073af021264b12fe312ab5255b71008bdd5fe874d164d48daf034dc8",
+  "t2b2_bridge_path": "/content/d2_scratch/t2b2_bridge.py",
+  "t2b2_bridge_sha256": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872"
+ },
+ "a10_reference_sha256": "6a8c87889ec1d7a5d35336a3cdc30f9537376f2b3878ac9d1ee12cc34319c5df",
+ "a10_cross_check": {
+  "max_rel": 0.0,
+  "seconds": 19.839622020721436
+ },
+ "producer": {
+  "engine_version": "0.78.0",
+  "modules": {
+   "__init__.py": "8a41a923d7dfd4378fbba19042bc056940a4de6e8d3d3921be4a8ce68720d88b",
+   "errors.py": "8dcb6c4c165b6e094ce5f5696e236452a7a51d9ca7b840f5e36b704443f2011e",
+   "types.py": "e45f60319fad4449b4148d10edc497e336f72d936b5a107154707ab73c856fe4",
+   "truth.py": "8704a1fdfe4ddbb273888a5f275642079aec6406637f8585373401c0f5308383",
+   "rules_config.py": "68bb0c9202831d89852c02c1564c99522ba6980bfd4b6436142b5665ee48852c",
+   "serialization.py": "2801a376979142650de01979b454d3a7ee9efb9a73d376435e1820bfc48a1fa4",
+   "ci.py": "6703257bcd9337a0b07eb440f9096c46a7cc8d51ac7e1c4056f2f7b043a8f597",
+   "precision.py": "481be9ad5f3b3e7cbda97e1ba5225e9608f5ce8040dfaf0469e8d105765f879a",
+   "decision.py": "9bd01a136ea6b4a3a51db0fe20e3552058a91b8558d7b041d0ec37aefd786f88",
+   "family.py": "c68792dded4a87b92a537e6ad4935fff81457257ce98eb8620008b82ce77393c",
+   "bootstrap_plan.py": "6941a7ac19fddfd9d3ca465632e3c68f18809d55e8e82cefa0a206fac2dcd3f7",
+   "calibration.py": "1cc25d502021025191f3181b454b999555998884964f3c3dfe915bc9e0db18ea",
+   "quantity.py": "f817dc9ddca575bdcc35287cae7d2da87baf5c1e4368b784b0dbe7963914a3d1",
+   "density.py": "c1273a0723b3c9501d6625f689367c1e4463f6289dbeb1e150774197dc796735",
+   "orchestrator.py": "21f246df65c5d04d94a70f05387f611c402cc6282618911348718be950ecac63",
+   "positions.py": "8f640eb7d620c2d0bd3eb0fe31ded2e453cc47c839de435644854afc8e499432",
+   "expansion.py": "d46fcf953fcaa1529a4d0f0e7ea29808ae734b84201f7d31484a6ee905981089",
+   "w2_stop.py": "768cf18c256a026ca97e06cebc0a9efed5565cde6df48fed228f14a38a811d8b",
+   "position_state.py": "42e3cdb38f3ca22209ff6c6a5b3b46e526d5617737bd1d45124fcbf5847a0130",
+   "registry.py": "f494231bc66af55f2d3071b944448e7eb8bd65b805fc665dab175270f2b06d47",
+   "observers12.py": "a02fd804aec90fca908bad2759dfe5d95019014b607d421c7e3c9e29a8eb9788",
+   "observers12_stream.py": "08939878f94f38509573a8abc09181d9bd7e74b8719603c311904c0d69953b25",
+   "w2_manifest.py": "41116d3f483b238d1ebc33f189697232bb2cb6552853397b061b6de186697528",
+   "stage12.py": "3e5b3b3150f25707288d16b0b597a5e359434647606cdb385825f3f42f211d2c",
+   "coordinator.py": "c8274ebccd3dde12e57666ff4a18eff8e1d9da073362d2711a6e8f41dbb8ae98",
+   "twelve_eval.py": "721ec152e4ed9b1b5612fb75afdafd45d2f7963a69ed343a35b44472391b1f49",
+   "plan_io.py": "c3bc4b720812e6cd2433853246460483656ec6e2195c3d3fd9555c5fd1a1a849",
+   "grid_registry.py": "dee79a33bc428203b8e2b83cd901db7e95c92c4c4b2fbc1c7b4568b085d4b69b",
+   "grid_manifest.py": "c0cfcad4fbfa4e268f9a918332fc65517a56654b09e48e3646aca8447245608f",
+   "production.py": "c883c6ef35de93abea84c2b2bfc7731619316c8780a15b384ff9907c378acc35",
+   "official_gate.py": "42723a6a5d8f8f92aa8a653f2b60452c7220ae63f0aae2335d96b7f229b5c859",
+   "formal_runner.py": "5f431cff364b52b85d65bfe180b59764e73c2b5a891d35e11081f2bb878cad1e",
+   "legacy_kernel.py": "440d3b6dfb8db4cd5ccce69b8b9a823f3e2cffc4ab4630dc272870c792d2e13e",
+   "performance.py": "c56665ffdeca9df815f0d0792099658152379b8d2d1d43a5a2ab9a0ea27ec79a",
+   "w2_shared.py": "150fdb9f1244a474af03118db24f7641470632e7020d655a998b78f7d3065900",
+   "w2_context.py": "6e51282a30a9665e82125ed4899f2d3386351d4e096181625d2d6c35c98b5a2d",
+   "integrated_runner.py": "e4aee5b257070231f611c45d658e62ff72aef9c5b2c798fec8ee99e3f7268830",
+   "threshold_evaluator.py": "7a73d9df614b44ec4d1f9895150cdbd0073c2deb29467074311995c929309a37",
+   "twelve_assets.py": "550781567142579fc8cb6a4a690afa7b3831fdcc7b51745b39f365a71eb6cc8e",
+   "controls.py": "8e330c7fdd68533cb9c2668983f171d3b1ed48dd4755eefcdee1c95e358de848",
+   "w2_shared_build.py": "7e0a63464754f62980b7f42a327df5505430a95877511674b6253c1a32f72050",
+   "ckpt_persist.py": "438eeaa162d4cf276e537941350da64b02c46f2e76eb7462309405652153d428",
+   "calibration_first.py": "e024c44de07597866124bba558a0634b3832d6a6fbd9a7b44de207e463a572a1",
+   "run_reader.py": "2c7b0fb1f46285715ad31efcaa21d51b9f87d3335edd6c96d80d1664f4089127",
+   "d2_rng.py": "321d3602efaf76b4d83b182da1edc35d607112b61acfae2427e9e2ba78a60e11",
+   "d2_bank.py": "89bf7ff292f541b1ce5e8302ae84bb89cb9ac751335579c7e1c9d8fa434ab6df",
+   "archive.py": "354e75e3f89e3477c4b1bd05e7423ddd735431984bb27301cf3d60162cedeee6",
+   "checkpoint.py": "aeefe9ae9fdc9c7b9866be7f62e851c25289c0aaaa2069ea3a3e0b2057d5e5ed"
+  },
+  "script_sha256": "6ef809146402c81b086b3b21b2172cf61f56d85e794a7c988aab014b08aff3b8",
+  "pins_sha256": "2a603e9256db124ce64c1131cc117d6967276cce4e02a01e28bb36882d24aef8",
+  "inventory_sha256": "3523d233115ab8f41710e524d8bc80171f0d7b66c9ed5de06cafecde604a9fb5",
+  "crn_table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+  "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+  "profile": {
+   "profile": "production_official",
+   "scale": 1.0,
+   "selftest": false,
+   "skip_env_lock": false,
+   "skip_a10": false,
+   "configs": null
+  },
+  "gates_before_generation": {
+   "G_pins_loaded": true,
+   "G_engine_inventory": true,
+   "G_script_sha": true,
+   "G_phaseC_members": true,
+   "G_env_lock": true,
+   "G_d1_trusted": true,
+   "G_external_loader_sha": true,
+   "G_crn_table": true,
+   "G_bank_spec": true,
+   "G_registry_bound": true,
+   "G_calibration_bank_matches_a10": true
+  },
+  "digest": "9ed095c563d2f7bc54a9fe8a648015d70e251eeb9e11693d847099e8a7a5284c"
+ },
+ "ledger": [
+  {
+   "name": "ref_E1_b0",
+   "satisfied_by": "new_generation",
+   "manifest_sha256": "f36f6c9a00a9a7b9a905229fcb3738f93d2b316832c6e9327f3bd23eca42a1bd"
+  },
+  {
+   "name": "ref_E1_b1",
+   "satisfied_by": "new_generation",
+   "manifest_sha256": "cadf7003e934c088e213fad56550fcefd384285cf0c15bbd0e252c4953ebb138"
+  },
+  {
+   "name": "ref_E1_fit",
+   "satisfied_by": "new_generation",
+   "manifest_sha256": "ee1b54badf7bd92d19481aa194da49df1a0d4f416f0eea93aa70d78bef43d1f4"
+  },
+  {
+   "name": "cfg10101_b0",
+   "satisfied_by": "new_generation",
+   "manifest_sha256": "360b4feeb47854a9b77aecf27a7212c0749b908ba7a015c349f93b25588b74fc"
+  },
+  {
+   "name": "cfg10101_b1",
+   "satisfied_by": "new_generation",
+   "manifest_sha256": "287cc863c9e85fbbb6bbc86263895f99bb9e699ce64fb7eb373cf39cc6f4229c"
+  },
+  {
+   "name": "cfg10101_fit",
+   "satisfied_by": "new_generation",
+   "manifest_sha256": "bc7d3d233919d6aaa7d8418124d6e8a1981c6cfa691ec2cb0bdeb827accc9518"
+  },
+  {
+   "name": "cfg10201_b0",
+   "satisfied_by": "new_generation",
+   "manifest_sha256": "c14b06b627e0e052dc448ddf1946ed17548db4aeb2641232b5abff282dbd9c78"
+  },
+  {
+   "name": "cfg10201_b1",
+   "satisfied_by": "new_generation",
+   "manifest_sha256": "03b7b76432a4b0b6c52588a69b560dabea929f4e11a6ff95aaffbda44404461f"
+  },
+  {
+   "name": "cfg10201_fit",
+   "satisfied_by": "new_generation",
+   "manifest_sha256": "23e2495cc2b30b79375d1612b430917ea4ccfe19c3e5e0363646cc34718f355c"
+  },
+  {
+   "name": "cfg10301_b0",
+   "satisfied_by": "new_generation",
+   "manifest_sha256": "c7411df99b4acf300308302e136727f85a0fd21c88de609b359086a3333be0a1"
+  },
+  {
+   "name": "cfg10301_b1",
+   "satisfied_by": "new_generation",
+   "manifest_sha256": "e608013437430d776fbbe6fb918484088174739ad5706d596396380c3bccc53c"
+  },
+  {
+   "name": "cfg10301_fit",
+   "satisfied_by": "new_generation",
+   "manifest_sha256": "06a90347ada412ca09e8a4743652c51cce32ff5e2877383cd6f1c20e2dcb9cce"
+  }
+ ],
+ "required_requests": [
+  "ref_E1_b0",
+  "ref_E1_b1",
+  "ref_E1_fit",
+  "cfg10101_b0",
+  "cfg10101_b1",
+  "cfg10101_fit",
+  "cfg10201_b0",
+  "cfg10201_b1",
+  "cfg10201_fit",
+  "cfg10301_b0",
+  "cfg10301_b1",
+  "cfg10301_fit"
+ ],
+ "gates": {
+  "G_pins_loaded": true,
+  "G_engine_inventory": true,
+  "G_script_sha": true,
+  "G_phaseC_members": true,
+  "G_env_lock": true,
+  "G_d1_trusted": true,
+  "G_external_loader_sha": true,
+  "G_crn_table": true,
+  "G_bank_spec": true,
+  "G_registry_bound": true,
+  "G_calibration_bank_matches_a10": true,
+  "G_family_reference": true,
+  "G_all_configurations": true,
+  "G_registry_saved": true
+ },
+ "required_inventory": [
+  "G_pins_loaded",
+  "G_engine_inventory",
+  "G_script_sha",
+  "G_phaseC_members",
+  "G_env_lock",
+  "G_d1_trusted",
+  "G_external_loader_sha",
+  "G_crn_table",
+  "G_bank_spec",
+  "G_registry_bound",
+  "G_calibration_bank_matches_a10",
+  "G_family_reference",
+  "G_all_configurations",
+  "G_registry_saved"
+ ],
+ "required_all_true": true,
+ "D2_PASS": true,
+ "seconds": 3822.23366189003
+}

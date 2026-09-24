@@ -1,0 +1,1405 @@
+{
+ "schema": "d2_generation_ledger_v1",
+ "created": "2026-09-24",
+ "created_by": "Claude (author-side ledger of the accepted generation runs)",
+ "source_lock": {
+  "commit": "8b5e6102f0088afbf69b10aaa9e90af4a63e07e2",
+  "inventory_sha256": "3523d233115ab8f41710e524d8bc80171f0d7b66c9ed5de06cafecde604a9fb5",
+  "engine_version": "0.78.0",
+  "preexecution_authorization": "ChatGPT_D2_preexecution_GO_8b5e6102f008.md / Step1_PhaseD_D2_preexecution_authorization_8b5e6102f008.json"
+ },
+ "families": {
+  "E1": {
+   "run_id": "20260923T063210Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z",
+   "commit": "8b5e6102f0088afbf69b10aaa9e90af4a63e07e2",
+   "inventory_sha256": "3523d233115ab8f41710e524d8bc80171f0d7b66c9ed5de06cafecde604a9fb5",
+   "engine_version": "0.78.0",
+   "configuration_ids": [
+    10101,
+    10201,
+    10301
+   ],
+   "directories": 12,
+   "new_calls": 12,
+   "reused_units": 0,
+   "npz_files": 20,
+   "npz_bytes": 1238465936,
+   "script_seconds": 3822.23366189003,
+   "a10_max_rel": 0.0,
+   "gates": {
+    "G_pins_loaded": true,
+    "G_engine_inventory": true,
+    "G_script_sha": true,
+    "G_phaseC_members": true,
+    "G_env_lock": true,
+    "G_d1_trusted": true,
+    "G_external_loader_sha": true,
+    "G_crn_table": true,
+    "G_bank_spec": true,
+    "G_registry_bound": true,
+    "G_calibration_bank_matches_a10": true,
+    "G_family_reference": true,
+    "G_all_configurations": true,
+    "G_registry_saved": true
+   },
+   "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+   "producer_digest": "9ed095c563d2f7bc54a9fe8a648015d70e251eeb9e11693d847099e8a7a5284c",
+   "records": {
+    "final_record_sha256": "04ec8f23a5f95514947a356a15ec25f766fae6a5989ca8f7dea15ea5928afcdc",
+    "bank_registry_sha256": "14a739ef8c1736ad6f4e3d32163706075a1e45034a1707184ee45e100c1b5c96",
+    "run_manifest_sha256": "d482d80440f6d91c8d53e08f4d67bb62d495e3c3ca94bc2ad0199cf2a0c55051",
+    "launcher_lock_sha256": "e49f767b202b9411c1bf6462ca894dbe54dab179aee9ab6f131c21e835d4e4d7"
+   },
+   "units": {
+    "ref_E1_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/ref_E1_b0",
+     "manifest_sha256": "f36f6c9a00a9a7b9a905229fcb3738f93d2b316832c6e9327f3bd23eca42a1bd",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "ref_E1_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/ref_E1_b1",
+     "manifest_sha256": "cadf7003e934c088e213fad56550fcefd384285cf0c15bbd0e252c4953ebb138",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "ref_E1_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/ref_E1_fit",
+     "manifest_sha256": "ee1b54badf7bd92d19481aa194da49df1a0d4f416f0eea93aa70d78bef43d1f4",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg10101_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10101_b0",
+     "manifest_sha256": "360b4feeb47854a9b77aecf27a7212c0749b908ba7a015c349f93b25588b74fc",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg10101_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10101_b1",
+     "manifest_sha256": "287cc863c9e85fbbb6bbc86263895f99bb9e699ce64fb7eb373cf39cc6f4229c",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg10101_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10101_fit",
+     "manifest_sha256": "bc7d3d233919d6aaa7d8418124d6e8a1981c6cfa691ec2cb0bdeb827accc9518",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg10201_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10201_b0",
+     "manifest_sha256": "c14b06b627e0e052dc448ddf1946ed17548db4aeb2641232b5abff282dbd9c78",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg10201_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10201_b1",
+     "manifest_sha256": "03b7b76432a4b0b6c52588a69b560dabea929f4e11a6ff95aaffbda44404461f",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg10201_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10201_fit",
+     "manifest_sha256": "23e2495cc2b30b79375d1612b430917ea4ccfe19c3e5e0363646cc34718f355c",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg10301_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10301_b0",
+     "manifest_sha256": "c7411df99b4acf300308302e136727f85a0fd21c88de609b359086a3333be0a1",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg10301_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10301_b1",
+     "manifest_sha256": "e608013437430d776fbbe6fb918484088174739ad5706d596396380c3bccc53c",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg10301_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E1_20260923T063210Z/out/d2/cfg10301_fit",
+     "manifest_sha256": "06a90347ada412ca09e8a4743652c51cce32ff5e2877383cd6f1c20e2dcb9cce",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    }
+   },
+   "audit": {
+    "md": "ChatGPT_audit_Step1_PhaseD_D2_E1_Colab_8b5e6102f008.md",
+    "json": "Step1_PhaseD_D2_E1_8b5e6102f008_metadata_acceptance.json"
+   },
+   "metadata_acceptance": "ChatGPT: PASS (run records and metadata only; NPZ arrays not independently read)"
+  },
+  "E2": {
+   "run_id": "20260923T092030Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z",
+   "commit": "8b5e6102f0088afbf69b10aaa9e90af4a63e07e2",
+   "inventory_sha256": "3523d233115ab8f41710e524d8bc80171f0d7b66c9ed5de06cafecde604a9fb5",
+   "engine_version": "0.78.0",
+   "configuration_ids": [
+    20101,
+    20102,
+    20103,
+    20201,
+    20202,
+    20203,
+    20301,
+    20302,
+    20303
+   ],
+   "directories": 39,
+   "new_calls": 39,
+   "reused_units": 0,
+   "npz_files": 59,
+   "npz_bytes": 3355397804,
+   "script_seconds": 8592.949563264847,
+   "a10_max_rel": 0.0,
+   "gates": {
+    "G_pins_loaded": true,
+    "G_engine_inventory": true,
+    "G_script_sha": true,
+    "G_phaseC_members": true,
+    "G_env_lock": true,
+    "G_d1_trusted": true,
+    "G_external_loader_sha": true,
+    "G_crn_table": true,
+    "G_bank_spec": true,
+    "G_registry_bound": true,
+    "G_calibration_bank_matches_a10": true,
+    "G_family_reference": true,
+    "G_all_configurations": true,
+    "G_registry_saved": true
+   },
+   "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+   "producer_digest": "9ed095c563d2f7bc54a9fe8a648015d70e251eeb9e11693d847099e8a7a5284c",
+   "records": {
+    "final_record_sha256": "0337e245370fec412add9bfa82cb6c62db56b225df48d8d70e4493b71698e5a4",
+    "bank_registry_sha256": "5498697e8df44099a88b5acde5ee92e454b1f94fb154dcfe57324aecb83c0b72",
+    "run_manifest_sha256": "ab10ec9e7b6944c386f54525ad13bfa7288b29a848b236310ca880cbb6f7009c",
+    "launcher_lock_sha256": "1e45686e289b9917ac9a95af0b7ddcbf9c44598fcea5e4f1d3b800eec750aad9"
+   },
+   "units": {
+    "ref_E2_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/ref_E2_b0",
+     "manifest_sha256": "4573eea23e0911194c44f1c79179b28225b30232744a9d62e7d3ed94756a1247",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "ref_E2_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/ref_E2_b1",
+     "manifest_sha256": "b15492a74e7b980594c42520cca5bfe1db08906b066688f59ae8bc92c33b17b7",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "ref_E2_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/ref_E2_fit",
+     "manifest_sha256": "360429a8b62d384ffb1646994490c1a1625ae009c3308161d3ca83355680f8b2",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20101_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20101_b0",
+     "manifest_sha256": "67a35318114acad6cc1a63e5b03a322e05242ee4e56a58b958de0c4b773bd7c9",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20101_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20101_b1",
+     "manifest_sha256": "337a50f0c3098caf0bce2728caeb8efc4b1492ec80b00ee3ce3bb982d01a7dd6",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20101_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20101_fit",
+     "manifest_sha256": "a6fcc5d23b54c937044a306be8271c4efcfc625940afae2d367ec4d9d071a546",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20101_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20101_w2",
+     "manifest_sha256": "12dc676420ff847ac863481670d39952f4d37d98181e9de534592364f78bd61e",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20102_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20102_b0",
+     "manifest_sha256": "afdfb74c2d27ab2d59fd31fb8d4a0d6c1ba8fa2a9ee012a9485af5c9e6dc030e",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20102_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20102_b1",
+     "manifest_sha256": "6756d80bcfdc8aee39068cc9c9c0928086be727cd9eca8f6dbb18a72cda28380",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20102_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20102_fit",
+     "manifest_sha256": "bc09fbae1b1c200b3c8451456388d13facee8f723cb2f02c5f2ea3297f5298cf",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20102_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20102_w2",
+     "manifest_sha256": "8936db066b4e588e90e92d7c9d33e45fd26ec563ebf4199f98937b0e232faabe",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20103_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20103_b0",
+     "manifest_sha256": "c13a6a6387dfda711ed94569d1c2918ce7048ec5182a3e22a68eeb98804b4f55",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20103_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20103_b1",
+     "manifest_sha256": "5a8a7378e7ac85af6b15c7c2a97b0d01b7e12013498b8e3234a79c0ce971288a",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20103_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20103_fit",
+     "manifest_sha256": "ab6b84ac8ac9b8b10a808663dc384cb9c788879d743f197ce36e344162faf40c",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20103_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20103_w2",
+     "manifest_sha256": "797469cac9cc9012e9004f00a35d27df7a24988a4152a458e2448a4f7fe89e2c",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20201_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20201_b0",
+     "manifest_sha256": "d44c2a1c7d320e97fd9097badba41f9cd61143040b9ae4ceff98585efb06be1b",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20201_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20201_b1",
+     "manifest_sha256": "10257f15ef9f80ac2ef22f843be1d51a1dc3a1fd6dfcdb55319b5867d2039637",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20201_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20201_fit",
+     "manifest_sha256": "aa294c1529ce6c5b457499cf77ade84b84e9bee8d760075663f42a3d8507007f",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20201_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20201_w2",
+     "manifest_sha256": "e5f14e7d5bd614774b4f1aa604cff1ef29f285ddf9e44c39064127a0580f8ce1",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20202_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20202_b0",
+     "manifest_sha256": "ecaa949e4f0dee1ce1897e8e158e49464f4e7ad34b5883492468c61ef2deebee",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20202_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20202_b1",
+     "manifest_sha256": "2569b7973104ba847e53ad10b42dafcec81bb306d53fa376e25fb99ff97e96b3",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20202_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20202_fit",
+     "manifest_sha256": "e1b9ac48bdf29287a7453c9e210c301587adafd65016eb2eb4e577ca06c6ba98",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20202_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20202_w2",
+     "manifest_sha256": "a88cb7c9e7db5aa5222b79f3ea02fa00b3fc4ff91a91ac337ebc2205ea729dde",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20203_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20203_b0",
+     "manifest_sha256": "4b56f40c0e11e7881fe677535e11c8ce3ed5b992d3655158ad26535cea393868",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20203_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20203_b1",
+     "manifest_sha256": "efe3e2ddf81658d45b95bd4bd32c48785e607cbb27b802a562ae8ba41d187b63",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20203_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20203_fit",
+     "manifest_sha256": "144722b6adabfc2993e1acc793a62efa66a5a8f80871b79c9dcf8c221e966f12",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20203_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20203_w2",
+     "manifest_sha256": "e8b2104bd8b82691722f998259318ea3749474958e756f39e1330a772456b796",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20301_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20301_b0",
+     "manifest_sha256": "76f6b5e886032fa1d3cc857e9f669fab82dacb820cf12def1bed048ac92c0f93",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20301_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20301_b1",
+     "manifest_sha256": "703f412a3802c77c63ca3d3fe1bcf9f399bcefe367194084f1b57235308301cb",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20301_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20301_fit",
+     "manifest_sha256": "9f7000929b97fd4dd70f0e11abb0300dc7c0fb1dd339f1efefbfdcb7489c9631",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20301_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20301_w2",
+     "manifest_sha256": "fe525f4b288ef0cdc6a5a82032f9cd8863ee517611f070c1feefd5c4b8f0904b",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20302_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20302_b0",
+     "manifest_sha256": "dde2740abfa15c52af104cac467ef4a668b2cc70b589e175672aaf2fdb64f11a",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20302_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20302_b1",
+     "manifest_sha256": "ad4f759b4824b4ba3badbb3825d8082342877123fc5b068dbdb59c0afd618b9e",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20302_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20302_fit",
+     "manifest_sha256": "190090ea1f72be73929e89397225e273f6fe60b9b79072d82584ea2c32592056",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20302_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20302_w2",
+     "manifest_sha256": "c7e3fe64da4c6430b5670f7ced79f04f487f7ab5f027f10e82c0254f8be26d97",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20303_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20303_b0",
+     "manifest_sha256": "d482c1a863e1f3220b0664e60bd981b3831c6251d998a0f5fe0b44125fd7f47c",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20303_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20303_b1",
+     "manifest_sha256": "64a7ad6ee08a88e66add1ce04868a78b9868c6e59eb91ea787e5e2fa59916db7",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20303_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20303_fit",
+     "manifest_sha256": "7e78dff5b625abcb19ea661a93cfdb6d259452aa1726f2a37233b637b925f7c3",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg20303_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2/cfg20303_w2",
+     "manifest_sha256": "4341e30912268474071b587ea0befb1cb615f8a2a7d73ff882691980c3ab669f",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    }
+   },
+   "audit": {
+    "md": "ChatGPT_audit_Step1_PhaseD_D2_E2_Colab_8b5e6102f008.md",
+    "json": "Step1_PhaseD_D2_E2_8b5e6102f008_metadata_acceptance.json"
+   },
+   "metadata_acceptance": "ChatGPT: PASS (run records and metadata only; NPZ arrays not independently read)"
+  },
+  "E7": {
+   "run_id": "20260923T125656Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z",
+   "commit": "8b5e6102f0088afbf69b10aaa9e90af4a63e07e2",
+   "inventory_sha256": "3523d233115ab8f41710e524d8bc80171f0d7b66c9ed5de06cafecde604a9fb5",
+   "engine_version": "0.78.0",
+   "configuration_ids": [
+    30101,
+    30102,
+    30103,
+    30201,
+    30202,
+    30203,
+    30301,
+    30302,
+    30303
+   ],
+   "directories": 39,
+   "new_calls": 39,
+   "reused_units": 0,
+   "npz_files": 59,
+   "npz_bytes": 3355397804,
+   "script_seconds": 9190.005126953125,
+   "a10_max_rel": 0.0,
+   "gates": {
+    "G_pins_loaded": true,
+    "G_engine_inventory": true,
+    "G_script_sha": true,
+    "G_phaseC_members": true,
+    "G_env_lock": true,
+    "G_d1_trusted": true,
+    "G_external_loader_sha": true,
+    "G_crn_table": true,
+    "G_bank_spec": true,
+    "G_registry_bound": true,
+    "G_calibration_bank_matches_a10": true,
+    "G_family_reference": true,
+    "G_all_configurations": true,
+    "G_registry_saved": true
+   },
+   "environment_fingerprint": "a99b901520dce14b1fca5e1b94cac539ac2912779eacbfc3f0fc1ea7a537c499",
+   "producer_digest": "9ed095c563d2f7bc54a9fe8a648015d70e251eeb9e11693d847099e8a7a5284c",
+   "records": {
+    "final_record_sha256": "570809a2a2dfa11b83b3f8aeac99bee81ea333eec14a0cc35c51228222c003a8",
+    "bank_registry_sha256": "6c4db39cc28de65d9fa9f797388562d0ae837e821a9e0461f8263361f3df4515",
+    "run_manifest_sha256": "74b76dea0729c22721bcf507d5ab9019284c35a93855841be9cc402b8b0d9871",
+    "launcher_lock_sha256": "cde9135f66adf5bf216e230353b1163a485d23234340b6b825ad4ed6a00057d1"
+   },
+   "units": {
+    "ref_E7_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/ref_E7_b0",
+     "manifest_sha256": "882228b10f1a8c2476d5dc9b677d751408973af0fa0b9e079d74a03522a6643a",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "ref_E7_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/ref_E7_b1",
+     "manifest_sha256": "6b458a2f3773128cecdaea0a3596b75e578d55653335a22bdf3ec8f6d2dbfecc",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "ref_E7_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/ref_E7_fit",
+     "manifest_sha256": "60567d15de71cfe56f2b031c8ec18db75e06f952f51b8a07cb973df5546dfa34",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30101_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30101_b0",
+     "manifest_sha256": "eea2bf915bdcee25a6c16cc23e4f770ec2aeff2eee8ebb591962557b156cfd12",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30101_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30101_b1",
+     "manifest_sha256": "dad27314d041a209b218361432583462c193d8619a13dd3cc394aef8b67786f6",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30101_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30101_fit",
+     "manifest_sha256": "2bc7b0caa06f2103939165eb75fa9127e033b2bc13a91a27097ed1fa63c557e8",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30101_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30101_w2",
+     "manifest_sha256": "45355acc91b4920ec66b4bc342f56a67c33f32c9740662f4a6e622bb41742f54",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30102_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30102_b0",
+     "manifest_sha256": "ac947a9a5d8480eccce32882e933355c8d1da0fa2ead66b971123360137b2919",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30102_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30102_b1",
+     "manifest_sha256": "4fea5af22ec67b2a4ecc0e87d1bd807c4bc9a2a75670cb941893bd5d76261d35",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30102_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30102_fit",
+     "manifest_sha256": "418196550c416085043b94d3f39006606b198430b7167f4826439dde970102de",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30102_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30102_w2",
+     "manifest_sha256": "8d0f621f32845bb675c0303abb59005dbcd2217f26ba762757d9bf22f9304e09",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30103_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30103_b0",
+     "manifest_sha256": "5961d2923d54e863e4d8bd509f089e5b5ddb33bcc9ef1fe2e87f3aef822c7e75",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30103_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30103_b1",
+     "manifest_sha256": "a10691129bc27241160c08a0f8b3bc4645c5574994527dde64907e1cae63cf79",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30103_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30103_fit",
+     "manifest_sha256": "7256f88162634d1335998e9bff4346f2b33dd3f350a57e2f46b24339dde5e00d",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30103_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30103_w2",
+     "manifest_sha256": "b8a50103654a5e910bb4c2498609f6258f575f8c49c6edbbb14585b9bbca1568",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30201_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30201_b0",
+     "manifest_sha256": "f4c19139d27b64f43225539c47852168ebd789685ff92803ed1905590c3fcd93",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30201_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30201_b1",
+     "manifest_sha256": "810bbb58aefa79a5dbfd3b4c1d5a49908115be338ecc111ebc06efe74020c583",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30201_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30201_fit",
+     "manifest_sha256": "32e86fa277348820c97dd1220ddbc5c3108c949cf2557142299fa99b0625b43e",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30201_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30201_w2",
+     "manifest_sha256": "b6d07d448fc53c17a2f66ef6ccb3c0f1f4b6dc71f72ccf0a82d568370fb87d08",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30202_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30202_b0",
+     "manifest_sha256": "9fd913037b9f25618fd6b2f1c7baf83d9fadf8ac01a0f2c7e83545aead771346",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30202_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30202_b1",
+     "manifest_sha256": "3369b934ac0a7b149c30be73972ac050629f672dc53f4cce3123e131a6fd3dc7",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30202_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30202_fit",
+     "manifest_sha256": "96c156773a90421e083a5e20766f8405e82ee9a7297cc715efe62113f6162c1b",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30202_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30202_w2",
+     "manifest_sha256": "8d36778acc8e997ee7f826be5b708b3e8850d4ae958e63c80679f89b98e94e2b",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30203_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30203_b0",
+     "manifest_sha256": "a57264ab08077867a89e63bfa6f3431dd2c8206ba8fa544059a0f13cfe7891d6",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30203_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30203_b1",
+     "manifest_sha256": "189e9d6769c7fd7a47640d66963793a29cb370de21383ca0714bbb4cb20992e9",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30203_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30203_fit",
+     "manifest_sha256": "6fc27e2f68624e442c842ff692c4e0284e247991c4212d1f721df88457df5942",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30203_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30203_w2",
+     "manifest_sha256": "e5eda9e0ee91f46700b42cf9afda19229eacf0cbe77081a74f2c6acb6ac44481",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30301_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30301_b0",
+     "manifest_sha256": "ddb26b8ba36e655d5105e9d9e4b52a8c8ca33a616fcb7a7169e89aa5f04b8276",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30301_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30301_b1",
+     "manifest_sha256": "024c248f84edc478645786e0c3eec16b974a6880ffb225e7525e2a0e63fcf241",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30301_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30301_fit",
+     "manifest_sha256": "da67d3f788ee9a8c47824cb6f64dc6840d479eccda8126798a7f4689eb71319d",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30301_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30301_w2",
+     "manifest_sha256": "aa99b475b94a491afe48bbab7015bec3c3069ad8a690650dd5955bbfe2071494",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30302_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30302_b0",
+     "manifest_sha256": "79db8f2f1799e206175586c91cbe9f78e2c4166f4de1e111d1fc66f382227f59",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30302_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30302_b1",
+     "manifest_sha256": "be7e9e054b81080fff954c8edc31d77c7c7507c4080456cc4f7a0416594e970a",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30302_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30302_fit",
+     "manifest_sha256": "84c7c01c8ed15bc03be050d5c6807cca1bdec152e3802f0a25f1609d0d2acba4",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30302_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30302_w2",
+     "manifest_sha256": "f37c3d3ae2f17ee4337d1cf0d63d1e56757ded7bb0090c0ffdcb5b5521d9b1e6",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30303_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30303_b0",
+     "manifest_sha256": "081aea6f51715a26d2a411304c1447ed2a811848114cc7ef8bde0f0db31126c7",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30303_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30303_b1",
+     "manifest_sha256": "bf6bf385cd7c0fe0061cf14474176f0267a604c346c1af5e873bc553a8694b1b",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30303_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30303_fit",
+     "manifest_sha256": "f7744ff1167c671910929d0bc07a1c9291c9333d3ab157fe764276d189e98bf0",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg30303_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2/cfg30303_w2",
+     "manifest_sha256": "741b9c7364f5521c3b620a0d9145f9051909ecb17a2efd1f5a41f0f89a185bd6",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    }
+   },
+   "audit": {
+    "md": "ChatGPT_audit_Step1_PhaseD_D2_E7_Colab_8b5e6102f008.md",
+    "json": "Step1_PhaseD_D2_E7_8b5e6102f008_metadata_acceptance.json"
+   },
+   "metadata_acceptance": "ChatGPT: PASS (run records and metadata only; NPZ arrays not independently read)"
+  },
+  "E8": {
+   "run_id": "20260923T174910Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z",
+   "commit": "8b5e6102f0088afbf69b10aaa9e90af4a63e07e2",
+   "inventory_sha256": "3523d233115ab8f41710e524d8bc80171f0d7b66c9ed5de06cafecde604a9fb5",
+   "engine_version": "0.78.0",
+   "configuration_ids": [
+    40101,
+    40102,
+    40103,
+    40201,
+    40202,
+    40203,
+    40301,
+    40302,
+    40303
+   ],
+   "directories": 39,
+   "new_calls": 39,
+   "reused_units": 0,
+   "npz_files": 59,
+   "npz_bytes": 3355397804,
+   "script_seconds": 9267.096185922623,
+   "a10_max_rel": 0.0,
+   "gates": {
+    "G_pins_loaded": true,
+    "G_engine_inventory": true,
+    "G_script_sha": true,
+    "G_phaseC_members": true,
+    "G_env_lock": true,
+    "G_d1_trusted": true,
+    "G_external_loader_sha": true,
+    "G_crn_table": true,
+    "G_bank_spec": true,
+    "G_registry_bound": true,
+    "G_calibration_bank_matches_a10": true,
+    "G_family_reference": true,
+    "G_all_configurations": true,
+    "G_registry_saved": true
+   },
+   "environment_fingerprint": "8130927af4723e91e076aa2efed54e44090f60474cbbc95361c8d19c9364f52a",
+   "producer_digest": "9ed095c563d2f7bc54a9fe8a648015d70e251eeb9e11693d847099e8a7a5284c",
+   "records": {
+    "final_record_sha256": "819ebaa142197e6f71dfaa9c17a56fd183c10515d4c97a709e148ab6a29ecf5a",
+    "bank_registry_sha256": "b780e67ce190d081a70b5327d0829006081d9207b3fdb55ee0b0b554d9745b6a",
+    "run_manifest_sha256": "89da1c118f652a764f3425daea4de753c22044b554341d72ef95aa44ba3c1dfa",
+    "launcher_lock_sha256": "2fb413186c4f59072965c85dc0ac1f15e7d667dcb66a84085209032cbee7d61e"
+   },
+   "units": {
+    "ref_E8_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/ref_E8_b0",
+     "manifest_sha256": "af8816fe66ebccd4840bbc10bdbc14ace957ed57143c567522adfbdb7c55cf48",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "ref_E8_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/ref_E8_b1",
+     "manifest_sha256": "1432fa6910905f255c73697cbee39bdc05182093f7ebac25b0d09f85393d59d3",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "ref_E8_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/ref_E8_fit",
+     "manifest_sha256": "13d6802c1111732850672e4b6a234ac337764a3950f57aaed54b06359f1f7b37",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40101_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40101_b0",
+     "manifest_sha256": "4cab8185338f2eecfbd775f01a91b31fe91401db61c44a2768af1c34e2ad3be5",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40101_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40101_b1",
+     "manifest_sha256": "9bc0f3d97b490cc6acb070844855347942ec2257b1b928f5d05952d89d66e00b",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40101_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40101_fit",
+     "manifest_sha256": "017aedda6478fab4a36332069411a2991a98c1d39cfa4a27dab6b6819c76761e",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40101_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40101_w2",
+     "manifest_sha256": "0ec362ab7736d9428d1b45143a7fad2bef76d99428216023209bec9e30855352",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40102_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40102_b0",
+     "manifest_sha256": "c7b168e4d206d756800921e3330c270692780c82179d071febe3bfce717c89d5",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40102_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40102_b1",
+     "manifest_sha256": "0473ed45cda68729cb9e47ab5897ece7d55896c5eb2a9ae831830cb907d47e1c",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40102_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40102_fit",
+     "manifest_sha256": "86e82349ecdd3424b64bcaa948bfffd95577c7a72269a006474fe3c2bbacca35",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40102_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40102_w2",
+     "manifest_sha256": "ee60d8bbfb7a957bc9be3cc90ce8513d766a96eb30fa91c8241f9259ee699d60",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40103_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40103_b0",
+     "manifest_sha256": "43968a469d2785c79468dba0fc2fcc58882a0b3a58f0f8124a12e36e641162a4",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40103_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40103_b1",
+     "manifest_sha256": "254158375c460375637e82d8ddd482d9f4c58f23de6c53976f279f58898f50b3",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40103_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40103_fit",
+     "manifest_sha256": "46ae0397a03e06589a41b306be036096c7f1b485a24c22f1379ed0ffd560652a",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40103_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40103_w2",
+     "manifest_sha256": "1ca0556a89209ed5f0a52dc119b3feb98ecd070261f3fd917a4dfe20d7872e38",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40201_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40201_b0",
+     "manifest_sha256": "80bfb32dec80dac31b1fe660c9b27ffa8701f6ba82c088c14fab693cafc47ab5",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40201_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40201_b1",
+     "manifest_sha256": "5fe2e6d12b587f7c1d580ba267e17fa0fbd4c4e09ec06b9988d314af0125472d",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40201_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40201_fit",
+     "manifest_sha256": "57d09a9e28e7ea17a152d88c8ff47317f5ef30319361d68b3370ee15ec5c3344",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40201_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40201_w2",
+     "manifest_sha256": "ba92f5e45874d164667d7be552ac43bcda6453a27760c79cd9baa3526f4e0112",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40202_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40202_b0",
+     "manifest_sha256": "d0bd870679b5febf926571e471b5400b653866b4c7be25fdd116850c4d638e7b",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40202_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40202_b1",
+     "manifest_sha256": "f29a0dd271174a94a33f955b66bf7b0d9a1837e1530cb67113352ad939dbd1d1",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40202_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40202_fit",
+     "manifest_sha256": "5e77a800f5d4b8ad78bf855b11fb12b9264ee3b0ab9bd30af2d51253bda84f0b",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40202_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40202_w2",
+     "manifest_sha256": "80c344b899d08c55a95e76fda9422786d3e10ff70733b4ca2404468b82345814",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40203_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40203_b0",
+     "manifest_sha256": "8eda910e270220b5344601ad2251d4fba9c956e4fef53bab29b0435e5699a9bb",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40203_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40203_b1",
+     "manifest_sha256": "ffd33c253fde432f3ecfd38416e494f9a15e8e54792ff7499024fcb7265aa038",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40203_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40203_fit",
+     "manifest_sha256": "9189ab81e873526231fd3c3fee7d27c20c494f46a22aa076376a7bade8b492c1",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40203_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40203_w2",
+     "manifest_sha256": "9ff9d276416b5498f715a7626ea7472e4255b5e7563f8d9409f6d14c7bd44df8",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40301_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40301_b0",
+     "manifest_sha256": "bc5a9c7dfba92e0805e9187e465476fa9e9a6f66d3fc63a40db12cacc6b25cd2",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40301_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40301_b1",
+     "manifest_sha256": "c59a2b59ed7cc69748017c3f99289d26dcf0dbace828911f560e912a9c58dbe3",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40301_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40301_fit",
+     "manifest_sha256": "574b4e16a9562a91b38dd6a3f4e1443fb94e8aaeb99cb4b4f74641ebdd69629c",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40301_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40301_w2",
+     "manifest_sha256": "604e2e43d09f2fbf17608d04dce0b4af6da23dbb88cfa110771c4cecdfe2fa7b",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40302_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40302_b0",
+     "manifest_sha256": "b85127c498e57317e7ee49682f4aa8b1f28cd7b306bb623199b706606eed5791",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40302_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40302_b1",
+     "manifest_sha256": "b7361a97bf462d5aa1f5217035121033bb2e05c95569f0dcfd12c5bc23e3bef1",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40302_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40302_fit",
+     "manifest_sha256": "e9d59c1df677b5129848522c61f72dfef3645183d3509cdbd4e0361ee921fd35",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40302_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40302_w2",
+     "manifest_sha256": "cabc35f41f3ae4d95dd01ee92392bb11b7cf2ba905f4b338a055c81f6539ff12",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40303_b0": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40303_b0",
+     "manifest_sha256": "462723515f81bc341e3fb62a656da34f24817617e4b93c925295b297be9bc61b",
+     "n_rows": 1000000,
+     "n_clusters": 10000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40303_b1": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40303_b1",
+     "manifest_sha256": "0a36ee7bbe97d2452ba4f42635aa6e824b9c0acd7e1b613bcca67de34b2294c9",
+     "n_rows": 3000000,
+     "n_clusters": 30000,
+     "purpose": "evaluation",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40303_fit": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40303_fit",
+     "manifest_sha256": "1ae644ba5dff0817d12f31e3ddb2adfc4499e2e6abe3934f926902dd649fc81a",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "fitting",
+     "formal": true,
+     "reused": false
+    },
+    "cfg40303_w2": {
+     "path": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2/cfg40303_w2",
+     "manifest_sha256": "45fb084adff8031d27d4190356164ac696828e7b7fa8606286b3311b41eb549b",
+     "n_rows": 200000,
+     "n_clusters": 2000,
+     "purpose": "w2_independent",
+     "formal": true,
+     "reused": false
+    }
+   },
+   "audit": {
+    "md": "ChatGPT_audit_Step1_PhaseD_D2_E8_Colab_8b5e6102f008.md",
+    "json": "Step1_PhaseD_D2_E8_8b5e6102f008_metadata_acceptance.json"
+   },
+   "metadata_acceptance": "ChatGPT: PASS (run records and metadata only; NPZ arrays not independently read)"
+  }
+ },
+ "totals": {
+  "families": 4,
+  "configurations": 30,
+  "w2_positions": 27,
+  "directories": 129,
+  "npz_files": 197,
+  "npz_bytes": 11304659348,
+  "seconds": 30872.284538030624,
+  "calls": 129
+ },
+ "environment_note": "E1/E2/E7 share environment fingerprint a99b9015\u2026; E8 recorded 8130927a\u2026 (BLAS pool listing order / OpenCV-associated library path; mandatory versions and thread limits equal). Both identities are retained; no alias or compatibility exemption; exact-fingerprint reuse checks apply as written.",
+ "scope": "Generation records and metadata of the four family runs (Drive outputs: 129 directories, 197 NPZ, 11.3 GB). NOT: independent numerical acceptance of the NPZ arrays, f32 sensitivity evidence, case-level W2, formal bank-asset receipt, fixed plans, D3/PC-1, noise, calibration, labels, ENGINE_VALID.",
+ "next": "read-only post-run numerical verification of the stored arrays in Colab (verification notebook, small evidence output) -> outer bank-asset receipt after that audit"
+}

@@ -1,0 +1,106 @@
+{
+ "schema": "d2_bank_manifest_v1",
+ "family": "E8",
+ "config_id": 40103,
+ "evaluation_ids": {
+  "matched": 40103,
+  "native": 90103
+ },
+ "purpose": "evaluation",
+ "crn_group": 1004,
+ "wave_id": 1,
+ "batch_id": 1,
+ "shards": [
+  {
+   "file": "cfg40103_b1_s1.npz",
+   "sidecar": "cfg40103_b1_s1.npz.sidecar.json",
+   "file_sha256": "a84b80da6e0cecd149be6d57767a3b7e98aa9840b9b93e0fc364bec7eb5a1343",
+   "sidecar_sha256": "f6e119cc4b99be30fde1ec47844da49339aa0687c06b537a2d17d479bb7392bb",
+   "rows": [
+    0,
+    1000000
+   ]
+  },
+  {
+   "file": "cfg40103_b1_s2.npz",
+   "sidecar": "cfg40103_b1_s2.npz.sidecar.json",
+   "file_sha256": "1699435bae2a82c357e5e75a92aa39d07228b1196fd10bb8820a6259502dca82",
+   "sidecar_sha256": "3b17d1b4e22227dd1f9d403f3a9a0a117ecd64163ac03b2db3e04482f8d8aa59",
+   "rows": [
+    1000000,
+    2000000
+   ]
+  },
+  {
+   "file": "cfg40103_b1_s3.npz",
+   "sidecar": "cfg40103_b1_s3.npz.sidecar.json",
+   "file_sha256": "4b5edbe7f58399028c824f5b0cd02a7701e81a98d3173486737b88eb38cbf432",
+   "sidecar_sha256": "8b45eeeb204dfd637cfd392256096c5a8f3f602dbb77132f0f43bb8583bd5263",
+   "rows": [
+    2000000,
+    3000000
+   ]
+  }
+ ],
+ "roles": [
+  "model_matched",
+  "model_native",
+  "ref_native"
+ ],
+ "root_sha256": {
+  "model_matched": "0644dcaede1c554efabbf861a79e312daddb872cf028caa8b5f1cadf8e65fe15",
+  "model_native": "e182ab95d2a00df79d0afeedb8603b6ff8d48b66e37a773a2e09b54f6c350c4c",
+  "ref_native": "6aae1227c19f00d5aefe4fc37cd87be405cab147cd690fe3baeea440b668ad7f"
+ },
+ "selections": [
+  "float64"
+ ],
+ "n_rows": 3000000,
+ "n_clusters": 30000,
+ "m": 100,
+ "complete": true,
+ "scale": 1.0,
+ "formal": true,
+ "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+ "spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+ "master_seed": 20260912,
+ "calls": [
+  {
+   "purpose": "evaluation",
+   "group": 1004,
+   "batch_id": 1,
+   "key_rotation": [
+    20260912,
+    1,
+    200,
+    1004,
+    1,
+    1
+   ],
+   "key_gaussian": [
+    20260912,
+    1,
+    200,
+    1004,
+    1,
+    0
+   ],
+   "clusters": [
+    0,
+    30000
+   ],
+   "roles": [
+    "model_matched",
+    "model_native",
+    "ref_native"
+   ],
+   "selections": [
+    "float64"
+   ],
+   "chunk_clusters": 2000,
+   "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+   "t": 1790188483.79703
+  }
+ ],
+ "manifest_sha256": "254158375c460375637e82d8ddd482d9f4c58f23de6c53976f279f58898f50b3"
+}
