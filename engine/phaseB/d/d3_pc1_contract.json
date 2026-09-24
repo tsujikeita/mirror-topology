@@ -1,0 +1,39 @@
+{
+ "schema": "d3_pc1_contract_v1",
+ "source": {
+  "rules": "results/step1_phaseA/A11_freeze/A11_rules_v1.0.md",
+  "rules_sha256": "5c6d9cd33e9ee2ac1573f0c2c492b5900d7b04edcd1c4eb9cc144081dc56d631",
+  "notebook": "results/step1_phaseA/A11_freeze/MirrorTopology_Step1_A11_x0bridge_v1.4.1.ipynb",
+  "notebook_sha256": "791a5abb74beb2370e036519283ca64ab34a886cc4267147c104c1cd604191a1",
+  "rule_ids": [
+   "R2",
+   "R5"
+  ],
+  "notebook_cells": {
+   "metric": 5,
+   "generators": 3,
+   "D_of": 2
+  }
+ },
+ "relation": "C(g r) = D(M) C(r) D(M)^T on the frozen real basis (t1_engine.load_cov_full real basis; D(M) from t2b2_bridge quadrature: (YQ*WQ)^T Ymat(DIRS @ M))",
+ "base_x0": "b = -r_obs (A11 R1 canonical gauge)",
+ "clone_x0": "x0_H1 = M_CT b - T_CT (registered hypothesis H1; H2 = M_CT b + T_CT is the discriminating alternative, not the clone)",
+ "metric": "rel(C1, target) = ||C1 - target||_F / ||target||_F, target = D(M) C0 D(M)^T, C0 = base covariance, C1 = INDEPENDENTLY generated clone covariance; diagnostics rel_off (off-diagonal), rel_white (diagonal-whitened)",
+ "direction": "generated clone C1 compared to the transformed base; never D C0 D^T stored as the clone's generated value",
+ "tolerance": {
+  "match_rel_lt": 1e-05,
+  "discriminate_rel_gt": 0.01,
+  "source": "A11 R5: match rel < 1e-5 (TOL_MATCH); discriminate rel > 1e-2 (TOL_DISCR)"
+ },
+ "not_used": {
+  "d1_pins_rel_tolerance": 1e-10,
+  "reason": "same-covariance regeneration tolerance of the D-1 A11 cross-check; not a physical clone tolerance"
+ },
+ "basis": "both covariances loaded with the frozen t1_engine real-basis transform (21x21 real); M is the spatial 3x3 deck matrix; D(M) is its 21x21 representation",
+ "improper_M": "valid (A11 R2)",
+ "status_semantics": {
+  "PC1_PENDING": "asset generated / not yet compared",
+  "PC1_PASS": "rel < 1e-5 for every required action of the configuration",
+  "PC1_FAIL": "any required action rel >= 1e-5 (asset-layer failure; formal consumption forbidden; NOT converted to position-unresolved / UNKNOWN; no prior renormalisation; no 3-position fallback)"
+ }
+}

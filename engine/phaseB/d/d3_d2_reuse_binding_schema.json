@@ -1,0 +1,42 @@
+{
+ "schema": "d3_d2_reuse_binding_v1",
+ "purpose": "D-3 consumes accepted D-2 first-wave assets as FIXED inputs (never re-generated, never re-labelled as D-3 output)",
+ "identity_kept_verbatim": [
+  "D-2 producer digest",
+  "generator commit 8b5e6102f0088afbf69b10aaa9e90af4a63e07e2",
+  "generation environment fingerprint (E8 retains its own)",
+  "COMPLETE manifest SHA",
+  "sidecar SHA",
+  "NPZ file SHA",
+  "member array SHAs",
+  "root SHA per role",
+  "formal keys (MASTER_SEED, wave 1, purpose, group, batch, stream)",
+  "UID ends and rotation index ranges",
+  "selections"
+ ],
+ "must_match_the_D3_request": [
+  "family",
+  "config_id (first-wave ids preserved)",
+  "role -> root SHA (model roots from the D-1 intake of the SAME configuration; ref_matched = PR3 isotropic root; ref_native from the configuration's own c_ct)",
+  "purpose / group / batch / rotation index / row order",
+  "selection set",
+  "n_rows (N0 batch 0; 3N0 batch 1; N_fit; )",
+  "prefix invariance (batch 0 rows are the prefix of the family latent)"
+ ],
+ "view_differences_allowed": [
+  "stage (3-position vs 12-position mixture view)",
+  "weights (1/3 or size-conditional -> 1/36 family / 1/12 within size)",
+  "assembly into a 12-position FamilyInput"
+ ],
+ "forbidden": [
+  "asserting a new configuration shares a root with an old one",
+  "substituting the family matched reference for a native reference",
+  "re-stamping producer / environment / engine of a reused asset",
+  "relaxing match_request for same-producer caches",
+  "silent generalisation of the D-2 f32 acceptance to new positions"
+ ],
+ "plan_sharing": {
+  "rule": "within each family, old and new configurations of the same system share the five-seed BootstrapPlan / FittingPlan identities and UID order; evaluation and fitting stay separate purposes",
+  "fixed": "plan identity fixed once before the formal calibration and unchanged through the target evaluation; no threshold-dependent resampling; no unrecorded keys"
+ }
+}

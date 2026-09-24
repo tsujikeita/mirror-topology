@@ -1,0 +1,9036 @@
+{
+ "schema": "d3_pc1_case_table_v1",
+ "contract": {
+  "schema": "d3_pc1_contract_v1",
+  "source": {
+   "rules": "results/step1_phaseA/A11_freeze/A11_rules_v1.0.md",
+   "rules_sha256": "5c6d9cd33e9ee2ac1573f0c2c492b5900d7b04edcd1c4eb9cc144081dc56d631",
+   "notebook": "results/step1_phaseA/A11_freeze/MirrorTopology_Step1_A11_x0bridge_v1.4.1.ipynb",
+   "notebook_sha256": "791a5abb74beb2370e036519283ca64ab34a886cc4267147c104c1cd604191a1",
+   "rule_ids": [
+    "R2",
+    "R5"
+   ],
+   "notebook_cells": {
+    "metric": 5,
+    "generators": 3,
+    "D_of": 2
+   }
+  },
+  "relation": "C(g r) = D(M) C(r) D(M)^T on the frozen real basis (t1_engine.load_cov_full real basis; D(M) from t2b2_bridge quadrature: (YQ*WQ)^T Ymat(DIRS @ M))",
+  "base_x0": "b = -r_obs (A11 R1 canonical gauge)",
+  "clone_x0": "x0_H1 = M_CT b - T_CT (registered hypothesis H1; H2 = M_CT b + T_CT is the discriminating alternative, not the clone)",
+  "metric": "rel(C1, target) = ||C1 - target||_F / ||target||_F, target = D(M) C0 D(M)^T, C0 = base covariance, C1 = INDEPENDENTLY generated clone covariance; diagnostics rel_off (off-diagonal), rel_white (diagonal-whitened)",
+  "direction": "generated clone C1 compared to the transformed base; never D C0 D^T stored as the clone's generated value",
+  "tolerance": {
+   "match_rel_lt": 1e-05,
+   "discriminate_rel_gt": 0.01,
+   "source": "A11 R5: match rel < 1e-5 (TOL_MATCH); discriminate rel > 1e-2 (TOL_DISCR)"
+  },
+  "not_used": {
+   "d1_pins_rel_tolerance": 1e-10,
+   "reason": "same-covariance regeneration tolerance of the D-1 A11 cross-check; not a physical clone tolerance"
+  },
+  "basis": "both covariances loaded with the frozen t1_engine real-basis transform (21x21 real); M is the spatial 3x3 deck matrix; D(M) is its 21x21 representation",
+  "improper_M": "valid (A11 R2)",
+  "status_semantics": {
+   "PC1_PENDING": "asset generated / not yet compared",
+   "PC1_PASS": "rel < 1e-5 for every required action of the configuration",
+   "PC1_FAIL": "any required action rel >= 1e-5 (asset-layer failure; formal consumption forbidden; NOT converted to position-unresolved / UNKNOWN; no prior renormalisation; no 3-position fallback)"
+  }
+ },
+ "config_map_sha256": "8b2b0b24353a93eb6511069c6767e37ef36224ae2613d2bf11d49964a023debb",
+ "required_actions": {
+  "E2": [
+   "halfturn_B"
+  ],
+  "E7": [
+   "glide_A"
+  ],
+  "E8": [
+   "glide_A",
+   "glide_B"
+  ]
+ },
+ "new_point_cases": [
+  {
+   "case_id": "20104:halfturn_B",
+   "config_id": 20104,
+   "family": "E2",
+   "size_id": "L1.00",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    6.123233995736766e-17,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.46640000000000004,
+    -0.9629000000000001,
+    -0.74
+   ],
+   "clone_x0_H1": [
+    0.4664,
+    0.9629000000000001,
+    -1.74
+   ],
+   "alt_x0_H2": [
+    0.4664000000000001,
+    0.9629000000000001,
+    0.26
+   ],
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "generator_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20105:halfturn_B",
+   "config_id": 20105,
+   "family": "E2",
+   "size_id": "L1.00",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    6.123233995736766e-17,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.4198,
+    -0.6301,
+    -0.74
+   ],
+   "clone_x0_H1": [
+    0.41979999999999995,
+    0.6301,
+    -1.74
+   ],
+   "alt_x0_H2": [
+    0.41980000000000006,
+    0.6301,
+    0.26
+   ],
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "generator_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20106:halfturn_B",
+   "config_id": 20106,
+   "family": "E2",
+   "size_id": "L1.00",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    6.123233995736766e-17,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.1986,
+    -0.0026000000000000003,
+    -0.74
+   ],
+   "clone_x0_H1": [
+    0.19859999999999994,
+    0.0026000000000000003,
+    -1.74
+   ],
+   "alt_x0_H2": [
+    0.19860000000000005,
+    0.0026000000000000003,
+    0.26
+   ],
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "generator_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20107:halfturn_B",
+   "config_id": 20107,
+   "family": "E2",
+   "size_id": "L1.00",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    6.123233995736766e-17,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.05,
+    -0.5025000000000001,
+    -0.74
+   ],
+   "clone_x0_H1": [
+    0.04999999999999994,
+    0.5025000000000001,
+    -1.74
+   ],
+   "alt_x0_H2": [
+    0.050000000000000065,
+    0.5025000000000001,
+    0.26
+   ],
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "generator_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20108:halfturn_B",
+   "config_id": 20108,
+   "family": "E2",
+   "size_id": "L1.00",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    6.123233995736766e-17,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.3522,
+    -0.155,
+    -0.74
+   ],
+   "clone_x0_H1": [
+    0.35219999999999996,
+    0.155,
+    -1.74
+   ],
+   "alt_x0_H2": [
+    0.35220000000000007,
+    0.155,
+    0.26
+   ],
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "generator_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20109:halfturn_B",
+   "config_id": 20109,
+   "family": "E2",
+   "size_id": "L1.00",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    6.123233995736766e-17,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.30960000000000004,
+    -0.8153,
+    -0.74
+   ],
+   "clone_x0_H1": [
+    0.3096,
+    0.8153,
+    -1.74
+   ],
+   "alt_x0_H2": [
+    0.3096000000000001,
+    0.8153,
+    0.26
+   ],
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "generator_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20110:halfturn_B",
+   "config_id": 20110,
+   "family": "E2",
+   "size_id": "L1.00",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    6.123233995736766e-17,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.0007,
+    -0.9500000000000001,
+    -0.74
+   ],
+   "clone_x0_H1": [
+    0.0006999999999999387,
+    0.9500000000000001,
+    -1.74
+   ],
+   "alt_x0_H2": [
+    0.0007000000000000613,
+    0.9500000000000001,
+    0.26
+   ],
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "generator_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20111:halfturn_B",
+   "config_id": 20111,
+   "family": "E2",
+   "size_id": "L1.00",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    6.123233995736766e-17,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.22590000000000002,
+    -0.5924,
+    -0.74
+   ],
+   "clone_x0_H1": [
+    0.22589999999999996,
+    0.5924,
+    -1.74
+   ],
+   "alt_x0_H2": [
+    0.22590000000000007,
+    0.5924,
+    0.26
+   ],
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "generator_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20112:halfturn_B",
+   "config_id": 20112,
+   "family": "E2",
+   "size_id": "L1.00",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    6.123233995736766e-17,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.4058,
+    -0.442,
+    -0.74
+   ],
+   "clone_x0_H1": [
+    0.40579999999999994,
+    0.442,
+    -1.74
+   ],
+   "alt_x0_H2": [
+    0.40580000000000005,
+    0.442,
+    0.26
+   ],
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "generator_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20204:halfturn_B",
+   "config_id": 20204,
+   "family": "E2",
+   "size_id": "L1.20",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    7.347880794884119e-17,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.5596800000000001,
+    -1.15548,
+    -0.888
+   ],
+   "clone_x0_H1": [
+    0.55968,
+    1.15548,
+    -2.088
+   ],
+   "alt_x0_H2": [
+    0.5596800000000002,
+    1.15548,
+    0.31199999999999994
+   ],
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "generator_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20205:halfturn_B",
+   "config_id": 20205,
+   "family": "E2",
+   "size_id": "L1.20",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    7.347880794884119e-17,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.50376,
+    -0.75612,
+    -0.888
+   ],
+   "clone_x0_H1": [
+    0.5037599999999999,
+    0.75612,
+    -2.088
+   ],
+   "alt_x0_H2": [
+    0.5037600000000001,
+    0.75612,
+    0.31199999999999994
+   ],
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "generator_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20206:halfturn_B",
+   "config_id": 20206,
+   "family": "E2",
+   "size_id": "L1.20",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    7.347880794884119e-17,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.23831999999999998,
+    -0.0031200000000000004,
+    -0.888
+   ],
+   "clone_x0_H1": [
+    0.2383199999999999,
+    0.0031200000000000004,
+    -2.088
+   ],
+   "alt_x0_H2": [
+    0.23832000000000006,
+    0.0031200000000000004,
+    0.31199999999999994
+   ],
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "generator_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20207:halfturn_B",
+   "config_id": 20207,
+   "family": "E2",
+   "size_id": "L1.20",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    7.347880794884119e-17,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.06,
+    -0.6030000000000001,
+    -0.888
+   ],
+   "clone_x0_H1": [
+    0.05999999999999992,
+    0.6030000000000001,
+    -2.088
+   ],
+   "alt_x0_H2": [
+    0.060000000000000074,
+    0.6030000000000001,
+    0.31199999999999994
+   ],
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "generator_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20208:halfturn_B",
+   "config_id": 20208,
+   "family": "E2",
+   "size_id": "L1.20",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    7.347880794884119e-17,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.42264,
+    -0.186,
+    -0.888
+   ],
+   "clone_x0_H1": [
+    0.42263999999999996,
+    0.186,
+    -2.088
+   ],
+   "alt_x0_H2": [
+    0.42264000000000007,
+    0.186,
+    0.31199999999999994
+   ],
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "generator_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20209:halfturn_B",
+   "config_id": 20209,
+   "family": "E2",
+   "size_id": "L1.20",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    7.347880794884119e-17,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.37152,
+    -0.97836,
+    -0.888
+   ],
+   "clone_x0_H1": [
+    0.37151999999999996,
+    0.97836,
+    -2.088
+   ],
+   "alt_x0_H2": [
+    0.3715200000000001,
+    0.97836,
+    0.31199999999999994
+   ],
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "generator_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20210:halfturn_B",
+   "config_id": 20210,
+   "family": "E2",
+   "size_id": "L1.20",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    7.347880794884119e-17,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.0008399999999999999,
+    -1.1400000000000001,
+    -0.888
+   ],
+   "clone_x0_H1": [
+    0.0008399999999999264,
+    1.1400000000000001,
+    -2.088
+   ],
+   "alt_x0_H2": [
+    0.0008400000000000734,
+    1.1400000000000001,
+    0.31199999999999994
+   ],
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "generator_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20211:halfturn_B",
+   "config_id": 20211,
+   "family": "E2",
+   "size_id": "L1.20",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    7.347880794884119e-17,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.27108,
+    -0.7108800000000001,
+    -0.888
+   ],
+   "clone_x0_H1": [
+    0.27107999999999993,
+    0.7108800000000001,
+    -2.088
+   ],
+   "alt_x0_H2": [
+    0.27108000000000004,
+    0.7108800000000001,
+    0.31199999999999994
+   ],
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "generator_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20212:halfturn_B",
+   "config_id": 20212,
+   "family": "E2",
+   "size_id": "L1.20",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    7.347880794884119e-17,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.48695999999999995,
+    -0.5304,
+    -0.888
+   ],
+   "clone_x0_H1": [
+    0.4869599999999999,
+    0.5304,
+    -2.088
+   ],
+   "alt_x0_H2": [
+    0.48696,
+    0.5304,
+    0.31199999999999994
+   ],
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "generator_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20304:halfturn_B",
+   "config_id": 20304,
+   "family": "E2",
+   "size_id": "L1.50",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    9.184850993605148e-17,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.6996,
+    -1.44435,
+    -1.1099999999999999
+   ],
+   "clone_x0_H1": [
+    0.6995999999999999,
+    1.44435,
+    -2.61
+   ],
+   "alt_x0_H2": [
+    0.6996000000000001,
+    1.44435,
+    0.3900000000000001
+   ],
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "generator_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20305:halfturn_B",
+   "config_id": 20305,
+   "family": "E2",
+   "size_id": "L1.50",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    9.184850993605148e-17,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.6297,
+    -0.9451499999999999,
+    -1.1099999999999999
+   ],
+   "clone_x0_H1": [
+    0.6296999999999999,
+    0.9451499999999999,
+    -2.61
+   ],
+   "alt_x0_H2": [
+    0.6297000000000001,
+    0.9451499999999999,
+    0.3900000000000001
+   ],
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "generator_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20306:halfturn_B",
+   "config_id": 20306,
+   "family": "E2",
+   "size_id": "L1.50",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    9.184850993605148e-17,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.2979,
+    -0.0039000000000000007,
+    -1.1099999999999999
+   ],
+   "clone_x0_H1": [
+    0.2978999999999999,
+    0.0039000000000000007,
+    -2.61
+   ],
+   "alt_x0_H2": [
+    0.2979000000000001,
+    0.0039000000000000007,
+    0.3900000000000001
+   ],
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "generator_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20307:halfturn_B",
+   "config_id": 20307,
+   "family": "E2",
+   "size_id": "L1.50",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    9.184850993605148e-17,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.07500000000000001,
+    -0.7537500000000001,
+    -1.1099999999999999
+   ],
+   "clone_x0_H1": [
+    0.07499999999999991,
+    0.7537500000000001,
+    -2.61
+   ],
+   "alt_x0_H2": [
+    0.07500000000000011,
+    0.7537500000000001,
+    0.3900000000000001
+   ],
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "generator_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20308:halfturn_B",
+   "config_id": 20308,
+   "family": "E2",
+   "size_id": "L1.50",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    9.184850993605148e-17,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.5283,
+    -0.23249999999999998,
+    -1.1099999999999999
+   ],
+   "clone_x0_H1": [
+    0.5282999999999999,
+    0.23249999999999998,
+    -2.61
+   ],
+   "alt_x0_H2": [
+    0.5283000000000001,
+    0.23249999999999998,
+    0.3900000000000001
+   ],
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "generator_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20309:halfturn_B",
+   "config_id": 20309,
+   "family": "E2",
+   "size_id": "L1.50",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    9.184850993605148e-17,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.46440000000000003,
+    -1.22295,
+    -1.1099999999999999
+   ],
+   "clone_x0_H1": [
+    0.4643999999999999,
+    1.22295,
+    -2.61
+   ],
+   "alt_x0_H2": [
+    0.46440000000000015,
+    1.22295,
+    0.3900000000000001
+   ],
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "generator_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20310:halfturn_B",
+   "config_id": 20310,
+   "family": "E2",
+   "size_id": "L1.50",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    9.184850993605148e-17,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.00105,
+    -1.425,
+    -1.1099999999999999
+   ],
+   "clone_x0_H1": [
+    0.001049999999999908,
+    1.425,
+    -2.61
+   ],
+   "alt_x0_H2": [
+    0.0010500000000000919,
+    1.425,
+    0.3900000000000001
+   ],
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "generator_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20311:halfturn_B",
+   "config_id": 20311,
+   "family": "E2",
+   "size_id": "L1.50",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    9.184850993605148e-17,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.33885000000000004,
+    -0.8886000000000001,
+    -1.1099999999999999
+   ],
+   "clone_x0_H1": [
+    0.33884999999999993,
+    0.8886000000000001,
+    -2.61
+   ],
+   "alt_x0_H2": [
+    0.33885000000000015,
+    0.8886000000000001,
+    0.3900000000000001
+   ],
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "generator_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "20312:halfturn_B",
+   "config_id": 20312,
+   "family": "E2",
+   "size_id": "L1.50",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    9.184850993605148e-17,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.6087,
+    -0.663,
+    -1.1099999999999999
+   ],
+   "clone_x0_H1": [
+    0.6086999999999999,
+    0.663,
+    -2.61
+   ],
+   "alt_x0_H2": [
+    0.6087000000000001,
+    0.663,
+    0.3900000000000001
+   ],
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "generator_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30104:glide_A",
+   "config_id": 30104,
+   "family": "E7",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31,
+    -0.23,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.31,
+    0.23,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.69,
+    0.23,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30105:glide_A",
+   "config_id": 30105,
+   "family": "E7",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31,
+    -0.0789,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.31,
+    0.0789,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.69,
+    0.0789,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30106:glide_A",
+   "config_id": 30106,
+   "family": "E7",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31,
+    -0.1444,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.31,
+    0.1444,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.69,
+    0.1444,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30107:glide_A",
+   "config_id": 30107,
+   "family": "E7",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31,
+    -0.203,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.31,
+    0.203,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.69,
+    0.203,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30108:glide_A",
+   "config_id": 30108,
+   "family": "E7",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31,
+    -0.02,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.31,
+    0.02,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.69,
+    0.02,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30109:glide_A",
+   "config_id": 30109,
+   "family": "E7",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31,
+    -0.062,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.31,
+    0.062,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.69,
+    0.062,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30110:glide_A",
+   "config_id": 30110,
+   "family": "E7",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31,
+    -0.09580000000000001,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.31,
+    0.09580000000000001,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.69,
+    0.09580000000000001,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30111:glide_A",
+   "config_id": 30111,
+   "family": "E7",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31,
+    -0.12860000000000002,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.31,
+    0.12860000000000002,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.69,
+    0.12860000000000002,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30112:glide_A",
+   "config_id": 30112,
+   "family": "E7",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31,
+    -0.1602,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.31,
+    0.1602,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.69,
+    0.1602,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30204:glide_A",
+   "config_id": 30204,
+   "family": "E7",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.372,
+    -0.276,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.572,
+    0.276,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.828,
+    0.276,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30205:glide_A",
+   "config_id": 30205,
+   "family": "E7",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.372,
+    -0.09468,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.572,
+    0.09468,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.828,
+    0.09468,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30206:glide_A",
+   "config_id": 30206,
+   "family": "E7",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.372,
+    -0.17328,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.572,
+    0.17328,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.828,
+    0.17328,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30207:glide_A",
+   "config_id": 30207,
+   "family": "E7",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.372,
+    -0.2436,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.572,
+    0.2436,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.828,
+    0.2436,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30208:glide_A",
+   "config_id": 30208,
+   "family": "E7",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.372,
+    -0.024,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.572,
+    0.024,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.828,
+    0.024,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30209:glide_A",
+   "config_id": 30209,
+   "family": "E7",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.372,
+    -0.0744,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.572,
+    0.0744,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.828,
+    0.0744,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30210:glide_A",
+   "config_id": 30210,
+   "family": "E7",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.372,
+    -0.11496,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.572,
+    0.11496,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.828,
+    0.11496,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30211:glide_A",
+   "config_id": 30211,
+   "family": "E7",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.372,
+    -0.15432,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.572,
+    0.15432,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.828,
+    0.15432,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30212:glide_A",
+   "config_id": 30212,
+   "family": "E7",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.372,
+    -0.19224,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.572,
+    0.19224,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.828,
+    0.19224,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30304:glide_A",
+   "config_id": 30304,
+   "family": "E7",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46499999999999997,
+    -0.34500000000000003,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9649999999999999,
+    0.34500000000000003,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0350000000000001,
+    0.34500000000000003,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30305:glide_A",
+   "config_id": 30305,
+   "family": "E7",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46499999999999997,
+    -0.11835,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9649999999999999,
+    0.11835,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0350000000000001,
+    0.11835,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30306:glide_A",
+   "config_id": 30306,
+   "family": "E7",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46499999999999997,
+    -0.21660000000000001,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9649999999999999,
+    0.21660000000000001,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0350000000000001,
+    0.21660000000000001,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30307:glide_A",
+   "config_id": 30307,
+   "family": "E7",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46499999999999997,
+    -0.3045,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9649999999999999,
+    0.3045,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0350000000000001,
+    0.3045,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30308:glide_A",
+   "config_id": 30308,
+   "family": "E7",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46499999999999997,
+    -0.03,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9649999999999999,
+    0.03,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0350000000000001,
+    0.03,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30309:glide_A",
+   "config_id": 30309,
+   "family": "E7",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46499999999999997,
+    -0.093,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9649999999999999,
+    0.093,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0350000000000001,
+    0.093,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30310:glide_A",
+   "config_id": 30310,
+   "family": "E7",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46499999999999997,
+    -0.14370000000000002,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9649999999999999,
+    0.14370000000000002,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0350000000000001,
+    0.14370000000000002,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30311:glide_A",
+   "config_id": 30311,
+   "family": "E7",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46499999999999997,
+    -0.19290000000000002,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9649999999999999,
+    0.19290000000000002,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0350000000000001,
+    0.19290000000000002,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "30312:glide_A",
+   "config_id": 30312,
+   "family": "E7",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46499999999999997,
+    -0.2403,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9649999999999999,
+    0.2403,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0350000000000001,
+    0.2403,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40104:glide_A",
+   "config_id": 40104,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.030000000000000002,
+    -0.23,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.03,
+    0.23,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.97,
+    0.23,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40104:glide_B",
+   "config_id": 40104,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.030000000000000002,
+    -0.23,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    0.030000000000000002,
+    -0.23,
+    -1.42
+   ],
+   "alt_x0_H2": [
+    0.030000000000000002,
+    -0.23,
+    0.5800000000000001
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40105:glide_A",
+   "config_id": 40105,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.3121,
+    -0.02,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.3121,
+    0.02,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.6879,
+    0.02,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40105:glide_B",
+   "config_id": 40105,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.3121,
+    -0.02,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    0.3121,
+    -0.02,
+    -1.42
+   ],
+   "alt_x0_H2": [
+    0.3121,
+    -0.02,
+    0.5800000000000001
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40106:glide_A",
+   "config_id": 40106,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.3256,
+    -0.23,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.3256000000000001,
+    0.23,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.6744,
+    0.23,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40106:glide_B",
+   "config_id": 40106,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.3256,
+    -0.23,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    0.3256,
+    -0.23,
+    -1.42
+   ],
+   "alt_x0_H2": [
+    0.3256,
+    -0.23,
+    0.5800000000000001
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40107:glide_A",
+   "config_id": 40107,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.47000000000000003,
+    -0.02,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.47,
+    0.02,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.53,
+    0.02,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40107:glide_B",
+   "config_id": 40107,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.47000000000000003,
+    -0.02,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    0.47000000000000003,
+    -0.02,
+    -1.42
+   ],
+   "alt_x0_H2": [
+    0.47000000000000003,
+    -0.02,
+    0.5800000000000001
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40108:glide_A",
+   "config_id": 40108,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.1454,
+    -0.23,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.1454,
+    0.23,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.8546,
+    0.23,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40108:glide_B",
+   "config_id": 40108,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.1454,
+    -0.23,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    0.1454,
+    -0.23,
+    -1.42
+   ],
+   "alt_x0_H2": [
+    0.1454,
+    -0.23,
+    0.5800000000000001
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40109:glide_A",
+   "config_id": 40109,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.47000000000000003,
+    -0.23,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.47,
+    0.23,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.53,
+    0.23,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40109:glide_B",
+   "config_id": 40109,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.47000000000000003,
+    -0.23,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    0.47000000000000003,
+    -0.23,
+    -1.42
+   ],
+   "alt_x0_H2": [
+    0.47000000000000003,
+    -0.23,
+    0.5800000000000001
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40110:glide_A",
+   "config_id": 40110,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.2056,
+    -0.02,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.2056,
+    0.02,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.7944,
+    0.02,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40110:glide_B",
+   "config_id": 40110,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.2056,
+    -0.02,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    0.2056,
+    -0.02,
+    -1.42
+   ],
+   "alt_x0_H2": [
+    0.2056,
+    -0.02,
+    0.5800000000000001
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40111:glide_A",
+   "config_id": 40111,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31880000000000003,
+    -0.1236,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.3188,
+    0.1236,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.6812,
+    0.1236,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40111:glide_B",
+   "config_id": 40111,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.31880000000000003,
+    -0.1236,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    0.31880000000000003,
+    -0.1236,
+    -1.42
+   ],
+   "alt_x0_H2": [
+    0.31880000000000003,
+    -0.1236,
+    0.5800000000000001
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40112:glide_A",
+   "config_id": 40112,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.030000000000000002,
+    -0.1288,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.03,
+    0.1288,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.97,
+    0.1288,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40112:glide_B",
+   "config_id": 40112,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.030000000000000002,
+    -0.1288,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    0.030000000000000002,
+    -0.1288,
+    -1.42
+   ],
+   "alt_x0_H2": [
+    0.030000000000000002,
+    -0.1288,
+    0.5800000000000001
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40204:glide_A",
+   "config_id": 40204,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.036000000000000004,
+    -0.276,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.236,
+    0.276,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    1.164,
+    0.276,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40204:glide_B",
+   "config_id": 40204,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.036000000000000004,
+    -0.276,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    0.036000000000000004,
+    -0.276,
+    -1.704
+   ],
+   "alt_x0_H2": [
+    0.036000000000000004,
+    -0.276,
+    0.696
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40205:glide_A",
+   "config_id": 40205,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.37451999999999996,
+    -0.024,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.57452,
+    0.024,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.82548,
+    0.024,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40205:glide_B",
+   "config_id": 40205,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.37451999999999996,
+    -0.024,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    0.37451999999999996,
+    -0.024,
+    -1.704
+   ],
+   "alt_x0_H2": [
+    0.37451999999999996,
+    -0.024,
+    0.696
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40206:glide_A",
+   "config_id": 40206,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.39072,
+    -0.276,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.59072,
+    0.276,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.80928,
+    0.276,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40206:glide_B",
+   "config_id": 40206,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.39072,
+    -0.276,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    0.39072,
+    -0.276,
+    -1.704
+   ],
+   "alt_x0_H2": [
+    0.39072,
+    -0.276,
+    0.696
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40207:glide_A",
+   "config_id": 40207,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.5640000000000001,
+    -0.024,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.764,
+    0.024,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.6359999999999999,
+    0.024,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40207:glide_B",
+   "config_id": 40207,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.5640000000000001,
+    -0.024,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    0.5640000000000001,
+    -0.024,
+    -1.704
+   ],
+   "alt_x0_H2": [
+    0.5640000000000001,
+    -0.024,
+    0.696
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40208:glide_A",
+   "config_id": 40208,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.17448,
+    -0.276,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.37448,
+    0.276,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    1.02552,
+    0.276,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40208:glide_B",
+   "config_id": 40208,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.17448,
+    -0.276,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    0.17448,
+    -0.276,
+    -1.704
+   ],
+   "alt_x0_H2": [
+    0.17448,
+    -0.276,
+    0.696
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40209:glide_A",
+   "config_id": 40209,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.5640000000000001,
+    -0.276,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.764,
+    0.276,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.6359999999999999,
+    0.276,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40209:glide_B",
+   "config_id": 40209,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.5640000000000001,
+    -0.276,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    0.5640000000000001,
+    -0.276,
+    -1.704
+   ],
+   "alt_x0_H2": [
+    0.5640000000000001,
+    -0.276,
+    0.696
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40210:glide_A",
+   "config_id": 40210,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.24672,
+    -0.024,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.44672,
+    0.024,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.9532799999999999,
+    0.024,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40210:glide_B",
+   "config_id": 40210,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.24672,
+    -0.024,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    0.24672,
+    -0.024,
+    -1.704
+   ],
+   "alt_x0_H2": [
+    0.24672,
+    -0.024,
+    0.696
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40211:glide_A",
+   "config_id": 40211,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.38256,
+    -0.14832,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.58256,
+    0.14832,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.8174399999999999,
+    0.14832,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40211:glide_B",
+   "config_id": 40211,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.38256,
+    -0.14832,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    0.38256,
+    -0.14832,
+    -1.704
+   ],
+   "alt_x0_H2": [
+    0.38256,
+    -0.14832,
+    0.696
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40212:glide_A",
+   "config_id": 40212,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.036000000000000004,
+    -0.15456,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.236,
+    0.15456,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    1.164,
+    0.15456,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40212:glide_B",
+   "config_id": 40212,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.036000000000000004,
+    -0.15456,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    0.036000000000000004,
+    -0.15456,
+    -1.704
+   ],
+   "alt_x0_H2": [
+    0.036000000000000004,
+    -0.15456,
+    0.696
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40304:glide_A",
+   "config_id": 40304,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.045000000000000005,
+    -0.34500000000000003,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.545,
+    0.34500000000000003,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.455,
+    0.34500000000000003,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40304:glide_B",
+   "config_id": 40304,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.045000000000000005,
+    -0.34500000000000003,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    0.045000000000000005,
+    -0.34500000000000003,
+    -2.13
+   ],
+   "alt_x0_H2": [
+    0.045000000000000005,
+    -0.34500000000000003,
+    0.87
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40305:glide_A",
+   "config_id": 40305,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46814999999999996,
+    -0.03,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.96815,
+    0.03,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.03185,
+    0.03,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40305:glide_B",
+   "config_id": 40305,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.46814999999999996,
+    -0.03,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    0.46814999999999996,
+    -0.03,
+    -2.13
+   ],
+   "alt_x0_H2": [
+    0.46814999999999996,
+    -0.03,
+    0.87
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40306:glide_A",
+   "config_id": 40306,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.4884,
+    -0.34500000000000003,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9884,
+    0.34500000000000003,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0116,
+    0.34500000000000003,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40306:glide_B",
+   "config_id": 40306,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.4884,
+    -0.34500000000000003,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    0.4884,
+    -0.34500000000000003,
+    -2.13
+   ],
+   "alt_x0_H2": [
+    0.4884,
+    -0.34500000000000003,
+    0.87
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40307:glide_A",
+   "config_id": 40307,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.7050000000000001,
+    -0.03,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -2.205,
+    0.03,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    0.7949999999999999,
+    0.03,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40307:glide_B",
+   "config_id": 40307,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.7050000000000001,
+    -0.03,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    0.7050000000000001,
+    -0.03,
+    -2.13
+   ],
+   "alt_x0_H2": [
+    0.7050000000000001,
+    -0.03,
+    0.87
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40308:glide_A",
+   "config_id": 40308,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.21810000000000002,
+    -0.34500000000000003,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.7181,
+    0.34500000000000003,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.2819,
+    0.34500000000000003,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40308:glide_B",
+   "config_id": 40308,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.21810000000000002,
+    -0.34500000000000003,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    0.21810000000000002,
+    -0.34500000000000003,
+    -2.13
+   ],
+   "alt_x0_H2": [
+    0.21810000000000002,
+    -0.34500000000000003,
+    0.87
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40309:glide_A",
+   "config_id": 40309,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.7050000000000001,
+    -0.34500000000000003,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -2.205,
+    0.34500000000000003,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    0.7949999999999999,
+    0.34500000000000003,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40309:glide_B",
+   "config_id": 40309,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.7050000000000001,
+    -0.34500000000000003,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    0.7050000000000001,
+    -0.34500000000000003,
+    -2.13
+   ],
+   "alt_x0_H2": [
+    0.7050000000000001,
+    -0.34500000000000003,
+    0.87
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40310:glide_A",
+   "config_id": 40310,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.3084,
+    -0.03,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.8084,
+    0.03,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.1916,
+    0.03,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40310:glide_B",
+   "config_id": 40310,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.3084,
+    -0.03,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    0.3084,
+    -0.03,
+    -2.13
+   ],
+   "alt_x0_H2": [
+    0.3084,
+    -0.03,
+    0.87
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40311:glide_A",
+   "config_id": 40311,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.47820000000000007,
+    -0.1854,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9782000000000002,
+    0.1854,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0217999999999998,
+    0.1854,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40311:glide_B",
+   "config_id": 40311,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.47820000000000007,
+    -0.1854,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    0.47820000000000007,
+    -0.1854,
+    -2.13
+   ],
+   "alt_x0_H2": [
+    0.47820000000000007,
+    -0.1854,
+    0.87
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40312:glide_A",
+   "config_id": 40312,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.045000000000000005,
+    -0.19319999999999998,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.545,
+    0.19319999999999998,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.455,
+    0.19319999999999998,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  },
+  {
+   "case_id": "40312:glide_B",
+   "config_id": 40312,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.045000000000000005,
+    -0.19319999999999998,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    0.045000000000000005,
+    -0.19319999999999998,
+    -2.13
+   ],
+   "alt_x0_H2": [
+    0.045000000000000005,
+    -0.19319999999999998,
+    0.87
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING"
+  }
+ ],
+ "first_wave_anchor_cases": [
+  {
+   "case_id": "20101:halfturn_B",
+   "config_id": 20101,
+   "family": "E2",
+   "size_id": "L1.00",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    6.123233995736766e-17,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.2452274712376159,
+    -0.3429926323318836,
+    -0.74
+   ],
+   "clone_x0_H1": [
+    0.24522747123761585,
+    0.3429926323318836,
+    -1.74
+   ],
+   "alt_x0_H2": [
+    0.24522747123761596,
+    0.3429926323318836,
+    0.26
+   ],
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "generator_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E2_c18e51e0d58d6ecfc.npy",
+    "cov_file_sha256": "8fb4b11321bea93a6b61a2d1c266732d345333e0517d19e0e18ca3e764bc1214",
+    "cov_array_sha256": "4e1df7b0149ba2303fe17f91f945e3e74e22562425ef385816301bcacf03f006"
+   }
+  },
+  {
+   "case_id": "20102:halfturn_B",
+   "config_id": 20102,
+   "family": "E2",
+   "size_id": "L1.00",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    6.123233995736766e-17,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.07150075549277313,
+    -0.24162711619922894,
+    -0.74
+   ],
+   "clone_x0_H1": [
+    0.07150075549277307,
+    0.24162711619922894,
+    -1.74
+   ],
+   "alt_x0_H2": [
+    0.07150075549277318,
+    0.24162711619922894,
+    0.26
+   ],
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "generator_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E2_0790cef826cd75c75.npy",
+    "cov_file_sha256": "89f36343df4632252a4031eab08ebd76c999a43380e9e9a5a42c6764bc4644d3",
+    "cov_array_sha256": "c0652e2ae098da08923b9b3620f7978c9d8bded0ac4910dd3d5e97676ebe1a5e"
+   }
+  },
+  {
+   "case_id": "20103:halfturn_B",
+   "config_id": 20103,
+   "family": "E2",
+   "size_id": "L1.00",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    6.123233995736766e-17,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.8951290935216393,
+    -0.2514647338918028,
+    -0.74
+   ],
+   "clone_x0_H1": [
+    0.8951290935216392,
+    0.2514647338918028,
+    -1.74
+   ],
+   "alt_x0_H2": [
+    0.8951290935216394,
+    0.2514647338918028,
+    0.26
+   ],
+   "shape_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0
+   },
+   "generator_params": {
+    "Lx": 1.0,
+    "Ly": 1.0,
+    "Lz": 1.0,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E2_a6a9d4786d71d3c0a.npy",
+    "cov_file_sha256": "58cae3efa2e92da8aacac2d1f8e0c6a4cf2d3dd2338f7fd7c63e03859a6a8992",
+    "cov_array_sha256": "3d6138751f1013c440224357091d405621b9dd11007252ad24cd275ef4bb2263"
+   }
+  },
+  {
+   "case_id": "20201:halfturn_B",
+   "config_id": 20201,
+   "family": "E2",
+   "size_id": "L1.20",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    7.347880794884119e-17,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.2942729654851391,
+    -0.4115911587982603,
+    -0.888
+   ],
+   "clone_x0_H1": [
+    0.29427296548513904,
+    0.4115911587982603,
+    -2.088
+   ],
+   "alt_x0_H2": [
+    0.29427296548513915,
+    0.4115911587982603,
+    0.31199999999999994
+   ],
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "generator_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E2_268fba07d10165afc.npy",
+    "cov_file_sha256": "c9b9566fb6f6bef20aefdf2fa2c970c2f705ade37a7ac44fdde295ea418ad88a",
+    "cov_array_sha256": "1a91bc37afeca53349d5f9ea39dca19847ff8cad6bc6836de825ace4d11adf02"
+   }
+  },
+  {
+   "case_id": "20202:halfturn_B",
+   "config_id": 20202,
+   "family": "E2",
+   "size_id": "L1.20",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    7.347880794884119e-17,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.08580090659132775,
+    -0.28995253943907473,
+    -0.888
+   ],
+   "clone_x0_H1": [
+    0.08580090659132768,
+    0.28995253943907473,
+    -2.088
+   ],
+   "alt_x0_H2": [
+    0.08580090659132782,
+    0.28995253943907473,
+    0.31199999999999994
+   ],
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "generator_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E2_ade5ff0a3cc74ac4b.npy",
+    "cov_file_sha256": "c5d8850d621d576ea20d7df8365523bb40a37ca83d929a1253acb4321c421446",
+    "cov_array_sha256": "63be8677e062b8619c56b8fa8a97f42b9a64c431776e1b75a3052f8759eb19a7"
+   }
+  },
+  {
+   "case_id": "20203:halfturn_B",
+   "config_id": 20203,
+   "family": "E2",
+   "size_id": "L1.20",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    7.347880794884119e-17,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -1.074154912225967,
+    -0.30175768067016334,
+    -0.888
+   ],
+   "clone_x0_H1": [
+    1.074154912225967,
+    0.30175768067016334,
+    -2.088
+   ],
+   "alt_x0_H2": [
+    1.074154912225967,
+    0.30175768067016334,
+    0.31199999999999994
+   ],
+   "shape_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2
+   },
+   "generator_params": {
+    "Lx": 1.2,
+    "Ly": 1.2,
+    "Lz": 1.2,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E2_0078e7fd974e7638d.npy",
+    "cov_file_sha256": "ebf25ac9c4985586d6cffde8007818eb164d295b2c0eb088b65ae5fa5ff6c88f",
+    "cov_array_sha256": "b5034cde63d349aacd991b812de3003eaefbfc5db3bdb103a8f9665391965ad2"
+   }
+  },
+  {
+   "case_id": "20301:halfturn_B",
+   "config_id": 20301,
+   "family": "E2",
+   "size_id": "L1.50",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    9.184850993605148e-17,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.36784120685642385,
+    -0.5144889484978254,
+    -1.1099999999999999
+   ],
+   "clone_x0_H1": [
+    0.36784120685642374,
+    0.5144889484978254,
+    -2.61
+   ],
+   "alt_x0_H2": [
+    0.36784120685642396,
+    0.5144889484978254,
+    0.3900000000000001
+   ],
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "generator_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E2_73a8b8f2c8905076e.npy",
+    "cov_file_sha256": "5181c4067e92c65ef77dcd39c7d1a52087a96dd19ca55d137b6770a0503e8bc3",
+    "cov_array_sha256": "ff43339bcbda1ab845ddcbeecb86a493213516c63d25739ac502c739af772e91"
+   }
+  },
+  {
+   "case_id": "20302:halfturn_B",
+   "config_id": 20302,
+   "family": "E2",
+   "size_id": "L1.50",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    9.184850993605148e-17,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.10725113323915969,
+    -0.3624406742988434,
+    -1.1099999999999999
+   ],
+   "clone_x0_H1": [
+    0.1072511332391596,
+    0.3624406742988434,
+    -2.61
+   ],
+   "alt_x0_H2": [
+    0.10725113323915979,
+    0.3624406742988434,
+    0.3900000000000001
+   ],
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "generator_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E2_29850795daa9eff90.npy",
+    "cov_file_sha256": "404d84860db767d769f88d9db5d1d5395bbe4aa1f882fb1fb7429a56327aa5c3",
+    "cov_array_sha256": "1b5a8bfb66ad634063966e2d1ff9e9af778a728eaea5f5ce4f71b7e99b9e0893"
+   }
+  },
+  {
+   "case_id": "20303:halfturn_B",
+   "config_id": 20303,
+   "family": "E2",
+   "size_id": "L1.50",
+   "action": "halfturn_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    9.184850993605148e-17,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -1.342693640282459,
+    -0.3771971008377042,
+    -1.1099999999999999
+   ],
+   "clone_x0_H1": [
+    1.342693640282459,
+    0.3771971008377042,
+    -2.61
+   ],
+   "alt_x0_H2": [
+    1.342693640282459,
+    0.3771971008377042,
+    0.3900000000000001
+   ],
+   "shape_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5
+   },
+   "generator_params": {
+    "Lx": 1.5,
+    "Ly": 1.5,
+    "Lz": 1.5,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 0.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E2_a04ba04637b1fa7ab.npy",
+    "cov_file_sha256": "f41ed5cb0135e528b68201bead09b95350d1bc7e173dda353f839d8fc5f54e00",
+    "cov_array_sha256": "de80b0f8c82c81918168a8bb03c3fc8bf53c34f7297fc91b6909f686425a44f7"
+   }
+  },
+  {
+   "case_id": "30101:glide_A",
+   "config_id": 30101,
+   "family": "E7",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31,
+    -0.11278702805018147,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.31,
+    0.11278702805018147,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.69,
+    0.11278702805018147,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E7_8396dc1acd0d38f5e.npy",
+    "cov_file_sha256": "c91682567b727b912fa39b88dd661f017df95df89f8ee08bbb4178be9fc13ede",
+    "cov_array_sha256": "00f7e61025a6abafaeb77d775806baa8a2acab7507721378317c167518200f9b"
+   }
+  },
+  {
+   "case_id": "30102:glide_A",
+   "config_id": 30102,
+   "family": "E7",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31,
+    -0.04504442885635738,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.31,
+    0.04504442885635738,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.69,
+    0.04504442885635738,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E7_a8f9173bd6afdee73.npy",
+    "cov_file_sha256": "55c4c1655335edabc654d5500f2dc82fc3c0d8f0cbf3fa7213d0a7f2202fb225",
+    "cov_array_sha256": "4c04234c666893a49444d06d9bb16b17e3aee809c234e7046b20d1d55dfb6fe8"
+   }
+  },
+  {
+   "case_id": "30103:glide_A",
+   "config_id": 30103,
+   "family": "E7",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.31,
+    -0.17608175443077442,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.31,
+    0.17608175443077442,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.69,
+    0.17608175443077442,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "L1y": 1.0,
+    "L2x": 0.0,
+    "L2z": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E7_87805576e93afe1db.npy",
+    "cov_file_sha256": "565cef276f6b465ea8c0c3b6ab9fa1c5e8cc1d2196e0d940fd9fe6947b234de2",
+    "cov_array_sha256": "22b87124209ab9e3056eafbb1c30852f922dfd3f67611f38baf122a07e5701ec"
+   }
+  },
+  {
+   "case_id": "30201:glide_A",
+   "config_id": 30201,
+   "family": "E7",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.372,
+    -0.13534443366021776,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.572,
+    0.13534443366021776,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.828,
+    0.13534443366021776,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E7_d8810697adfcf87a8.npy",
+    "cov_file_sha256": "9b01c52658fa2070423ecced0f5cf2b6fe1425e5a208fd4fab136c930874895e",
+    "cov_array_sha256": "83e759d7e832d52fbcff3d3445eb89432f66bcb78d4250170acf363a7b356c80"
+   }
+  },
+  {
+   "case_id": "30202:glide_A",
+   "config_id": 30202,
+   "family": "E7",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.372,
+    -0.05405331462762885,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.572,
+    0.05405331462762885,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.828,
+    0.05405331462762885,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E7_9f2cac533968d2a49.npy",
+    "cov_file_sha256": "933ec0004ded0832bc7c909965178f07678e9363b5fc51fa2237aa02b3a14b29",
+    "cov_array_sha256": "0c85b00bb4b4e9ca018dfc100cd7c017dd55fb4c2bb9cf84a39b021073c34e4e"
+   }
+  },
+  {
+   "case_id": "30203:glide_A",
+   "config_id": 30203,
+   "family": "E7",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.372,
+    -0.2112981053169293,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.572,
+    0.2112981053169293,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.828,
+    0.2112981053169293,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "L1y": 1.2,
+    "L2x": 0.0,
+    "L2z": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E7_0b1a77b8d9ad97b29.npy",
+    "cov_file_sha256": "c45ee1f60fad338319e7d7be988135da9444d3697c231f3fbf24b45c0191eaef",
+    "cov_array_sha256": "80e5d3e78e85a4c10db968c113ba5037db8d52e5152529ac41a53d0223a183e1"
+   }
+  },
+  {
+   "case_id": "30301:glide_A",
+   "config_id": 30301,
+   "family": "E7",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46499999999999997,
+    -0.1691805420752722,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9649999999999999,
+    0.1691805420752722,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0350000000000001,
+    0.1691805420752722,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E7_c06a7a19670e66ed0.npy",
+    "cov_file_sha256": "4a724215f64a5e7f774e01df24e6b160e5fd600c0aaca402d4ee1a70e2718ab2",
+    "cov_array_sha256": "3833df82a6a54052f39f70562ceb3e8d3101c0102b18f18040792b163c26926e"
+   }
+  },
+  {
+   "case_id": "30302:glide_A",
+   "config_id": 30302,
+   "family": "E7",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46499999999999997,
+    -0.06756664328453607,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9649999999999999,
+    0.06756664328453607,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0350000000000001,
+    0.06756664328453607,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E7_ace9b8eeaca667b5a.npy",
+    "cov_file_sha256": "5fa6487085d781d3c1db2d7c65e29bad345e82349e324b74b759769be5d54de7",
+    "cov_array_sha256": "35d080123683be0f747e325686e1e6ebd48dab7ef7cfee470610a5702656bb9b"
+   }
+  },
+  {
+   "case_id": "30303:glide_A",
+   "config_id": 30303,
+   "family": "E7",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.46499999999999997,
+    -0.2641226316461616,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.9649999999999999,
+    0.2641226316461616,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.0350000000000001,
+    0.2641226316461616,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "L1y": 1.5,
+    "L2x": 0.0,
+    "L2z": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E7_7e4e21caa9b192446.npy",
+    "cov_file_sha256": "90438d54f34cae412c183ff5be716f8acac85a2f7dec71d57fc3a389e41197bc",
+    "cov_array_sha256": "5a6f0d1df00e2576b05e26c3f67c36338c9fbd70b35fd2a559a67bb6484d3b21"
+   }
+  },
+  {
+   "case_id": "40101:glide_A",
+   "config_id": 40101,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.21609142351830096,
+    -0.1388778490467109,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.216091423518301,
+    0.1388778490467109,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.7839085764816991,
+    0.1388778490467109,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_08fa01dc8dfea7fb9.npy",
+    "cov_file_sha256": "dc3baf0656b526821b216fe3284a892438f20adefc128a88e64f72f0391e1d7e",
+    "cov_array_sha256": "a0f481038d2eb944d7013e75c2567f5bdaa81fdb5025fa4048c4f42ba07bd70b"
+   }
+  },
+  {
+   "case_id": "40101:glide_B",
+   "config_id": 40101,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.21609142351830096,
+    -0.1388778490467109,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    0.21609142351830096,
+    -0.1388778490467109,
+    -1.42
+   ],
+   "alt_x0_H2": [
+    0.21609142351830096,
+    -0.1388778490467109,
+    0.5800000000000001
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_08fa01dc8dfea7fb9.npy",
+    "cov_file_sha256": "dc3baf0656b526821b216fe3284a892438f20adefc128a88e64f72f0391e1d7e",
+    "cov_array_sha256": "a0f481038d2eb944d7013e75c2567f5bdaa81fdb5025fa4048c4f42ba07bd70b"
+   }
+  },
+  {
+   "case_id": "40102:glide_A",
+   "config_id": 40102,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.10991624390681737,
+    -0.06676051199330066,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.1099162439068173,
+    0.06676051199330066,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.8900837560931827,
+    0.06676051199330066,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_4f5fbcb11358d5bc5.npy",
+    "cov_file_sha256": "0171fe4f2a1e9918e84d38984601626b295d9eb9fa82c3934ba6028216c587be",
+    "cov_array_sha256": "d47707320f15a624f6c6831f6bc53119801f2cd674411fcd5064339ee51220d2"
+   }
+  },
+  {
+   "case_id": "40102:glide_B",
+   "config_id": 40102,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.10991624390681737,
+    -0.06676051199330066,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    0.10991624390681737,
+    -0.06676051199330066,
+    -1.42
+   ],
+   "alt_x0_H2": [
+    0.10991624390681737,
+    -0.06676051199330066,
+    0.5800000000000001
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_4f5fbcb11358d5bc5.npy",
+    "cov_file_sha256": "0171fe4f2a1e9918e84d38984601626b295d9eb9fa82c3934ba6028216c587be",
+    "cov_array_sha256": "d47707320f15a624f6c6831f6bc53119801f2cd674411fcd5064339ee51220d2"
+   }
+  },
+  {
+   "case_id": "40103:glide_A",
+   "config_id": 40103,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.4225612190131215,
+    -0.125548183938205,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    -1.4225612190131214,
+    0.125548183938205,
+    -0.42
+   ],
+   "alt_x0_H2": [
+    0.5774387809868785,
+    0.125548183938205,
+    -0.42
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_4b283ff566c05973d.npy",
+    "cov_file_sha256": "407029859125119b7f66081167d574ddb57d155d9037e38eb7d3ca58aea93e71",
+    "cov_array_sha256": "c3a5cf7cfcabc05e268d7a8154ebecaa3de74dd128d7a860461755774f3b0ea6"
+   }
+  },
+  {
+   "case_id": "40103:glide_B",
+   "config_id": 40103,
+   "family": "E8",
+   "size_id": "L1.00",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "base_x0": [
+    -0.4225612190131215,
+    -0.125548183938205,
+    -0.42
+   ],
+   "clone_x0_H1": [
+    0.4225612190131215,
+    -0.125548183938205,
+    -1.42
+   ],
+   "alt_x0_H2": [
+    0.4225612190131215,
+    -0.125548183938205,
+    0.5800000000000001
+   ],
+   "shape_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "generator_params": {
+    "LAx": 1.0,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.0,
+    "LCy": 1.0
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_4b283ff566c05973d.npy",
+    "cov_file_sha256": "407029859125119b7f66081167d574ddb57d155d9037e38eb7d3ca58aea93e71",
+    "cov_array_sha256": "c3a5cf7cfcabc05e268d7a8154ebecaa3de74dd128d7a860461755774f3b0ea6"
+   }
+  },
+  {
+   "case_id": "40201:glide_A",
+   "config_id": 40201,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.25930970822196114,
+    -0.1666534188560531,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.459309708221961,
+    0.1666534188560531,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.9406902917780389,
+    0.1666534188560531,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_e662fc0f335935d4e.npy",
+    "cov_file_sha256": "993d8fbe9bcc79fbfbbfa6020850f4d9137f5207c6c6a76001159eddeb1e040b",
+    "cov_array_sha256": "1954a468e09029e6287b7aeef37d34c69a174a6b1847c900336d3e5e2183c1f1"
+   }
+  },
+  {
+   "case_id": "40201:glide_B",
+   "config_id": 40201,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.25930970822196114,
+    -0.1666534188560531,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    0.25930970822196114,
+    -0.1666534188560531,
+    -1.704
+   ],
+   "alt_x0_H2": [
+    0.25930970822196114,
+    -0.1666534188560531,
+    0.696
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_e662fc0f335935d4e.npy",
+    "cov_file_sha256": "993d8fbe9bcc79fbfbbfa6020850f4d9137f5207c6c6a76001159eddeb1e040b",
+    "cov_array_sha256": "1954a468e09029e6287b7aeef37d34c69a174a6b1847c900336d3e5e2183c1f1"
+   }
+  },
+  {
+   "case_id": "40202:glide_A",
+   "config_id": 40202,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.13189949268818082,
+    -0.08011261439196078,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.3318994926881809,
+    0.08011261439196078,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    1.068100507311819,
+    0.08011261439196078,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_9c8195baa51e77e91.npy",
+    "cov_file_sha256": "ce9f7a949bff2310ce99129e9a428255ac44a8c3c26f6152a65f1b4ea7989d87",
+    "cov_array_sha256": "cdc1d2d64e9dfd8880b17d3d8fb0ccd6425db9f6b37893fb8759054ec83c7e87"
+   }
+  },
+  {
+   "case_id": "40202:glide_B",
+   "config_id": 40202,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.13189949268818082,
+    -0.08011261439196078,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    0.13189949268818082,
+    -0.08011261439196078,
+    -1.704
+   ],
+   "alt_x0_H2": [
+    0.13189949268818082,
+    -0.08011261439196078,
+    0.696
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_9c8195baa51e77e91.npy",
+    "cov_file_sha256": "ce9f7a949bff2310ce99129e9a428255ac44a8c3c26f6152a65f1b4ea7989d87",
+    "cov_array_sha256": "cdc1d2d64e9dfd8880b17d3d8fb0ccd6425db9f6b37893fb8759054ec83c7e87"
+   }
+  },
+  {
+   "case_id": "40203:glide_A",
+   "config_id": 40203,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.2,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.5070734628157457,
+    -0.150657820725846,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    -1.7070734628157456,
+    0.150657820725846,
+    -0.504
+   ],
+   "alt_x0_H2": [
+    0.6929265371842542,
+    0.150657820725846,
+    -0.504
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_7b552aacb8718a377.npy",
+    "cov_file_sha256": "89145fb2d9d42ffc003b73be02c4bf238c5c98499fcf29b3a9bf2d32ee641a72",
+    "cov_array_sha256": "3c2eaae313deae449e219cfe08c5656dc9514644c05a04eed18e2b952cbb9169"
+   }
+  },
+  {
+   "case_id": "40203:glide_B",
+   "config_id": 40203,
+   "family": "E8",
+   "size_id": "L1.20",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.2
+   ],
+   "base_x0": [
+    -0.5070734628157457,
+    -0.150657820725846,
+    -0.504
+   ],
+   "clone_x0_H1": [
+    0.5070734628157457,
+    -0.150657820725846,
+    -1.704
+   ],
+   "alt_x0_H2": [
+    0.5070734628157457,
+    -0.150657820725846,
+    0.696
+   ],
+   "shape_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "generator_params": {
+    "LAx": 1.2,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.2,
+    "LCy": 1.2
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_7b552aacb8718a377.npy",
+    "cov_file_sha256": "89145fb2d9d42ffc003b73be02c4bf238c5c98499fcf29b3a9bf2d32ee641a72",
+    "cov_array_sha256": "3c2eaae313deae449e219cfe08c5656dc9514644c05a04eed18e2b952cbb9169"
+   }
+  },
+  {
+   "case_id": "40301:glide_A",
+   "config_id": 40301,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.32413713527745147,
+    -0.20831677357006637,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.8241371352774514,
+    0.20831677357006637,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.1758628647225486,
+    0.20831677357006637,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_3b4fe407d9b836a2e.npy",
+    "cov_file_sha256": "92d4db6798818e08169a41d1af411e0cb0af02cc3a351e517d78ef3783ad4b1d",
+    "cov_array_sha256": "a04b7e3d5c79846022a5714cb33f41c8d9292639a1e47a1580ed4a4bbcef93cd"
+   }
+  },
+  {
+   "case_id": "40301:glide_B",
+   "config_id": 40301,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.32413713527745147,
+    -0.20831677357006637,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    0.32413713527745147,
+    -0.20831677357006637,
+    -2.13
+   ],
+   "alt_x0_H2": [
+    0.32413713527745147,
+    -0.20831677357006637,
+    0.87
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_3b4fe407d9b836a2e.npy",
+    "cov_file_sha256": "92d4db6798818e08169a41d1af411e0cb0af02cc3a351e517d78ef3783ad4b1d",
+    "cov_array_sha256": "a04b7e3d5c79846022a5714cb33f41c8d9292639a1e47a1580ed4a4bbcef93cd"
+   }
+  },
+  {
+   "case_id": "40302:glide_A",
+   "config_id": 40302,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.16487436586022605,
+    -0.10014076798995099,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -1.664874365860226,
+    0.10014076798995099,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    1.335125634139774,
+    0.10014076798995099,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_b2baaf57e1c69eb81.npy",
+    "cov_file_sha256": "de22417204c10c0a56701b2edf537dc27653689eaf58ca9ebd19de26159a729a",
+    "cov_array_sha256": "ccce18720565b63075cf8c9dc4f8d97db0a5a2234b81e47236bccf90f7593a67"
+   }
+  },
+  {
+   "case_id": "40302:glide_B",
+   "config_id": 40302,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.16487436586022605,
+    -0.10014076798995099,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    0.16487436586022605,
+    -0.10014076798995099,
+    -2.13
+   ],
+   "alt_x0_H2": [
+    0.16487436586022605,
+    -0.10014076798995099,
+    0.87
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_b2baaf57e1c69eb81.npy",
+    "cov_file_sha256": "de22417204c10c0a56701b2edf537dc27653689eaf58ca9ebd19de26159a729a",
+    "cov_array_sha256": "ccce18720565b63075cf8c9dc4f8d97db0a5a2234b81e47236bccf90f7593a67"
+   }
+  },
+  {
+   "case_id": "40303:glide_A",
+   "config_id": 40303,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_A",
+   "M": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    1.5,
+    0.0,
+    0.0
+   ],
+   "base_x0": [
+    -0.6338418285196823,
+    -0.1883222759073075,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    -2.1338418285196825,
+    0.1883222759073075,
+    -0.63
+   ],
+   "alt_x0_H2": [
+    0.8661581714803177,
+    0.1883222759073075,
+    -0.63
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_61abec20c26f1fc51.npy",
+    "cov_file_sha256": "500eb70cadde5a316ebc0564610726ff5aed8df738867a3bd97f3aa3f5713a44",
+    "cov_array_sha256": "9aae5751da36ca5c9799ac4858dd8bfea0c6d752f67471612e58f4ebd8fa689d"
+   }
+  },
+  {
+   "case_id": "40303:glide_B",
+   "config_id": 40303,
+   "family": "E8",
+   "size_id": "L1.50",
+   "action": "glide_B",
+   "M": [
+    [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "T": [
+    0.0,
+    0.0,
+    1.5
+   ],
+   "base_x0": [
+    -0.6338418285196823,
+    -0.1883222759073075,
+    -0.63
+   ],
+   "clone_x0_H1": [
+    0.6338418285196823,
+    -0.1883222759073075,
+    -2.13
+   ],
+   "alt_x0_H2": [
+    0.6338418285196823,
+    -0.1883222759073075,
+    0.87
+   ],
+   "shape_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "generator_params": {
+    "LAx": 1.5,
+    "LAy": 0.0,
+    "LBx": 0.0,
+    "LBz": 1.5,
+    "LCy": 1.5
+   },
+   "metric": "rel_frobenius",
+   "tolerance_match_rel_lt": 1e-05,
+   "status": "PC1_PENDING",
+   "set": "first_wave_anchor_diagnostic",
+   "base_reused_from_D1": {
+    "cov_file": "cov_cache/cov_E8_61abec20c26f1fc51.npy",
+    "cov_file_sha256": "500eb70cadde5a316ebc0564610726ff5aed8df738867a3bd97f3aa3f5713a44",
+    "cov_array_sha256": "9aae5751da36ca5c9799ac4858dd8bfea0c6d752f67471612e58f4ebd8fa689d"
+   }
+  }
+ ],
+ "counts": {
+  "new_point_cases": 108,
+  "first_wave_anchor_cases": 36,
+  "unique_covariance_requests": {
+   "new_bases": 81,
+   "new_clones": 108,
+   "first_wave_clones": 36,
+   "first_wave_bases_reused": 27,
+   "total_new_generations": 225
+  },
+  "note": "one case per (configuration, required action); E8 has two actions; E1 excluded (homogeneous)"
+ },
+ "table_sha256": "7352e1c6ed458fe0a28733e21bf7cbcf4c6c42e0bd649a03bb9cf0791f7171e0"
+}
