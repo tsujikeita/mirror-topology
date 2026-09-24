@@ -1,5 +1,5 @@
 # Step1_PhaseB_engine_spec v0.3 追補 — B-2 実装受入 packet（第 35 tranche 監査を反映）
-初版：2026-09-16（Claude）。B-3-3 v2整理：2026-09-19。Phase D-1 起草：2026-09-20。以下の現行engineは `step1_engine 0.79.0（数値 kernel は 0.54.0 基盤の継承；D-2 4 family 生成 ledger と read-only 検証 script／notebook の追加）`（数値 kernel は 0.54.0＝受入れ済み基盤 `1db30cd1…` と同一；`d/` の追加のみ）（module／test／fixture／reference／doc の SHA inventory は `B2_completion_inventory.json`＋監査側 `B2_inventory_audit_supplement.json`）。
+初版：2026-09-16（Claude）。B-3-3 v2整理：2026-09-19。Phase D-1 起草：2026-09-20。以下の現行engineは `step1_engine 0.80.0（数値 kernel は 0.54.0 基盤の継承；read-only 検証器 v0.2＝RV-1/2/3 反映）`（数値 kernel は 0.54.0＝受入れ済み基盤 `1db30cd1…` と同一；`d/` の追加のみ）（module／test／fixture／reference／doc の SHA inventory は `B2_completion_inventory.json`＋監査側 `B2_inventory_audit_supplement.json`）。
 
 **B-2受入れ当時の判定ラベル（歴史的記録。現在の状態は§D.0とB-3-3文書を参照）**：`B2_implementation_acceptance=accepted`／`B2_original_Colab_acceptance=pending_explicit_carryover_to_B3`／`B3_notebook_preparation=go`／`ENGINE_VALID=not_evaluated`／`Phase_C_freeze=not_authorized`。規則本文 `Step1_rules_v1.0_draft4.1.md`（SHA `5f02c970…`）・`rules_tables_v1.json`（SHA `522751be…`）・spec v0.2 追補は不変。
 
@@ -15,7 +15,7 @@
 | 統合 | threshold_evaluator／integrated_runner／archive／checkpoint | 共通 evaluator（親必要量→位置→coordinator→12 位置→eligible truth）・pseudo 完全性・content-addressed archive・意味検証 reader（t29–34） |
 | 回帰 | legacy_kernel／performance | A10 kernel の同一環境 bit 一致・Colab official との 1e-15 一致・性能 unit（t23–25） |
 
-受入テスト（実体，D-2 生成 ledger）：48 module・93 test file（自作 `test_b*` 28・`test_d*` 10・監査 `test_audit*` 55）・835 test 関数定義・1270 pytest case（parametrize 展開；B-2 受入時は 41／63／619／827）。監査原本の同梱区分：**原本保持**／**path 適応のみ**／**fixture 再生成**（t34・t35：配布しない pickle cache を in-process 生成に置換；assert 不変。t35 の12位置 fixture は `TwelveFixture` による原検査用入力から `twelve_from_cases` による入力へ変更しており、同じ数値標本の再現とは区別する）／**API 追従**（t29：result_ref→diagnostic_ref・injection hook を共通 evaluator へ）／**比較 oracle 訂正**（t28：高 offset KDE の literal 基準）——いずれも監査で承認済みの差分で，テスト緩和ではない。「意味検証 reader」の scope は core（保存 replicate・密度に条件付き）であり，外部 W₂/context 参照・run/coordinator を含む再利用契約の認証ではない。
+受入テスト（実体，D-2 検証器 v0.2）：48 module・93 test file（自作 `test_b*` 28・`test_d*` 10・監査 `test_audit*` 55）・837 test 関数定義・1272 pytest case（parametrize 展開；B-2 受入時は 41／63／619／827）。監査原本の同梱区分：**原本保持**／**path 適応のみ**／**fixture 再生成**（t34・t35：配布しない pickle cache を in-process 生成に置換；assert 不変。t35 の12位置 fixture は `TwelveFixture` による原検査用入力から `twelve_from_cases` による入力へ変更しており、同じ数値標本の再現とは区別する）／**API 追従**（t29：result_ref→diagnostic_ref・injection hook を共通 evaluator へ）／**比較 oracle 訂正**（t28：高 offset KDE の literal 基準）——いずれも監査で承認済みの差分で，テスト緩和ではない。「意味検証 reader」の scope は core（保存 replicate・密度に条件付き）であり，外部 W₂/context 参照・run/coordinator を含む再利用契約の認証ではない。
 
 **inventory の適用範囲**：現提出版の照合には `B2_completion_inventory.json` を用いる。`B2_inventory_audit_supplement.json` と `docs_B2_scope_and_B3_handoff_proposal_ChatGPT.md` は第35 tranche（engine 0.39.0）の監査時点の履歴資料として原bytesを保持し、現版のSHAや件数の代用にはしない。
 
@@ -65,7 +65,8 @@
 | Phase D-2 tranche ③a（fitting wrapper・強い intake・BankSupply） | 0.74.0（v2） | — | `ChatGPT_audit_Step1_PhaseD_D2_tranche3a_v2.md` | **実装受入れ PASS**（RD2T3A-A/B/C 閉鎖） |
 | Phase D-2 tranche ③b（W₂ bank・生成 script・notebook） | 0.78.0（v4；commit `8b5e6102…`） | — | `ChatGPT_audit_Step1_PhaseD_D2_tranche3b_v4.md` | **実装・接続の受入れ PASS**；実行前 GO `ChatGPT_D2_preexecution_GO_8b5e6102f008.md` |
 | Phase D-2 正式生成（E1／E2／E7／E8） | `8b5e6102…`（0.78.0） | `20260923T063210Z`／`092030Z`／`125656Z`／`174910Z`（計 8.58 h） | 各 family の `ChatGPT_audit_Step1_PhaseD_D2_<F>_Colab_8b5e6102f008.md` | **4 family とも実行記録・metadata 受入れ**（NPZ 実配列の独立数値受入れは未了）；ledger `registered_assets/d2/d2_generation_ledger.json` |
-| Phase D-2 実行後検証（read-only） | 本版（0.79.0） | 未実行 | `Step1_PhaseD_D2_generation_ledger_report.md` | 検証 script／notebook 起草（事前確認待ち） |
+| Phase D-2 生成 ledger | 0.79.0（commit `19106ef…`） | — | `ChatGPT_audit_Step1_PhaseD_D2_readonly_verifier_v0.1.md` | **ledger・4 family 履歴登録は受入れ** |
+| Phase D-2 実行後検証器（read-only） | 本版（0.80.0；v0.2） | 未実行 | 同上／`Step1_PhaseD_D2_generation_ledger_report.md` §3 | v0.1 は HOLD（RV-1 束縛・RV-2 出力隔離・RV-3 f32 規則）；v0.2 で反映（実行前確認待ち） |
 
 ### D.1 更新履歴（tranche 35／36 以降）
 - tranche 36：第 35 tranche 監査の inventory・provenance・性能・実行範囲の訂正と B-3 移管表を反映（本版）。監査の受入試験 12 件を同梱。
