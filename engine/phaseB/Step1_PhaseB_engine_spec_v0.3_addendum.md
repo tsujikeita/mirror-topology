@@ -67,7 +67,8 @@
 | Phase D-2 正式生成（E1／E2／E7／E8） | `8b5e6102…`（0.78.0） | `20260923T063210Z`／`092030Z`／`125656Z`／`174910Z`（計 8.58 h） | 各 family の `ChatGPT_audit_Step1_PhaseD_D2_<F>_Colab_8b5e6102f008.md` | **4 family とも実行記録・metadata 受入れ**（NPZ 実配列の独立数値受入れは未了）；ledger `registered_assets/d2/d2_generation_ledger.json` |
 | Phase D-2 生成 ledger | 0.79.0（commit `19106ef…`） | — | `ChatGPT_audit_Step1_PhaseD_D2_readonly_verifier_v0.1.md` | **ledger・4 family 履歴登録は受入れ** |
 | Phase D-2 実行後検証器（read-only） | `dfe98c5f…`（0.81.0） | 4 family（計 997 s） | `ChatGPT_audit_Step1_PhaseD_D2_readonly_verifier_v0.3.md`（実装 PASS）／`ChatGPT_audit_Step1_PhaseD_D2_readonly_Colab_dfe98c5f37c6.md`（**PASS_WITH_EXPLICIT_SCOPE**） | 4 family とも integrity all_ok・登録 f32 規則（near-tie 違反 0・Event B mismatch 0）；外側 receipt `registered_assets/d2/d2_outer_receipt.json` |
-| Phase D-3（12 位置共分散・PC-1・12 位置 bank） | 設計 v0.1 | — | `Step1_PhaseD_D3_design_v0.1.md` | 設計（監査待ち） |
+| Phase D-2 外側 receipt | `registered_assets/d2/d2_outer_receipt.json` | — | `ChatGPT_audit_Step1_PhaseD_D2receipt_D3design_v0.1.md` | **著者側記録として受入れ**（範囲は直前の受入れと同一） |
+| Phase D-3（12 位置共分散・PC-1・12 位置 bank） | 設計 v0.2 | — | 同上／`Step1_PhaseD_D3_design_v0.2.md` | v0.1 は方針支持・実装仕様凍結 HOLD（D3-A〜D）；v0.2 で条項 A〜F を反映（設計確定待ち） |
 
 ### D.1 更新履歴（tranche 35／36 以降）
 - tranche 36：第 35 tranche 監査の inventory・provenance・性能・実行範囲の訂正と B-3 移管表を反映（本版）。監査の受入試験 12 件を同梱。
