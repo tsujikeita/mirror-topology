@@ -1,7 +1,7 @@
 {
- "engine_version": "0.80.0",
+ "engine_version": "0.81.0",
  "modules": {
-  "__init__.py": "2396c30f8968c9d60da24694aca6ef64bc55bb539cda53de464941a4ee000b3e",
+  "__init__.py": "e728e7b3734baa739dccee8bbe03778fa2d35d62f897fd43c6f452f695ce872d",
   "archive.py": "354e75e3f89e3477c4b1bd05e7423ddd735431984bb27301cf3d60162cedeee6",
   "bootstrap_plan.py": "6941a7ac19fddfd9d3ca465632e3c68f18809d55e8e82cefa0a206fac2dcd3f7",
   "calibration.py": "1cc25d502021025191f3181b454b999555998884964f3c3dfe915bc9e0db18ea",
@@ -102,6 +102,9 @@
   "test_audit_d2_tranche3b_review_chatgpt.py": 11,
   "test_audit_d2_tranche3b_v2_review_chatgpt.py": 11,
   "test_audit_d2_tranche3b_v3_snapshot_chatgpt.py": 9,
+  "test_audit_d2_verify_prior_adapted_chatgpt.py": 12,
+  "test_audit_d2_verify_reference_outputs_chatgpt.py": 2,
+  "test_audit_d2_verify_v02_edges_chatgpt.py": 12,
   "test_audit_d4_intake_v2_review_chatgpt.py": 15,
   "test_audit_v02_priority_chatgpt.py": 14,
   "test_audit_v03_b2_intake_chatgpt.py": 4,
@@ -145,7 +148,7 @@
   "test_d4_intake.py": 5,
   "test_d4_run_reader.py": 8
  },
- "total_test_functions": 837,
+ "total_test_functions": 863,
  "tests_sha256": {
   "test_audit_b2_tranche10_chatgpt.py": "304ee655483cc9780e9bf778fb2aa659b6eb6ab017c69b01481db6f56efe2603",
   "test_audit_b2_tranche11_chatgpt.py": "d1aaa931fab2572a9ac8f007bde23bc426f4071f0e1054356ead14061f4f5c4a",
@@ -198,6 +201,9 @@
   "test_audit_d2_tranche3b_review_chatgpt.py": "14a646add6a776afd096f618e946c2b53a9cc7f61d1342695a8c8bbc5cce8f7c",
   "test_audit_d2_tranche3b_v2_review_chatgpt.py": "cad011a212733c15063c20052e5c8aa4bc0b6f1461e59323c759ff455f50ea0c",
   "test_audit_d2_tranche3b_v3_snapshot_chatgpt.py": "5064a87f4b8c16cdb17e90259738b730c27cdf27975dd588c4c233634836c348",
+  "test_audit_d2_verify_prior_adapted_chatgpt.py": "bb3f08dafe95025faf67a59b872528c0ab597d65627a825ce0e1c3340a855ea2",
+  "test_audit_d2_verify_reference_outputs_chatgpt.py": "d71b5104cd02492188b7b981aa305d8660f835e684b0d6ac57ff640541416d90",
+  "test_audit_d2_verify_v02_edges_chatgpt.py": "5f1727de13d42f19780eecb50e04e14190b4f7c5d46f75bbb4d6f76162caad03",
   "test_audit_d4_intake_v2_review_chatgpt.py": "ff5b2ae268e6d05f29b5f7e71d11010d4954e0ba5890b3314b4755b4649d04fe",
   "test_audit_v02_priority_chatgpt.py": "090a8efcb0747d8c0f66c2619e28351cd7567dd2b4a2cf8058389e811f4e0f11",
   "test_audit_v03_b2_intake_chatgpt.py": "85e0513cf8000761cf8fe3f718c74e7a0e7b29621e172aaa9da8fb9c5cacf788",
@@ -271,48 +277,49 @@
   "regression_logs/legacy_cross_environment_summary.json": "5a39bb9bcb047e4e8d3079f2466fe56152bc934463d43c6d262b373762d430a6",
   "regression_logs/legacy_regression_tranche24.txt": "3d1be014442dff23052d1c0cc8da80db43aceb3f9753dda35db2c72bed6358ac",
   "regression_logs/performance_budget_sandbox.json": "b269c526dd1c5e70456518b4428d9499bfcd982dca7853445773b0311d4c797c",
-  "regression_logs/d2_verify_v02_pytest/chunks_stdout.txt": "9a822ca6b705180c5eeaf0bcb101c754506532697806ef0106c843e32add012d",
-  "regression_logs/d2_verify_v02_pytest/j1.xml": "74e8c386e6274e150aadccc75c6335c9098427606816fe91fa058570d9b7773d",
-  "regression_logs/d2_verify_v02_pytest/j10.xml": "e78b13b0c45e4a05a17aed1eafa497b62095c7344703e5e4ab0ec1cb44b48f89",
-  "regression_logs/d2_verify_v02_pytest/j2.xml": "8b1f2268449946afc4ed901d0c0a6fc769f2f74d023bb2abaf27eef1f21c375b",
-  "regression_logs/d2_verify_v02_pytest/j3.xml": "33d037b67c2a40e45e45092910e98cb41eb1dad90a47f871262e61f9adf9cdee",
-  "regression_logs/d2_verify_v02_pytest/j4.xml": "289a25ddbc50255f7a8d19de469817f28fecd332757d4ff10d27e26838b9020c",
-  "regression_logs/d2_verify_v02_pytest/j5.xml": "c01a7bdbc208d758ada8ad6e3c0f7982bf05d1a5c0ea68aa23e010f5e178206b",
-  "regression_logs/d2_verify_v02_pytest/j6.xml": "2cf3112027b388600a6564c320879c22dde0d4e1b32a62cb0b58acbf82192aaf",
-  "regression_logs/d2_verify_v02_pytest/j7.xml": "4344d123d2d2fd0d0d7d3a83077ec3eb05b4ccddfa2b80a1b9c91599fd4f4b4e",
-  "regression_logs/d2_verify_v02_pytest/j8.xml": "4312f69dbd276c4158d564e755ceace8e0ce599ff1a40f82e0bde3506aaffd51",
-  "regression_logs/d2_verify_v02_pytest/j9.xml": "c3a05c89402b20f47f67fcf2833a931efd95317601935668209b8c24d48428c3"
+  "regression_logs/d2_verify_v03_pytest/chunks_stdout.txt": "493259ec4a699f829e989b9f57a9e21f0f73fd66e362205c36a0c866ee627114",
+  "regression_logs/d2_verify_v03_pytest/j1.xml": "6308e7f77bb8290aa2943236e0f359ba3fab9b46a5412b81eb5d934e3bc3d5ca",
+  "regression_logs/d2_verify_v03_pytest/j10.xml": "47e88ff9f5d0cbce41c4572a9b0c947f3bfe3359849a09c168a8a41173181594",
+  "regression_logs/d2_verify_v03_pytest/j11.xml": "dc820b6726f0a79dc1ebffcf97fd83450cdf24b8c341b7a72654ee69e53bb32a",
+  "regression_logs/d2_verify_v03_pytest/j2.xml": "144b85853f6ea18cfa5f74d225b4ce90ab11c7b0473a13cace0bf58588bd1e8f",
+  "regression_logs/d2_verify_v03_pytest/j3.xml": "3e7b19b43fa06455822f268585e87ae32c37ec2f231631397dc27fc7311e778c",
+  "regression_logs/d2_verify_v03_pytest/j4.xml": "e7a0db557a5b84ca7d2186c28e7acb5e31523045f2c998885669887158966481",
+  "regression_logs/d2_verify_v03_pytest/j5.xml": "df24b41192c3963b89266110eff4d5057901e4768aae2d0dc7b85c9c9362fcc4",
+  "regression_logs/d2_verify_v03_pytest/j6.xml": "a87db249281e49807be48ec3b2f6c30a7411774137cdafdf7e19a3e3abe5d8ec",
+  "regression_logs/d2_verify_v03_pytest/j7.xml": "4dfb780187d6625a6047bafb769155dc32d6329b244b5797f26094b1bc251436",
+  "regression_logs/d2_verify_v03_pytest/j8.xml": "47b24ee3c3773cdd4ba38d648c91f24947c9ac1b93377da8ce7451ed68d7210b",
+  "regression_logs/d2_verify_v03_pytest/j9.xml": "8a15a205363082d190d0b64ae6522a43ee37186b81c4f7e35c07032a605aafd7"
  },
  "documents_sha256": {
   "Step1_rules_v1.0_draft4.1.md": "5f02c970eb39f9b3e7f7b17b48eb2d3daa16434517cf4442bac339f5ab719615",
   "rules_tables_v1.json": "522751be134aa3ff4fdf33c6be0d7397fb7bd3c89a6c67e26a67bd32dceeb0b4",
   "Step1_PhaseB_engine_spec_v0.2_addendum.md": "ed9b02858df08b3d2acec990b61ab0626f1a9c05cb88f267051bcc33f39ba21d",
-  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "88ca9198ae946faa5ae95a6f4c7adb7cb1fdf344b305ed34d73485484941643a",
+  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "8cd97b743bdb1c96bc1bf2fbce60de95e42c3632923c1635c607d7480604eb8c",
   "Step1_PhaseB_B3_3_receipts_and_deadlines.md": "407bbca8b872e88415921dcf7f244b8ff7a72a4e9c7308478f59641c6cdd42ae",
   "Step1_PhaseD_design_v0.3.md": "6be8ae30f5da27c22e711379f23de1b8a74f094238d7a06334f70b64acef2d75",
   "Step1_PhaseD_D4_design_v0.1.md": "5c329210b13e12213597cc9198e6d9f09e628655979709613d5ffb7ca78da290",
   "Step1_PhaseD_D4_completion.md": "fa994209c5971de1a4ccd533e0a59e5ba7caba984642b8165370d6abcf421902",
   "Step1_PhaseD_D2_design_v0.2.md": "49080074c4dc74c5b56bd9aed3da44e80e0c1d927a11f4dcaabdd58d923ef374",
-  "Step1_PhaseD_D2_generation_ledger_report.md": "7e20e533de8561851a42865c01a6884e18a78e4b2b9e75c6f92f05794b105a1a"
+  "Step1_PhaseD_D2_generation_ledger_report.md": "2b5bde661639a96ccd4d14ef9128bbfeb1266001494d1d53e1d0306478d5455d"
  },
  "counts": {
   "modules": 48,
-  "test_files": 93,
-  "test_functions": 837,
+  "test_files": 96,
+  "test_functions": 863,
   "test_b_files": 28,
-  "test_audit_files": 55
+  "test_audit_files": 58
  },
  "b3_sha256": {
   "b3/MirrorTopology_Step1_B3_0_smoke_v0.3.ipynb": "c62537e5ce20210b15394b63a3a212a7c1cb3b14df277f481a86f928c1d6cde6",
   "b3/MirrorTopology_Step1_B3_1_control_v0.1.ipynb": "b665793fd12e745d765c510dc42c5c345fe80c0801d88b536bb4ccdf615d832d",
   "b3/MirrorTopology_Step1_B3_2A_assets_v0.2.ipynb": "b3400aca97a6bc5f6355324135e3a5b9e0a2094ccf1956716a8364a1c0f9b4bc",
   "b3/MirrorTopology_Step1_B3_2B_shared_null_v0.5.ipynb": "3fdeddb940694e777b2473742428df8fff68ff4192cbdf1bc78ee4949cc69135",
-  "b3/b3_0_pins.json": "964ba4df5b8086be7a25fa3e153298c48186f1373d2e2acfbd6564e11987aace",
+  "b3/b3_0_pins.json": "76085f0355fa2effb2b18e4ad6ff1dedda551952ca74f883bb8b90df62526f83",
   "b3/b3_0_smoke.py": "9c2d125f93487a55bb74c020d7803843054b550ec36163012dac6ffc9e485dae",
   "b3/b3_1_control.py": "d62a77502ad6efdc8bb65df8b8bcb44d66a390c884eaf0a0ad885dd3f9db4eeb",
-  "b3/b3_1_pins.json": "b02156d0f816cea7e8a0e5802082fa3ed5a5393daebd64f434070f7640491c50",
+  "b3/b3_1_pins.json": "4e9be60914242d6e3a6a8b80738935ca97dcaf92c849172a8d02e8e9b16a296b",
   "b3/b3_2_assets.py": "ed500397091966d2ff3dfeac8226c7bbd2688dae1b5a68a2440ce09b0a7fb1c6",
-  "b3/b3_2_pins.json": "fb331ebea74e76082be345cab1b378bfcef8013dcda06a3b1dda6cc62f4da0e3",
+  "b3/b3_2_pins.json": "fb3d610a6afd9648e8574470c443ac5201b697763564ec68f2504453b0f32bc0",
   "b3/b3_2_shared_null.py": "fc1c3d81cb4e1d22edd246a78cbd801a6a16024dca57ed1b0bc35ae9d47c09c6"
  },
  "registered_assets_sha256": {
@@ -748,13 +755,13 @@
  "d_sha256": {
   "d/MirrorTopology_Step1_D1_covgen_v0.3.ipynb": "5ad2213d68160ef30db154add21b233e5d22978d0d5ef2a636044e0f55055d6f",
   "d/MirrorTopology_Step1_D2_bankgen_v0.1.ipynb": "38428511b9b54d6e74a8441a2807299983440bd5cc6870984b17d5b804489acf",
-  "d/MirrorTopology_Step1_D2_verify_v0.2.ipynb": "3caa15e81ffd48ac340ad29419d6cc58eba242255b33dfe12040d15804548f8e",
+  "d/MirrorTopology_Step1_D2_verify_v0.2.ipynb": "338c6f9bf30f1252f8135cfb6f623794b815bc28e3f84de79098d1b22f449616",
   "d/d1_covgen.py": "ec0dce90ec05e97a26ca43c5396195b9b1f796afdb5f2784d3459c91ec3b3400",
-  "d/d1_pins.json": "918d5abbb3b4704015c737b506587216eb5a5af891285c8f40b23ff59b0325fc",
+  "d/d1_pins.json": "492bbb61cbde9bc239df551ada574e8a27089322f2bb5b42856cb4e00e8e79a7",
   "d/d2_bank_spec.json": "c5650166b7ae49a53c849184c2bb0cb44435c38c79d8ec0f2c3fbcbe93bd7415",
   "d/d2_bankgen.py": "6ef809146402c81b086b3b21b2172cf61f56d85e794a7c988aab014b08aff3b8",
   "d/d2_crn_table.json": "99b68d8e78b741c918d4375c60cd64472c148316855bdeac19766faecf503f61",
-  "d/d2_pins.json": "92464976286f1c5de4001f247dd78620c8a004df86f33ae02c985139a0191647",
-  "d/d2_verify_banks.py": "c36e7006f46ee19c8348f3e396a7c0132af1466d4c4f6f17783e448ecf2f9724"
+  "d/d2_pins.json": "854a562837a391d73b4a31fdc7388c028c4fbd11e6dc41257a9482565d8d614f",
+  "d/d2_verify_banks.py": "d3a348c6e18af3e26f6349e1e3bfb657c2f458cb2ca697496d925652a9e66228"
  }
 }

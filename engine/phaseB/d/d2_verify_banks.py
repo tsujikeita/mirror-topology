@@ -30,44 +30,74 @@ def _excl_write(path: str, data: bytes):
     with os.fdopen(fd, "wb") as fh: fh.write(data)
 
 
+def _json_snapshot(path):
+    """Authenticate and decode the same captured bytes, never separate path reads."""
+    data = open(path, "rb").read()
+    def pairs(items):
+        result = {}
+        for key, value in items:
+            if key in result: raise ValueError(f"duplicate JSON key: {key}")
+            result[key] = value
+        return result
+    def invalid(value): raise ValueError(f"nonfinite JSON constant: {value}")
+    return data, json.loads(data, object_pairs_hook=pairs, parse_constant=invalid)
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--phaseb", required=True); ap.add_argument("--run-root", required=True); ap.add_argument("--out", required=True); ap.add_argument("--mode", choices=("accepted", "test"), default="accepted"); ap.add_argument("--max-dirs", type=int, default=None); ap.add_argument("--path-map", action="append", default=[], help="OLD=NEW physical path mapping for moved caches (recorded)")
     a = ap.parse_args(); t0 = time.time()
     if a.max_dirs is not None and (a.max_dirs < 1): print("--max-dirs must be a positive integer", file=sys.stderr); return 2
     run_root = os.path.realpath(a.run_root); out = os.path.realpath(a.out)
+    if os.path.islink(os.path.abspath(a.out)): print("symlink output directory refused", file=sys.stderr); return 2
     def inside(p, q): p, q = os.path.realpath(p), os.path.realpath(q); return p == q or p.startswith(q.rstrip(os.sep) + os.sep)
     if inside(out, run_root) or inside(run_root, out): print("output must be disjoint from the run root", file=sys.stderr); return 2
     if os.path.lexists(out) and (not os.path.isdir(out) or os.path.islink(out) or os.listdir(out)): print("output must be a fresh (non-existent or empty) real directory", file=sys.stderr); return 2
     sys.path.insert(0, a.phaseb); R = dict(schema="d2_postrun_verification_v2", mode=a.mode, run_root=run_root, out=out, stage="init", failures=[], notes=[], accepted_run_binding=None, verification_scope=None)
+    output_safe = False
+    protected_banks = []
     def finish(code):
-        R["seconds"] = time.time() - t0; R["exit_code"] = code; os.makedirs(out, exist_ok=True)
+        R["seconds"] = time.time() - t0; R["exit_code"] = code
+        # In particular, do not publish an error report inside the bank just refused.
+        if not output_safe or any(inside(out, p) or inside(p, out) for p in protected_banks):
+            print(json.dumps(R, indent=1, default=str), file=sys.stderr)
+            return code if code else 2
+        os.makedirs(out, exist_ok=True)
         _excl_write(os.path.join(out, f"d2_verify_{R.get('family', 'unknown')}.json"), json.dumps(R, indent=1, default=str).encode()); print("all_ok =", R.get("all_ok"), "| coverage_complete =", R.get("coverage_complete"), "| stage:", R["stage"], "| failures:", R["failures"][:5]); return code
     try:
+        # Read input metadata once, also establishing ALL paths protected from writes.
+        pmap = dict(x.split("=", 1) for x in a.path_map); R["path_map"] = pmap
+        if len(pmap) != len(a.path_map) or any(not old or not new for old, new in pmap.items()):
+            raise ValueError("empty or duplicate path-map prefix")
+        def phys(p):
+            for old, new in sorted(pmap.items(), key=lambda x: len(x[0]), reverse=True):
+                old = old.rstrip(os.sep)
+                if p == old or p.startswith(old + os.sep): return new.rstrip(os.sep) + p[len(old):]
+            return p
+        rg_p = os.path.join(run_root, "d2", "d2_bank_registry.json"); rm_p = os.path.join(run_root, "d2", "d2_run_manifest.json"); fr_p = os.path.join(run_root, "d2_final_record.json"); lk_p = os.path.join(run_root, "launcher_lock.json")
+        rgb, rg = _json_snapshot(rg_p); rmb, rm = _json_snapshot(rm_p); frb, fr = _json_snapshot(fr_p)
+        lkb, lk = _json_snapshot(lk_p) if os.path.isfile(lk_p) else (None, None)
+        fam = rg.get("family"); R["family"] = fam if fam in ("E1", "E2", "E7", "E8") else "unknown"
+        protected_banks = [os.path.realpath(phys(d["path"])) for d in rg["directories"].values()]
+        if any(inside(out, p) or inside(p, out) for p in protected_banks):
+            R["stage"] = "output"; R["failures"].append("output overlaps a referenced bank"); return finish(2)
+        output_safe = True
         # ---- verifier source (separate from the generator source)
         from step1_engine import __version__; from step1_engine.checkpoint import module_shas; from step1_engine.official_gate import current_env
-        inv = json.load(open(os.path.join(a.phaseb, "B2_completion_inventory.json"))); me = os.path.abspath(__file__)
+        invb, inv = _json_snapshot(os.path.join(a.phaseb, "B2_completion_inventory.json")); me = os.path.abspath(__file__)
         vs_ok = (inv["modules"] == module_shas() and inv["engine_version"] == __version__ and inv.get("d_sha256", {}).get("d/d2_verify_banks.py") == sha(me))
-        ledger_p = os.path.join(a.phaseb, "registered_assets", "d2", "d2_generation_ledger.json"); ledger_ok = (inv.get("registered_assets_sha256", {}).get("registered_assets/d2/d2_generation_ledger.json") == sha(ledger_p))
-        R["verifier_source"] = dict(engine=__version__, inventory_sha256=sha(os.path.join(a.phaseb, "B2_completion_inventory.json")), script_sha256=sha(me), modules_digest=hashlib.sha256(json.dumps(module_shas(), sort_keys=True).encode()).hexdigest(), source_bound=bool(vs_ok), ledger_bound=bool(ledger_ok)); R["verification_environment"] = current_env()
+        ledger_p = os.path.join(a.phaseb, "registered_assets", "d2", "d2_generation_ledger.json"); ledgerb, ledger = _json_snapshot(ledger_p); ledger_ok = (inv.get("registered_assets_sha256", {}).get("registered_assets/d2/d2_generation_ledger.json") == hashlib.sha256(ledgerb).hexdigest())
+        R["verifier_source"] = dict(engine=__version__, inventory_sha256=hashlib.sha256(invb).hexdigest(), script_sha256=sha(me), modules_digest=hashlib.sha256(json.dumps(module_shas(), sort_keys=True).encode()).hexdigest(), source_bound=bool(vs_ok), ledger_bound=bool(ledger_ok)); R["verification_environment"] = current_env()
         if not (vs_ok and ledger_ok): R["failures"].append("verifier source / ledger not bound to the inventory"); R["stage"] = "verifier_source"; return finish(1)
         from step1_engine.d2_bank import verify_bank_dir, load_bank_spec, EXPECTED_MEMBERS; from step1_engine.d2_rng import load_crn_table
-        table, _ = load_crn_table(os.path.join(a.phaseb, "d", "d2_crn_table.json")); spec = load_bank_spec(os.path.join(a.phaseb, "d", "d2_bank_spec.json"), table=table); ledger = json.load(open(ledger_p))
-        # ---- inputs (read only)
-        rg_p = os.path.join(run_root, "d2", "d2_bank_registry.json"); rm_p = os.path.join(run_root, "d2", "d2_run_manifest.json"); fr_p = os.path.join(run_root, "d2_final_record.json"); lk_p = os.path.join(run_root, "launcher_lock.json")
-        rg = json.load(open(rg_p)); rm = json.load(open(rm_p)); fr = json.load(open(fr_p)); fam = rg.get("family"); R["family"] = fam
+        table, _ = load_crn_table(os.path.join(a.phaseb, "d", "d2_crn_table.json")); spec = load_bank_spec(os.path.join(a.phaseb, "d", "d2_bank_spec.json"), table=table)
         if fam not in spec["family_reference"]: R["failures"].append("unknown family"); R["stage"] = "inputs"; return finish(1)
         required = [f"ref_{fam}_b0", f"ref_{fam}_b1", f"ref_{fam}_fit"] + [f"cfg{cid}_{x}" for cid, c in sorted(spec["configurations"].items(), key=lambda kv: int(kv[0])) if c["family"] == fam for x in (["b0", "b1", "fit"] + (["w2"] if c["w2_primary"] is not None else []))]
         R["required_units"] = required
-        pmap = dict(x.split("=", 1) for x in a.path_map); R["path_map"] = pmap
-        def phys(p):
-            for old, new in pmap.items():
-                if p.startswith(old): return new + p[len(old):]
-            return p
         # ---- accepted-run binding (RV-1)
         if a.mode == "accepted":
             L = ledger["families"].get(fam)
             if L is None: R["failures"].append("family not in the ledger"); R["stage"] = "binding"; return finish(1)
-            exp = L["records"]; got = dict(final_record_sha256=sha(fr_p), bank_registry_sha256=sha(rg_p), run_manifest_sha256=sha(rm_p), launcher_lock_sha256=sha(lk_p) if os.path.exists(lk_p) else None)
+            exp = L["records"]; got = dict(final_record_sha256=hashlib.sha256(frb).hexdigest(), bank_registry_sha256=hashlib.sha256(rgb).hexdigest(), run_manifest_sha256=hashlib.sha256(rmb).hexdigest(), launcher_lock_sha256=(hashlib.sha256(lkb).hexdigest() if lkb is not None else None))
             diff = [k for k in exp if exp[k] != got.get(k)]
             if diff: R["failures"].append(f"run records differ from the accepted ledger: {diff}"); R["record_sha256"] = dict(expected=exp, got=got); R["stage"] = "binding"; return finish(1)
             if not (rm.get("stage") == "complete" and rm.get("D2_PASS") is True and not rm.get("failures") and rg.get("formal") is True): R["failures"].append("accepted run record is not a complete formal D2_PASS run"); R["stage"] = "binding"; return finish(1)
@@ -82,13 +112,29 @@ def main():
         for n_ in required:
             p = os.path.realpath(phys(rg["directories"][n_]["path"]))
             if inside(out, p) or inside(p, out): R["failures"].append(f"output overlaps bank directory {n_}"); R["stage"] = "output"; return finish(2)
+        # Logical names belong to the original record, NOT the relocated physical root.
+        logical_root = os.path.join(L["run_root"], "out") if a.mode == "accepted" else None
+        def inventory_name(name, shard_file):
+            original = os.path.join(rg["directories"][name]["path"], shard_file)
+            if logical_root is not None: return os.path.relpath(original, logical_root)
+            # Synthetic mode preserves the generator's run-relative naming convention.
+            canonical = os.path.join("d2", name, shard_file)
+            if canonical in fr.get("output_inventory", {}): return canonical
+            return os.path.relpath(original, run_root)
+        R["logical_run_root"] = logical_root
         # ---- per-unit integrity
         names = required if a.max_dirs is None else required[: a.max_dirs]; R["verification_scope"] = R["verification_scope"] if a.max_dirs is None else (R["verification_scope"] + "_partial"); R["coverage_complete"] = (a.max_dirs is None); R["checked_units"] = names; R["unchecked_units"] = [n_ for n_ in required if n_ not in names]
         inv_files = fr.get("output_inventory", {}); R["units"] = {}; cid_hash = {}; per_unit_arrays = {}
-        from step1_engine.legacy_kernel import LegacyKernel
+        from step1_engine.legacy_kernel import LegacyKernel, ASSET_SHA
         try:
             import healpy as hp; AXV = np.array(hp.pix2vec(16, np.arange(3072))).T; ANTI = hp.vec2pix(16, -AXV[:, 0], -AXV[:, 1], -AXV[:, 2])
-        except Exception: AXV = None; ANTI = None
+            if hashlib.sha256(np.ascontiguousarray(ANTI, dtype=np.int32).tobytes()).hexdigest() != ASSET_SHA["antipode"]: raise ValueError("registered antipode SHA mismatch")
+            if not np.all(np.isfinite(AXV)) or not np.allclose(np.linalg.norm(AXV, axis=1), 1.0, atol=1e-12, rtol=0): raise ValueError("invalid axis vectors")
+            geometry_status = "VERIFIED_REGISTERED_ANTIPODE_AND_UNIT_VECTORS"
+        except Exception as geometry_error:
+            AXV = None; ANTI = None; geometry_status = "NOT_EVALUATED"
+            R["axis_geometry_error"] = repr(geometry_error)
+        R["axis_geometry_status"] = geometry_status
         def stats(x): return dict(n=int(x.size), finite=int(np.isfinite(x).sum()), mean=float(np.mean(x)), std=float(np.std(x)), min=float(np.min(x)), max=float(np.max(x)))
         for name in names:
             d = rg["directories"][name]; p = phys(d["path"]); rec = dict(path=p, purpose=d.get("purpose"), tt=time.time())
@@ -96,7 +142,7 @@ def main():
                 man = verify_bank_dir(p); rec["manifest_sha256"] = man["manifest_sha256"]; rec["manifest_sha256_ok"] = (man["manifest_sha256"] == d["manifest_sha256"]); rec["n_rows"] = man["n_rows"]; rec["formal"] = man["formal"]; rec["roles"] = man["roles"]; rec["selections"] = man["selections"]
                 shards = []; cids = []; per = {}
                 for sh in man["shards"]:
-                    fp = os.path.join(p, sh["file"]); b = open(fp, "rb").read(); fsha = hashlib.sha256(b).hexdigest(); rel = os.path.relpath(os.path.join(d["path"], sh["file"]), run_root)
+                    fp = os.path.join(p, sh["file"]); b = open(fp, "rb").read(); fsha = hashlib.sha256(b).hexdigest(); rel = inventory_name(name, sh["file"])
                     shards.append(dict(file=sh["file"], file_sha256=fsha, matches_manifest=(fsha == sh["file_sha256"]), inventory_bytes_match=(inv_files.get(rel, {}).get("bytes") == len(b))))
                     with np.load(io.BytesIO(b), allow_pickle=False) as z:
                         cids.append(np.asarray(z["cid"]))
@@ -108,9 +154,9 @@ def main():
                 rec["arrays"] = {}
                 for (role, sel), dd in per.items():
                     arr = {kk: np.concatenate(v) for kk, v in dd.items()}; per[(role, sel)] = arr; rec["arrays"][f"{role}__{sel}"] = dict(T1=stats(arr["T1"]), T2=stats(arr["T2"]), AX=dict(min=int(arr["AX"].min()), max=int(arr["AX"].max())), PL=dict(min=int(arr["PL"].min()), max=int(arr["PL"].max())))
-                per_unit_arrays[name] = (man, per)
                 rec["ok"] = bool(rec["manifest_sha256_ok"] and all(s["matches_manifest"] and s["inventory_bytes_match"] for s in shards) and man["formal"] == (a.mode == "accepted" or man["formal"]))
                 if a.mode == "accepted" and not man["formal"]: rec["ok"] = False
+                if rec["ok"]: per_unit_arrays[name] = (man, per)
             except Exception as ex: rec["ok"] = False; rec["error"] = repr(ex)
             rec["seconds"] = time.time() - rec.pop("tt"); R["units"][name] = rec
             if not rec["ok"]: R["failures"].append(name)
@@ -136,14 +182,37 @@ def main():
                 sel64 = A["T1"]; rel = np.abs(A["T1"] - B["T1"]) / np.maximum(np.abs(A["T1"]), 1e-300)
                 near = rel[flips] < REL_NEAR_TIE; ev64 = (A["T1"] <= T1_OBS) & (A["T2"] <= T2_OBS); ev32 = (B["T1"] <= T1_OBS) & (B["T2"] <= T2_OBS); mism = float(np.mean(ev64 != ev32)) if len(ev64) else 0.0
                 evidence = []
-                for i in flips[:2000]:
-                    e = dict(row=int(i), AX=[int(A["AX"][i]), int(B["AX"][i])], PL=[int(A["PL"][i]), int(B["PL"][i])], T1=[float(A["T1"][i]), float(B["T1"][i])], T2=[float(A["T2"][i]), float(B["T2"][i])], event_B=[bool(ev64[i]), bool(ev32[i])], rel_dT1=float(rel[i]), near_tie=bool(rel[i] < REL_NEAR_TIE))
-                    if ANTI is not None: e["antipode"] = bool(ANTI[A["AX"][i]] == B["AX"][i]); v1, v2 = AXV[A["AX"][i]], AXV[B["AX"][i]]; e["plane_angle_deg"] = float(np.degrees(np.arccos(np.clip(abs(float(v1 @ v2)), 0, 1))))
-                    evidence.append(e)
+                evidence_name = f"flip_evidence_{name}_{role}.jsonl"
+                evidence_hash = hashlib.sha256(); evidence_bytes = 0
+                os.makedirs(out, exist_ok=True)
+                evidence_fd = os.open(os.path.join(out, evidence_name), os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0), 0o644)
+                evidence_file = os.fdopen(evidence_fd, "wb")
+                try:
+                    for i in flips:
+                        e = dict(row=int(i), AX=[int(A["AX"][i]), int(B["AX"][i])], PL=[int(A["PL"][i]), int(B["PL"][i])], T1=[float(A["T1"][i]), float(B["T1"][i])], T2=[float(A["T2"][i]), float(B["T2"][i])], event_B=[bool(ev64[i]), bool(ev32[i])], rel_dT1=float(rel[i]), near_tie=bool(rel[i] < REL_NEAR_TIE))
+                        if ANTI is not None: e["antipode"] = bool(ANTI[A["AX"][i]] == B["AX"][i]); v1, v2 = AXV[A["AX"][i]], AXV[B["AX"][i]]; e["plane_angle_deg"] = float(np.degrees(np.arccos(np.clip(abs(float(v1 @ v2)), 0, 1))))
+                        raw = (json.dumps(e, sort_keys=True, allow_nan=False) + "\n").encode()
+                        evidence_file.write(raw); evidence_hash.update(raw); evidence_bytes += len(raw)
+                        if len(evidence) < 2000: evidence.append(e)
+                finally:
+                    evidence_file.close()
+                if os.path.getsize(os.path.join(out, evidence_name)) != evidence_bytes or sha(os.path.join(out, evidence_name)) != evidence_hash.hexdigest():
+                    raise RuntimeError("flip evidence write/readback mismatch")
                 rec = dict(rows=int(len(sel64)), flips=int(len(flips)), flip_rate=float(len(flips) / max(1, len(sel64))), near_tie_flips_rel_lt_1e6=int(near.sum()), flips_rel_ge_1e6=int((~near).sum()), event_B_mismatch_rate=mism, event_B_mismatch_count=int(np.sum(ev64 != ev32)), plane_flip_rate=float(np.mean(A["PL"] != B["PL"])), registered_rule=dict(near_tie_relative=REL_NEAR_TIE, event_B_mismatch_bound=EVENT_B_MISMATCH_BOUND, target=[T1_OBS, T2_OBS]), passes_registered_rule=bool((~near).sum() == 0 and mism <= EVENT_B_MISMATCH_BOUND), evidence_truncated=(len(flips) > 2000), flip_evidence=evidence, diagnostics=dict(abs_dT1_max=float(np.abs(A["T1"] - B["T1"]).max()) if len(sel64) else 0.0, abs_dT2_max=float(np.abs(A["T2"] - B["T2"]).max()) if len(sel64) else 0.0, note="absolute differences are diagnostics only; the registered rule uses the relative selected-S+ difference"))
+                rec["full_flip_evidence_ref"] = dict(file=evidence_name, sha256=evidence_hash.hexdigest(), bytes=evidence_bytes, rows=int(len(flips)))
+                rec["inline_evidence_is_preview"] = True
+                rec["axis_geometry_status"] = geometry_status
+                rec["evidence_complete"] = bool(len(flips) == 0 or ANTI is not None)
                 if man["purpose"] == "evaluation" and man["config_id"] != req_subset: rec["note"] = "paired paths outside the required subset (diagnostic)"
                 f32.setdefault(name, {})[role] = rec; gate_ok = gate_ok and rec["passes_registered_rule"]
         R["f32_sensitivity"] = f32; R["f32_registered_gate"] = dict(status=("CANDIDATE_EVALUATED" if any_pair else "NOT_EVALUATED"), all_pairs_pass_registered_rule=(bool(gate_ok) if any_pair else None), required_subset_config=req_subset, required_subset_checked=any(n_ == f"cfg{req_subset}_b0" for n_ in per_unit_arrays), w2_units_checked=sorted(n_ for n_ in per_unit_arrays if n_.endswith("_w2")), scope="candidate evaluation of the registered rule on the stored paired paths; formal acceptance is a separate audit decision; not a scientific statement")
+        R["f32_registered_gate"]["integrity_complete"] = bool(not R["failures"] and all(u["ok"] for u in R["units"].values()))
+        R["f32_registered_gate"]["axis_geometry_status"] = geometry_status
+        R["f32_registered_gate"]["evidence_complete"] = bool(any_pair and all(v["evidence_complete"] for roles in f32.values() for v in roles.values()))
+        expected_pairs = {(f"ref_{fam}_b0", "ref_matched")} | {(f"cfg{req_subset}_b0", r) for r in ("model_matched", "model_native", "ref_native")} | {(n, "model_matched") for n in required if n.endswith("_w2")}
+        observed_pairs = {(n, r) for n, roles in f32.items() for r in roles}
+        R["f32_registered_gate"]["required_pair_scope_complete"] = bool(R["coverage_complete"] and expected_pairs <= observed_pairs)
+        R["f32_registered_gate"]["missing_required_pairs"] = sorted([list(x) for x in expected_pairs - observed_pairs])
         R["all_ok"] = (not R["failures"]) and all(u["ok"] for u in R["units"].values()) and (R["cid_correspondence_ok"] is not False) and struct_ok; R["stage"] = "complete"
         return finish(0 if (R["all_ok"] and R["coverage_complete"]) else 1)
     except Exception as ex:

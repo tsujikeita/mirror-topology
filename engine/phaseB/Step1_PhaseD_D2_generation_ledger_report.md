@@ -1,5 +1,5 @@
-# Phase D-2 生成 ledger（4 family 完了；監査で受入れ）と read-only 検証器 v0.2（監査 RV-1/2/3 の反映）
-2026-09-24。Claude作成。engine `step1_engine 0.80.0`（数値 kernel は 0.54.0 基盤の継承；変更は `d/d2_verify_banks.py`・`d/MirrorTopology_Step1_D2_verify_v0.1.ipynb` の追加と `registered_assets/d2/` の登録；生成 script・bank 関数・CRN 表・spec は 0.78.0（commit `8b5e6102…`）と同一）。
+# Phase D-2 生成 ledger（受入れ済み）と read-only 検証器 v0.3（監査 v0.2：RV2-A〜D＝参考補強の採用）
+2026-09-24。Claude作成。engine `step1_engine 0.81.0`（数値 kernel は 0.54.0 基盤の継承；変更は `d/d2_verify_banks.py`・`d/MirrorTopology_Step1_D2_verify_v0.1.ipynb` の追加と `registered_assets/d2/` の登録；生成 script・bank 関数・CRN 表・spec は 0.78.0（commit `8b5e6102…`）と同一）。
 
 ## 1. 生成 run の記録（`registered_assets/d2/d2_generation_ledger.json`）
 | family | run id | 配置 | directory | NPZ（GB） | script 秒 | A10 max rel | 環境 fingerprint | 監査 |
@@ -24,9 +24,19 @@ NPZ 実配列の独立数値受入れ（file／member SHA・shape・有限性・
 
 試験 `tests/test_d2_verify.py`（3 件）：全 family synthetic の test mode 正常（39 unit・cid 対応・入力不変），accepted mode の synthetic 拒否・空／欠落／別 family registry の拒否・実 E7 metadata（NPZ なし）の全 unit FAIL・実 metadata の整合改変拒否；出力隔離（run root・bank 子・alias・非空・負の max-dirs）と partial の区別，module 改変の source 拒否；f32 の相対規則（監査の 2 例：base 1000／Δ5e-4 → 全 flip near-tie，base 0.01／Δ5e-7 → near-tie 0）・Event B mismatch 1.0 の記録（integrity とは独立）・reference 規模違いの cid 検知。
 
+## 3a. v0.3（監査 v0.2：前回 27 対照は適応版で 27/27，改善確認；残件 4 領域は参考補強 2 file を精査のうえ採用）
+| ID | 対応 |
+|---|---|
+| RV2-A | 出力先の不適合（run／参照 bank との交差）や安全確認前の例外では，その OUT に error report を**書かず** stderr に理由を残して非 0 終了（監査の実 E7 metadata＋path-map 対照で保護対象への新規書込み 0；入力 file 集合・SHA 不変） |
+| RV2-B | accepted mode では **ledger の元 run root を logical 基準**として inventory の相対名を作り，`--path-map` は実 file を開く physical 位置だけに適用（run 全体を移動した正常対照が成功；元 record は書き換えない）。inventory／ledger／4 run record は **bytes を一度取得して同じ bytes を hash と JSON decode に使用**（重複 key・非有限 JSON を拒否；読込み後に disk を戻す 2 対照で binding を成功にしない） |
+| RV2-C | flip evidence は**全 flip を streaming JSONL** に保存（report から file SHA／bytes／rows を参照；inline は 2000 件 preview のまま），integrity 成功 unit だけを候補計算へ供給し，`integrity_complete`／`required_pair_scope_complete`／`evidence_complete`／`axis_geometry_status` を分離（軸情報未取得は NOT_EVALUATED，幾何証拠欠落は evidence_complete=False；取得時は登録 antipode hash と軸の有限性・単位長を確認） |
+| RV2-D | notebook 実行 cell の stdout／stderr 保存がコメント内に入っていた不具合を修正（独立行で先に log を保存；report が出ない失敗も `report_missing` の final record に残す） |
+
+候補 SHA：script `d3a348c6…`，notebook `338c6f9b…`（監査の参考補強と同一 bytes）。監査の試験 3 file（前回 27 の適応版・新 19・候補 4）を `tests/test_audit_d2_verify_*_chatgpt.py` として同梱（path と出力先の適応のみ；27＋19＋4＝**50/50**），自作 3 件も候補に対して PASS。数値 kernel・生成器・RNG・spec・ledger・登録 metadata・閾値は不変。監査環境では healpy 未導入のため軸幾何の成功経路は監査側で未実行（sandbox では healpy 1.20.0 で自作テストの antipode／plane 角の記録を確認）。
+
 ## 3b. 旧 §3（v0.1）
 Drive 上の family 出力を受入れ済み commit の engine で読取り専用に検証し，小さな JSON を出す：全 directory の `verify_bank_dir`（bytes・identity・member 集合・dtype・有限性・cid・範囲・UID・key），**NPZ file SHA の再計算**と registry／final record の照合，role×selection の配列統計（mean／std／min／max・AX／PL histogram），必須 f32 subset（batch 0）と W₂ bank の paired 感度——凍結 kernel では f32 は **selection（argmin）にのみ**影響し T1/T2 は選ばれた軸で f64 評価されるため，指標は axis／plane flip 率・flip 行の |ΔT|・near-tie 数——，同 latent 不変量（batch ごとの cid 構造）。Drive は変更しない。sandbox 自己試験（E7 30101・scale 0.003・実 kernel）：7 directory 全 ok，W₂ 600 行で flip 0。見込み：family あたり 10〜20 min（保証ではない）。
 
-**テスト 1272/1272 PASS**（10 chunk・JUnit 同梱 `regression_logs/d2_verify_v02_pytest/`；node 集合＝collect・重複 0・failure 0）。
+**テスト 1322/1322 PASS**（11 chunk・JUnit 同梱 `regression_logs/d2_verify_v03_pytest/`；node 集合＝collect・重複 0・failure 0）。
 
 先生の作業：本 packet を commit（ledger と検証 notebook の登録）→ ChatGPT へ「D-2 生成 ledger と実行後検証 notebook の事前確認」→ GO 後に E1→E2→E7→E8 の順で検証 notebook を実行（各 family の `RUN_ROOT` を指定；出力は数百 KB の zip）→ 4 family の検証 zip を ChatGPT の配列数値監査へ。
