@@ -1,0 +1,195 @@
+{
+ "stage": "complete",
+ "family": "E7",
+ "failures": [],
+ "timings": {},
+ "pins_sha256": "1821586445d8d7f9124acfeda1db51b6014981dd3d5303fa87b80dda49644490",
+ "engine_version": "0.84.0",
+ "loader": {
+  "t1_engine_path": "/home/claude/mt/t1_engine.py",
+  "t1_engine_sha256": "87bf8424073af021264b12fe312ab5255b71008bdd5fe874d164d48daf034dc8",
+  "t2b2_bridge_path": "/home/claude/mt/t2b2_bridge.py",
+  "t2b2_bridge_sha256": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872"
+ },
+ "a11_generator_cell4_sha256": "ab1fc4dc62f9cd01b4c6025969d0bd321aeacf64655eb4e3ea7d724c5321fcfa",
+ "env": {
+  "python": "3.12.3",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "healpy": "1.20.0",
+  "camb": "2.0.4",
+  "pot": "0.9.7.post1",
+  "blas_threads": [
+   {
+    "api": "blas",
+    "n": 1,
+    "owner": "numpy",
+    "lib": "openblas",
+    "filepath": "/usr/local/lib/python3.12/dist-packages/numpy.libs/libscipy_openblas64_-32a4b2a6.so",
+    "version": "0.3.31.188.0"
+   },
+   {
+    "api": "blas",
+    "n": 1,
+    "owner": "other",
+    "lib": "openblas",
+    "filepath": "/usr/local/lib/python3.12/dist-packages/scipy.libs/libscipy_openblas-6cdc3b4a.so",
+    "version": "0.3.30"
+   }
+  ]
+ },
+ "env_gate": {
+  "versions_ok": false,
+  "pools_ok": false,
+  "expected": {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "pot": "0.9.7.post1",
+   "camb": "2.0.4",
+   "numpy_openblas_threads": 2,
+   "other_pools_max": 2,
+   "note": "rules §12.1 hard gate (checked live in the generating process); A11-style fingerprint/lock diff recorded as metadata only"
+  }
+ },
+ "git": {
+  "head": {
+   "returncode": 0,
+   "stdout": "0cc65e34f03df85e92f738686bff0a476132f337",
+   "stderr": ""
+  },
+  "origin": {
+   "returncode": 0,
+   "stdout": "https://github.com/CompactCollaboration/CMBtopology",
+   "stderr": ""
+  },
+  "status": {
+   "returncode": 0,
+   "stdout": "",
+   "stderr": ""
+  }
+ },
+ "env_lock": {
+  "schema": "d3_env_lock_v1",
+  "python": "3.12.3",
+  "versions": {
+   "numpy": "2.4.4",
+   "scipy": "1.17.1",
+   "matplotlib": "3.10.8",
+   "healpy": "1.20.0",
+   "camb": "2.0.4",
+   "tqdm": "4.70.1",
+   "numba": "0.67.0",
+   "quaternionic": "1.0.18",
+   "spherical": "1.1.4",
+   "pandas": "3.0.2"
+  },
+  "requirements_sha256": "c8c985d01620f7b0d13cc6ab84b7f40f1024d9c3764c2bc6c3d566949e40b7b2",
+  "platform": {
+   "machine": "x86_64",
+   "platform": "Linux-6.18.44-fc-v42-x86_64-with-glibc2.39"
+  },
+  "blas_lapack": "{'blas': 'scipy-openblas', 'lapack': 'scipy-openblas'}",
+  "cmbtopology_commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+  "env_fingerprint": "bfeef304fbc404bbfadb247886cd3655d0f7d9ea395239410c22b84e0217b0ca"
+ },
+ "pc1_status": {
+  "30104": {
+   "actions_required": [
+    "glide_A"
+   ],
+   "actions_evaluated": [
+    "glide_A"
+   ],
+   "status": "PC1_PASS",
+   "max_rel": 8.351226669947676e-08
+  }
+ },
+ "n_bases": 1,
+ "n_cases": 1,
+ "gates": {
+  "G_pins_loaded": true,
+  "G_engine_inventory": true,
+  "G_script_sha": true,
+  "G_phaseC_members": true,
+  "G_external_loader_sha": true,
+  "G_a11_freeze_sha": true,
+  "G_a11_generator_cell_sha": true,
+  "G_env_lock": false,
+  "G_ct_commit": true,
+  "G_ct_origin": true,
+  "G_ct_clean": true,
+  "G_ct_dependencies_present": true,
+  "G_registry_source_bound": true,
+  "G_config_map_bound": true,
+  "G_case_table_bound": true,
+  "G_d1_trusted": true,
+  "G_bridge_quadrature": true,
+  "G_all_bases_generated": true,
+  "G_all_base_intakes_pass": true,
+  "G_all_cases_evaluated": true,
+  "G_evidence_saved": true,
+  "G_all_intakes_pass": true
+ },
+ "required_inventory": [
+  "G_pins_loaded",
+  "G_engine_inventory",
+  "G_script_sha",
+  "G_phaseC_members",
+  "G_external_loader_sha",
+  "G_a11_freeze_sha",
+  "G_a11_generator_cell_sha",
+  "G_env_lock",
+  "G_ct_commit",
+  "G_ct_origin",
+  "G_ct_clean",
+  "G_ct_dependencies_present",
+  "G_registry_source_bound",
+  "G_config_map_bound",
+  "G_case_table_bound",
+  "G_d1_trusted",
+  "G_bridge_quadrature",
+  "G_all_bases_generated",
+  "G_all_base_intakes_pass",
+  "G_all_cases_evaluated",
+  "G_evidence_saved"
+ ],
+ "required_all_true": false,
+ "D3_PASS": false,
+ "seconds": 510.7375819683075,
+ "output_inventory": {
+  "d3_pc1_results.json": {
+   "sha256": "27ce0eca7cbfe21cc74602adc0f2d41c4994075ef97f32e08dd2312f4d1280bb",
+   "bytes": 3566
+  },
+  "d3_env_lock.json": {
+   "sha256": "690d8a2bcbf54d22241d8c527c17516c41b7e04b68c27b7e8158146e48791fa9",
+   "bytes": 714
+  },
+  "d3_cov_registry.json": {
+   "sha256": "fdb33e1a321fae159c8a75282fee9780eabd261992ff822d37556551c1c55d6c",
+   "bytes": 2026
+  },
+  "d3_covgen_stdout.log": {
+   "sha256": "2df13e0e0f9cd3f1c568c09f07790aeec8c146959b30afe9684b23db6ac8f29a",
+   "bytes": 813
+  },
+  "cov_cache/cov_E7_890ffc7227637a3c9.npy.manifest.json": {
+   "sha256": "c1770cca7cbce306dada35d5564456db33d66bfc51e289f0259ee6670b127887",
+   "bytes": 1002
+  },
+  "cov_cache/cov_E7_2881a34e9adce4d47.npy": {
+   "sha256": "963d35f12344feacf1ac134f62b2b7fb910f3540b402ed93a2562eef061d2677",
+   "bytes": 7184
+  },
+  "cov_cache/cov_E7_2881a34e9adce4d47.npy.manifest.json": {
+   "sha256": "a3a43718eacee6046d414af54b48475b4647b0d79e98f81e74aec8880ba5a5eb",
+   "bytes": 1005
+  },
+  "cov_cache/cov_E7_890ffc7227637a3c9.npy": {
+   "sha256": "adf3903fcbdc09e565da49cdd65c78e11d88cdaf295cabcd99bc75a756d8b851",
+   "bytes": 7184
+  }
+ }
+}

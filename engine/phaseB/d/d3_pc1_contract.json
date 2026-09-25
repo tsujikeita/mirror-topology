@@ -13,7 +13,8 @@
    "metric": 5,
    "generators": 3,
    "D_of": 2
-  }
+  },
+  "registered_copies": "registered_assets/a11 (full notebook + rules + cell extracts; trust-anchored SHAs in d3_stage.TRUSTED_SOURCES)"
  },
  "relation": "C(g r) = D(M) C(r) D(M)^T on the frozen real basis (t1_engine.load_cov_full real basis; D(M) from t2b2_bridge quadrature: (YQ*WQ)^T Ymat(DIRS @ M))",
  "base_x0": "b = -r_obs (A11 R1 canonical gauge)",
@@ -32,7 +33,7 @@
  "basis": "both covariances loaded with the frozen t1_engine real-basis transform (21x21 real); M is the spatial 3x3 deck matrix; D(M) is its 21x21 representation",
  "improper_M": "valid (A11 R2)",
  "status_semantics": {
-  "PC1_PENDING": "asset generated / not yet compared",
+  "PC1_PENDING": "not yet compared (covariances may be ungenerated or generated; no PC-1 evaluation has been made)",
   "PC1_PASS": "rel < 1e-5 for every required action of the configuration",
   "PC1_FAIL": "any required action rel >= 1e-5 (asset-layer failure; formal consumption forbidden; NOT converted to position-unresolved / UNKNOWN; no prior renormalisation; no 3-position fallback)"
  }

@@ -1,5 +1,7 @@
 {
- "schema": "d3_pc1_case_table_v1",
+ "schema": "d3_pc1_case_table_v2",
+ "formal": true,
+ "draft_note": null,
  "contract": {
   "schema": "d3_pc1_contract_v1",
   "source": {
@@ -15,7 +17,8 @@
     "metric": 5,
     "generators": 3,
     "D_of": 2
-   }
+   },
+   "registered_copies": "registered_assets/a11 (full notebook + rules + cell extracts; trust-anchored SHAs in d3_stage.TRUSTED_SOURCES)"
   },
   "relation": "C(g r) = D(M) C(r) D(M)^T on the frozen real basis (t1_engine.load_cov_full real basis; D(M) from t2b2_bridge quadrature: (YQ*WQ)^T Ymat(DIRS @ M))",
   "base_x0": "b = -r_obs (A11 R1 canonical gauge)",
@@ -34,12 +37,43 @@
   "basis": "both covariances loaded with the frozen t1_engine real-basis transform (21x21 real); M is the spatial 3x3 deck matrix; D(M) is its 21x21 representation",
   "improper_M": "valid (A11 R2)",
   "status_semantics": {
-   "PC1_PENDING": "asset generated / not yet compared",
+   "PC1_PENDING": "not yet compared (covariances may be ungenerated or generated; no PC-1 evaluation has been made)",
    "PC1_PASS": "rel < 1e-5 for every required action of the configuration",
    "PC1_FAIL": "any required action rel >= 1e-5 (asset-layer failure; formal consumption forbidden; NOT converted to position-unresolved / UNKNOWN; no prior renormalisation; no 3-position fallback)"
   }
  },
- "config_map_sha256": "8b2b0b24353a93eb6511069c6767e37ef36224ae2613d2bf11d49964a023debb",
+ "a11_attestation": {
+  "rules_sha256": "5c6d9cd33e9ee2ac1573f0c2c492b5900d7b04edcd1c4eb9cc144081dc56d631",
+  "notebook_sha256": "791a5abb74beb2370e036519283ca64ab34a886cc4267147c104c1cd604191a1",
+  "cells": {
+   "2": "2827e63e9e46c78fa9a89be3a308e6cf00f1ed786839fe96be6e930117628a27",
+   "3": "468d1a8a902318d9803e1475dd55206051bb641f6a310a0a8846af7e7646bd00",
+   "5": "02a94ea127ff834b6425ac2445c9e879a5f4e021489449d358e1422b117d90e6"
+  },
+  "extract_manifest_sha256": "95ccecfc7d5ee6c48fccc7b924a0e82cbef1dbffeb2edea0d0840f45519f0547"
+ },
+ "ct_source": {
+  "commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+  "file_sha256": {
+   "topology/src/E2.py": "ea13ff16e8a9072c8d6fa2c8a3e64f1b56ef7f6fbe1db2250fd5475b1a703776",
+   "topology/src/E7.py": "34cb0b19b32cca8ef5db4d96f5df9d977517d8eadef9bb6d95c90e687753d84d",
+   "topology/src/E8.py": "3979deca5f06734882cd767c055f89d7dc10d6e89393b5537b9ad963dff76f5d",
+   "topology/parameter_files/default_E2.py": "4d1b0e43f9e8a6026974d7d7c66ef19fdcf6d5c03e1f427542fdd1f89fdda1ed"
+  }
+ },
+ "e2_default_angles": {
+  "alpha": 90.0,
+  "beta": 90.0,
+  "gamma": 0.0
+ },
+ "provenance_route": {
+  "ct": "registered_pinned_copy",
+  "a11": "registered_originals_trust_anchored",
+  "note": "which verified route supplied the bytes; excluded from the payload SHA (the bytes are identical by SHA)"
+ },
+ "config_map_sha256": "da1e68bcec4934d4332b774e31598b8753a0509c76440b7da4137c0110a0fdb5",
+ "registry_sha256": "ba48214585c50348a9f43ef82ba33c3b7fcb982ebc89d0ba38985969c48ec851",
+ "twelve_assets_sha256": "1d05e6b3afc86f8da94765cebe128f2b291bc523c10599dcb6e54ff7be01d89c",
  "required_actions": {
   "E2": [
    "halfturn_B"
@@ -6677,9 +6711,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 20101,
     "cov_file": "cov_cache/cov_E2_c18e51e0d58d6ecfc.npy",
     "cov_file_sha256": "8fb4b11321bea93a6b61a2d1c266732d345333e0517d19e0e18ca3e764bc1214",
-    "cov_array_sha256": "4e1df7b0149ba2303fe17f91f945e3e74e22562425ef385816301bcacf03f006"
+    "cov_array_sha256": "4e1df7b0149ba2303fe17f91f945e3e74e22562425ef385816301bcacf03f006",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -6743,9 +6779,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 20102,
     "cov_file": "cov_cache/cov_E2_0790cef826cd75c75.npy",
     "cov_file_sha256": "89f36343df4632252a4031eab08ebd76c999a43380e9e9a5a42c6764bc4644d3",
-    "cov_array_sha256": "c0652e2ae098da08923b9b3620f7978c9d8bded0ac4910dd3d5e97676ebe1a5e"
+    "cov_array_sha256": "c0652e2ae098da08923b9b3620f7978c9d8bded0ac4910dd3d5e97676ebe1a5e",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -6809,9 +6847,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 20103,
     "cov_file": "cov_cache/cov_E2_a6a9d4786d71d3c0a.npy",
     "cov_file_sha256": "58cae3efa2e92da8aacac2d1f8e0c6a4cf2d3dd2338f7fd7c63e03859a6a8992",
-    "cov_array_sha256": "3d6138751f1013c440224357091d405621b9dd11007252ad24cd275ef4bb2263"
+    "cov_array_sha256": "3d6138751f1013c440224357091d405621b9dd11007252ad24cd275ef4bb2263",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -6875,9 +6915,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 20201,
     "cov_file": "cov_cache/cov_E2_268fba07d10165afc.npy",
     "cov_file_sha256": "c9b9566fb6f6bef20aefdf2fa2c970c2f705ade37a7ac44fdde295ea418ad88a",
-    "cov_array_sha256": "1a91bc37afeca53349d5f9ea39dca19847ff8cad6bc6836de825ace4d11adf02"
+    "cov_array_sha256": "1a91bc37afeca53349d5f9ea39dca19847ff8cad6bc6836de825ace4d11adf02",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -6941,9 +6983,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 20202,
     "cov_file": "cov_cache/cov_E2_ade5ff0a3cc74ac4b.npy",
     "cov_file_sha256": "c5d8850d621d576ea20d7df8365523bb40a37ca83d929a1253acb4321c421446",
-    "cov_array_sha256": "63be8677e062b8619c56b8fa8a97f42b9a64c431776e1b75a3052f8759eb19a7"
+    "cov_array_sha256": "63be8677e062b8619c56b8fa8a97f42b9a64c431776e1b75a3052f8759eb19a7",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7007,9 +7051,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 20203,
     "cov_file": "cov_cache/cov_E2_0078e7fd974e7638d.npy",
     "cov_file_sha256": "ebf25ac9c4985586d6cffde8007818eb164d295b2c0eb088b65ae5fa5ff6c88f",
-    "cov_array_sha256": "b5034cde63d349aacd991b812de3003eaefbfc5db3bdb103a8f9665391965ad2"
+    "cov_array_sha256": "b5034cde63d349aacd991b812de3003eaefbfc5db3bdb103a8f9665391965ad2",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7073,9 +7119,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 20301,
     "cov_file": "cov_cache/cov_E2_73a8b8f2c8905076e.npy",
     "cov_file_sha256": "5181c4067e92c65ef77dcd39c7d1a52087a96dd19ca55d137b6770a0503e8bc3",
-    "cov_array_sha256": "ff43339bcbda1ab845ddcbeecb86a493213516c63d25739ac502c739af772e91"
+    "cov_array_sha256": "ff43339bcbda1ab845ddcbeecb86a493213516c63d25739ac502c739af772e91",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7139,9 +7187,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 20302,
     "cov_file": "cov_cache/cov_E2_29850795daa9eff90.npy",
     "cov_file_sha256": "404d84860db767d769f88d9db5d1d5395bbe4aa1f882fb1fb7429a56327aa5c3",
-    "cov_array_sha256": "1b5a8bfb66ad634063966e2d1ff9e9af778a728eaea5f5ce4f71b7e99b9e0893"
+    "cov_array_sha256": "1b5a8bfb66ad634063966e2d1ff9e9af778a728eaea5f5ce4f71b7e99b9e0893",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7205,9 +7255,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 20303,
     "cov_file": "cov_cache/cov_E2_a04ba04637b1fa7ab.npy",
     "cov_file_sha256": "f41ed5cb0135e528b68201bead09b95350d1bc7e173dda353f839d8fc5f54e00",
-    "cov_array_sha256": "de80b0f8c82c81918168a8bb03c3fc8bf53c34f7297fc91b6909f686425a44f7"
+    "cov_array_sha256": "de80b0f8c82c81918168a8bb03c3fc8bf53c34f7297fc91b6909f686425a44f7",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7272,9 +7324,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 30101,
     "cov_file": "cov_cache/cov_E7_8396dc1acd0d38f5e.npy",
     "cov_file_sha256": "c91682567b727b912fa39b88dd661f017df95df89f8ee08bbb4178be9fc13ede",
-    "cov_array_sha256": "00f7e61025a6abafaeb77d775806baa8a2acab7507721378317c167518200f9b"
+    "cov_array_sha256": "00f7e61025a6abafaeb77d775806baa8a2acab7507721378317c167518200f9b",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7339,9 +7393,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 30102,
     "cov_file": "cov_cache/cov_E7_a8f9173bd6afdee73.npy",
     "cov_file_sha256": "55c4c1655335edabc654d5500f2dc82fc3c0d8f0cbf3fa7213d0a7f2202fb225",
-    "cov_array_sha256": "4c04234c666893a49444d06d9bb16b17e3aee809c234e7046b20d1d55dfb6fe8"
+    "cov_array_sha256": "4c04234c666893a49444d06d9bb16b17e3aee809c234e7046b20d1d55dfb6fe8",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7406,9 +7462,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 30103,
     "cov_file": "cov_cache/cov_E7_87805576e93afe1db.npy",
     "cov_file_sha256": "565cef276f6b465ea8c0c3b6ab9fa1c5e8cc1d2196e0d940fd9fe6947b234de2",
-    "cov_array_sha256": "22b87124209ab9e3056eafbb1c30852f922dfd3f67611f38baf122a07e5701ec"
+    "cov_array_sha256": "22b87124209ab9e3056eafbb1c30852f922dfd3f67611f38baf122a07e5701ec",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7473,9 +7531,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 30201,
     "cov_file": "cov_cache/cov_E7_d8810697adfcf87a8.npy",
     "cov_file_sha256": "9b01c52658fa2070423ecced0f5cf2b6fe1425e5a208fd4fab136c930874895e",
-    "cov_array_sha256": "83e759d7e832d52fbcff3d3445eb89432f66bcb78d4250170acf363a7b356c80"
+    "cov_array_sha256": "83e759d7e832d52fbcff3d3445eb89432f66bcb78d4250170acf363a7b356c80",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7540,9 +7600,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 30202,
     "cov_file": "cov_cache/cov_E7_9f2cac533968d2a49.npy",
     "cov_file_sha256": "933ec0004ded0832bc7c909965178f07678e9363b5fc51fa2237aa02b3a14b29",
-    "cov_array_sha256": "0c85b00bb4b4e9ca018dfc100cd7c017dd55fb4c2bb9cf84a39b021073c34e4e"
+    "cov_array_sha256": "0c85b00bb4b4e9ca018dfc100cd7c017dd55fb4c2bb9cf84a39b021073c34e4e",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7607,9 +7669,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 30203,
     "cov_file": "cov_cache/cov_E7_0b1a77b8d9ad97b29.npy",
     "cov_file_sha256": "c45ee1f60fad338319e7d7be988135da9444d3697c231f3fbf24b45c0191eaef",
-    "cov_array_sha256": "80e5d3e78e85a4c10db968c113ba5037db8d52e5152529ac41a53d0223a183e1"
+    "cov_array_sha256": "80e5d3e78e85a4c10db968c113ba5037db8d52e5152529ac41a53d0223a183e1",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7674,9 +7738,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 30301,
     "cov_file": "cov_cache/cov_E7_c06a7a19670e66ed0.npy",
     "cov_file_sha256": "4a724215f64a5e7f774e01df24e6b160e5fd600c0aaca402d4ee1a70e2718ab2",
-    "cov_array_sha256": "3833df82a6a54052f39f70562ceb3e8d3101c0102b18f18040792b163c26926e"
+    "cov_array_sha256": "3833df82a6a54052f39f70562ceb3e8d3101c0102b18f18040792b163c26926e",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7741,9 +7807,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 30302,
     "cov_file": "cov_cache/cov_E7_ace9b8eeaca667b5a.npy",
     "cov_file_sha256": "5fa6487085d781d3c1db2d7c65e29bad345e82349e324b74b759769be5d54de7",
-    "cov_array_sha256": "35d080123683be0f747e325686e1e6ebd48dab7ef7cfee470610a5702656bb9b"
+    "cov_array_sha256": "35d080123683be0f747e325686e1e6ebd48dab7ef7cfee470610a5702656bb9b",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7808,9 +7876,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 30303,
     "cov_file": "cov_cache/cov_E7_7e4e21caa9b192446.npy",
     "cov_file_sha256": "90438d54f34cae412c183ff5be716f8acac85a2f7dec71d57fc3a389e41197bc",
-    "cov_array_sha256": "5a6f0d1df00e2576b05e26c3f67c36338c9fbd70b35fd2a559a67bb6484d3b21"
+    "cov_array_sha256": "5a6f0d1df00e2576b05e26c3f67c36338c9fbd70b35fd2a559a67bb6484d3b21",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7875,9 +7945,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40101,
     "cov_file": "cov_cache/cov_E8_08fa01dc8dfea7fb9.npy",
     "cov_file_sha256": "dc3baf0656b526821b216fe3284a892438f20adefc128a88e64f72f0391e1d7e",
-    "cov_array_sha256": "a0f481038d2eb944d7013e75c2567f5bdaa81fdb5025fa4048c4f42ba07bd70b"
+    "cov_array_sha256": "a0f481038d2eb944d7013e75c2567f5bdaa81fdb5025fa4048c4f42ba07bd70b",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -7942,9 +8014,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40101,
     "cov_file": "cov_cache/cov_E8_08fa01dc8dfea7fb9.npy",
     "cov_file_sha256": "dc3baf0656b526821b216fe3284a892438f20adefc128a88e64f72f0391e1d7e",
-    "cov_array_sha256": "a0f481038d2eb944d7013e75c2567f5bdaa81fdb5025fa4048c4f42ba07bd70b"
+    "cov_array_sha256": "a0f481038d2eb944d7013e75c2567f5bdaa81fdb5025fa4048c4f42ba07bd70b",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8009,9 +8083,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40102,
     "cov_file": "cov_cache/cov_E8_4f5fbcb11358d5bc5.npy",
     "cov_file_sha256": "0171fe4f2a1e9918e84d38984601626b295d9eb9fa82c3934ba6028216c587be",
-    "cov_array_sha256": "d47707320f15a624f6c6831f6bc53119801f2cd674411fcd5064339ee51220d2"
+    "cov_array_sha256": "d47707320f15a624f6c6831f6bc53119801f2cd674411fcd5064339ee51220d2",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8076,9 +8152,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40102,
     "cov_file": "cov_cache/cov_E8_4f5fbcb11358d5bc5.npy",
     "cov_file_sha256": "0171fe4f2a1e9918e84d38984601626b295d9eb9fa82c3934ba6028216c587be",
-    "cov_array_sha256": "d47707320f15a624f6c6831f6bc53119801f2cd674411fcd5064339ee51220d2"
+    "cov_array_sha256": "d47707320f15a624f6c6831f6bc53119801f2cd674411fcd5064339ee51220d2",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8143,9 +8221,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40103,
     "cov_file": "cov_cache/cov_E8_4b283ff566c05973d.npy",
     "cov_file_sha256": "407029859125119b7f66081167d574ddb57d155d9037e38eb7d3ca58aea93e71",
-    "cov_array_sha256": "c3a5cf7cfcabc05e268d7a8154ebecaa3de74dd128d7a860461755774f3b0ea6"
+    "cov_array_sha256": "c3a5cf7cfcabc05e268d7a8154ebecaa3de74dd128d7a860461755774f3b0ea6",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8210,9 +8290,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40103,
     "cov_file": "cov_cache/cov_E8_4b283ff566c05973d.npy",
     "cov_file_sha256": "407029859125119b7f66081167d574ddb57d155d9037e38eb7d3ca58aea93e71",
-    "cov_array_sha256": "c3a5cf7cfcabc05e268d7a8154ebecaa3de74dd128d7a860461755774f3b0ea6"
+    "cov_array_sha256": "c3a5cf7cfcabc05e268d7a8154ebecaa3de74dd128d7a860461755774f3b0ea6",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8277,9 +8359,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40201,
     "cov_file": "cov_cache/cov_E8_e662fc0f335935d4e.npy",
     "cov_file_sha256": "993d8fbe9bcc79fbfbbfa6020850f4d9137f5207c6c6a76001159eddeb1e040b",
-    "cov_array_sha256": "1954a468e09029e6287b7aeef37d34c69a174a6b1847c900336d3e5e2183c1f1"
+    "cov_array_sha256": "1954a468e09029e6287b7aeef37d34c69a174a6b1847c900336d3e5e2183c1f1",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8344,9 +8428,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40201,
     "cov_file": "cov_cache/cov_E8_e662fc0f335935d4e.npy",
     "cov_file_sha256": "993d8fbe9bcc79fbfbbfa6020850f4d9137f5207c6c6a76001159eddeb1e040b",
-    "cov_array_sha256": "1954a468e09029e6287b7aeef37d34c69a174a6b1847c900336d3e5e2183c1f1"
+    "cov_array_sha256": "1954a468e09029e6287b7aeef37d34c69a174a6b1847c900336d3e5e2183c1f1",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8411,9 +8497,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40202,
     "cov_file": "cov_cache/cov_E8_9c8195baa51e77e91.npy",
     "cov_file_sha256": "ce9f7a949bff2310ce99129e9a428255ac44a8c3c26f6152a65f1b4ea7989d87",
-    "cov_array_sha256": "cdc1d2d64e9dfd8880b17d3d8fb0ccd6425db9f6b37893fb8759054ec83c7e87"
+    "cov_array_sha256": "cdc1d2d64e9dfd8880b17d3d8fb0ccd6425db9f6b37893fb8759054ec83c7e87",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8478,9 +8566,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40202,
     "cov_file": "cov_cache/cov_E8_9c8195baa51e77e91.npy",
     "cov_file_sha256": "ce9f7a949bff2310ce99129e9a428255ac44a8c3c26f6152a65f1b4ea7989d87",
-    "cov_array_sha256": "cdc1d2d64e9dfd8880b17d3d8fb0ccd6425db9f6b37893fb8759054ec83c7e87"
+    "cov_array_sha256": "cdc1d2d64e9dfd8880b17d3d8fb0ccd6425db9f6b37893fb8759054ec83c7e87",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8545,9 +8635,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40203,
     "cov_file": "cov_cache/cov_E8_7b552aacb8718a377.npy",
     "cov_file_sha256": "89145fb2d9d42ffc003b73be02c4bf238c5c98499fcf29b3a9bf2d32ee641a72",
-    "cov_array_sha256": "3c2eaae313deae449e219cfe08c5656dc9514644c05a04eed18e2b952cbb9169"
+    "cov_array_sha256": "3c2eaae313deae449e219cfe08c5656dc9514644c05a04eed18e2b952cbb9169",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8612,9 +8704,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40203,
     "cov_file": "cov_cache/cov_E8_7b552aacb8718a377.npy",
     "cov_file_sha256": "89145fb2d9d42ffc003b73be02c4bf238c5c98499fcf29b3a9bf2d32ee641a72",
-    "cov_array_sha256": "3c2eaae313deae449e219cfe08c5656dc9514644c05a04eed18e2b952cbb9169"
+    "cov_array_sha256": "3c2eaae313deae449e219cfe08c5656dc9514644c05a04eed18e2b952cbb9169",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8679,9 +8773,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40301,
     "cov_file": "cov_cache/cov_E8_3b4fe407d9b836a2e.npy",
     "cov_file_sha256": "92d4db6798818e08169a41d1af411e0cb0af02cc3a351e517d78ef3783ad4b1d",
-    "cov_array_sha256": "a04b7e3d5c79846022a5714cb33f41c8d9292639a1e47a1580ed4a4bbcef93cd"
+    "cov_array_sha256": "a04b7e3d5c79846022a5714cb33f41c8d9292639a1e47a1580ed4a4bbcef93cd",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8746,9 +8842,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40301,
     "cov_file": "cov_cache/cov_E8_3b4fe407d9b836a2e.npy",
     "cov_file_sha256": "92d4db6798818e08169a41d1af411e0cb0af02cc3a351e517d78ef3783ad4b1d",
-    "cov_array_sha256": "a04b7e3d5c79846022a5714cb33f41c8d9292639a1e47a1580ed4a4bbcef93cd"
+    "cov_array_sha256": "a04b7e3d5c79846022a5714cb33f41c8d9292639a1e47a1580ed4a4bbcef93cd",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8813,9 +8911,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40302,
     "cov_file": "cov_cache/cov_E8_b2baaf57e1c69eb81.npy",
     "cov_file_sha256": "de22417204c10c0a56701b2edf537dc27653689eaf58ca9ebd19de26159a729a",
-    "cov_array_sha256": "ccce18720565b63075cf8c9dc4f8d97db0a5a2234b81e47236bccf90f7593a67"
+    "cov_array_sha256": "ccce18720565b63075cf8c9dc4f8d97db0a5a2234b81e47236bccf90f7593a67",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8880,9 +8980,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40302,
     "cov_file": "cov_cache/cov_E8_b2baaf57e1c69eb81.npy",
     "cov_file_sha256": "de22417204c10c0a56701b2edf537dc27653689eaf58ca9ebd19de26159a729a",
-    "cov_array_sha256": "ccce18720565b63075cf8c9dc4f8d97db0a5a2234b81e47236bccf90f7593a67"
+    "cov_array_sha256": "ccce18720565b63075cf8c9dc4f8d97db0a5a2234b81e47236bccf90f7593a67",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -8947,9 +9049,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40303,
     "cov_file": "cov_cache/cov_E8_61abec20c26f1fc51.npy",
     "cov_file_sha256": "500eb70cadde5a316ebc0564610726ff5aed8df738867a3bd97f3aa3f5713a44",
-    "cov_array_sha256": "9aae5751da36ca5c9799ac4858dd8bfea0c6d752f67471612e58f4ebd8fa689d"
+    "cov_array_sha256": "9aae5751da36ca5c9799ac4858dd8bfea0c6d752f67471612e58f4ebd8fa689d",
+    "receipt": "D1_aa089fa492bc"
    }
   },
   {
@@ -9014,9 +9118,11 @@
    "status": "PC1_PENDING",
    "set": "first_wave_anchor_diagnostic",
    "base_reused_from_D1": {
+    "config_id": 40303,
     "cov_file": "cov_cache/cov_E8_61abec20c26f1fc51.npy",
     "cov_file_sha256": "500eb70cadde5a316ebc0564610726ff5aed8df738867a3bd97f3aa3f5713a44",
-    "cov_array_sha256": "9aae5751da36ca5c9799ac4858dd8bfea0c6d752f67471612e58f4ebd8fa689d"
+    "cov_array_sha256": "9aae5751da36ca5c9799ac4858dd8bfea0c6d752f67471612e58f4ebd8fa689d",
+    "receipt": "D1_aa089fa492bc"
    }
   }
  ],
@@ -9027,10 +9133,11 @@
    "new_bases": 81,
    "new_clones": 108,
    "first_wave_clones": 36,
-   "first_wave_bases_reused": 27,
+   "first_wave_bases_required": 27,
+   "first_wave_bases_verified_for_reuse": 27,
    "total_new_generations": 225
   },
-  "note": "one case per (configuration, required action); E8 has two actions; E1 excluded (homogeneous)"
+  "note": "one case per (configuration, required action); E8 has two actions; E1 excluded (homogeneous); first-wave bases: 27 required (E2/E7/E8 anchors), verified for reuse only when the D-1 registry is bound (draft: 0); the 3 E1 D-1 covariances are kept but not clone-tested"
  },
- "table_sha256": "7352e1c6ed458fe0a28733e21bf7cbcf4c6c42e0bd649a03bb9cf0791f7171e0"
+ "table_sha256": "5f335e75e1e3360358f7cc7ab15aefa3d774f3afef37b835714b8b285499c64b"
 }
