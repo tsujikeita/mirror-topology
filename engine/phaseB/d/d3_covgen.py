@@ -28,11 +28,12 @@ def sha(p): return hashlib.sha256(open(p, "rb").read()).hexdigest()
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--mt", required=True); ap.add_argument("--phaseb", required=True); ap.add_argument("--phasec", required=True); ap.add_argument("--ct", required=True); ap.add_argument("--out", required=True); ap.add_argument("--family", required=True)
     ap.add_argument("--profile", default="production_official"); ap.add_argument("--with-h2", action="store_true", help="also generate the H2 alternative clone (diagnostic; doubles clone cost)")
-    ap.add_argument("--selftest-configs", default=None); ap.add_argument("--selftest-skip-env-lock", action="store_true"); ap.add_argument("--selftest-skip-pc1", action="store_true")
+    ap.add_argument("--sizes", default=None, help="FORMAL size partition of the family run, e.g. L1.00 or L1.00,L1.20: all new configurations AND the first-wave anchor cases of those sizes; recorded as partition (family PASS = aggregation of the registered partitions)")
+    ap.add_argument("--selftest-configs", default=None); ap.add_argument("--selftest-skip-env-lock", action="store_true"); ap.add_argument("--selftest-skip-pc1", action="store_true"); ap.add_argument("--selftest-skip-anchors", action="store_true", help="SELF-TEST ONLY: omit the anchor cases of the selected sizes (never a formal partition)")
     a = ap.parse_args(); t0 = time.time()
     if os.path.exists(a.out) and os.listdir(a.out): print("OUT must be a fresh (empty) directory", file=sys.stderr); return 2
     os.makedirs(a.out, exist_ok=True); CACHE = os.path.join(a.out, "cov_cache"); os.makedirs(CACHE, exist_ok=True); SCRATCH = os.path.join(a.out, "scratch"); os.makedirs(SCRATCH, exist_ok=True)
-    log = open(os.path.join(a.out, "d3_covgen_stdout.log"), "w"); G = {k: None for k in REQUIRED}; R = dict(stage="init", family=a.family, failures=[], timings={}); selftest = a.selftest_configs is not None or a.selftest_skip_env_lock or a.selftest_skip_pc1
+    log = open(os.path.join(a.out, "d3_covgen_stdout.log"), "w"); G = {k: None for k in REQUIRED}; R = dict(stage="init", family=a.family, failures=[], timings={}); selftest = a.selftest_configs is not None or a.selftest_skip_env_lock or a.selftest_skip_pc1 or a.selftest_skip_anchors   # --sizes is a FORMAL partition, not a self-test
     def note(*s):
         m = " ".join(str(x) for x in s); print(m, flush=True)
         try: log.write(m + "\n"); log.flush()
@@ -53,6 +54,7 @@ def main():
         G["G_pins_loaded"] = bool(pins.get("schema") == "d3_pins_v1" and inv0.get("d_sha256", {}).get("d/d3_pins.json") == R["pins_sha256"])
         from step1_engine import __version__; from step1_engine.checkpoint import module_shas
         G["G_engine_inventory"] = (inv0["modules"] == module_shas() and inv0["engine_version"] == __version__ == pins["engine_version"]); me = os.path.abspath(__file__); G["G_script_sha"] = (inv0.get("d_sha256", {}).get("d/d3_covgen.py") == sha(me)); R["engine_version"] = __version__
+        R["source"] = dict(engine_version=__version__, inventory_sha256=sha(os.path.join(a.phaseb, "B2_completion_inventory.json")), script_sha256=sha(me), pins_sha256=R["pins_sha256"], profile=a.profile)
         if not (G["G_pins_loaded"] and G["G_engine_inventory"] and G["G_script_sha"]): R["failures"].append("preflight binding failed"); return finish(1, "preflight")
         # ---- trusted inputs (D-1 v0.3 contracts)
         pc = json.load(open(os.path.join(a.phasec, "PACKET_INVENTORY.json"))); members = {}
@@ -116,8 +118,34 @@ def main():
         def Ymat(dirs): return (M21.conj() @ Yc_at(dirs)).real.T
         YQ = Ymat(DIRS)
         def D_of(Mm): return (YQ * WQ[:, None]).T @ Ymat(DIRS @ Mm)
-        G["G_bridge_quadrature"] = bool(np.abs((YQ * WQ[:, None]).T @ YQ - np.eye(21)).max() < 1e-12)
-        if not G["G_bridge_quadrature"]: R["failures"].append("bridge quadrature not orthonormal"); return finish(1, "bridge")
+        # A11 cell 2 representation battery (verbatim thresholds): Gram, real-basis bridge, orthogonality / direct geometry / homomorphism over the used M set, analytic reflections
+        RB = br.real_basis_lm(); asha = lambda arr: hashlib.sha256(np.ascontiguousarray(arr).tobytes()).hexdigest()
+        GATES = dict(G_quadrature_orthonormal=bool(np.abs((YQ * WQ[:, None]).T @ YQ - np.eye(21)).max() < 1e-12))
+        rng = np.random.default_rng(20260907); dirs_t = rng.standard_normal((100, 3)); dirs_t /= np.linalg.norm(dirs_t, axis=1, keepdims=True); th_t, ph_t = hp.vec2ang(dirs_t)
+        E_explicit = np.column_stack([(sph_harm_y(l, m, th_t, ph_t).real if (cs == 'c' and m == 0) else np.sqrt(2) * sph_harm_y(l, m, th_t, ph_t).real if cs == 'c' else np.sqrt(2) * sph_harm_y(l, m, th_t, ph_t).imag) for (l, m, cs) in RB])
+        GATES["G_real_basis_bridge"] = bool(np.abs(Ymat(dirs_t) - E_explicit).max() < 1e-12)
+        MA = np.diag([1., -1., 1.]); MB = np.diag([-1., 1., 1.]); RZ = np.diag([-1., -1., 1.]); from scipy.spatial.transform import Rotation
+        Rr1, Rr2 = Rotation.random(rng=rng).as_matrix(), Rotation.random(rng=rng).as_matrix(); worst_orth = worst_geom = 0.0
+        for Mm in [MA, MB, MA @ MB, RZ, Rr1, Rr2]:
+            D = D_of(Mm); worst_orth = max(worst_orth, np.abs(D.T @ D - np.eye(21)).max()); x = rng.standard_normal(21); a_vec = M21.conj().T @ x
+            worst_geom = max(worst_geom, np.abs((Yc_at(dirs_t).T @ (M21.conj().T @ (D @ x))).real - (Yc_at(dirs_t @ Mm).T @ a_vec).real).max() / np.abs((Yc_at(dirs_t @ Mm).T @ a_vec).real).max())
+        hom = max(np.abs(D_of(MA @ MB) - D_of(MA) @ D_of(MB)).max(), np.abs(D_of(Rr1 @ Rr2) - D_of(Rr1) @ D_of(Rr2)).max(), np.abs(D_of(MA @ Rr1) - D_of(MA) @ D_of(Rr1)).max())
+        Dy_th = np.diag([(-1.0 if cs == 's' else 1.0) for (l, m, cs) in RB]); Dz_th = np.diag([(-1.0) ** (l + m) for (l, m, cs) in RB])
+        GATES["G_D_orthogonal_all_used"] = bool(worst_orth < 1e-10); GATES["G_D_direct_geometry_complex_path"] = bool(worst_geom < 1e-10); GATES["G_D_homomorphism"] = bool(hom < 1e-10)
+        GATES["G_reflection_D_analytic"] = bool(np.abs(D_of(MA) - Dy_th).max() < 1e-12 and np.abs(D_of(np.diag([1., 1., -1.])) - Dz_th).max() < 1e-12)
+        R["representation"] = dict(gates=GATES, worst_orthogonality=float(worst_orth), worst_direct_geometry=float(worst_geom), worst_homomorphism=float(hom), quadrature_nodes_sha256=asha(DIRS), quadrature_weights_sha256=asha(WQ), M21_sha256=asha(M21), LM_sha256=hashlib.sha256(json.dumps(LM).encode()).hexdigest(), RB_sha256=hashlib.sha256(json.dumps(RB).encode()).hexdigest(), source="A11 v1.4.1 cell 2 battery (verbatim thresholds)")
+        G["G_bridge_quadrature"] = all(GATES.values())
+        if not G["G_bridge_quadrature"]: R["failures"].append(f"bridge representation battery failed: {GATES}"); return finish(1, "bridge")
+        # per-action D(M) used by PC-1: orthogonality + analytic diagonal check where applicable; recorded per unique action
+        used_D = {}
+        def D_for(M):
+            key = json.dumps(np.asarray(M).tolist())
+            if key not in used_D:
+                D = D_of(np.asarray(M, float)); orth = float(np.abs(D.T @ D - np.eye(21)).max())
+                if not (np.isfinite(D).all() and orth < 1e-10): raise RuntimeError(f"D(M) for action matrix {key} failed the runtime orthogonality gate ({orth})")
+                used_D[key] = dict(D=D, orthogonality=orth, D_sha256=asha(D))
+            return used_D[key]["D"]
+        R["used_D"] = {}
         # ---- registered generator (A11 cell 4 verbatim; as in d1_covgen)
         def key_of(top, p, x0): return dict(topology=top, params={k: float(v) for k, v in p.items()}, x0=[float(v) for v in x0], run_config=RUN_CFG, cmbtopology_commit=EXPECTED_CMBTOPO_COMMIT, requirements_sha256=REQ_SHA, env_fingerprint=ENV_FINGERPRINT)
         def tag_of(top, p, x0): return top + "_" + hashlib.sha256(json.dumps(key_of(top, p, x0), sort_keys=True).encode()).hexdigest()
@@ -147,7 +175,13 @@ def main():
         # ---- family selection
         fam = a.family; rows = [r for r in cm["configurations"] if r["family"] == fam and r["origin"] == "twelve_added"]; sel = None if a.selftest_configs is None else {int(x) for x in a.selftest_configs.split(",")}
         if not rows: R["failures"].append("family has no new configurations (E1?)"); return finish(1, "family")
+        sizes_arg = None if a.sizes is None else [x for x in a.sizes.split(",") if x]
+        if sizes_arg is not None and (not sizes_arg or len(set(sizes_arg)) != len(sizes_arg) or any(x not in {r["size_id"] for r in rows} for x in sizes_arg)): R["failures"].append(f"invalid --sizes {a.sizes} (unknown / duplicate / empty)"); return finish(2, "selection")
+        if sel is not None and (not sel or any(x not in {r["config_id"] for r in rows} for x in sel)): R["failures"].append(f"invalid --selftest-configs {a.selftest_configs} (unknown ids)"); return finish(2, "selection")
+        if sizes_arg is not None: rows = [r for r in rows if r["size_id"] in sizes_arg]
         rows = [r for r in rows if sel is None or r["config_id"] in sel]; new_ids = {r["config_id"] for r in rows}
+        if not rows: R["failures"].append("empty configuration selection (invalid --selftest-configs / --sizes)"); return finish(2, "selection")
+        R["selection"] = dict(family=fam, sizes=sizes_arg, selftest_configs=(sorted(sel) if sel else None), selftest_skip_anchors=bool(a.selftest_skip_anchors), n_new_configurations=len(rows))
         from step1_engine.legacy_kernel import LegacyKernel;         k = LegacyKernel(a.mt); registry_out = {}; n_ok = 0
         def intake(r, f, rec):
             """D-1 intake contract applied to a 12-position configuration row (geometry binding by topology / params / x0 against the verified config map)."""
@@ -156,40 +190,101 @@ def main():
             C_M, c_ct = k.matched(Cr); S_M, iM = k.psqrt(C_M); S_N, iN = k.psqrt(Cr); roots_ok = all(v["clip"] == 0 and v["lambda_min"] > 0 and v["sym"] < 1e-12 and v["recon"] < 1e-10 for v in (iM, iN))
             ok = bool(geo_ok and rec["manifest"]["run_config"] == RUN_CFG and rec["manifest"]["cmbtopology_commit"] == EXPECTED_CMBTOPO_COMMIT and rec["manifest"]["env_fingerprint"] == ENV_FINGERPRINT and arr_sha == rec["cov_array_sha256"] and meta.get("cov_array_sha256") == arr_sha and Cr.shape == (21, 21) and psd and roots_ok)
             return ok, dict(pass_=ok, geometry_ok=geo_ok, psd=psd, eig_min=float(ev.min()), eig_max=float(ev.max()), c_ct=c_ct.tolist(), sqrt_matched=iM, sqrt_native=iN, array_sha_recomputed_ok=(arr_sha == rec["cov_array_sha256"])), Cr
+        def load_bound(path, expected_file_sha, expected_array_sha, what):
+            """Read the file ONCE: hash the bytes, decode the SAME bytes, recompute the raw array SHA, pass the decoded array through the frozen loader transform and check the
+            returned metadata against the expected identities; validate the real-basis matrix (21x21, real, finite, symmetric, PSD). Technical failures raise (never a PC1 result)."""
+            b = open(path, "rb").read(); fs = hashlib.sha256(b).hexdigest()
+            if fs != expected_file_sha: raise RuntimeError(f"{what}: file bytes differ from the recorded identity")
+            import io; raw = np.load(io.BytesIO(b), allow_pickle=False); rs = hashlib.sha256(raw.tobytes()).hexdigest()
+            if rs != expected_array_sha: raise RuntimeError(f"{what}: raw array SHA differs from the recorded identity")
+            tmpd = os.path.join(SCRATCH, "bound_load"); os.makedirs(tmpd, exist_ok=True); tp = os.path.join(tmpd, os.path.basename(path)); open(tp, "wb").write(b)
+            Mx, Cr, meta = t1.load_cov_full(tp, LMAX)
+            if not isinstance(meta, dict) or meta.get("cov_array_sha256") != rs: raise RuntimeError(f"{what}: loader metadata does not carry the loaded array identity")
+            Cr = np.asarray(Cr)
+            if Cr.shape != (21, 21) or np.iscomplexobj(Cr) or not np.isfinite(Cr).all(): raise RuntimeError(f"{what}: real-basis matrix invalid (shape {Cr.shape}, complex={np.iscomplexobj(Cr)}, finite={bool(np.isfinite(Cr).all()) if not np.iscomplexobj(Cr) else False})")
+            if np.abs(Cr - Cr.T).max() > 1e-12 * max(1.0, np.abs(Cr).max()): raise RuntimeError(f"{what}: real-basis matrix not symmetric")
+            ev = np.linalg.eigvalsh((Cr + Cr.T) / 2)
+            if not (np.isfinite(ev).all() and ev.min() > -1e-12 * ev.max() and ev.max() > 0): raise RuntimeError(f"{what}: real-basis matrix not PSD / degenerate")
+            return Cr, dict(file_sha256=fs, array_sha256=rs, loader_meta_sha=meta.get("cov_array_sha256"), eig_min=float(ev.min()), eig_max=float(ev.max()))
+        # ---- per-unit atomic evidence (partial records survive any exception)
+        pc1 = {}; failed_units = []; evidence = dict(schema="d3_partial_evidence_v1", family=fam, bases={}, cases={}, failed=failed_units, status="IN_PROGRESS")
+        def save_partial(status="IN_PROGRESS", unit=None):
+            """Write the partial evidence and READ IT BACK; a save failure is recorded with the unit identity in the run record and on stderr before propagating."""
+            evidence["status"] = status; evidence["bases"] = registry_out; evidence["cases"] = pc1
+            try:
+                atomic_write_json(evidence, os.path.join(a.out, "d3_partial_evidence.json")); back = json.load(open(os.path.join(a.out, "d3_partial_evidence.json")))
+                if back != json.loads(json.dumps(evidence, default=str)): raise RuntimeError("partial evidence read-back differs from the computed snapshot")
+            except Exception as ex_:
+                R["save_failure"] = dict(unit=unit, status=status, error=repr(ex_)); print(f"SAVE FAILURE at unit {unit}: {ex_!r}", file=sys.stderr); raise
         base_C = {}
         for r in rows:
-            tt = time.time(); f, tag, rec = ensure_cov(fam, r["shape_params"], r["x0_CT"]); ok, info, Cr = intake(r, f, rec); n_ok += int(ok); base_C[r["config_id"]] = Cr
-            registry_out[str(r["config_id"])] = dict(config_id=r["config_id"], family=fam, size_id=r["size_id"], position_index=r["position_index"], origin="twelve_added", cache_key=r["cache_key"], tag=tag, cov_file=os.path.relpath(f, a.out), cov_file_sha256=rec["cov_file_sha256"], cov_array_sha256=rec["cov_array_sha256"], x0_CT=r["x0_CT"], shape_params=r["shape_params"], intake=info, seconds=time.time() - tt)
+            tt = time.time()
+            try:
+                f, tag, rec = ensure_cov(fam, r["shape_params"], r["x0_CT"]); ok, info, Cr = intake(r, f, rec); Cr_b, bnd = load_bound(f, rec["cov_file_sha256"], rec["cov_array_sha256"], f"base {r['config_id']}"); ok = ok and np.array_equal(Cr_b, Cr)
+            except Exception as ex_:
+                failed_units.append(dict(unit="base", config_id=r["config_id"], request=dict(topology=fam, params=r["shape_params"], x0=r["x0_CT"]), error=repr(ex_))); save_partial("FAILED_AT_BASE"); R["failures"].append(f"base {r['config_id']}: {ex_!r}"); G["G_all_bases_generated"] = False; G["G_evidence_saved"] = True; return finish(1, "base_failure")
+            n_ok += int(ok); base_C[r["config_id"]] = Cr
+            try:
+              registry_out[str(r["config_id"])] = dict(config_id=r["config_id"], family=fam, size_id=r["size_id"], position_index=r["position_index"], origin="twelve_added", cache_key=r["cache_key"], tag=tag, cov_file=os.path.relpath(f, a.out), cov_file_sha256=rec["cov_file_sha256"], cov_array_sha256=rec["cov_array_sha256"], x0_CT=r["x0_CT"], shape_params=r["shape_params"], intake=info, seconds=time.time() - tt)
+              registry_out[str(r["config_id"])]["bound_load"] = bnd; save_partial(unit=dict(unit="base", config_id=r["config_id"]))
+            except Exception as ex_:
+                failed_units.append(dict(unit="base_save", config_id=r["config_id"], error=repr(ex_))); R["failures"].append(f"base {r['config_id']}: save failure {ex_!r}"); G["G_evidence_saved"] = False; return finish(1, "save_failure")
             note(f"base {r['config_id']} {fam}/{r['size_id']}/pos{r['position_index']}: intake {'PASS' if ok else 'FAIL'} ({time.time()-tt:.0f}s)")
             if not ok:
-                json.dump(dict(schema="d3_cov_registry_v1", status="STOPPED_AT_INTAKE_FAILURE", configurations=registry_out), open(os.path.join(a.out, "d3_cov_registry.json"), "w"), indent=1); R["failures"].append(f"intake failed for {r['config_id']}"); G["G_all_base_intakes_pass"] = False; G["G_evidence_saved"] = True; return finish(1, "intake_failure")
-        G["G_all_bases_generated"] = (len(base_C) == len(rows)); G["G_all_intakes_pass"] = G["G_all_base_intakes_pass"] = (n_ok == len(rows))
-        # ---- PC-1: clone covariances and comparison
-        pc1 = {}; n_cases = 0
+                save_partial("STOPPED_AT_INTAKE_FAILURE"); json.dump(dict(schema="d3_cov_registry_v1", status="STOPPED_AT_INTAKE_FAILURE", configurations=registry_out), open(os.path.join(a.out, "d3_cov_registry.json"), "w"), indent=1); R["failures"].append(f"intake failed for {r['config_id']}"); G["G_all_base_intakes_pass"] = False; G["G_evidence_saved"] = True; return finish(1, "intake_failure")
+        G["G_all_bases_generated"] = (len(base_C) == len(rows)); G["G_all_base_intakes_pass"] = (n_ok == len(rows))
+        # ---- PC-1: clone covariances and comparison (partition-aware: the anchor cases of the selected sizes are always included)
+        n_cases = 0
         if a.selftest_skip_pc1: G["G_all_cases_evaluated"] = None
         else:
-            cases = [c for c in ct["new_point_cases"] if c["family"] == fam and c["config_id"] in new_ids] + ([c for c in ct["first_wave_anchor_cases"] if c["family"] == fam] if sel is None else [])
+            sizes_sel = {r["size_id"] for r in rows}
+            cases = [c for c in ct["new_point_cases"] if c["family"] == fam and c["config_id"] in new_ids] + ([] if a.selftest_skip_anchors else [c for c in ct["first_wave_anchor_cases"] if c["family"] == fam and c["size_id"] in sizes_sel])
             for c in cases:
-                tt = time.time(); cid = c["config_id"]; M = np.array(c["M"], float)
-                if cid in base_C: C0 = base_C[cid]
-                else:
-                    p = os.path.join(d1dir, c["base_reused_from_D1"]["cov_file"])
-                    if sha(p) != c["base_reused_from_D1"]["cov_file_sha256"]: R["failures"].append(f"anchor base {cid}: D-1 bytes differ"); return finish(1, "anchor_base")
-                    _, C0, _ = t1.load_cov_full(p, LMAX)
-                f1, tag1, rec1 = ensure_cov(fam, c["generator_params"] if fam != "E2" else c["shape_params"], c["clone_x0_H1"]); _, C1, _ = t1.load_cov_full(f1, LMAX); D = D_of(M); target = D @ C0 @ D.T
-                rel = float(np.linalg.norm(C1 - target) / np.linalg.norm(target)); off = ~np.eye(21, dtype=bool); rel_off = float(np.linalg.norm((C1 - target)[off]) / np.linalg.norm(target[off])); w = 1 / np.sqrt(np.diag(target)); rel_white = float(np.linalg.norm((w[:, None] * (C1 - target) * w[None, :])) / np.linalg.norm(w[:, None] * target * w[None, :]))
-                res = dict(case_id=c["case_id"], config_id=cid, action=c["action"], set=c.get("set", "new_point"), base_from=("generated_here" if cid in base_C else "D1_registered"), clone_tag=tag1, clone_cov_file=os.path.relpath(f1, a.out), clone_file_sha256=rec1["cov_file_sha256"], clone_array_sha256=rec1["cov_array_sha256"], rel=rel, rel_off=rel_off, rel_white=rel_white, tolerance_match_rel_lt=c["tolerance_match_rel_lt"], match=bool(rel < c["tolerance_match_rel_lt"]), seconds=time.time() - tt)
-                if a.with_h2:
-                    f2, tag2, rec2 = ensure_cov(fam, c["generator_params"] if fam != "E2" else c["shape_params"], c["alt_x0_H2"]); _, C2, _ = t1.load_cov_full(f2, LMAX); res["rel_H2"] = float(np.linalg.norm(C2 - target) / np.linalg.norm(target)); res["h2_discriminates"] = bool(res["rel_H2"] > PC1_CONTRACT["tolerance"]["discriminate_rel_gt"]); res["h2_tag"] = tag2
-                pc1[c["case_id"]] = res; n_cases += 1; note(f"PC-1 {c['case_id']}: rel={rel:.3e} {'match' if res['match'] else 'NO MATCH'} ({time.time()-tt:.0f}s)")
+                tt = time.time(); cid = c["config_id"]; M = np.array(c["M"], float); res = dict(case_id=c["case_id"], config_id=cid, action=c["action"], set=c.get("set", "new_point"), base_from=("generated_here" if cid in base_C else "D1_registered"), tolerance_match_rel_lt=c["tolerance_match_rel_lt"])
+                try:
+                    if cid in base_C: C0 = base_C[cid]; res["base_identity"] = dict(file_sha256=registry_out[str(cid)]["cov_file_sha256"], array_sha256=registry_out[str(cid)]["cov_array_sha256"])
+                    else:
+                        p = os.path.join(d1dir, c["base_reused_from_D1"]["cov_file"]); C0, bnd0 = load_bound(p, c["base_reused_from_D1"]["cov_file_sha256"], c["base_reused_from_D1"]["cov_array_sha256"], f"anchor base {cid}"); res["base_identity"] = bnd0
+                    gp = c["generator_params"] if fam != "E2" else c["shape_params"]; f1, tag1, rec1 = ensure_cov(fam, gp, c["clone_x0_H1"]); C1, bnd1 = load_bound(f1, rec1["cov_file_sha256"], rec1["cov_array_sha256"], f"clone {c['case_id']}")
+                    D = D_for(M); target = D @ C0 @ D.T; tn = float(np.linalg.norm(target)); dn = float(np.linalg.norm(C1 - target))
+                    if not (np.isfinite(tn) and tn > 0 and np.isfinite(dn)): raise RuntimeError(f"PC-1 {c['case_id']}: primary norms invalid (target {tn}, diff {dn})")
+                    rel = dn / tn; off = ~np.eye(21, dtype=bool); ton = float(np.linalg.norm(target[off])); rel_off = (float(np.linalg.norm((C1 - target)[off]) / ton) if ton > 0 else None)
+                    dg = np.diag(target); rel_white = None
+                    if np.all(dg > 0):
+                        w = 1 / np.sqrt(dg); wn = float(np.linalg.norm(w[:, None] * target * w[None, :])); rel_white = (float(np.linalg.norm(w[:, None] * (C1 - target) * w[None, :]) / wn) if wn > 0 else None)
+                    res.update(clone_tag=tag1, clone_cov_file=os.path.relpath(f1, a.out), clone_identity=bnd1, D_sha256=used_D[json.dumps(M.tolist())]["D_sha256"], D_orthogonality=used_D[json.dumps(M.tolist())]["orthogonality"], rel=float(rel), rel_off=rel_off, rel_white=rel_white, diagnostics_note=(None if (rel_off is not None and rel_white is not None) else "a diagnostic denominator was zero; primary rel unaffected"), match=bool(rel < c["tolerance_match_rel_lt"]), evaluation="EVALUATED", seconds=time.time() - tt)
+                    if a.with_h2:
+                        f2, tag2, rec2 = ensure_cov(fam, gp, c["alt_x0_H2"]); C2, bnd2 = load_bound(f2, rec2["cov_file_sha256"], rec2["cov_array_sha256"], f"H2 {c['case_id']}"); d2n = float(np.linalg.norm(C2 - target)); rel2 = (d2n / tn) if np.isfinite(d2n) else float("inf")
+                        if np.isfinite(rel2): res.update(rel_H2=float(rel2), h2_status="EVALUATED", h2_discriminates=bool(rel2 > PC1_CONTRACT["tolerance"]["discriminate_rel_gt"]), h2_tag=tag2, h2_identity=bnd2)
+                        else: res.update(rel_H2=None, h2_status="INVALID_DIAGNOSTIC", h2_discriminates=None, h2_reason=f"H2 difference norm not finite ({d2n}); diagnostic only, H1 result unaffected", h2_tag=tag2, h2_identity=bnd2)
+                    n_cases += 1; note(f"PC-1 {c['case_id']}: rel={rel:.3e} {'match' if res['match'] else 'NO MATCH'} ({time.time()-tt:.0f}s)")
+                except Exception as ex_:
+                    res.update(evaluation="TECHNICAL_FAILURE", error=repr(ex_), match=None, seconds=time.time() - tt); failed_units.append(dict(unit="pc1_case", case_id=c["case_id"], config_id=cid, action=c["action"], request=dict(topology=fam, x0_H1=c["clone_x0_H1"]), error=repr(ex_)))
+                    pc1[c["case_id"]] = res; save_partial("FAILED_AT_PC1"); R["failures"].append(f"PC-1 {c['case_id']}: technical failure {ex_!r}"); G["G_all_cases_evaluated"] = False; G["G_evidence_saved"] = True
+                    json.dump(dict(schema="d3_cov_registry_v1", status="STOPPED_AT_PC1_TECHNICAL_FAILURE", configurations=registry_out), open(os.path.join(a.out, "d3_cov_registry.json"), "w"), indent=1); json.dump(dict(schema="d3_pc1_results_v1", family=fam, status="PARTIAL", cases=pc1), open(os.path.join(a.out, "d3_pc1_results.json"), "w"), indent=1); return finish(1, "pc1_technical_failure")
+                pc1[c["case_id"]] = res
+                try: save_partial(unit=dict(unit="pc1_case", case_id=c["case_id"]))
+                except Exception as ex_:
+                    failed_units.append(dict(unit="pc1_case_save", case_id=c["case_id"], config_id=cid, action=c["action"], error=repr(ex_))); R["failures"].append(f"PC-1 {c['case_id']}: save failure {ex_!r}"); G["G_evidence_saved"] = False; return finish(1, "save_failure")
+            R["used_D"] = {k: dict(orthogonality=v["orthogonality"], D_sha256=v["D_sha256"]) for k, v in used_D.items()}
             status = {}
             for cid in sorted({c["config_id"] for c in cases}):
-                rs = [v for v in pc1.values() if v["config_id"] == cid]; req = REQUIRED_ACTIONS[fam]
-                status[str(cid)] = dict(actions_required=req, actions_evaluated=sorted(v["action"] for v in rs), status=("PC1_PASS" if len(rs) == len(req) and all(v["match"] for v in rs) else ("PC1_FAIL" if len(rs) == len(req) else "PC1_PENDING")), max_rel=max(v["rel"] for v in rs))
-            R["pc1_status"] = status; G["G_all_cases_evaluated"] = (n_cases == len(cases))
-        json.dump(dict(schema="d3_cov_registry_v1", family=fam, registry_sha256=reg.registry_sha256, config_map_sha256=cm["map_sha256"], case_table_sha256=ct["table_sha256"], env_fingerprint=ENV_FINGERPRINT, cmbtopology_commit=EXPECTED_CMBTOPO_COMMIT, run_config=RUN_CFG, configurations=registry_out, n=len(registry_out), scope=("SELFTEST subset" if sel else f"{fam}: 12-position added configurations")), open(os.path.join(a.out, "d3_cov_registry.json"), "w"), indent=1)
-        json.dump(dict(schema="d3_pc1_results_v1", family=fam, contract=PC1_CONTRACT, case_table_sha256=ct["table_sha256"], cases=pc1, configuration_status=R.get("pc1_status", {}), with_h2=a.with_h2, scope="asset-layer PC-1 evaluation per the transcribed A11 R2/R5 contract; PC1_FAIL forbids formal consumption of the configuration; no position-state conversion"), open(os.path.join(a.out, "d3_pc1_results.json"), "w"), indent=1)
-        R["n_bases"] = len(base_C); R["n_cases"] = n_cases; G["G_evidence_saved"] = all(os.path.exists(os.path.join(a.out, f)) for f in ("d3_cov_registry.json", "d3_pc1_results.json", "d3_env_lock.json"))
+                rs = [v for v in pc1.values() if v["config_id"] == cid]; req = REQUIRED_ACTIONS[fam]; ev_ok = [v for v in rs if v.get("evaluation") == "EVALUATED"]
+                status[str(cid)] = dict(actions_required=req, actions_evaluated=sorted(v["action"] for v in ev_ok), status=("PC1_PASS" if len(ev_ok) == len(req) and all(v["match"] for v in ev_ok) else ("PC1_FAIL" if len(ev_ok) == len(req) else "PC1_PENDING")), max_rel=(max(v["rel"] for v in ev_ok) if ev_ok else None))
+            R["pc1_status"] = status; G["G_all_cases_evaluated"] = (n_cases == len(cases) and len(cases) > 0)
+            R["partition"] = dict(sizes=sorted(sizes_sel), new_point_cases=sum(1 for c in cases if c.get("set", "new_point") == "new_point"), anchor_cases=sum(1 for c in cases if c.get("set") == "first_wave_anchor_diagnostic"), required_new_point_cases_family=sum(1 for c in ct["new_point_cases"] if c["family"] == fam), required_anchor_cases_family=sum(1 for c in ct["first_wave_anchor_cases"] if c["family"] == fam))
+        save_partial("COMPLETE")
+        json.dump(dict(schema="d3_cov_registry_v1", family=fam, partition=R.get("partition"), selection=R.get("selection"), registry_sha256=reg.registry_sha256, config_map_sha256=cm["map_sha256"], case_table_sha256=ct["table_sha256"], env_fingerprint=ENV_FINGERPRINT, cmbtopology_commit=EXPECTED_CMBTOPO_COMMIT, run_config=RUN_CFG, configurations=registry_out, n=len(registry_out), scope=("SELFTEST subset" if sel else f"{fam}: 12-position added configurations")), open(os.path.join(a.out, "d3_cov_registry.json"), "w"), indent=1)
+        json.dump(dict(schema="d3_pc1_results_v1", family=fam, partition=R.get("partition"), selection=R.get("selection"), contract=PC1_CONTRACT, case_table_sha256=ct["table_sha256"], representation=R.get("representation"), used_D=R.get("used_D"), cases=pc1, configuration_status=R.get("pc1_status", {}), with_h2=a.with_h2, scope="asset-layer PC-1 evaluation per the transcribed A11 R2/R5 contract; PC1_FAIL forbids formal consumption of the configuration; no position-state conversion"), open(os.path.join(a.out, "d3_pc1_results.json"), "w"), indent=1)
+        R["n_bases"] = len(base_C); R["n_cases"] = n_cases
+        # evidence saved: every published file is READ BACK and compared VALUE-LEVEL with the computed snapshots (not only key sets); bytes SHA recorded
+        try:
+            snap_reg = json.loads(json.dumps(registry_out, default=str)); snap_pc1 = json.loads(json.dumps(pc1, default=str)); snap_ev = json.loads(json.dumps(evidence, default=str))
+            rg_chk = json.load(open(os.path.join(a.out, "d3_cov_registry.json"))); pc_chk = json.load(open(os.path.join(a.out, "d3_pc1_results.json"))); ev_chk = json.load(open(os.path.join(a.out, "d3_partial_evidence.json"))); env_chk = json.load(open(os.path.join(a.out, "d3_env_lock.json")))
+            ok_ev = (rg_chk["configurations"] == snap_reg and pc_chk["cases"] == snap_pc1 and pc_chk.get("configuration_status", {}) == R.get("pc1_status", {}) and ev_chk == snap_ev and ev_chk["status"] == "COMPLETE" and env_chk["env_fingerprint"] == ENV_FINGERPRINT and rg_chk["env_fingerprint"] == ENV_FINGERPRINT and rg_chk["case_table_sha256"] == pc_chk["case_table_sha256"] == ct["table_sha256"] and pc_chk.get("representation") == R.get("representation"))
+            R["published_evidence"] = dict(registry_sha256=sha(os.path.join(a.out, "d3_cov_registry.json")), pc1_results_sha256=sha(os.path.join(a.out, "d3_pc1_results.json")), partial_evidence_sha256=sha(os.path.join(a.out, "d3_partial_evidence.json")), env_lock_sha256=sha(os.path.join(a.out, "d3_env_lock.json")), value_level_readback_ok=bool(ok_ev)); G["G_evidence_saved"] = bool(ok_ev)
+            if not ok_ev: R["failures"].append("published evidence differs from the computed snapshots (value-level read-back)")
+        except Exception as ex_: G["G_evidence_saved"] = False; R["failures"].append(f"evidence check: {ex_!r}")
         shutil.rmtree(SCRATCH, ignore_errors=True)
         return finish(0 if all(G[kk] is True for kk in REQUIRED) else 1, "complete")
     except Exception as ex:

@@ -263,3 +263,61 @@ REUSE_BINDING_SCHEMA = dict(schema="d3_d2_reuse_binding_v1", purpose="D-3 consum
     view_differences_allowed=["stage (3-position vs 12-position mixture view)", "weights (1/3 or size-conditional -> 1/36 family / 1/12 within size)", "assembly into a 12-position FamilyInput"],
     forbidden=["asserting a new configuration shares a root with an old one", "substituting the family matched reference for a native reference", "re-stamping producer / environment / engine of a reused asset", "relaxing match_request for same-producer caches", "silent generalisation of the D-2 f32 acceptance to new positions"],
     plan_sharing=dict(rule="within each family, old and new configurations of the same system share the five-seed BootstrapPlan / FittingPlan identities and UID order; evaluation and fitting stay separate purposes", fixed="plan identity fixed once before the formal calibration and unchanged through the target evaluation; no threshold-dependent resampling; no unrecorded keys"))
+
+
+REQUIRED_D3A_GATES = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_phaseC_members", "G_external_loader_sha", "G_a11_freeze_sha", "G_a11_generator_cell_sha", "G_env_lock", "G_ct_commit", "G_ct_origin", "G_ct_clean", "G_ct_dependencies_present",
+                       "G_registry_source_bound", "G_config_map_bound", "G_case_table_bound", "G_d1_trusted", "G_bridge_quadrature", "G_all_bases_generated", "G_all_base_intakes_pass", "G_all_cases_evaluated", "G_evidence_saved")
+
+
+def aggregate_partitions(case_table: dict, family: str, run_records: List[dict], expected_source: dict) -> dict:
+    """FORMAL family-level D-3a coverage from formal partition runs. Inputs are treated as untrusted snapshots and re-verified:
+    * case_table: payload SHA recomputed (self-consistent) and formal; family must have cases (E1 -> refused as not applicable, never 'complete');
+    * expected_source: {engine_version, inventory_sha256, script_sha256, pins_sha256} that every run's recorded source must equal;
+    * each run: D3_PASS True, stage complete, no failures, EVERY required gate True (fixed list), no self-test selection, profile production_official, family consistent
+      across run manifest / registry / pc1 results, case-table SHA equal in registry AND pc1 results, environment fingerprint equal in registry / env record;
+    * per partition: its sizes determine the expected new bases and case ids (new-point + anchor of those sizes); registry configurations and evaluated cases must equal them;
+    * each case: evaluation EVALUATED, config_id / action equal to the case table, rel a finite float, match == (rel < tolerance);
+    * configuration_status re-derived from the cases and compared with the stored summary;
+    * partitions disjoint and covering all sizes; union of cases == family required set.
+    A finite PC1_FAIL configuration is carried through (coverage complete, status FAIL); the result is an independent deep copy. Not a PC-1 acceptance."""
+    if _table_payload_sha(case_table) != case_table.get("table_sha256") or case_table.get("formal") is not True: raise InputContractError("case table payload / formal flag")
+    req_new_cases = {c["case_id"]: c for c in case_table["new_point_cases"] if c["family"] == family}; req_anc_cases = {c["case_id"]: c for c in case_table["first_wave_anchor_cases"] if c["family"] == family}
+    if not req_new_cases: raise InputContractError(f"family {family}: no 12-position cases in the case table (not applicable; no coverage record is issued)")
+    if not run_records: raise InputContractError("no partition runs supplied")
+    for k in ("engine_version", "inventory_sha256", "script_sha256", "pins_sha256"):
+        if not isinstance(expected_source.get(k), str) or not expected_source[k]: raise InputContractError(f"expected_source lacks {k}")
+    all_sizes = sorted({c["size_id"] for c in req_new_cases.values()}); sizes_seen = []; cases = {}; statuses = {}; bases = set(); tol = case_table["contract"]["tolerance"]["match_rel_lt"]
+    for i, rr in enumerate(run_records):
+        rm, rg, pr = rr.get("run_manifest"), rr.get("registry"), rr.get("pc1_results")
+        if not all(isinstance(x, dict) for x in (rm, rg, pr)): raise InputContractError(f"partition {i}: run_manifest / registry / pc1_results required")
+        if not (rm.get("D3_PASS") is True and rm.get("stage") == "complete" and rm.get("failures") == []): raise InputContractError(f"partition {i}: not a complete formal D3_PASS run")
+        gates = rm.get("gates") or {}
+        if set(gates) != set(REQUIRED_D3A_GATES) or any(gates.get(g) is not True for g in REQUIRED_D3A_GATES): raise InputContractError(f"partition {i}: required gates not all True / gate set differs")
+        src = rm.get("source") or {}
+        if any(src.get(k) != expected_source[k] for k in ("engine_version", "inventory_sha256", "script_sha256", "pins_sha256")) or src.get("profile") != "production_official": raise InputContractError(f"partition {i}: recorded source / profile differ from the expected source")
+        sel = rm.get("selection") or {}
+        if sel.get("selftest_configs") or sel.get("selftest_skip_anchors"): raise InputContractError(f"partition {i}: self-test selections are not formal partitions")
+        if not (rm.get("family") == rg.get("family") == pr.get("family") == family): raise InputContractError(f"partition {i}: family differs across records")
+        if rg.get("case_table_sha256") != case_table["table_sha256"] or pr.get("case_table_sha256") != case_table["table_sha256"]: raise InputContractError(f"partition {i}: case-table SHA differs")
+        if rg.get("env_fingerprint") != (rm.get("env_lock") or {}).get("env_fingerprint") or not rg.get("env_fingerprint"): raise InputContractError(f"partition {i}: environment fingerprint inconsistent")
+        sz = list(sel.get("sizes") or all_sizes)
+        if len(set(sz)) != len(sz) or any(x not in all_sizes for x in sz) or set(sz) & set(sizes_seen): raise InputContractError(f"partition {i}: sizes invalid / duplicate / overlapping")
+        sizes_seen += sz
+        exp_bases = {str(c["config_id"]) for c in req_new_cases.values() if c["size_id"] in sz}; exp_cases = {k for k, c in {**req_new_cases, **req_anc_cases}.items() if c["size_id"] in sz}
+        if set(rg.get("configurations", {})) != exp_bases: raise InputContractError(f"partition {i}: registry configurations differ from the sizes' new bases")
+        pcases = pr.get("cases") or {}
+        if set(pcases) != exp_cases: raise InputContractError(f"partition {i}: evaluated cases differ from the sizes' required cases")
+        derived = {}
+        for k, v in pcases.items():
+            ref = {**req_new_cases, **req_anc_cases}[k]; rel = v.get("rel")
+            if v.get("evaluation") != "EVALUATED" or v.get("config_id") != ref["config_id"] or v.get("action") != ref["action"] or not isinstance(rel, float) or not np.isfinite(rel) or rel < 0 or v.get("match") != (rel < tol) or v.get("tolerance_match_rel_lt") != tol: raise InputContractError(f"partition {i}: case {k} inconsistent (evaluation / identity / rel / match)")
+            derived.setdefault(str(ref["config_id"]), []).append(v)
+        for cid, rs in derived.items():
+            req = REQUIRED_ACTIONS[family]; st = dict(actions_required=req, actions_evaluated=sorted(x["action"] for x in rs), status=("PC1_PASS" if sorted(x["action"] for x in rs) == sorted(req) and all(x["match"] for x in rs) else ("PC1_FAIL" if sorted(x["action"] for x in rs) == sorted(req) else "PC1_PENDING")), max_rel=max(x["rel"] for x in rs))
+            stored = (pr.get("configuration_status") or {}).get(cid)
+            if stored != st: raise InputContractError(f"partition {i}: stored configuration status for {cid} differs from the status re-derived from its cases")
+            statuses[cid] = copy.deepcopy(st)
+        cases.update(copy.deepcopy(pcases)); bases |= set(rg["configurations"])
+    if sorted(sizes_seen) != all_sizes: raise InputContractError(f"partitions do not cover the family sizes: {sorted(sizes_seen)} vs {all_sizes}")
+    if set(cases) != set(req_new_cases) | set(req_anc_cases) or bases != {str(c["config_id"]) for c in req_new_cases.values()}: raise InputContractError("union of partitions differs from the family required set")
+    return copy.deepcopy(dict(schema="d3a_family_coverage_v2", family=family, sizes=all_sizes, partitions=len(run_records), expected_source=dict(expected_source), case_table_sha256=case_table["table_sha256"], n_bases=len(bases), n_cases=len(cases), n_new_point_cases=len(req_new_cases), n_anchor_cases=len(req_anc_cases), configuration_status=statuses, n_pc1_pass=sum(v["status"] == "PC1_PASS" for v in statuses.values()), n_pc1_fail=sum(v["status"] == "PC1_FAIL" for v in statuses.values()), family_coverage_complete=True, note="formal coverage aggregation of verified partition runs; per-configuration PC1 statuses re-derived and carried through; not itself a PC-1 acceptance"))
