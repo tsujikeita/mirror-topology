@@ -269,11 +269,67 @@ REQUIRED_D3A_GATES = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_
                        "G_registry_source_bound", "G_config_map_bound", "G_case_table_bound", "G_d1_trusted", "G_bridge_quadrature", "G_all_bases_generated", "G_all_base_intakes_pass", "G_all_cases_evaluated", "G_evidence_saved")
 
 
+# Internal factory capability: protects the public API, not hostile reflection in
+# the same Python process. Published fields are detached views of immutable bytes.
+_VERIFIED_PARTITION_FACTORY_TOKEN = object()
+
+
 class VerifiedPartition:
-    """A D-3a run whose published documents were read from disk ONCE, hashed from the same bytes, matched against the run manifest's published_evidence / output_inventory, and
-    semantically bound (source, gates, environment fingerprint recomputation, registry/case identities). Only instances of this class enter aggregate_partitions."""
-    __slots__ = ("run_dir", "run_manifest", "registry", "pc1_results", "evidence", "env_lock", "document_sha256", "verified")
-    def __init__(self, run_dir, rm, rg, pr, ev, env, shas): self.run_dir, self.run_manifest, self.registry, self.pc1_results, self.evidence, self.env_lock, self.document_sha256, self.verified = run_dir, rm, rg, pr, ev, env, shas, True
+    """Intake-created immutable metadata snapshot. Public mappings are copies.
+
+    Array/file integrity and the outer-ledger binding are separate, explicit
+    properties. This object never asserts a physical PC-1 acceptance.
+    """
+    __slots__ = ("_payload", "_seal")
+
+    def __init__(self, run_dir, rm, rg, pr, ev, env, shas, *,
+                 _token=None, arrays_verified=False, outer_ledger_bound=False,
+                 expected_config_map_sha256=None):
+        if _token is not _VERIFIED_PARTITION_FACTORY_TOKEN:
+            raise InputContractError("VerifiedPartition must be created by verify_partition_run")
+        record = dict(run_dir=str(run_dir), run_manifest=rm, registry=rg,
+                      pc1_results=pr, evidence=ev, env_lock=env,
+                      document_sha256=shas, arrays_verified=bool(arrays_verified),
+                      outer_ledger_bound=bool(outer_ledger_bound),
+                      expected_config_map_sha256=expected_config_map_sha256)
+        object.__setattr__(self, "_payload", json.dumps(record, sort_keys=True,
+                          allow_nan=False, ensure_ascii=False).encode("utf-8"))
+        object.__setattr__(self, "_seal", _VERIFIED_PARTITION_FACTORY_TOKEN)
+
+    def __setattr__(self, name, value):
+        raise AttributeError("VerifiedPartition is immutable; create a new verified snapshot")
+
+    def __delattr__(self, name):
+        raise AttributeError("VerifiedPartition is immutable")
+
+    def _view(self, name):
+        return json.loads(self._payload.decode("utf-8"))[name]
+
+    @property
+    def verified(self):
+        return self._seal is _VERIFIED_PARTITION_FACTORY_TOKEN
+
+    @property
+    def run_dir(self): return self._view("run_dir")
+    @property
+    def run_manifest(self): return self._view("run_manifest")
+    @property
+    def registry(self): return self._view("registry")
+    @property
+    def pc1_results(self): return self._view("pc1_results")
+    @property
+    def evidence(self): return self._view("evidence")
+    @property
+    def env_lock(self): return self._view("env_lock")
+    @property
+    def document_sha256(self): return self._view("document_sha256")
+    @property
+    def arrays_verified(self): return self._view("arrays_verified")
+    @property
+    def outer_ledger_bound(self): return self._view("outer_ledger_bound")
+    @property
+    def verification_scope(self):
+        return "file_and_member_integrity" if self.arrays_verified else "metadata_only"
 
 
 def _env_fingerprint_of(env_lock: dict, run_config: dict) -> str:
@@ -281,58 +337,127 @@ def _env_fingerprint_of(env_lock: dict, run_config: dict) -> str:
 
 
 def verify_partition_run(run_dir: str, expected_source: dict, expected_case_table_sha256: str, expected_config_map_sha256: str, require_arrays: bool = True, expected_run_manifest_sha256: Optional[str] = None) -> VerifiedPartition:
-    """Trusted intake of one D-3a run directory (the script's --out). Reads each published document once; the same bytes are hashed, decoded and compared with the run manifest's
-    published_evidence SHAs and, for every entry of output_inventory (documents and, when require_arrays, every covariance .npy), with the actual file bytes. Then: run
-    D3_PASS/complete/no failures, required gates, source == expected (4 identities + profile), run_manifest.engine_version == source.engine_version, case-table / config-map
-    SHAs == the expected (pins) values in registry and results, env fingerprint RECOMPUTED from the env lock == stored fingerprint in registry/results/env lock, every registry
-    entry carries 64-hex file/array SHAs with intake pass, every case carries clone identity with 64-hex SHAs and EVALUATED, configuration_status keys == registry bases +
-    anchor configurations of the run. Raises on any mismatch."""
-    def rd(name):
-        p = os.path.join(run_dir, name)
-        if not os.path.exists(p): raise InputContractError(f"run document missing: {name}")
-        b = open(p, "rb").read(); return b, hashlib.sha256(b).hexdigest(), json.loads(b.decode("utf-8"))
-    _, rm_sha, rm = rd("d3_run_manifest.json")
-    if expected_run_manifest_sha256 is not None and rm_sha != expected_run_manifest_sha256: raise InputContractError("run manifest bytes differ from the outer ledger identity")
-    if not isinstance(rm, dict) or rm.get("D3_PASS") is not True or rm.get("stage") != "complete" or rm.get("failures") != []: raise InputContractError("run manifest is not a complete formal D3_PASS record")
+    """Read each file once; bind the consumed metadata/arrays to their identities.
+
+    This performs integrity and cross-document checks, not physical regeneration.
+    The optional external run hash remains a separate provenance assertion.
+    require_arrays=False produces an explicitly metadata-only snapshot which the
+    formal aggregator will not accept as full covariance-file verification.
+    """
+    import io
+    if type(require_arrays) is not bool:
+        raise InputContractError("require_arrays must be a boolean")
+    cache = {}
+    root = os.path.realpath(run_dir)
+    def raw(name):
+        if not isinstance(name, str) or not name or os.path.isabs(name) or ".." in name.replace("\\", "/").split("/"):
+            raise InputContractError("invalid run-relative output name")
+        if name not in cache:
+            path = os.path.realpath(os.path.join(root, name))
+            if os.path.commonpath([root, path]) != root:
+                raise InputContractError("output reference escapes its run directory")
+            with open(path, "rb") as fh:
+                cache[name] = fh.read()
+        return cache[name]
+    def pairs(items):
+        ans = {}
+        for key, value in items:
+            if key in ans: raise InputContractError("duplicate JSON key: " + key)
+            ans[key] = value
+        return ans
+    def parse(name):
+        def invalid(value): raise InputContractError("non-finite JSON constant: " + value)
+        value = json.loads(raw(name).decode("utf-8"), object_pairs_hook=pairs,
+                           parse_constant=invalid)
+        if not isinstance(value, dict): raise InputContractError(name + ": document must be an object")
+        return value
+    def ident(name):
+        b = raw(name)
+        return dict(sha256=hashlib.sha256(b).hexdigest(), bytes=len(b))
+    def hex64(value):
+        return isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None
+    def check_ident(name, entry):
+        if not isinstance(entry, dict) or not hex64(entry.get("sha256")) or type(entry.get("bytes")) is not int or entry["bytes"] < 0:
+            raise InputContractError(name + ": invalid file identity")
+        if ident(name) != dict(sha256=entry["sha256"], bytes=entry["bytes"]):
+            raise InputContractError(name + ": bytes differ from expected identity")
+    rm = parse("d3_run_manifest.json"); rm_sha = ident("d3_run_manifest.json")["sha256"]
+    if expected_run_manifest_sha256 is not None and rm_sha != expected_run_manifest_sha256:
+        raise InputContractError("run manifest bytes differ from the outer ledger identity")
+    if rm.get("D3_PASS") is not True or rm.get("stage") != "complete" or rm.get("failures") != []:
+        raise InputContractError("run manifest is not a complete formal D3_PASS record")
     pub = ((rm.get("published_evidence") or {}).get("documents")) or {}
-    if set(pub) != {"d3_cov_registry.json", "d3_pc1_results.json", "d3_partial_evidence.json", "d3_env_lock.json"} or rm["published_evidence"].get("value_level_readback_ok") is not True: raise InputContractError("run manifest lacks the published-evidence identities")
-    docs = {}; shas = {}
-    for name in pub:
-        b, h, d = rd(name)
-        if h != pub[name]["sha256"] or len(b) != pub[name]["bytes"]: raise InputContractError(f"{name}: bytes differ from the published identity")
-        docs[name] = d; shas[name] = h
+    names = {"d3_cov_registry.json", "d3_pc1_results.json", "d3_partial_evidence.json", "d3_env_lock.json"}
+    if set(pub) != names or rm["published_evidence"].get("value_level_readback_ok") is not True:
+        raise InputContractError("run manifest lacks the published-evidence identities")
     inv = rm.get("output_inventory") or {}
-    if not inv: raise InputContractError("run manifest lacks output_inventory")
-    for rel, e in inv.items():
-        p = os.path.join(run_dir, rel)
-        if rel.endswith(".npy") and not require_arrays: continue
-        if not os.path.exists(p): raise InputContractError(f"output missing: {rel}")
-        b = open(p, "rb").read()
-        if hashlib.sha256(b).hexdigest() != e.get("sha256") or len(b) != e.get("bytes"): raise InputContractError(f"output {rel}: bytes differ from the recorded inventory")
-    rg, pr, ev, env = docs["d3_cov_registry.json"], docs["d3_pc1_results.json"], docs["d3_partial_evidence.json"], docs["d3_env_lock.json"]
+    if not isinstance(inv, dict) or not names <= set(inv):
+        raise InputContractError("output inventory omits published documents")
+    docs = {}; shas = {}
+    for name in sorted(names):
+        check_ident(name, pub[name]); check_ident(name, inv[name])
+        docs[name] = parse(name); shas[name] = ident(name)["sha256"]
+    for name, entry in inv.items():
+        if name.endswith(".npy") and not require_arrays:
+            if not isinstance(entry, dict) or not hex64(entry.get("sha256")) or type(entry.get("bytes")) is not int or entry["bytes"] < 0:
+                raise InputContractError(name + ": invalid recorded array-file identity")
+            continue
+        check_ident(name, entry)
+    rg, pr, ev, env = (docs[n] for n in ("d3_cov_registry.json", "d3_pc1_results.json", "d3_partial_evidence.json", "d3_env_lock.json"))
     gates = rm.get("gates") or {}
-    if set(gates) != set(REQUIRED_D3A_GATES) or any(gates.get(g) is not True for g in REQUIRED_D3A_GATES): raise InputContractError("required gates not all True / gate set differs")
+    if set(gates) != set(REQUIRED_D3A_GATES) or any(gates.get(g) is not True for g in REQUIRED_D3A_GATES):
+        raise InputContractError("required gates not all True / gate set differs")
     src = rm.get("source") or {}
-    if any(src.get(k) != expected_source.get(k) for k in ("engine_version", "inventory_sha256", "script_sha256", "pins_sha256")) or src.get("profile") != "production_official" or rm.get("engine_version") != src.get("engine_version") or rg.get("source") != src or pr.get("source") != src: raise InputContractError("recorded source differs from the expected source / inconsistent across documents")
+    keys = ("engine_version", "inventory_sha256", "script_sha256", "pins_sha256")
+    if any(not isinstance(expected_source.get(k), str) or not expected_source[k] or src.get(k) != expected_source[k] for k in keys) or src.get("profile") != "production_official" or rm.get("engine_version") != src.get("engine_version") or rg.get("source") != src or pr.get("source") != src:
+        raise InputContractError("recorded source differs from the expected source / inconsistent across documents")
     sel = rm.get("selection") or {}
-    if sel.get("selftest_configs") or sel.get("selftest_skip_anchors"): raise InputContractError("self-test run is not a formal partition")
+    if sel.get("selftest_configs") or sel.get("selftest_skip_anchors"):
+        raise InputContractError("self-test run is not a formal partition")
     fam = rm.get("family")
-    if not (fam == rg.get("family") == pr.get("family") == ev.get("family")): raise InputContractError("family differs across documents")
-    if rg.get("case_table_sha256") != expected_case_table_sha256 or pr.get("case_table_sha256") != expected_case_table_sha256 or rg.get("config_map_sha256") != expected_config_map_sha256 or pr.get("config_map_sha256") != expected_config_map_sha256: raise InputContractError("case-table / config-map identities differ from the registered pins")
+    if not (fam == rg.get("family") == pr.get("family") == ev.get("family")):
+        raise InputContractError("family differs across documents")
+    if rg.get("case_table_sha256") != expected_case_table_sha256 or pr.get("case_table_sha256") != expected_case_table_sha256 or rg.get("config_map_sha256") != expected_config_map_sha256 or pr.get("config_map_sha256") != expected_config_map_sha256:
+        raise InputContractError("case-table / config-map identities differ from the registered pins")
     fp = _env_fingerprint_of(env, rg.get("run_config"))
-    if not (fp == env.get("env_fingerprint") == rg.get("env_fingerprint") == pr.get("env_fingerprint")): raise InputContractError("environment fingerprint does not re-derive from the env lock / differs across documents")
-    hex64 = lambda v: isinstance(v, str) and len(v) == 64
-    for cid, e in (rg.get("configurations") or {}).items():
-        if not (isinstance(e, dict) and str(e.get("config_id")) == cid and hex64(e.get("cov_file_sha256")) and hex64(e.get("cov_array_sha256")) and (e.get("intake") or {}).get("pass_") is True and e.get("cov_file") and (e.get("bound_load") or {}).get("file_sha256") == e["cov_file_sha256"]): raise InputContractError(f"registry entry {cid}: incomplete / not passing")
-        if require_arrays and (f"{e['cov_file']}" not in inv): raise InputContractError(f"registry entry {cid}: covariance file not in the output inventory")
-    for k, v in (pr.get("cases") or {}).items():
-        ci = v.get("clone_identity") or {}
-        if v.get("evaluation") != "EVALUATED" or not (hex64(ci.get("file_sha256")) and hex64(ci.get("array_sha256")) and ci.get("loader_meta_sha") == ci.get("array_sha256")) or not hex64(v.get("D_sha256")) or not isinstance(v.get("rel"), float): raise InputContractError(f"case {k}: incomplete evaluation identity")
-        if require_arrays and v.get("clone_cov_file") not in inv: raise InputContractError(f"case {k}: clone file not in the output inventory")
-    if ev.get("status") != "COMPLETE" or set(ev.get("cases") or {}) != set(pr.get("cases") or {}) or set(ev.get("bases") or {}) != set(rg.get("configurations") or {}): raise InputContractError("partial evidence does not correspond to the published results")
-    expected_status_keys = set(rg["configurations"]) | {str(v["config_id"]) for v in pr["cases"].values()}
-    if set(pr.get("configuration_status") or {}) != expected_status_keys or set(rm.get("pc1_status") or {}) != expected_status_keys or rm["pc1_status"] != pr["configuration_status"]: raise InputContractError("configuration_status keys differ from the run's bases / evaluated configurations")
-    shas["d3_run_manifest.json"] = rm_sha; return VerifiedPartition(run_dir, copy.deepcopy(rm), copy.deepcopy(rg), copy.deepcopy(pr), copy.deepcopy(ev), copy.deepcopy(env), shas)
+    if not (fp == env.get("env_fingerprint") == rg.get("env_fingerprint") == pr.get("env_fingerprint")) or rm.get("env_lock") != env:
+        raise InputContractError("environment identity/content differs across documents")
+    array_shas = {}
+    def covariance_identity(name, file_sha, array_sha, bound):
+        if not isinstance(name, str) or not name.endswith(".npy") or name not in inv or not hex64(file_sha) or not hex64(array_sha):
+            raise InputContractError("incomplete covariance identity / inventory reference")
+        if inv[name].get("sha256") != file_sha:
+            raise InputContractError(name + ": referenced file SHA differs from the inventory")
+        if not isinstance(bound, dict) or bound.get("file_sha256") != file_sha or bound.get("array_sha256") != array_sha or bound.get("loader_meta_sha") != array_sha:
+            raise InputContractError(name + ": bound-loader identity differs from covariance identity")
+        if require_arrays:
+            if name not in array_shas:
+                with io.BytesIO(raw(name)) as stream:
+                    arr = np.load(stream, allow_pickle=False)
+                if not isinstance(arr, np.ndarray) or arr.dtype.hasobject:
+                    raise InputContractError(name + ": expected a non-object NPY array")
+                array_shas[name] = hashlib.sha256(np.ascontiguousarray(arr).tobytes()).hexdigest()
+            if array_shas[name] != array_sha:
+                raise InputContractError(name + ": raw array SHA differs from the claimed identity")
+    for cid, entry in (rg.get("configurations") or {}).items():
+        if not isinstance(entry, dict) or str(entry.get("config_id")) != cid or (entry.get("intake") or {}).get("pass_") is not True:
+            raise InputContractError("registry entry " + cid + ": incomplete / not passing")
+        covariance_identity(entry.get("cov_file"), entry.get("cov_file_sha256"), entry.get("cov_array_sha256"), entry.get("bound_load"))
+    for key, value in (pr.get("cases") or {}).items():
+        ci = value.get("clone_identity") or {}
+        if value.get("evaluation") != "EVALUATED" or not hex64(value.get("D_sha256")) or type(value.get("rel")) is not float or not np.isfinite(value["rel"]) or value["rel"] < 0:
+            raise InputContractError("case " + key + ": incomplete evaluation identity")
+        covariance_identity(value.get("clone_cov_file"), ci.get("file_sha256"), ci.get("array_sha256"), ci)
+    if ev.get("status") != "COMPLETE" or ev.get("failed") != [] or ev.get("cases") != pr.get("cases") or ev.get("bases") != rg.get("configurations"):
+        raise InputContractError("partial evidence contents differ from the published results")
+    status_keys = set(rg["configurations"]) | {str(v["config_id"]) for v in pr["cases"].values()}
+    if set(pr.get("configuration_status") or {}) != status_keys or set(rm.get("pc1_status") or {}) != status_keys or rm["pc1_status"] != pr["configuration_status"]:
+        raise InputContractError("configuration status differs across documents")
+    shas["d3_run_manifest.json"] = rm_sha
+    return VerifiedPartition(run_dir, rm, rg, pr, ev, env, shas,
+             _token=_VERIFIED_PARTITION_FACTORY_TOKEN, arrays_verified=require_arrays,
+             outer_ledger_bound=expected_run_manifest_sha256 is not None,
+             expected_config_map_sha256=expected_config_map_sha256)
 
 
 def aggregate_partitions(case_table: dict, family: str, partitions: List[VerifiedPartition], expected_source: dict, expected_case_table_sha256: str) -> dict:
@@ -344,7 +469,7 @@ def aggregate_partitions(case_table: dict, family: str, partitions: List[Verifie
     if _table_payload_sha(case_table) != case_table.get("table_sha256") or case_table.get("formal") is not True or case_table["table_sha256"] != expected_case_table_sha256: raise InputContractError("case table is not the registered formal table")
     req_new_cases = {c["case_id"]: c for c in case_table["new_point_cases"] if c["family"] == family}; req_anc_cases = {c["case_id"]: c for c in case_table["first_wave_anchor_cases"] if c["family"] == family}
     if not req_new_cases: raise InputContractError(f"family {family}: no 12-position cases in the case table (not applicable; no coverage record is issued)")
-    if not partitions or any(not isinstance(p, VerifiedPartition) or not p.verified for p in partitions): raise InputContractError("only VerifiedPartition instances (verify_partition_run) enter the formal aggregation")
+    if not partitions or any(type(p) is not VerifiedPartition or not p.verified or not p.arrays_verified for p in partitions): raise InputContractError("only array-verified VerifiedPartition instances enter formal aggregation; metadata-only intake is not full coverage")
     for k in ("engine_version", "inventory_sha256", "script_sha256", "pins_sha256"):
         if not isinstance(expected_source.get(k), str) or not expected_source[k]: raise InputContractError(f"expected_source lacks {k}")
     all_sizes = sorted({c["size_id"] for c in req_new_cases.values()}); sizes_seen = []; cases = {}; statuses = {}; bases = set(); tol = case_table["contract"]["tolerance"]["match_rel_lt"]
@@ -372,4 +497,4 @@ def aggregate_partitions(case_table: dict, family: str, partitions: List[Verifie
         cases.update(copy.deepcopy(pcases)); bases |= set(rg["configurations"])
     if sorted(sizes_seen) != all_sizes: raise InputContractError(f"partitions do not cover the family sizes: {sorted(sizes_seen)} vs {all_sizes}")
     if set(cases) != set(req_new_cases) | set(req_anc_cases) or bases != {str(c["config_id"]) for c in req_new_cases.values()}: raise InputContractError("union of partitions differs from the family required set")
-    return copy.deepcopy(dict(schema="d3a_family_coverage_v3", family=family, sizes=all_sizes, partitions=[dict(run_dir=p.run_dir, document_sha256=p.document_sha256) for p in partitions], expected_source=dict(expected_source), case_table_sha256=expected_case_table_sha256, n_bases=len(bases), n_cases=len(cases), n_new_point_cases=len(req_new_cases), n_anchor_cases=len(req_anc_cases), configuration_status=statuses, n_pc1_pass=sum(v["status"] == "PC1_PASS" for v in statuses.values()), n_pc1_fail=sum(v["status"] == "PC1_FAIL" for v in statuses.values()), family_coverage_complete=True, note="formal coverage aggregation of verified partition runs (documents read once, hashed from the same bytes, bound to published identities and pins); per-configuration PC1 statuses re-derived; not itself a PC-1 acceptance"))
+    return copy.deepcopy(dict(schema="d3a_family_coverage_v3", family=family, sizes=all_sizes, partitions=[dict(run_dir=p.run_dir, document_sha256=p.document_sha256, arrays_verified=p.arrays_verified, outer_ledger_bound=p.outer_ledger_bound) for p in partitions], expected_source=dict(expected_source), case_table_sha256=expected_case_table_sha256, n_bases=len(bases), n_cases=len(cases), n_new_point_cases=len(req_new_cases), n_anchor_cases=len(req_anc_cases), configuration_status=statuses, n_pc1_pass=sum(v["status"] == "PC1_PASS" for v in statuses.values()), n_pc1_fail=sum(v["status"] == "PC1_FAIL" for v in statuses.values()), family_coverage_complete=True, arrays_verified=True, verification_scope="file_and_member_integrity", outer_ledger_bound=all(p.outer_ledger_bound for p in partitions), note="formal coverage aggregation of verified partition runs (documents read once, hashed from the same bytes, bound to published identities and pins); per-configuration PC1 statuses re-derived; not itself a PC-1 acceptance"))
