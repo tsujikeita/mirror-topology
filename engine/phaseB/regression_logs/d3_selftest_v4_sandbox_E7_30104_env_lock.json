@@ -1,0 +1,24 @@
+{
+ "schema": "d3_env_lock_v1",
+ "python": "3.12.3",
+ "versions": {
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "matplotlib": "3.10.8",
+  "healpy": "1.20.0",
+  "camb": "2.0.4",
+  "tqdm": "4.70.1",
+  "numba": "0.67.0",
+  "quaternionic": "1.0.18",
+  "spherical": "1.1.4",
+  "pandas": "3.0.2"
+ },
+ "requirements_sha256": "c8c985d01620f7b0d13cc6ab84b7f40f1024d9c3764c2bc6c3d566949e40b7b2",
+ "platform": {
+  "machine": "x86_64",
+  "platform": "Linux-6.18.44-fc-v42-x86_64-with-glibc2.39"
+ },
+ "blas_lapack": "{'blas': 'scipy-openblas', 'lapack': 'scipy-openblas'}",
+ "cmbtopology_commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+ "env_fingerprint": "bfeef304fbc404bbfadb247886cd3655d0f7d9ea395239410c22b84e0217b0ca"
+}

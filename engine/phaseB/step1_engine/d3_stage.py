@@ -269,38 +269,91 @@ REQUIRED_D3A_GATES = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_
                        "G_registry_source_bound", "G_config_map_bound", "G_case_table_bound", "G_d1_trusted", "G_bridge_quadrature", "G_all_bases_generated", "G_all_base_intakes_pass", "G_all_cases_evaluated", "G_evidence_saved")
 
 
-def aggregate_partitions(case_table: dict, family: str, run_records: List[dict], expected_source: dict) -> dict:
-    """FORMAL family-level D-3a coverage from formal partition runs. Inputs are treated as untrusted snapshots and re-verified:
-    * case_table: payload SHA recomputed (self-consistent) and formal; family must have cases (E1 -> refused as not applicable, never 'complete');
-    * expected_source: {engine_version, inventory_sha256, script_sha256, pins_sha256} that every run's recorded source must equal;
-    * each run: D3_PASS True, stage complete, no failures, EVERY required gate True (fixed list), no self-test selection, profile production_official, family consistent
-      across run manifest / registry / pc1 results, case-table SHA equal in registry AND pc1 results, environment fingerprint equal in registry / env record;
-    * per partition: its sizes determine the expected new bases and case ids (new-point + anchor of those sizes); registry configurations and evaluated cases must equal them;
-    * each case: evaluation EVALUATED, config_id / action equal to the case table, rel a finite float, match == (rel < tolerance);
-    * configuration_status re-derived from the cases and compared with the stored summary;
-    * partitions disjoint and covering all sizes; union of cases == family required set.
-    A finite PC1_FAIL configuration is carried through (coverage complete, status FAIL); the result is an independent deep copy. Not a PC-1 acceptance."""
-    if _table_payload_sha(case_table) != case_table.get("table_sha256") or case_table.get("formal") is not True: raise InputContractError("case table payload / formal flag")
+class VerifiedPartition:
+    """A D-3a run whose published documents were read from disk ONCE, hashed from the same bytes, matched against the run manifest's published_evidence / output_inventory, and
+    semantically bound (source, gates, environment fingerprint recomputation, registry/case identities). Only instances of this class enter aggregate_partitions."""
+    __slots__ = ("run_dir", "run_manifest", "registry", "pc1_results", "evidence", "env_lock", "document_sha256", "verified")
+    def __init__(self, run_dir, rm, rg, pr, ev, env, shas): self.run_dir, self.run_manifest, self.registry, self.pc1_results, self.evidence, self.env_lock, self.document_sha256, self.verified = run_dir, rm, rg, pr, ev, env, shas, True
+
+
+def _env_fingerprint_of(env_lock: dict, run_config: dict) -> str:
+    return hashlib.sha256(json.dumps(dict(python=env_lock["python"], versions=env_lock["versions"], requirements_sha256=env_lock["requirements_sha256"], platform=env_lock["platform"], blas_lapack=env_lock["blas_lapack"], ct_commit=env_lock["cmbtopology_commit"], run_config=run_config), sort_keys=True).encode()).hexdigest()
+
+
+def verify_partition_run(run_dir: str, expected_source: dict, expected_case_table_sha256: str, expected_config_map_sha256: str, require_arrays: bool = True, expected_run_manifest_sha256: Optional[str] = None) -> VerifiedPartition:
+    """Trusted intake of one D-3a run directory (the script's --out). Reads each published document once; the same bytes are hashed, decoded and compared with the run manifest's
+    published_evidence SHAs and, for every entry of output_inventory (documents and, when require_arrays, every covariance .npy), with the actual file bytes. Then: run
+    D3_PASS/complete/no failures, required gates, source == expected (4 identities + profile), run_manifest.engine_version == source.engine_version, case-table / config-map
+    SHAs == the expected (pins) values in registry and results, env fingerprint RECOMPUTED from the env lock == stored fingerprint in registry/results/env lock, every registry
+    entry carries 64-hex file/array SHAs with intake pass, every case carries clone identity with 64-hex SHAs and EVALUATED, configuration_status keys == registry bases +
+    anchor configurations of the run. Raises on any mismatch."""
+    def rd(name):
+        p = os.path.join(run_dir, name)
+        if not os.path.exists(p): raise InputContractError(f"run document missing: {name}")
+        b = open(p, "rb").read(); return b, hashlib.sha256(b).hexdigest(), json.loads(b.decode("utf-8"))
+    _, rm_sha, rm = rd("d3_run_manifest.json")
+    if expected_run_manifest_sha256 is not None and rm_sha != expected_run_manifest_sha256: raise InputContractError("run manifest bytes differ from the outer ledger identity")
+    if not isinstance(rm, dict) or rm.get("D3_PASS") is not True or rm.get("stage") != "complete" or rm.get("failures") != []: raise InputContractError("run manifest is not a complete formal D3_PASS record")
+    pub = ((rm.get("published_evidence") or {}).get("documents")) or {}
+    if set(pub) != {"d3_cov_registry.json", "d3_pc1_results.json", "d3_partial_evidence.json", "d3_env_lock.json"} or rm["published_evidence"].get("value_level_readback_ok") is not True: raise InputContractError("run manifest lacks the published-evidence identities")
+    docs = {}; shas = {}
+    for name in pub:
+        b, h, d = rd(name)
+        if h != pub[name]["sha256"] or len(b) != pub[name]["bytes"]: raise InputContractError(f"{name}: bytes differ from the published identity")
+        docs[name] = d; shas[name] = h
+    inv = rm.get("output_inventory") or {}
+    if not inv: raise InputContractError("run manifest lacks output_inventory")
+    for rel, e in inv.items():
+        p = os.path.join(run_dir, rel)
+        if rel.endswith(".npy") and not require_arrays: continue
+        if not os.path.exists(p): raise InputContractError(f"output missing: {rel}")
+        b = open(p, "rb").read()
+        if hashlib.sha256(b).hexdigest() != e.get("sha256") or len(b) != e.get("bytes"): raise InputContractError(f"output {rel}: bytes differ from the recorded inventory")
+    rg, pr, ev, env = docs["d3_cov_registry.json"], docs["d3_pc1_results.json"], docs["d3_partial_evidence.json"], docs["d3_env_lock.json"]
+    gates = rm.get("gates") or {}
+    if set(gates) != set(REQUIRED_D3A_GATES) or any(gates.get(g) is not True for g in REQUIRED_D3A_GATES): raise InputContractError("required gates not all True / gate set differs")
+    src = rm.get("source") or {}
+    if any(src.get(k) != expected_source.get(k) for k in ("engine_version", "inventory_sha256", "script_sha256", "pins_sha256")) or src.get("profile") != "production_official" or rm.get("engine_version") != src.get("engine_version") or rg.get("source") != src or pr.get("source") != src: raise InputContractError("recorded source differs from the expected source / inconsistent across documents")
+    sel = rm.get("selection") or {}
+    if sel.get("selftest_configs") or sel.get("selftest_skip_anchors"): raise InputContractError("self-test run is not a formal partition")
+    fam = rm.get("family")
+    if not (fam == rg.get("family") == pr.get("family") == ev.get("family")): raise InputContractError("family differs across documents")
+    if rg.get("case_table_sha256") != expected_case_table_sha256 or pr.get("case_table_sha256") != expected_case_table_sha256 or rg.get("config_map_sha256") != expected_config_map_sha256 or pr.get("config_map_sha256") != expected_config_map_sha256: raise InputContractError("case-table / config-map identities differ from the registered pins")
+    fp = _env_fingerprint_of(env, rg.get("run_config"))
+    if not (fp == env.get("env_fingerprint") == rg.get("env_fingerprint") == pr.get("env_fingerprint")): raise InputContractError("environment fingerprint does not re-derive from the env lock / differs across documents")
+    hex64 = lambda v: isinstance(v, str) and len(v) == 64
+    for cid, e in (rg.get("configurations") or {}).items():
+        if not (isinstance(e, dict) and str(e.get("config_id")) == cid and hex64(e.get("cov_file_sha256")) and hex64(e.get("cov_array_sha256")) and (e.get("intake") or {}).get("pass_") is True and e.get("cov_file") and (e.get("bound_load") or {}).get("file_sha256") == e["cov_file_sha256"]): raise InputContractError(f"registry entry {cid}: incomplete / not passing")
+        if require_arrays and (f"{e['cov_file']}" not in inv): raise InputContractError(f"registry entry {cid}: covariance file not in the output inventory")
+    for k, v in (pr.get("cases") or {}).items():
+        ci = v.get("clone_identity") or {}
+        if v.get("evaluation") != "EVALUATED" or not (hex64(ci.get("file_sha256")) and hex64(ci.get("array_sha256")) and ci.get("loader_meta_sha") == ci.get("array_sha256")) or not hex64(v.get("D_sha256")) or not isinstance(v.get("rel"), float): raise InputContractError(f"case {k}: incomplete evaluation identity")
+        if require_arrays and v.get("clone_cov_file") not in inv: raise InputContractError(f"case {k}: clone file not in the output inventory")
+    if ev.get("status") != "COMPLETE" or set(ev.get("cases") or {}) != set(pr.get("cases") or {}) or set(ev.get("bases") or {}) != set(rg.get("configurations") or {}): raise InputContractError("partial evidence does not correspond to the published results")
+    expected_status_keys = set(rg["configurations"]) | {str(v["config_id"]) for v in pr["cases"].values()}
+    if set(pr.get("configuration_status") or {}) != expected_status_keys or set(rm.get("pc1_status") or {}) != expected_status_keys or rm["pc1_status"] != pr["configuration_status"]: raise InputContractError("configuration_status keys differ from the run's bases / evaluated configurations")
+    shas["d3_run_manifest.json"] = rm_sha; return VerifiedPartition(run_dir, copy.deepcopy(rm), copy.deepcopy(rg), copy.deepcopy(pr), copy.deepcopy(ev), copy.deepcopy(env), shas)
+
+
+def aggregate_partitions(case_table: dict, family: str, partitions: List[VerifiedPartition], expected_source: dict, expected_case_table_sha256: str) -> dict:
+    """FORMAL family-level D-3a coverage from VERIFIED partition runs (verify_partition_run). The case table must equal the registered identity (expected_case_table_sha256 from the
+    pins / canonical context), be payload-consistent and formal; every partition's sizes determine the expected new bases and case ids (new-point + anchor of those sizes);
+    registry configurations and evaluated cases must equal them; each case: EVALUATED, config/action equal to the table, finite rel, match == (rel < tolerance);
+    configuration_status re-derived and compared; partitions disjoint and covering all sizes; union == family required set. A finite PC1_FAIL is carried through. Returns a
+    deep copy. Not a PC-1 acceptance; raw dicts are refused (use verify_partition_run)."""
+    if _table_payload_sha(case_table) != case_table.get("table_sha256") or case_table.get("formal") is not True or case_table["table_sha256"] != expected_case_table_sha256: raise InputContractError("case table is not the registered formal table")
     req_new_cases = {c["case_id"]: c for c in case_table["new_point_cases"] if c["family"] == family}; req_anc_cases = {c["case_id"]: c for c in case_table["first_wave_anchor_cases"] if c["family"] == family}
     if not req_new_cases: raise InputContractError(f"family {family}: no 12-position cases in the case table (not applicable; no coverage record is issued)")
-    if not run_records: raise InputContractError("no partition runs supplied")
+    if not partitions or any(not isinstance(p, VerifiedPartition) or not p.verified for p in partitions): raise InputContractError("only VerifiedPartition instances (verify_partition_run) enter the formal aggregation")
     for k in ("engine_version", "inventory_sha256", "script_sha256", "pins_sha256"):
         if not isinstance(expected_source.get(k), str) or not expected_source[k]: raise InputContractError(f"expected_source lacks {k}")
     all_sizes = sorted({c["size_id"] for c in req_new_cases.values()}); sizes_seen = []; cases = {}; statuses = {}; bases = set(); tol = case_table["contract"]["tolerance"]["match_rel_lt"]
-    for i, rr in enumerate(run_records):
-        rm, rg, pr = rr.get("run_manifest"), rr.get("registry"), rr.get("pc1_results")
-        if not all(isinstance(x, dict) for x in (rm, rg, pr)): raise InputContractError(f"partition {i}: run_manifest / registry / pc1_results required")
-        if not (rm.get("D3_PASS") is True and rm.get("stage") == "complete" and rm.get("failures") == []): raise InputContractError(f"partition {i}: not a complete formal D3_PASS run")
-        gates = rm.get("gates") or {}
-        if set(gates) != set(REQUIRED_D3A_GATES) or any(gates.get(g) is not True for g in REQUIRED_D3A_GATES): raise InputContractError(f"partition {i}: required gates not all True / gate set differs")
-        src = rm.get("source") or {}
-        if any(src.get(k) != expected_source[k] for k in ("engine_version", "inventory_sha256", "script_sha256", "pins_sha256")) or src.get("profile") != "production_official": raise InputContractError(f"partition {i}: recorded source / profile differ from the expected source")
-        sel = rm.get("selection") or {}
-        if sel.get("selftest_configs") or sel.get("selftest_skip_anchors"): raise InputContractError(f"partition {i}: self-test selections are not formal partitions")
-        if not (rm.get("family") == rg.get("family") == pr.get("family") == family): raise InputContractError(f"partition {i}: family differs across records")
-        if rg.get("case_table_sha256") != case_table["table_sha256"] or pr.get("case_table_sha256") != case_table["table_sha256"]: raise InputContractError(f"partition {i}: case-table SHA differs")
-        if rg.get("env_fingerprint") != (rm.get("env_lock") or {}).get("env_fingerprint") or not rg.get("env_fingerprint"): raise InputContractError(f"partition {i}: environment fingerprint inconsistent")
-        sz = list(sel.get("sizes") or all_sizes)
+    for i, p in enumerate(partitions):
+        rm, rg, pr = p.run_manifest, p.registry, p.pc1_results; src = rm.get("source") or {}
+        if any(src.get(k) != expected_source[k] for k in ("engine_version", "inventory_sha256", "script_sha256", "pins_sha256")): raise InputContractError(f"partition {i}: source differs from the expected source")
+        if not (rm.get("family") == rg.get("family") == pr.get("family") == family): raise InputContractError(f"partition {i}: family differs")
+        if rg.get("case_table_sha256") != expected_case_table_sha256 or pr.get("case_table_sha256") != expected_case_table_sha256: raise InputContractError(f"partition {i}: case-table SHA differs")
+        sel = rm.get("selection") or {}; sz = list(sel.get("sizes") or all_sizes)
         if len(set(sz)) != len(sz) or any(x not in all_sizes for x in sz) or set(sz) & set(sizes_seen): raise InputContractError(f"partition {i}: sizes invalid / duplicate / overlapping")
         sizes_seen += sz
         exp_bases = {str(c["config_id"]) for c in req_new_cases.values() if c["size_id"] in sz}; exp_cases = {k for k, c in {**req_new_cases, **req_anc_cases}.items() if c["size_id"] in sz}
@@ -314,10 +367,9 @@ def aggregate_partitions(case_table: dict, family: str, run_records: List[dict],
             derived.setdefault(str(ref["config_id"]), []).append(v)
         for cid, rs in derived.items():
             req = REQUIRED_ACTIONS[family]; st = dict(actions_required=req, actions_evaluated=sorted(x["action"] for x in rs), status=("PC1_PASS" if sorted(x["action"] for x in rs) == sorted(req) and all(x["match"] for x in rs) else ("PC1_FAIL" if sorted(x["action"] for x in rs) == sorted(req) else "PC1_PENDING")), max_rel=max(x["rel"] for x in rs))
-            stored = (pr.get("configuration_status") or {}).get(cid)
-            if stored != st: raise InputContractError(f"partition {i}: stored configuration status for {cid} differs from the status re-derived from its cases")
+            if (pr.get("configuration_status") or {}).get(cid) != st: raise InputContractError(f"partition {i}: stored configuration status for {cid} differs from the status re-derived from its cases")
             statuses[cid] = copy.deepcopy(st)
         cases.update(copy.deepcopy(pcases)); bases |= set(rg["configurations"])
     if sorted(sizes_seen) != all_sizes: raise InputContractError(f"partitions do not cover the family sizes: {sorted(sizes_seen)} vs {all_sizes}")
     if set(cases) != set(req_new_cases) | set(req_anc_cases) or bases != {str(c["config_id"]) for c in req_new_cases.values()}: raise InputContractError("union of partitions differs from the family required set")
-    return copy.deepcopy(dict(schema="d3a_family_coverage_v2", family=family, sizes=all_sizes, partitions=len(run_records), expected_source=dict(expected_source), case_table_sha256=case_table["table_sha256"], n_bases=len(bases), n_cases=len(cases), n_new_point_cases=len(req_new_cases), n_anchor_cases=len(req_anc_cases), configuration_status=statuses, n_pc1_pass=sum(v["status"] == "PC1_PASS" for v in statuses.values()), n_pc1_fail=sum(v["status"] == "PC1_FAIL" for v in statuses.values()), family_coverage_complete=True, note="formal coverage aggregation of verified partition runs; per-configuration PC1 statuses re-derived and carried through; not itself a PC-1 acceptance"))
+    return copy.deepcopy(dict(schema="d3a_family_coverage_v3", family=family, sizes=all_sizes, partitions=[dict(run_dir=p.run_dir, document_sha256=p.document_sha256) for p in partitions], expected_source=dict(expected_source), case_table_sha256=expected_case_table_sha256, n_bases=len(bases), n_cases=len(cases), n_new_point_cases=len(req_new_cases), n_anchor_cases=len(req_anc_cases), configuration_status=statuses, n_pc1_pass=sum(v["status"] == "PC1_PASS" for v in statuses.values()), n_pc1_fail=sum(v["status"] == "PC1_FAIL" for v in statuses.values()), family_coverage_complete=True, note="formal coverage aggregation of verified partition runs (documents read once, hashed from the same bytes, bound to published identities and pins); per-configuration PC1 statuses re-derived; not itself a PC-1 acceptance"))

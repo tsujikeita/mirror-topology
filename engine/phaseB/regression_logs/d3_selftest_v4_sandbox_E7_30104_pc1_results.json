@@ -1,0 +1,143 @@
+{
+ "schema": "d3_pc1_results_v1",
+ "family": "E7",
+ "partition": {
+  "sizes": [
+   "L1.00"
+  ],
+  "new_point_cases": 1,
+  "anchor_cases": 0,
+  "required_new_point_cases_family": 27,
+  "required_anchor_cases_family": 9
+ },
+ "selection": {
+  "family": "E7",
+  "sizes": null,
+  "selftest_configs": [
+   30104
+  ],
+  "selftest_skip_anchors": true,
+  "n_new_configurations": 1
+ },
+ "contract": {
+  "schema": "d3_pc1_contract_v1",
+  "source": {
+   "rules": "results/step1_phaseA/A11_freeze/A11_rules_v1.0.md",
+   "rules_sha256": "5c6d9cd33e9ee2ac1573f0c2c492b5900d7b04edcd1c4eb9cc144081dc56d631",
+   "notebook": "results/step1_phaseA/A11_freeze/MirrorTopology_Step1_A11_x0bridge_v1.4.1.ipynb",
+   "notebook_sha256": "791a5abb74beb2370e036519283ca64ab34a886cc4267147c104c1cd604191a1",
+   "rule_ids": [
+    "R2",
+    "R5"
+   ],
+   "notebook_cells": {
+    "metric": 5,
+    "generators": 3,
+    "D_of": 2
+   },
+   "registered_copies": "registered_assets/a11 (full notebook + rules + cell extracts; trust-anchored SHAs in d3_stage.TRUSTED_SOURCES)"
+  },
+  "relation": "C(g r) = D(M) C(r) D(M)^T on the frozen real basis (t1_engine.load_cov_full real basis; D(M) from t2b2_bridge quadrature: (YQ*WQ)^T Ymat(DIRS @ M))",
+  "base_x0": "b = -r_obs (A11 R1 canonical gauge)",
+  "clone_x0": "x0_H1 = M_CT b - T_CT (registered hypothesis H1; H2 = M_CT b + T_CT is the discriminating alternative, not the clone)",
+  "metric": "rel(C1, target) = ||C1 - target||_F / ||target||_F, target = D(M) C0 D(M)^T, C0 = base covariance, C1 = INDEPENDENTLY generated clone covariance; diagnostics rel_off (off-diagonal), rel_white (diagonal-whitened)",
+  "direction": "generated clone C1 compared to the transformed base; never D C0 D^T stored as the clone's generated value",
+  "tolerance": {
+   "match_rel_lt": 1e-05,
+   "discriminate_rel_gt": 0.01,
+   "source": "A11 R5: match rel < 1e-5 (TOL_MATCH); discriminate rel > 1e-2 (TOL_DISCR)"
+  },
+  "not_used": {
+   "d1_pins_rel_tolerance": 1e-10,
+   "reason": "same-covariance regeneration tolerance of the D-1 A11 cross-check; not a physical clone tolerance"
+  },
+  "basis": "both covariances loaded with the frozen t1_engine real-basis transform (21x21 real); M is the spatial 3x3 deck matrix; D(M) is its 21x21 representation",
+  "improper_M": "valid (A11 R2)",
+  "status_semantics": {
+   "PC1_PENDING": "not yet compared (covariances may be ungenerated or generated; no PC-1 evaluation has been made)",
+   "PC1_PASS": "rel < 1e-5 for every required action of the configuration",
+   "PC1_FAIL": "any required action rel >= 1e-5 (asset-layer failure; formal consumption forbidden; NOT converted to position-unresolved / UNKNOWN; no prior renormalisation; no 3-position fallback)"
+  }
+ },
+ "case_table_sha256": "5f335e75e1e3360358f7cc7ab15aefa3d774f3afef37b835714b8b285499c64b",
+ "config_map_sha256": "da1e68bcec4934d4332b774e31598b8753a0509c76440b7da4137c0110a0fdb5",
+ "env_fingerprint": "bfeef304fbc404bbfadb247886cd3655d0f7d9ea395239410c22b84e0217b0ca",
+ "source": {
+  "engine_version": "0.86.0",
+  "inventory_sha256": "7c289795e52f4f18e07dddf72cc29d1fb9a0f265828f533ba94e5b3bb62fb3db",
+  "script_sha256": "6db2f9e11635e1317f319aa9425416ed2dd3359233d75ac0494647ad12471b78",
+  "pins_sha256": "7dfc77329c4f9eb989e0dc7236a6f7c33f7c0b8168dcd56931a14b26b9de2de6",
+  "profile": "production_official"
+ },
+ "representation": {
+  "gates": {
+   "G_quadrature_orthonormal": true,
+   "G_real_basis_bridge": true,
+   "G_D_orthogonal_all_used": true,
+   "G_D_direct_geometry_complex_path": true,
+   "G_D_homomorphism": true,
+   "G_reflection_D_analytic": true
+  },
+  "worst_orthogonality": 1.3322676295501878e-15,
+  "worst_direct_geometry": 2.127628825052322e-15,
+  "worst_homomorphism": 9.43689570931383e-16,
+  "quadrature_nodes_sha256": "b53296ec7b42ec928bd64ecd1c4f3eb382ba90b3e354ee3bde5299662bdbbf41",
+  "quadrature_weights_sha256": "94d2eab0bd6b95620a3df3c4dfec294dcc8fb22eb43a09cb2661c16454c586cd",
+  "M21_sha256": "c488cc7070a2d391e8ceeea08c87643d1f1552515990fb135652c4599c6101e8",
+  "LM_sha256": "4d5f9471cc92c9fc76d27237fbe0bf43acb0aec3c30fccd78b7ea9cb5c4a153c",
+  "RB_sha256": "e278e7ec89765483c31b205325035f47fc57f9a3951c0feb34934a9e5b4aa10b",
+  "source": "A11 v1.4.1 cell 2 battery (verbatim thresholds)"
+ },
+ "used_D": {
+  "[[1.0, 0.0, 0.0], [0.0, -1.0, 0.0], [0.0, 0.0, 1.0]]": {
+   "orthogonality": 1.3322676295501878e-15,
+   "D_sha256": "e4731c27865f2a8cd886ef89f40ed0d734f533cc2e8c001fb8794dbe7d162573"
+  }
+ },
+ "cases": {
+  "30104:glide_A": {
+   "case_id": "30104:glide_A",
+   "config_id": 30104,
+   "action": "glide_A",
+   "set": "new_point",
+   "base_from": "generated_here",
+   "tolerance_match_rel_lt": 1e-05,
+   "base_identity": {
+    "file_sha256": "963d35f12344feacf1ac134f62b2b7fb910f3540b402ed93a2562eef061d2677",
+    "array_sha256": "8779a43f77b519229a382bb7bf812104c3ee5bee49c871be250b286fd8695055"
+   },
+   "clone_tag": "E7_890ffc7227637a3c91740611cbaf98feb3c85352f639ad9058f29c146fa9711c",
+   "clone_cov_file": "cov_cache/cov_E7_890ffc7227637a3c9.npy",
+   "clone_identity": {
+    "file_sha256": "adf3903fcbdc09e565da49cdd65c78e11d88cdaf295cabcd99bc75a756d8b851",
+    "array_sha256": "d09381148c82e16b8624618864b90e7916559c334a7c56b2cc7d2d21352c5792",
+    "loader_meta_sha": "d09381148c82e16b8624618864b90e7916559c334a7c56b2cc7d2d21352c5792",
+    "eig_min": 117.61793113478096,
+    "eig_max": 919.9427137754728
+   },
+   "D_sha256": "e4731c27865f2a8cd886ef89f40ed0d734f533cc2e8c001fb8794dbe7d162573",
+   "D_orthogonality": 1.3322676295501878e-15,
+   "rel": 8.351226669947676e-08,
+   "rel_off": 3.316109224120973e-07,
+   "rel_white": 8.68214343582836e-08,
+   "diagnostics_note": null,
+   "match": true,
+   "evaluation": "EVALUATED",
+   "seconds": 274.37071084976196
+  }
+ },
+ "configuration_status": {
+  "30104": {
+   "actions_required": [
+    "glide_A"
+   ],
+   "actions_evaluated": [
+    "glide_A"
+   ],
+   "status": "PC1_PASS",
+   "max_rel": 8.351226669947676e-08
+  }
+ },
+ "with_h2": false,
+ "scope": "asset-layer PC-1 evaluation per the transcribed A11 R2/R5 contract; PC1_FAIL forbids formal consumption of the configuration; no position-state conversion"
+}

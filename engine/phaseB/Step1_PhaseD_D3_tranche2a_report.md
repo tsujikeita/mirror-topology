@@ -1,5 +1,5 @@
-# Phase D-3 tranche ②a v3 報告（監査 v2：R-D3T2AV2-A/B/C の反映）
-2026-09-26。Claude作成。engine `step1_engine 0.86.0`（版は据置き：自己試験 v3 は最終 script／pins bytes の記録であり，版を変えると pins が変わるため；数値 kernel は 0.54.0 基盤の継承；変更は `d/d3_covgen.py`・`d3_stage.aggregate_partitions`（正式化）・notebook v0.2（fallback record）・テスト・自己試験証拠）。tranche ① v3 は監査で受入れ（tranche ② GO）。本 tranche は ② の前半＝**共分散＋PC-1 生成 script**であり，②b（D-3 covariance receipt／12 位置束縛 intake／正式 12 位置 profile／plan schema の小規模接続）は次。**見込み：実行前監査 1〜2 往復 → family 別 Colab（E2／E7 ≈8 h，E8 ≈11 h；size 分割可）→ 実行後監査（保証ではない）。** **テスト 1329/1329 PASS**（11 chunk・JUnit 同梱 `regression_logs/d3_t2av3_pytest/`；node 集合＝collect・重複 0・failure 0）。
+# Phase D-3 tranche ②a v4 報告（監査 v3：R-D3T2AV3-A/B の反映）
+2026-09-26。Claude作成。engine `step1_engine 0.86.0`（版は据置き：自己試験 v3 は最終 script／pins bytes の記録であり，版を変えると pins が変わるため；数値 kernel は 0.54.0 基盤の継承；変更は `d/d3_covgen.py`・`d3_stage.aggregate_partitions`（正式化）・notebook v0.2（fallback record）・テスト・自己試験証拠）。tranche ① v3 は監査で受入れ（tranche ② GO）。本 tranche は ② の前半＝**共分散＋PC-1 生成 script**であり，②b（D-3 covariance receipt／12 位置束縛 intake／正式 12 位置 profile／plan schema の小規模接続）は次。**見込み：実行前監査 1〜2 往復 → family 別 Colab（E2／E7 ≈8 h，E8 ≈11 h；size 分割可）→ 実行後監査（保証ではない）。** **テスト 1331/1331 PASS**（11 chunk・JUnit 同梱 `regression_logs/d3_t2av4_pytest/`；node 集合＝collect・重複 0・failure 0）。
 
 | 成果物 | 内容 |
 |---|---|
@@ -29,5 +29,13 @@
 | selector | `--sizes` の重複・`--selftest-configs` の未知 ID 混在を生成前に exit 2 |
 
 run manifest に `source`（engine 版・inventory・script・pins SHA・profile）を記録。**自己試験 v3**（sandbox・実 CMBtopology・E7 30104・env gate skip・anchor 省略 flag）は**最終 script（SHA `1a82f413…`）と pins bytes の記録**：battery 6 gate PASS，base 287 s → intake PASS，clone 283 s → PC-1 rel 8.35e-8（EVALUATED），`published_evidence.value_level_readback_ok=True`。証拠 `regression_logs/d3_selftest_v3_sandbox_E7_30104_*.json`（正式受入れではない；npy 未添付）。
+
+## v4（監査 v3：C 閉鎖・返値分離・保存失敗識別を確認；A／B の残件）
+| ID | 対応 |
+|---|---|
+| R-D3T2AV3-A | registry／PC-1 結果／partial evidence／env lock を**完全 document の in-memory snapshot**として組み立ててから書き，bytes を一度だけ読み戻して**その同じ bytes**を hash・decode・全内容照合に使用（`published_evidence.documents[name]`＝sha256・bytes・readback_ok；header／contract／representation／used_D／source を含む）。監査の 6 対照（registry の family／config_map SHA／run_config，PC-1 の contract 許容／used_D SHA，env lock の版）と「値検査後・SHA 再読前の書換え」は，snapshot 不一致または同一 bytes の SHA として不整合にならない構造で対応。notebook v0.2 は run manifest が dict でない／最小 schema 欠落でも fallback record |
+| R-D3T2AV3-B | **信頼 intake `verify_partition_run`** を新設：run directory の各 document を一度読み，同じ bytes の SHA を manifest の `published_evidence` と照合，`output_inventory` の全 entry（document・covariance .npy）を実 bytes と照合，**外側 ledger の manifest SHA**（optional；実行後に固定）に束縛，required 21 gate，source の 4 identity＋profile（registry／結果内の `source` とも一致）と `engine_version` の整合，case 表／config map の SHA を **pins の期待値**へ照合，環境 fingerprint を env lock から**再計算**して 3 document で一致，registry entry（64 hex SHA・intake pass・bound_load 一致・inventory 収録），case（clone identity・D SHA・EVALUATED・inventory 収録），partial evidence の対応，configuration_status の key 集合。`aggregate_partitions` は **`VerifiedPartition` のみ**受け，case 表を登録期待 SHA に束縛（生 dict・自己整合の別表は拒否）。監査の対照（coherent 書換え・空 base metadata・cov SHA／intake FAIL・空 clone identity・inventory 削除・env 版改変・stale engine・余分 status・別 source・self-test・表 SHA・family 差替え・npy 改変・許容 0.25 表・case 除去表・moved case／size 欠落／重複）を `tests/test_d3_partition_intake.py` で拒否確認；有限 PC1_FAIL の coverage は維持 |
+
+**自己試験 v4**（最終 script SHA `6db2f9e1…`・最終 pins bytes；sandbox・実 CMBtopology・E7 30104・env gate skip・anchor 省略）：battery 6 gate PASS，base 283 s → intake PASS，clone 274 s → PC-1 rel 8.35e-8，4 document の read-back OK。証拠 `regression_logs/d3_selftest_v4_sandbox_E7_30104_*.json`（5 document；self-test のため intake では拒否されることも試験）。
 
 限定：正式生成・PC-1 の物理 PASS・12 位置 profile・bank・plan 固定は含まない。E2／E7／E8 の実行順は監査の指示に従う。
