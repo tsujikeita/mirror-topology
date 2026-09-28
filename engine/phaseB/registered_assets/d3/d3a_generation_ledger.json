@@ -1,0 +1,452 @@
+{
+ "schema": "d3a_generation_ledger_v1",
+ "created": "2026-09-29",
+ "created_by": "Claude (author-side ledger of the formal D-3a partition runs; external acceptance by ChatGPT referenced)",
+ "repository": "https://github.com/tsujikeita/mirror-topology.git",
+ "source_lock": {
+  "commit": "fe7c201ef265ddf614ed7d538acd3197eaa331c0",
+  "engine_version": "0.86.0",
+  "inventory_sha256": "2cc5668a6768f1dd0ce27daeeb72397b6c0d816cf6fcacda962fab3c2f65b1d6",
+  "script_sha256": "6db2f9e11635e1317f319aa9425416ed2dd3359233d75ac0494647ad12471b78",
+  "pins_sha256": "7dfc77329c4f9eb989e0dc7236a6f7c33f7c0b8168dcd56931a14b26b9de2de6",
+  "notebook_sha256": "6444a32022a71debd9c3b2d96867375a5732f3c8cd13dfad4a1aa6da2aa0cc0d",
+  "preexecution_authorization": "Step1_PhaseD_D3_tranche2a_v5_decision.json (ChatGPT GO for execution of commit fe7c201e)",
+  "cmbtopology_commit": "0cc65e34f03df85e92f738686bff0a476132f337"
+ },
+ "case_table_sha256": "5f335e75e1e3360358f7cc7ab15aefa3d774f3afef37b835714b8b285499c64b",
+ "config_map_sha256": "da1e68bcec4934d4332b774e31598b8753a0509c76440b7da4137c0110a0fdb5",
+ "colab": {
+  "runtime": "CPU; High-RAM runtime for the two partitions that were killed on the standard runtime; no GPU",
+  "drive_root": "/content/drive/MyDrive/MirrorTopology_D3",
+  "launcher": "d/MirrorTopology_Step1_D3a_covgen_v0.2.ipynb (parameter cell REPO_COMMIT / EXPECTED_INVENTORY_SHA256 / FAMILY / SIZE_FILTER filled; all other cells verbatim)"
+ },
+ "formal_runs": {
+  "d3_E2_L1.00_fe7c201ef265_audit": {
+   "family": "E2",
+   "sizes": [
+    "L1.00"
+   ],
+   "registered_dir": "registered_assets/d3/runs/d3_E2_L1.00_fe7c201ef265_audit/d3",
+   "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E2_L1.00_20260926T074141Z",
+   "run_id": "20260926T074141Z",
+   "runtime": "standard",
+   "run_manifest_sha256": "f28bc65ecb721807839a813e353acd9cfde6520a060c31500a4c86e43e5429ab",
+   "document_sha256": {
+    "d3_cov_registry.json": "ce5556e06315146a9c782f4237d19fc29e6a0dacdd417a86899b6bd647bc34d9",
+    "d3_env_lock.json": "5750e3b77751d3564ad66f0997214e43034a2a9da4265f6ced6e21728fe485b5",
+    "d3_partial_evidence.json": "7f48dcf38c539dc6eedaaa0b149204bf73f2314d13ba5caf468320719683dea2",
+    "d3_pc1_results.json": "f821f5bf4cc9168f62d40138c3b50b476ffb9bb8e93094fc34ef5e45c01c2151",
+    "d3_run_manifest.json": "f28bc65ecb721807839a813e353acd9cfde6520a060c31500a4c86e43e5429ab"
+   },
+   "final_record_sha256": "4f53d1d942095403dbd70851d210a676e8579d7c43c9759a72b0de763948ddc7",
+   "launcher_lock_sha256": "8b50aab997d608461fe73152691ebc3a5c04affe2f10fad70313bbe64790b030",
+   "seconds": 8872.32173871994,
+   "n_bases": 9,
+   "n_cases": 12,
+   "n_inventory_files": 47,
+   "n_npy": 21,
+   "npy_bytes": 150864,
+   "max_rel": 4.500214978562989e-08,
+   "pc1_pass": 12,
+   "pc1_fail": 0,
+   "env_fingerprint": "bcfae7ed2c800a18e7a5e6bac03916b70f54cd330bc7f16a5210b1605250df0b",
+   "gates_all_true": true,
+   "n_gates": 21
+  },
+  "d3_E2_L1.20_fe7c201ef265_audit": {
+   "family": "E2",
+   "sizes": [
+    "L1.20"
+   ],
+   "registered_dir": "registered_assets/d3/runs/d3_E2_L1.20_fe7c201ef265_audit/d3",
+   "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E2_L1.20_20260926T135737Z",
+   "run_id": "20260926T135737Z",
+   "runtime": "standard",
+   "run_manifest_sha256": "00a480fa8c88705e98b21be42a8949d679c5efb0b0f1b851293834bcf3533b8d",
+   "document_sha256": {
+    "d3_cov_registry.json": "8c0882f72bafa8de7bad7b05085f564089fbcca6c7bad780353c5aedb8081f11",
+    "d3_env_lock.json": "5750e3b77751d3564ad66f0997214e43034a2a9da4265f6ced6e21728fe485b5",
+    "d3_partial_evidence.json": "87a0c4031873a289e9ed69abf79f0c91d38a91a8d3c78667f7e5f5ca4875a00c",
+    "d3_pc1_results.json": "666cade5a6e855515f06de1f1ceba4133dc5acef4578ce321330ef40e16d1e7e",
+    "d3_run_manifest.json": "00a480fa8c88705e98b21be42a8949d679c5efb0b0f1b851293834bcf3533b8d"
+   },
+   "final_record_sha256": "628fcef1b2f72354f52256c45e91c191e9fa63ee388529460771dea18d58a986",
+   "launcher_lock_sha256": "62b4514282eb21d28f6d4662b130894106bf23c3ce572be74a07d75f6ec9b4d7",
+   "seconds": 9091.614491701126,
+   "n_bases": 9,
+   "n_cases": 12,
+   "n_inventory_files": 47,
+   "n_npy": 21,
+   "npy_bytes": 150864,
+   "max_rel": 3.296022457530575e-08,
+   "pc1_pass": 12,
+   "pc1_fail": 0,
+   "env_fingerprint": "bcfae7ed2c800a18e7a5e6bac03916b70f54cd330bc7f16a5210b1605250df0b",
+   "gates_all_true": true,
+   "n_gates": 21
+  },
+  "d3_E2_L1.50_fe7c201ef265_audit_High_Memory": {
+   "family": "E2",
+   "sizes": [
+    "L1.50"
+   ],
+   "registered_dir": "registered_assets/d3/runs/d3_E2_L1.50_fe7c201ef265_audit_High_Memory/d3",
+   "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E2_L1.50_20260928T001131Z",
+   "run_id": "20260928T001131Z",
+   "runtime": "high_memory",
+   "run_manifest_sha256": "fe53d5960e73b4ebcea9ddf70103c0f7a9623bd9cd8f74ee90af95ff1ea32fa1",
+   "document_sha256": {
+    "d3_cov_registry.json": "b0affaf87d284d9e6e4ab3cdac4a7a5bae030c9d8d23af0c9ba0e682bee64481",
+    "d3_env_lock.json": "5750e3b77751d3564ad66f0997214e43034a2a9da4265f6ced6e21728fe485b5",
+    "d3_partial_evidence.json": "f49b28822ca024fb573145c7cca9a7c5450691a025b1db5d057a4c6d35eb0151",
+    "d3_pc1_results.json": "34871f238b2a782d3f6214984e86095af2ef3d9a978730fcb9b7fd341bd56993",
+    "d3_run_manifest.json": "fe53d5960e73b4ebcea9ddf70103c0f7a9623bd9cd8f74ee90af95ff1ea32fa1"
+   },
+   "final_record_sha256": "73e57af15d04ebe1f3cdc673e1eefb0fbfcd45cce57d75761e793b5b4d038fb2",
+   "launcher_lock_sha256": "203a357d030379cc56cf09cc655331209dc799040b07bc8eee0fedd56176c1e9",
+   "seconds": 3187.497029066086,
+   "n_bases": 9,
+   "n_cases": 12,
+   "n_inventory_files": 47,
+   "n_npy": 21,
+   "npy_bytes": 150864,
+   "max_rel": 2.1831203617455643e-08,
+   "pc1_pass": 12,
+   "pc1_fail": 0,
+   "env_fingerprint": "bcfae7ed2c800a18e7a5e6bac03916b70f54cd330bc7f16a5210b1605250df0b",
+   "gates_all_true": true,
+   "n_gates": 21
+  },
+  "d3_E7_L1.00_fe7c201ef265_audit": {
+   "family": "E7",
+   "sizes": [
+    "L1.00"
+   ],
+   "registered_dir": "registered_assets/d3/runs/d3_E7_L1.00_fe7c201ef265_audit/d3",
+   "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E7_L1.00_20260926T174854Z",
+   "run_id": "20260926T174854Z",
+   "runtime": "standard",
+   "run_manifest_sha256": "260a3698f975d4328835107a48c58b725cd6f5303c652de87581076476b1a5d8",
+   "document_sha256": {
+    "d3_cov_registry.json": "b36f9776b4712ac760757c252060c949d29a2ecd663900bdfd84e4a7057c3ee9",
+    "d3_env_lock.json": "5750e3b77751d3564ad66f0997214e43034a2a9da4265f6ced6e21728fe485b5",
+    "d3_partial_evidence.json": "a8fb62d04b34e5161b9e53b31ea9b578dfacd3be76b00c217aca953177edad03",
+    "d3_pc1_results.json": "a502111979d973925df705a310c9392513fd3409c04f42921e0981c809b315ed",
+    "d3_run_manifest.json": "260a3698f975d4328835107a48c58b725cd6f5303c652de87581076476b1a5d8"
+   },
+   "final_record_sha256": "be862fe6e527e172fd6cf6b9972b35df45d0c679720599ef181e9b7e1149884a",
+   "launcher_lock_sha256": "1c5581b0cd40c322d05345628374e5e8ad34ea671efd6df8b29adffe507e99f1",
+   "seconds": 8650.155827999115,
+   "n_bases": 9,
+   "n_cases": 12,
+   "n_inventory_files": 47,
+   "n_npy": 21,
+   "npy_bytes": 150864,
+   "max_rel": 8.351226669021276e-08,
+   "pc1_pass": 12,
+   "pc1_fail": 0,
+   "env_fingerprint": "bcfae7ed2c800a18e7a5e6bac03916b70f54cd330bc7f16a5210b1605250df0b",
+   "gates_all_true": true,
+   "n_gates": 21
+  },
+  "d3_E7_L1.20_fe7c201ef265_audit": {
+   "family": "E7",
+   "sizes": [
+    "L1.20"
+   ],
+   "registered_dir": "registered_assets/d3/runs/d3_E7_L1.20_fe7c201ef265_audit/d3",
+   "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E7_L1.20_20260927T020217Z",
+   "run_id": "20260927T020217Z",
+   "runtime": "standard",
+   "run_manifest_sha256": "110ab3ef714b87da4ad69d214027898c8dc98a5f4461b4cbd6c0c1db4c5ea89f",
+   "document_sha256": {
+    "d3_cov_registry.json": "78428ada0192dfccddd80fb063c3928cbf965f7559304bca834e48629905e8f6",
+    "d3_env_lock.json": "5750e3b77751d3564ad66f0997214e43034a2a9da4265f6ced6e21728fe485b5",
+    "d3_partial_evidence.json": "7f9a7768b65c2735006a54ea0e5c716284514e3f24d2aff8d6222c41353c6fe4",
+    "d3_pc1_results.json": "420a67a23c42d131e2746912b8711e5393173eb0c9ce6cc30530746acca6d675",
+    "d3_run_manifest.json": "110ab3ef714b87da4ad69d214027898c8dc98a5f4461b4cbd6c0c1db4c5ea89f"
+   },
+   "final_record_sha256": "67dab0871b6b6c3ee5f436b086600bc507bb91e087b1c2b2a821d98168c425d9",
+   "launcher_lock_sha256": "42f95c44f21b2d75d66b34c5406a7606f0d8edee0b6b6238f2d406c24f7df4d2",
+   "seconds": 8479.585669279099,
+   "n_bases": 9,
+   "n_cases": 12,
+   "n_inventory_files": 47,
+   "n_npy": 21,
+   "npy_bytes": 150864,
+   "max_rel": 7.360771087714571e-08,
+   "pc1_pass": 12,
+   "pc1_fail": 0,
+   "env_fingerprint": "bcfae7ed2c800a18e7a5e6bac03916b70f54cd330bc7f16a5210b1605250df0b",
+   "gates_all_true": true,
+   "n_gates": 21
+  },
+  "d3_E7_L1.50_fe7c201ef265_audit": {
+   "family": "E7",
+   "sizes": [
+    "L1.50"
+   ],
+   "registered_dir": "registered_assets/d3/runs/d3_E7_L1.50_fe7c201ef265_audit/d3",
+   "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E7_L1.50_20260927T061528Z",
+   "run_id": "20260927T061528Z",
+   "runtime": "standard",
+   "run_manifest_sha256": "6b4017c99aebe31d907d73c03febc2e43763b95e95c83da00a4dbf6c30281f69",
+   "document_sha256": {
+    "d3_cov_registry.json": "4b1b92b1c4c746b3bbba258960492e2562bef7a6632a634583c6d17d34e85c88",
+    "d3_env_lock.json": "5750e3b77751d3564ad66f0997214e43034a2a9da4265f6ced6e21728fe485b5",
+    "d3_partial_evidence.json": "569707cb9d8e8a0f8ef28b6f1789415b6352abac18ac84bb11968d105c2a62ab",
+    "d3_pc1_results.json": "148f35825ed677ebb0f29512b3aa8acb2645207e51e1fef093a20f8edad304e9",
+    "d3_run_manifest.json": "6b4017c99aebe31d907d73c03febc2e43763b95e95c83da00a4dbf6c30281f69"
+   },
+   "final_record_sha256": "fa7b0411162943c4033eb66617e535c2bd9f0fa113ce0b47fa23faa2a00aa055",
+   "launcher_lock_sha256": "c462376a4bc3ace103ae31b54a4ae6da32bfdca35dc8bdc3e4ed7a0901fc3e50",
+   "seconds": 9046.950680017471,
+   "n_bases": 9,
+   "n_cases": 12,
+   "n_inventory_files": 47,
+   "n_npy": 21,
+   "npy_bytes": 150864,
+   "max_rel": 6.089297433195164e-08,
+   "pc1_pass": 12,
+   "pc1_fail": 0,
+   "env_fingerprint": "bcfae7ed2c800a18e7a5e6bac03916b70f54cd330bc7f16a5210b1605250df0b",
+   "gates_all_true": true,
+   "n_gates": 21
+  },
+  "d3_E8_L1.00_fe7c201ef265_audit": {
+   "family": "E8",
+   "sizes": [
+    "L1.00"
+   ],
+   "registered_dir": "registered_assets/d3/runs/d3_E8_L1.00_fe7c201ef265_audit/d3",
+   "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E8_L1.00_20260927T084859Z",
+   "run_id": "20260927T084859Z",
+   "runtime": "standard",
+   "run_manifest_sha256": "a367afa2f516f0c92f6935ff18ef2ae190a52b680ea42d76ca8acf00c3b301d6",
+   "document_sha256": {
+    "d3_cov_registry.json": "9f013ac69cb67156f30ec28bf7a23fb4662649c001e619a37fdee9b64f1bf3ee",
+    "d3_env_lock.json": "5750e3b77751d3564ad66f0997214e43034a2a9da4265f6ced6e21728fe485b5",
+    "d3_partial_evidence.json": "a99c589761bddae3da3d23ff370a8d67d6e82cd5684ad9a44089e72944567262",
+    "d3_pc1_results.json": "e98f283a7f3549771298a71a9df1b8aec571d1e3f73758e91eda40bc0b8410ee",
+    "d3_run_manifest.json": "a367afa2f516f0c92f6935ff18ef2ae190a52b680ea42d76ca8acf00c3b301d6"
+   },
+   "final_record_sha256": "24a1b62785fd5f466c0ae026b79e1ed2b8203257a456c6da5e59014cec5c66a5",
+   "launcher_lock_sha256": "b97ab194eed9e082759453ae0396a24ad9ad9367e984e93ff11a0f912f56e768",
+   "seconds": 13811.817400455475,
+   "n_bases": 9,
+   "n_cases": 24,
+   "n_inventory_files": 71,
+   "n_npy": 33,
+   "npy_bytes": 237072,
+   "max_rel": 8.292609078583325e-08,
+   "pc1_pass": 12,
+   "pc1_fail": 0,
+   "env_fingerprint": "bcfae7ed2c800a18e7a5e6bac03916b70f54cd330bc7f16a5210b1605250df0b",
+   "gates_all_true": true,
+   "n_gates": 21
+  },
+  "d3_E8_L1.20_fe7c201ef265_audit": {
+   "family": "E8",
+   "sizes": [
+    "L1.20"
+   ],
+   "registered_dir": "registered_assets/d3/runs/d3_E8_L1.20_fe7c201ef265_audit/d3",
+   "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E8_L1.20_20260927T124831Z",
+   "run_id": "20260927T124831Z",
+   "runtime": "standard",
+   "run_manifest_sha256": "7f9098e7fa5b64ed8148e380b84cf34109db766bc74bebdfb544e8cc824e9b47",
+   "document_sha256": {
+    "d3_cov_registry.json": "ab99b47e6e98037078f70ef3d002301c8bff9a554c56a6008571666e4bc931fc",
+    "d3_env_lock.json": "5750e3b77751d3564ad66f0997214e43034a2a9da4265f6ced6e21728fe485b5",
+    "d3_partial_evidence.json": "3023fc68ebeb871f1a4e1e79f85c42b435216bd33e6c6b448bc9519b60332e41",
+    "d3_pc1_results.json": "0f97394382490e2a86af8196937eee1a8004dd228b319c95381a2dc40c185e02",
+    "d3_run_manifest.json": "7f9098e7fa5b64ed8148e380b84cf34109db766bc74bebdfb544e8cc824e9b47"
+   },
+   "final_record_sha256": "911af447ec4cd2c5384376884950a5f0e840a4bb9aa1768732d1e88cfdf71862",
+   "launcher_lock_sha256": "5c2f8d00deca9356b0534da27271d51c91edebca88472d871bc2a29dbbedcf53",
+   "seconds": 14302.115719079971,
+   "n_bases": 9,
+   "n_cases": 24,
+   "n_inventory_files": 71,
+   "n_npy": 33,
+   "npy_bytes": 237072,
+   "max_rel": 7.281805873670248e-08,
+   "pc1_pass": 12,
+   "pc1_fail": 0,
+   "env_fingerprint": "bcfae7ed2c800a18e7a5e6bac03916b70f54cd330bc7f16a5210b1605250df0b",
+   "gates_all_true": true,
+   "n_gates": 21
+  },
+  "d3_E8_L1.50_fe7c201ef265_audit_High_Memory": {
+   "family": "E8",
+   "sizes": [
+    "L1.50"
+   ],
+   "registered_dir": "registered_assets/d3/runs/d3_E8_L1.50_fe7c201ef265_audit_High_Memory/d3",
+   "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E8_L1.50_20260928T113755Z",
+   "run_id": "20260928T113755Z",
+   "runtime": "high_memory",
+   "run_manifest_sha256": "b3e3dfd77682b84c94a80e6933d095e75a1a620c8aa03c4f8ffcedeb7de8ece3",
+   "document_sha256": {
+    "d3_cov_registry.json": "5852f388dded98e47bb6c975527522e4f1d8bcd01b656ce028650a5534a02792",
+    "d3_env_lock.json": "5750e3b77751d3564ad66f0997214e43034a2a9da4265f6ced6e21728fe485b5",
+    "d3_partial_evidence.json": "98d52d801db85c16a19c039b2144d3adc56f4da1eafb2f6c7375958b5a47d53f",
+    "d3_pc1_results.json": "6e675cd980c9610544d0ff25d485d21e1ebceeffa68d2aa9433b19192a0d779d",
+    "d3_run_manifest.json": "b3e3dfd77682b84c94a80e6933d095e75a1a620c8aa03c4f8ffcedeb7de8ece3"
+   },
+   "final_record_sha256": "7df649f2609eddc537b73fba84585f991b359b4ca823c2d4a5e54b75ae0edc51",
+   "launcher_lock_sha256": "905c52ece8d1dc80d27016728d18d69835ed54528f4dabbef013813daf5de9af",
+   "seconds": 5426.4347496032715,
+   "n_bases": 9,
+   "n_cases": 24,
+   "n_inventory_files": 71,
+   "n_npy": 33,
+   "npy_bytes": 237072,
+   "max_rel": 5.280948364324491e-08,
+   "pc1_pass": 12,
+   "pc1_fail": 0,
+   "env_fingerprint": "bcfae7ed2c800a18e7a5e6bac03916b70f54cd330bc7f16a5210b1605250df0b",
+   "gates_all_true": true,
+   "n_gates": 21
+  }
+ },
+ "incomplete_attempts": {
+  "d3_E2_L1.50_fe7c201ef265_audit_INCOMPLETE_rc-9": {
+   "family": "E2",
+   "sizes": [
+    "L1.50"
+   ],
+   "registered_dir": "registered_assets/d3/runs/d3_E2_L1.50_fe7c201ef265_audit_INCOMPLETE_rc-9",
+   "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E2_L1.50_20260926T163437Z",
+   "runtime": "standard",
+   "script_returncode": -9,
+   "cause": "process killed (rc -9 = out of memory on the standard Colab runtime; CMBtopology preprocessing at the clone positions with larger |x0|)",
+   "partial_bases": 9,
+   "partial_cases": 0,
+   "completed_by": "d3_E2_L1.50_fe7c201ef265_audit_High_Memory",
+   "reproduction": 9,
+   "final_record_sha256": "bde65340156d1184a792aab6ce59a0ef7025ec9582158065e9ded0ad3ac712ca",
+   "partial_evidence_sha256": "6fdf4ba424d4f69e652333cd5570ba810b8d8b43b59b2a4191198bf5d9900d70",
+   "retained": "never deleted (D-3 design: all attempts retained)"
+  },
+  "d3_E8_L1.50_fe7c201ef265_audit_INCOMPLETE_rc-9": {
+   "family": "E8",
+   "sizes": [
+    "L1.50"
+   ],
+   "registered_dir": "registered_assets/d3/runs/d3_E8_L1.50_fe7c201ef265_audit_INCOMPLETE_rc-9",
+   "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E8_L1.50_20260927T164804Z",
+   "runtime": "standard",
+   "script_returncode": -9,
+   "cause": "process killed (rc -9 = out of memory on the standard Colab runtime; CMBtopology preprocessing at the clone positions with larger |x0|)",
+   "partial_bases": 9,
+   "partial_cases": 21,
+   "completed_by": "d3_E8_L1.50_fe7c201ef265_audit_High_Memory",
+   "reproduction": 30,
+   "final_record_sha256": "c3d0bf1e87b5d26cd5cf2c0e4b938b0efb519ef9133faedfdd7f904c8a39e004",
+   "partial_evidence_sha256": "52165505cdd0300e0dec9dad4c8e1f4af4c23b8fde552b01a5700fd94f6beaf4",
+   "retained": "never deleted (D-3 design: all attempts retained)"
+  }
+ },
+ "executed_notebooks": {
+  "MirrorTopology_Step1_D3a_covgen_v0_2_E2_L1.00_executed_fe7c201ef265.ipynb": {
+   "sha256": "f7c82ba69eec10f30027c79e120da71ee8b69dd17efa5dd49bc2fc0f3df08336",
+   "bytes": 18036
+  },
+  "MirrorTopology_Step1_D3a_covgen_v0_2_E2_L1.20_executed_fe7c201ef265.ipynb": {
+   "sha256": "0267634e63f0e90e4e3b4e07806e90eb030b983bdd39ea3d382b1a3225ac54b3",
+   "bytes": 18159
+  },
+  "MirrorTopology_Step1_D3a_covgen_v0_2_E2_L1.50_executed_fe7c201ef265.ipynb": {
+   "sha256": "d460b3357fd4130ef6b4cd23a0b2c378b35bf0ebdb2d2d92f24e30983b1c762b",
+   "bytes": 18238
+  },
+  "MirrorTopology_Step1_D3a_covgen_v0_2_E2_L1.50_executed_fe7c201ef265_High_Memory.ipynb": {
+   "sha256": "b8897c56a3edc1c186c44318517780a438ecb93a2172e56e19c24b5039d6a659",
+   "bytes": 18154
+  },
+  "MirrorTopology_Step1_D3a_covgen_v0_2_E7_L1.00_executed_fe7c201ef265.ipynb": {
+   "sha256": "0e498844945f4eb54e863827b1c147415fe40923477981433842e353f9d9068a",
+   "bytes": 18078
+  },
+  "MirrorTopology_Step1_D3a_covgen_v0_2_E7_L1.20_executed_fe7c201ef265.ipynb": {
+   "sha256": "3e232a583bc2659ef0184f8a06b06ae0338a8fa519ada4a2e0b04cc9c8c43d82",
+   "bytes": 17968
+  },
+  "MirrorTopology_Step1_D3a_covgen_v0_2_E7_L1.50_executed_fe7c201ef265.ipynb": {
+   "sha256": "6cade11a82b902414f7e7c3499d9dcacb9f221b18c3d027cebe23a74df86c0af",
+   "bytes": 18074
+  },
+  "MirrorTopology_Step1_D3a_covgen_v0_2_E8_L1.00_executed_fe7c201ef265.ipynb": {
+   "sha256": "21e99263f151bee355774881c9d55528329f50bdaa4ada068250b9ab6d674f10",
+   "bytes": 18131
+  },
+  "MirrorTopology_Step1_D3a_covgen_v0_2_E8_L1.20_executed_fe7c201ef265.ipynb": {
+   "sha256": "5361560a679136893c1db5eff39c7f505d9649bf1f340cdaf43f2b6855f3948b",
+   "bytes": 18131
+  },
+  "MirrorTopology_Step1_D3a_covgen_v0_2_E8_L1.50_executed_fe7c201ef265.ipynb": {
+   "sha256": "453aa81deeaa7756744c70506502cb1c713a25af282b6b6248d4e9eba3567b45",
+   "bytes": 18221
+  },
+  "MirrorTopology_Step1_D3a_covgen_v0_2_E8_L1.50_executed_fe7c201ef265_High_Memory.ipynb": {
+   "sha256": "ab6663282e26cab592833338b278ad222e1bee7691ad0f78962dd9715acb58bf",
+   "bytes": 18033
+  }
+ },
+ "coverage_sha256": "8a55452dbbbfb832ca0ece07ff0999a3f9e3ac4f8251216987c09e6c8d24365b",
+ "external_acceptance": {
+  "metadata_only_E2_L100": {
+   "file": "Step1_PhaseD_D3_E2_L1.00_fe7c201ef265_metadata_acceptance.json",
+   "date": "2026-09-26",
+   "decision": "PASS_WITH_EXPLICIT_SCOPE_RUN_METADATA_AND_REPORTED_PC1_RESULTS"
+  },
+  "metadata_only_all9": {
+   "file": "Step1_PhaseD_D3_all9_fe7c201ef265_metadata_acceptance.json",
+   "audit_report": "ChatGPT_audit_Step1_PhaseD_D3_all9_fe7c201ef265.md",
+   "audit_report_sha256": "ba7a649058130dc64e25edf09bc1cd68828b440310b32ede7c84f8be69bb42fd",
+   "date": "2026-09-29",
+   "decision": "PASS_WITH_EXPLICIT_SCOPE",
+   "input_zip": {
+    "name": "E2_E7_E8_L_results.zip",
+    "bytes": 500567,
+    "sha256": "d84c8553acfefff95c419e9c5c707c0569fcfbbc7427972a009e58e43c48ad4f"
+   },
+   "scope": "9 completed partition run records, metadata bytes, reported PC-1 re-derivation; High-RAM completions accepted under the same lock; NPY arrays NOT read (0/225); failed-attempt cause not independently verified",
+   "run_manifest_sha256_agree_with_ledger": true,
+   "env_fingerprint_agree": true,
+   "notebook_sha256_agree": true,
+   "audit_observations_addressed_in_this_packet": [
+    "failed attempts: records (launcher stderr rc -9, partial evidence, final record) registered as incomplete_attempts with run ids; partial evidence reproduced bit-identically by the completed runs",
+    "225 NPY: registered under registered_assets/d3/runs/<partition>/d3/cov_cache and additionally submitted as D3a_covariances.zip in the audit-requested layout",
+    "notebook execution counters: 6 notebooks were run in a parent Colab session reused across partitions (counters not starting at 1); computation runs in a separate child Python process on a fresh checkout / fresh OUT per run; fresh parent runtime per run will be used from D-3b on"
+   ]
+  },
+  "array_verified": "pending (this packet)"
+ },
+ "totals": {
+  "families": 3,
+  "partitions": 9,
+  "bases": 81,
+  "cases": 144,
+  "new_point_cases": 108,
+  "anchor_cases": 36,
+  "pc1_pass": 108,
+  "pc1_fail": 0
+ },
+ "wall_time": {
+  "standard_runtime_seconds": {
+   "d3_E2_L1.00_fe7c201ef265_audit": 8872.32173871994,
+   "d3_E2_L1.20_fe7c201ef265_audit": 9091.614491701126,
+   "d3_E7_L1.00_fe7c201ef265_audit": 8650.155827999115,
+   "d3_E7_L1.20_fe7c201ef265_audit": 8479.585669279099,
+   "d3_E7_L1.50_fe7c201ef265_audit": 9046.950680017471,
+   "d3_E8_L1.00_fe7c201ef265_audit": 13811.817400455475,
+   "d3_E8_L1.20_fe7c201ef265_audit": 14302.115719079971
+  },
+  "high_memory_seconds": {
+   "d3_E2_L1.50_fe7c201ef265_audit_High_Memory": 3187.497029066086,
+   "d3_E8_L1.50_fe7c201ef265_audit_High_Memory": 5426.4347496032715
+  }
+ }
+}

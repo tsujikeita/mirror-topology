@@ -1,0 +1,179 @@
+{
+ "launcher": {
+  "launcher_id": "MirrorTopology_Step1_D3a_covgen_v0.2",
+  "repo_url": "https://github.com/tsujikeita/mirror-topology.git",
+  "commit": "fe7c201ef265ddf614ed7d538acd3197eaa331c0",
+  "inventory_sha256": "2cc5668a6768f1dd0ce27daeeb72397b6c0d816cf6fcacda962fab3c2f65b1d6",
+  "pins_sha256": "7dfc77329c4f9eb989e0dc7236a6f7c33f7c0b8168dcd56931a14b26b9de2de6",
+  "engine_version": "0.86.0",
+  "family": "E7",
+  "size_filter": "L1.00",
+  "with_h2": false,
+  "run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E7_L1.00_20260926T174854Z"
+ },
+ "D3_PASS": true,
+ "family": "E7",
+ "size_filter": "L1.00",
+ "stages": {
+  "script_returncode": 0,
+  "script_pass": true,
+  "stage": "complete",
+  "gates": {
+   "G_pins_loaded": true,
+   "G_engine_inventory": true,
+   "G_script_sha": true,
+   "G_phaseC_members": true,
+   "G_external_loader_sha": true,
+   "G_a11_freeze_sha": true,
+   "G_a11_generator_cell_sha": true,
+   "G_env_lock": true,
+   "G_ct_commit": true,
+   "G_ct_origin": true,
+   "G_ct_clean": true,
+   "G_ct_dependencies_present": true,
+   "G_registry_source_bound": true,
+   "G_config_map_bound": true,
+   "G_case_table_bound": true,
+   "G_d1_trusted": true,
+   "G_bridge_quadrature": true,
+   "G_all_bases_generated": true,
+   "G_all_base_intakes_pass": true,
+   "G_all_cases_evaluated": true,
+   "G_evidence_saved": true
+  },
+  "failures": [],
+  "launcher_fallback": false,
+  "n_bases": 9,
+  "n_cases": 12,
+  "pc1_status": {
+   "30101": {
+    "actions_required": [
+     "glide_A"
+    ],
+    "actions_evaluated": [
+     "glide_A"
+    ],
+    "status": "PC1_PASS",
+    "max_rel": 7.819339348024247e-08
+   },
+   "30102": {
+    "actions_required": [
+     "glide_A"
+    ],
+    "actions_evaluated": [
+     "glide_A"
+    ],
+    "status": "PC1_PASS",
+    "max_rel": 7.702721955978529e-08
+   },
+   "30103": {
+    "actions_required": [
+     "glide_A"
+    ],
+    "actions_evaluated": [
+     "glide_A"
+    ],
+    "status": "PC1_PASS",
+    "max_rel": 8.255225856769128e-08
+   },
+   "30104": {
+    "actions_required": [
+     "glide_A"
+    ],
+    "actions_evaluated": [
+     "glide_A"
+    ],
+    "status": "PC1_PASS",
+    "max_rel": 8.351226669021276e-08
+   },
+   "30105": {
+    "actions_required": [
+     "glide_A"
+    ],
+    "actions_evaluated": [
+     "glide_A"
+    ],
+    "status": "PC1_PASS",
+    "max_rel": 7.774071024297487e-08
+   },
+   "30106": {
+    "actions_required": [
+     "glide_A"
+    ],
+    "actions_evaluated": [
+     "glide_A"
+    ],
+    "status": "PC1_PASS",
+    "max_rel": 8.034862277322881e-08
+   },
+   "30107": {
+    "actions_required": [
+     "glide_A"
+    ],
+    "actions_evaluated": [
+     "glide_A"
+    ],
+    "status": "PC1_PASS",
+    "max_rel": 8.282490411650918e-08
+   },
+   "30108": {
+    "actions_required": [
+     "glide_A"
+    ],
+    "actions_evaluated": [
+     "glide_A"
+    ],
+    "status": "PC1_PASS",
+    "max_rel": 7.656609800019263e-08
+   },
+   "30109": {
+    "actions_required": [
+     "glide_A"
+    ],
+    "actions_evaluated": [
+     "glide_A"
+    ],
+    "status": "PC1_PASS",
+    "max_rel": 7.747850071183871e-08
+   },
+   "30110": {
+    "actions_required": [
+     "glide_A"
+    ],
+    "actions_evaluated": [
+     "glide_A"
+    ],
+    "status": "PC1_PASS",
+    "max_rel": 7.791546817976706e-08
+   },
+   "30111": {
+    "actions_required": [
+     "glide_A"
+    ],
+    "actions_evaluated": [
+     "glide_A"
+    ],
+    "status": "PC1_PASS",
+    "max_rel": 7.897632868893098e-08
+   },
+   "30112": {
+    "actions_required": [
+     "glide_A"
+    ],
+    "actions_evaluated": [
+     "glide_A"
+    ],
+    "status": "PC1_PASS",
+    "max_rel": 8.173207253195677e-08
+   }
+  },
+  "seconds": 8650.155827999115,
+  "source": {
+   "engine_version": "0.86.0",
+   "inventory_sha256": "2cc5668a6768f1dd0ce27daeeb72397b6c0d816cf6fcacda962fab3c2f65b1d6",
+   "script_sha256": "6db2f9e11635e1317f319aa9425416ed2dd3359233d75ac0494647ad12471b78",
+   "pins_sha256": "7dfc77329c4f9eb989e0dc7236a6f7c33f7c0b8168dcd56931a14b26b9de2de6",
+   "profile": "production_official"
+  }
+ }
+}

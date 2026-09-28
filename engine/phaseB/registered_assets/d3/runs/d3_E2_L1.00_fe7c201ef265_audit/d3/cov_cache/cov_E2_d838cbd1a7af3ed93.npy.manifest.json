@@ -1,0 +1,40 @@
+{
+ "tag": "E2_d838cbd1a7af3ed93cf6e6208aaa320bc7dcb0023d3de29a42e95e99501409f5",
+ "manifest": {
+  "topology": "E2",
+  "params": {
+   "Lx": 1.0,
+   "Ly": 1.0,
+   "Lz": 1.0
+  },
+  "x0": [
+   0.07150075549277307,
+   0.24162711619922894,
+   -1.74
+  ],
+  "run_config": {
+   "l_max": 4,
+   "do_polarization": false,
+   "normalize": false,
+   "l_range": [
+    [
+     2,
+     4
+    ]
+   ],
+   "lp_range": [
+    [
+     2,
+     4
+    ]
+   ]
+  },
+  "cmbtopology_commit": "0cc65e34f03df85e92f738686bff0a476132f337",
+  "requirements_sha256": "c8c985d01620f7b0d13cc6ab84b7f40f1024d9c3764c2bc6c3d566949e40b7b2",
+  "env_fingerprint": "bcfae7ed2c800a18e7a5e6bac03916b70f54cd330bc7f16a5210b1605250df0b"
+ },
+ "cov_file_sha256": "8418b3721bfc286f688c9484da6ae9ee19e9778601d27634d2f79a1d80172183",
+ "cov_array_sha256": "7b36344b840fa0f104e3ec3260e742d643745aac3ce4b23444cab1bf4832ebad",
+ "source_run_dir": "E2_Lx_1.00_Ly_1.00_Lz_1.00_beta_90_alpha_90_gamma_0_x_0.07_y_0.24_z_-1.74_l_max_4_accuracy_99_percent",
+ "seconds": 425.33708667755127
+}

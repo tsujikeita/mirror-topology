@@ -1,0 +1,33 @@
+{
+ "launcher": {
+  "launcher_id": "MirrorTopology_Step1_D3a_covgen_v0.2",
+  "repo_url": "https://github.com/tsujikeita/mirror-topology.git",
+  "commit": "fe7c201ef265ddf614ed7d538acd3197eaa331c0",
+  "inventory_sha256": "2cc5668a6768f1dd0ce27daeeb72397b6c0d816cf6fcacda962fab3c2f65b1d6",
+  "pins_sha256": "7dfc77329c4f9eb989e0dc7236a6f7c33f7c0b8168dcd56931a14b26b9de2de6",
+  "engine_version": "0.86.0",
+  "family": "E2",
+  "size_filter": "L1.50",
+  "with_h2": false,
+  "run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E2_L1.50_20260926T163437Z"
+ },
+ "D3_PASS": false,
+ "family": "E2",
+ "size_filter": "L1.50",
+ "stages": {
+  "script_returncode": -9,
+  "script_pass": false,
+  "stage": "RECORD_MISSING_OR_INVALID",
+  "gates": null,
+  "failures": [
+   "run manifest unreadable: FileNotFoundError(2, 'No such file or directory')",
+   "script returncode -9"
+  ],
+  "launcher_fallback": true,
+  "n_bases": null,
+  "n_cases": null,
+  "pc1_status": null,
+  "seconds": null,
+  "source": null
+ }
+}
