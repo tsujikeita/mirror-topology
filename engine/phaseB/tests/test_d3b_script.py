@@ -45,6 +45,10 @@ def test_generation_script_preflight_scope_and_selftest_run(tmp_path):
         mm = verify_twelve_bank_dir(v['path'], ctx); assert mm['manifest_sha256'] == v['manifest_sha256'] and mm['formal'] is False and mm['origin'] == 'twelve_added' and v['request']['root_sha256'] == mm['root_sha256'] == ci['root_sha256']
         side = json.load(open(os.path.join(v['path'], mm['shards'][0]['sidecar']))); assert side['environment']['producer']['digest'] == m['producer']['digest'] and side['environment']['producer']['spec_v2_sha256'] == regj['spec_v2_sha256']
     assert m['directories']['cfg20104_b0']['n_clusters'] == 10 and m['directories']['cfg20104_b1']['n_clusters'] == 30 and m['directories']['cfg20104_fit']['n_clusters'] == 2
+    # R-D3BT1-A: the registry is published as a whole-document snapshot; the receipt (SHA / bytes of the read-back bytes) is bound into the run manifest and equals the file
+    import hashlib; rb = open(tmp_path / 'ok' / 'd3_bank_registry.json', 'rb').read(); rec = m['published_evidence']['d3_bank_registry.json']
+    assert rec == dict(sha256=hashlib.sha256(rb).hexdigest(), bytes=len(rb)) and m['publication_stage'] == 'bank_registry_verified' and json.loads(rb) == regj and not (tmp_path / 'ok' / 'd3_bank_registry.json.tmp').exists()
+    mb = open(tmp_path / 'ok' / 'd3_run_manifest.json', 'rb').read(); assert json.loads(mb) == m and not (tmp_path / 'ok' / 'd3_run_manifest.json.tmp').exists()
     # reuse-root: completed directories are re-verified against the context and reused (no regeneration; metadata snapshot exported; no new calls)
     r2 = _run(tmp_path / 'reuse', *ST, '--selftest-configs', '20104', '--reuse-root', str(tmp_path / 'ok')); m2 = _man(tmp_path / 'reuse')
     assert m2['stage'] == 'complete' and all(v['reused'] for v in m2['directories'].values()) and m2['directories']['cfg20104_b0']['manifest_sha256'] == m['directories']['cfg20104_b0']['manifest_sha256']
@@ -63,22 +67,47 @@ def test_generation_script_preflight_scope_and_selftest_run(tmp_path):
     assert r6.returncode == 1 and m6['stage'] == 'd2_reference' and m6['gates']['G_d2_reference_dirs'] is False and m6['directories'] == {}
 
 
-@pytest.mark.parametrize('returncode,scriptpass', [(0, True), (0, False), (1, True), (1, False)])
+@need_ext
+def test_registry_publication_detects_write_faults(tmp_path, monkeypatch):
+    """R-D3BT1-A (in-process, TEST-ONLY fault injection on json.dump): a registry whose written bytes differ from the computed snapshot (one field changed on the way to disk)
+    is never certified — G_registry_saved stays False, the stage is 'exception', the run manifest carries the failure, no .tmp is left behind."""
+    import importlib.util, io, contextlib, copy
+    spec = importlib.util.spec_from_file_location('d3_bankgen_under_test', SCRIPT); S = importlib.util.module_from_spec(spec); spec.loader.exec_module(S)
+    real = json.dump
+    def faulty(obj, fh, *a, **kw):
+        if str(getattr(fh, 'name', '')).endswith(('d3_bank_registry.json', 'd3_bank_registry.json.tmp')) and isinstance(obj, dict) and obj.get('status') != 'PARTIAL_AFTER_FAILURE':
+            obj = copy.deepcopy(obj); obj['family'] = 'E8'
+        return real(obj, fh, *a, **kw)
+    monkeypatch.setattr(json, 'dump', faulty)
+    out = tmp_path / 'o'; monkeypatch.setattr(sys, 'argv', ['d3_bankgen.py', '--mt', MT, '--phaseb', P, '--phasec', PC, '--out', str(out), '--family', 'E2', *ST, '--selftest-configs', '20104'])
+    with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()): rc = S.main()
+    m = _man(out); assert rc == 1 and m['stage'] == 'exception' and m['gates']['G_registry_saved'] is False and m['publication_stage'] == 'bank_registry' and any('differs from the computed snapshot' in f for f in m['failures'])
+    assert not (out / 'd3_bank_registry.json.tmp').exists() and json.load(open(out / 'd3_run_manifest.json')) == m
+    # the partial registry written on the failure path is itself published through the verified helper (family field intact there)
+    pr = json.load(open(out / 'd3_bank_registry.json')); assert pr['status'] == 'PARTIAL_AFTER_FAILURE' and pr['family'] == 'E2' and 'partial_registry_publication' in m
+
+
+@pytest.mark.parametrize('returncode,scriptpass', [(0, True), (0, False), (1, True), (1, False), (-9, 'missing'), (-9, 'invalid'), (0, 'list'), (0, 'null')])
 def test_notebook_launcher_final_pass_requires_both(tmp_path, monkeypatch, returncode, scriptpass):
     """The Colab launcher (cells 3 / 4 of d/MirrorTopology_Step1_D3b_bankgen_v0.1.ipynb, executed here with stubs; no external process): D3B_PASS of the final record requires
     BOTH script return code 0 AND the run manifest's D3B_PASS; the audit zip carries the non-NPZ metadata (completion manifests / sidecars / registry), never the arrays."""
     import types, io, contextlib, zipfile, hashlib
     out = tmp_path / 'nbout'; do = out / 'd3b'; (do / 'cfg20104_b0').mkdir(parents=True)
-    rm = {'D3B_PASS': scriptpass, 'gates': {}, 'directories': {}, 'scope': {}}; (do / 'd3_run_manifest.json').write_text(json.dumps(rm)); (do / 'cfg20104_b0' / 'COMPLETE.json').write_text('{}'); (do / 'cfg20104_b0' / 'cfg20104_b0_s0.npz').write_bytes(b'\0' * 10)
+    fallback = isinstance(scriptpass, str)                                                                                # R-D3BT1-B: child record missing / malformed / wrong type
+    rm = {'D3B_PASS': scriptpass, 'gates': {}, 'directories': {}, 'scope': {}}
+    if not fallback: (do / 'd3_run_manifest.json').write_text(json.dumps(rm))
+    elif scriptpass != 'missing': (do / 'd3_run_manifest.json').write_text({'invalid': '{', 'list': '[]', 'null': 'null'}[scriptpass])
+    (do / 'cfg20104_b0' / 'COMPLETE.json').write_text('{}'); (do / 'cfg20104_b0' / 'cfg20104_b0_s0.npz').write_bytes(b'\0' * 10)
     import subprocess as _sp; monkeypatch.setattr(_sp, 'run', lambda *a, **k: types.SimpleNamespace(returncode=returncode, stdout='TEST_ONLY', stderr=''))
     nb = json.load(open(os.path.join(P, 'd', 'MirrorTopology_Step1_D3b_bankgen_v0.1.ipynb'))); src = lambda i: ''.join(nb['cells'][i]['source'])
     ns = dict(sys=sys, subprocess=_sp, json=json, OUT=str(out), SCRIPT='TEST_ONLY', MT='TEST_ONLY', PHASEB=P, PHASEC='TEST_ONLY', FAMILY='E2', SZ=['L1.00'], REUSE_ROOT='', D2_REF_ROOT='')
     with contextlib.redirect_stdout(io.StringIO()): exec(compile(src(4), 'nb_cell4', 'exec'), ns)
-    assert ns['script_ok'] is (returncode == 0 and scriptpass)
+    expect = (returncode == 0 and scriptpass is True); assert ns['script_ok'] is expect and (out / 'launcher_script_stdout.txt').exists()
+    if fallback: assert ns['rm']['launcher_fallback'] is True and ns['rm']['D3B_PASS'] is False and ns['rm']['stage'] == 'RECORD_MISSING_OR_INVALID' and any(f'script returncode {returncode}' == f for f in ns['rm']['failures'])
     actual = tmp_path / 'audit.zip'; real_zip = zipfile.ZipFile; fake = types.ModuleType('zipfile'); fake.ZIP_DEFLATED = zipfile.ZIP_DEFLATED; fake.ZipFile = lambda _p, *a, **k: real_zip(actual, *a, **k); monkeypatch.setitem(sys.modules, 'zipfile', fake)
     colab = types.ModuleType('google.colab'); colab.files = types.SimpleNamespace(download=lambda p: None); monkeypatch.setitem(sys.modules, 'google.colab', colab)
     nsos = types.SimpleNamespace(walk=os.walk, path=types.SimpleNamespace(join=os.path.join, relpath=os.path.relpath, getsize=lambda p: actual.stat().st_size if str(p).startswith('/content/d3b_') else os.path.getsize(p)))
-    ns2 = dict(os=nsos, json=json, sha=lambda p: hashlib.sha256(open(p, 'rb').read()).hexdigest(), OUT=str(out), RUN=str(out.parent), FAMILY='E2', SZ=['L1.00'], REPO_COMMIT='a' * 40, lock={'sizes': ['L1.00']}, rc=types.SimpleNamespace(returncode=returncode), rm=rm, script_ok=ns['script_ok'])
+    ns2 = dict(os=nsos, json=json, sha=lambda p: hashlib.sha256(open(p, 'rb').read()).hexdigest(), OUT=str(out), RUN=str(out.parent), FAMILY='E2', SZ=['L1.00'], REPO_COMMIT='a' * 40, lock={'sizes': ['L1.00']}, rc=types.SimpleNamespace(returncode=returncode, stderr=''), rm=ns['rm'], script_ok=ns['script_ok'])
     with contextlib.redirect_stdout(io.StringIO()): exec(compile(src(5), 'nb_cell5', 'exec'), ns2)
     final = json.load(open(out / 'd3b_final_record.json')); names = real_zip(actual).namelist()
-    assert final['D3B_PASS'] is (returncode == 0 and scriptpass) and final['sizes'] == ['L1.00'] and 'd3b/cfg20104_b0/COMPLETE.json' in names and not any(n.endswith('.npz') for n in names) and final['output_inventory']['d3b/cfg20104_b0/cfg20104_b0_s0.npz']['sha256'] is None
+    assert final['D3B_PASS'] is expect and final['stages']['launcher_fallback'] is fallback and final['stages']['stage'] == ns['rm'].get('stage') and final['sizes'] == ['L1.00'] and 'd3b/cfg20104_b0/COMPLETE.json' in names and not any(n.endswith('.npz') for n in names) and final['output_inventory']['d3b/cfg20104_b0/cfg20104_b0_s0.npz']['sha256'] is None

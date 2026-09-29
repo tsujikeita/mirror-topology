@@ -14,7 +14,7 @@ partial registry on failure. D3B_PASS only in --profile production_official with
 from __future__ import annotations
 import os
 for _k in ("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS"): os.environ.setdefault(_k, "2")
-import argparse, hashlib, json, sys, time, traceback
+import argparse, hashlib, json, sys, time, traceback, copy
 import numpy as np
 
 REQUIRED = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_phaseC_members", "G_env_lock", "G_external_loader_sha", "G_twelve_context", "G_bank_spec_v2", "G_registry_bound", "G_calibration_bank_matches_a10", "G_scope_resolved", "G_all_configurations", "G_registry_saved")
@@ -22,6 +22,41 @@ SIZES = ("L1.00", "L1.20", "L1.50")
 
 
 def sha(p): return hashlib.sha256(open(p, "rb").read()).hexdigest()
+
+
+def _publish_json(path, document):
+    """Publish a whole immutable JSON snapshot; verify exactly the bytes written.
+
+    This is an I/O identity check, not a new scientific acceptance criterion.
+    A failed write/readback never produces a successful publication receipt.
+    """
+    snapshot = copy.deepcopy(document)
+    options = dict(indent=1, ensure_ascii=False, default=str, allow_nan=False)
+    expected = json.dumps(snapshot, **options).encode("utf-8")
+    tmp = path + ".tmp"
+    try:
+        with open(tmp, "w", encoding="utf-8", newline="\n") as fh:
+            json.dump(snapshot, fh, **options)
+            fh.flush()
+            os.fsync(fh.fileno())
+        # Hash, validate and acknowledge the same captured bytes, not a later
+        # independent read for the digest.
+        with open(tmp, "rb") as fh:
+            written = fh.read()
+        if written != expected:
+            raise RuntimeError("JSON publication differs from the computed snapshot: " + path)
+        os.replace(tmp, path)
+        with open(path, "rb") as fh:
+            published = fh.read()
+        if published != expected:
+            raise RuntimeError("published JSON differs from the computed snapshot: " + path)
+        return dict(sha256=hashlib.sha256(published).hexdigest(), bytes=len(published))
+    finally:
+        if os.path.exists(tmp):
+            try:
+                os.remove(tmp)
+            except OSError:
+                pass  # cleanup failure does not turn an unsuccessful write into PASS
 
 
 def main():
@@ -40,8 +75,14 @@ def main():
         except ValueError: pass
     def finish(code, stage="final"):
         R["stage"] = stage; R["gates"] = G; R["required_inventory"] = list(REQUIRED); R["required_all_true"] = all(G.get(k) is True for k in REQUIRED); R["D3B_PASS"] = bool(R["required_all_true"] and a.profile == "production_official" and not selftest and code == 0); R["seconds"] = time.time() - t0
-        note("D3B_PASS =", R["D3B_PASS"], "| stage:", stage, "| gates:", json.dumps(G)); log.close()
-        tmp = os.path.join(a.out, "d3_run_manifest.json.tmp"); open(tmp, "w").write(json.dumps(R, indent=1, ensure_ascii=False, default=str)); os.replace(tmp, os.path.join(a.out, "d3_run_manifest.json")); print("run manifest written; D3B_PASS =", R["D3B_PASS"]); return code
+        note("run finalization | stage:", stage, "| gates:", json.dumps(G)); log.close()
+        try:
+            _publish_json(os.path.join(a.out, "d3_run_manifest.json"), R)
+        except Exception as write_error:
+            print("run manifest could not be published/verified; no PASS: " + repr(write_error), file=sys.stderr)
+            return 1
+        print("run manifest published and verified; D3B_PASS =", R["D3B_PASS"])
+        return code
     try:
         if a.profile != "production_official": R["failures"].append("profile"); return finish(1)
         sys.path.insert(0, a.phaseb)
@@ -179,12 +220,20 @@ def main():
         G["G_all_configurations"] = bool(set(required) == done and (all_formal or scale < 1.0)); R["ledger"] = ledger; R["required_requests"] = required
         regj = dict(schema="d3_bank_registry_v1", family=fam, sizes=list(sizes), scale=scale, formal=(scale == 1.0 and not selftest and all_formal and set(required) == done), table_sha256=table["table_sha256"], spec_v1_sha256=spec1["spec_sha256"], spec_v2_sha256=spec2["spec_sha256"], covariance_receipt_sha256=ident["covariance_receipt_sha256"], config_map_sha256=ident["config_map_sha256"], registry_sha256=ident["registry_sha256"],
                     scope=R["scope"], d2_family_reference=R["d2_family_reference"], covariance_intake=R["covariance_intake"], directories=R["directories"], required_requests=required, ledger=ledger, calls=inv.calls, calls_reused={n_: v.get("calls_source") for n_, v in R["directories"].items() if v.get("reused")}, environment=env_rec, engine_version=__version__, loader=R.get("loader"), a10_reference_sha256=R.get("a10_reference_sha256"))
-        json.dump(regj, open(os.path.join(a.out, "d3_bank_registry.json"), "w"), indent=1, default=str); G["G_registry_saved"] = True
+        G["G_registry_saved"] = False
+        R["publication_stage"] = "bank_registry"
+        receipt = _publish_json(os.path.join(a.out, "d3_bank_registry.json"), regj)
+        R["published_evidence"] = {"d3_bank_registry.json": receipt}
+        G["G_registry_saved"] = True
+        R["publication_stage"] = "bank_registry_verified"
         return finish(0 if all(G[kk] is True for kk in REQUIRED) else 1, "complete")
     except Exception as ex:
         R["failures"].append("exception: " + repr(ex)); R["traceback"] = traceback.format_exc(); note(R["traceback"])
-        try: json.dump(dict(schema="d3_bank_registry_v1", status="PARTIAL_AFTER_FAILURE", family=a.family, directories=R["directories"]), open(os.path.join(a.out, "d3_bank_registry.json"), "w"), indent=1, default=str)
-        except Exception: pass
+        try:
+            partial = dict(schema="d3_bank_registry_v1", status="PARTIAL_AFTER_FAILURE", family=a.family, directories=R["directories"])
+            R["partial_registry_publication"] = _publish_json(os.path.join(a.out, "d3_bank_registry.json"), partial)
+        except Exception as partial_error:
+            R["partial_registry_publication_error"] = repr(partial_error)
         return finish(1, "exception")
 
 
