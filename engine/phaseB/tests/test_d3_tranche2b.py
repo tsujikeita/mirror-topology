@@ -124,6 +124,10 @@ def test_twelve_profile_size_inputs_assembly_and_gate():
         with pytest.raises(InputContractError): build_twelve_size_input(notctx, 'E2', 'L1.00', 'matched', fx.supplies('L1.00', 'matched'), fx.plans, fx.fplans)
     with pytest.raises(InputContractError): TwelveContext(dict(CTX._d))
     with pytest.raises(AttributeError): CTX.root = '/x'
+    # R-D3T2BV2-B: public registry / twelve-asset views are detached; editing them never changes the verified state nor the assembly's scope declaration
+    v = CTX.registry; v.surviving['E2'] = ['L1.00']; v.size_prior['E2'] = {'L1.00': 1.0}; a = CTX.twelve_assets; a.manifests['E2'].pop('L1.50')
+    assert CTX.registry.surviving['E2'] == ['L1.00', 'L1.20', 'L1.50'] and 'L1.50' in CTX.twelve_assets.manifests['E2'] and CTX.verified
+    assert assemble_twelve_family(CTX, 'E2', {'L1.00': (fm1, fn1)})[2]['full_surviving_scope'] is False
     # R-D3T2B-B: mixed source identities across sizes / systems are refused BEFORE assembly (never relabelled with the first input)
     for field, si in (('covariance_receipt_sha256', 1), ('twelve_assets_sha256', 1), ('manifest_sha256', 0), ('registry_sha256', 1), ('config_map_sha256', 0)):
         ss = {s: (fx.size_input(s, 'matched'), fx.size_input(s, 'native')) for s in fx.sizes}; ss['L1.20'][si].grid_identity[field] = '0' * 64
@@ -165,6 +169,13 @@ def test_plan_fixation_shared_by_first_wave_and_added_configurations():
     with pytest.raises(InputContractError): verify_plan_identity(fx.plans, fx.fplans, fx.plan_identity, family='E2')
     with pytest.raises(InputContractError): verify_plan_identity(fx.plans, fx.fplans, dict(copy.deepcopy(fx.plan_identity), evaluation_group=group_for(TABLE, 'evaluation', 'E2'), identity_sha256=None), table=TABLE)
     assert verify_plan_identity(fx.plans, fx.fplans, fx.plan_identity, table=TABLE, family='E7')
+    # R-D3T2BV2-A: five records cannot stand in for empty evaluation plans (empty strata dict / empty stratum list) even with the identity re-derived from the emptied objects
+    for empty in ({}, {0: []}):
+        pl = copy.deepcopy(fx.plans); ident = copy.deepcopy(fx.plan_identity)
+        for s in pl: pl[s].strata = dict(empty); pl[s].rng_keys = {b: pl[s].rng_keys[0] for b in empty}; pl[s].multiplicities = {b: np.zeros((20, 0), np.int64) for b in empty}
+        for rec in ident['evaluation']: rec['rng_keys'] = {str(b): list(fx.plans[0].rng_keys[0]) for b in empty}; rec['strata_uid_sha256'] = {str(b): dp._sha(b'[]') for b in empty}; rec['multiplicity_sha256'] = {str(b): dp._sha(np.zeros((20, 0), np.int64).tobytes()) for b in empty}
+        ident['identity_sha256'] = dp._payload_sha(ident, 'identity_sha256')
+        with pytest.raises(InputContractError): verify_plan_identity(pl, fx.fplans, ident)
     for purpose in (300, 400):
         with pytest.raises(InputContractError): fix_family_plans(TABLE, 'E7', {0: [ClusterUID(1, purpose, group_for(TABLE, 'evaluation', 'E7'), 0, i) for i in range(40)]}, 60, TABLE['master_seed'], B=20, B_KDE=25)
     with pytest.raises(InputContractError): fix_family_plans(TABLE, 'E7', {0: [ClusterUID(1, 200, group_for(TABLE, 'evaluation', 'E7'), 1, i) for i in range(40)]}, 60, TABLE['master_seed'], B=20, B_KDE=25)   # batch key / UID batch mismatch

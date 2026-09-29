@@ -199,9 +199,9 @@ class TwelveContext:
     @property
     def d2_ledger(self): return copy.deepcopy(self._d["d2_ledger"])
     @property
-    def registry(self): return self._d["registry"]
+    def registry(self): return copy.deepcopy(self._d["registry"])
     @property
-    def twelve_assets(self): return self._d["twelve_assets"]
+    def twelve_assets(self): return copy.deepcopy(self._d["twelve_assets"])
     @property
     def identities(self): return dict(registry_sha256=self._d["config_map"]["registry_sha256"], manifest_sha256=self._d["config_map"]["first_wave_manifest_sha256"], config_map_sha256=self._d["config_map"]["map_sha256"], twelve_assets_sha256=self._d["config_map"]["twelve_assets_sha256"], covariance_receipt_sha256=self._d["receipt"]["receipt_sha256"], crn_table_sha256=self._d["table"]["table_sha256"], d2_spec_sha256=self._d["d2_spec"]["spec_sha256"], d2_ledger_file_sha256=self._d["d2_ledger_sha256"])
 
@@ -326,7 +326,7 @@ _SOURCE_KEYS = ("registry_sha256", "manifest_sha256", "config_map_sha256", "twel
 def assemble_twelve_family(ctx: TwelveContext, family: str, size_inputs: Dict[str, Tuple[FamilyInput, Optional[FamilyInput]]]) -> Tuple[FamilyInput, Optional[FamilyInput], dict]:
     """All-size 12-position FamilyInput per system. BEFORE assembly every size / system view must carry the SAME source identities as the verified context (no value is taken
     from the first input or repaired); then twelve_eval.assemble_all_sizes (registered size prior x 1/12; shared plans) and the family identity from the context."""
-    ctx = _require_ctx(ctx); config_map = ctx._d["config_map"]; reg = ctx.registry; twelve_assets = ctx.twelve_assets; want = {k: ctx.identities[k] for k in _SOURCE_KEYS}
+    ctx = _require_ctx(ctx); config_map = ctx._d["config_map"]; reg = ctx._d["registry"]; twelve_assets = ctx._d["twelve_assets"]; want = {k: ctx.identities[k] for k in _SOURCE_KEYS}
     from .twelve_eval import assemble_all_sizes
     if family not in TWELVE_FAMILIES: raise InputContractError("family")
     sizes = list(size_inputs)
@@ -444,6 +444,8 @@ def verify_plan_identity(plans: Dict[int, BootstrapPlan], fit_plans: Dict[int, F
     for s in sorted(seeds):
         p, rec = plans[s], ev[s]
         if not isinstance(p, BootstrapPlan): raise InputContractError("evaluation plan type")
+        if not isinstance(p.strata, dict) or not p.strata or any(not isinstance(u, (list, tuple)) or len(u) == 0 for u in p.strata.values()):
+            raise InputContractError(f"evaluation plan seed {s}: at least one stratum, and every stratum nonempty, is required")
         p.validate()
         if p.seed_id != s or p.plan_id != rec["plan_id"] or p.plan_id != f"D3-{fam}-eval-s{s}" or p.replicates != B: raise InputContractError(f"evaluation plan seed {s}: id / replicates differ from the fixed identity")
         keys = {str(b): list(k) for b, k in p.rng_keys.items()}

@@ -1,7 +1,7 @@
 {
- "engine_version": "0.90.0",
+ "engine_version": "0.91.0",
  "modules": {
-  "__init__.py": "6ee915f58d2521d728b471df9b38a42236613b6b11fcc861b72628b3d7c5aa21",
+  "__init__.py": "4ec035e764338094ef4fbba3b99dc5ef1e886341c303c2db39d1be410e2ad4cc",
   "archive.py": "354e75e3f89e3477c4b1bd05e7423ddd735431984bb27301cf3d60162cedeee6",
   "bootstrap_plan.py": "6941a7ac19fddfd9d3ca465632e3c68f18809d55e8e82cefa0a206fac2dcd3f7",
   "calibration.py": "1cc25d502021025191f3181b454b999555998884964f3c3dfe915bc9e0db18ea",
@@ -14,7 +14,7 @@
   "d2_bank.py": "89bf7ff292f541b1ce5e8302ae84bb89cb9ac751335579c7e1c9d8fa434ab6df",
   "d2_rng.py": "321d3602efaf76b4d83b182da1edc35d607112b61acfae2427e9e2ba78a60e11",
   "d3_assets.py": "e27bb135b279ff05bb17330ad6c269c8583f6387809c02c7329a220bfcd5a6f6",
-  "d3_profile.py": "e24b2402396399aa3363bb8194615c8c7e2c5b28504a034ffcde264bf2e1b305",
+  "d3_profile.py": "e5a29131d0c00269cbc92210f20d64a078176c54818bd7e36c811fec33876c87",
   "d3_stage.py": "01b231285e4045dd899d3e357e641fd694b212563d9ed1b680fa5c7db0902d01",
   "decision.py": "9bd01a136ea6b4a3a51db0fe20e3552058a91b8558d7b041d0ec37aefd786f88",
   "density.py": "c1273a0723b3c9501d6625f689367c1e4463f6289dbeb1e150774197dc796735",
@@ -111,6 +111,7 @@
   "test_audit_d3_t2av4_boundaries_chatgpt.py": 12,
   "test_audit_d3_t2av4_prior31_adapted_chatgpt.py": 12,
   "test_audit_d3_t2b_contracts_chatgpt.py": 18,
+  "test_audit_d3_t2bv2_closing_chatgpt.py": 13,
   "test_audit_d3a_completion_boundaries_chatgpt.py": 9,
   "test_audit_d4_intake_v2_review_chatgpt.py": 15,
   "test_audit_v02_priority_chatgpt.py": 14,
@@ -160,7 +161,7 @@
   "test_d4_intake.py": 5,
   "test_d4_run_reader.py": 8
  },
- "total_test_functions": 931,
+ "total_test_functions": 944,
  "tests_sha256": {
   "test_audit_b2_tranche10_chatgpt.py": "304ee655483cc9780e9bf778fb2aa659b6eb6ab017c69b01481db6f56efe2603",
   "test_audit_b2_tranche11_chatgpt.py": "d1aaa931fab2572a9ac8f007bde23bc426f4071f0e1054356ead14061f4f5c4a",
@@ -219,6 +220,7 @@
   "test_audit_d3_t2av4_boundaries_chatgpt.py": "9f980ad948cad467ea8a0cb2320726f4e24271bd8e6363634f285e990e563272",
   "test_audit_d3_t2av4_prior31_adapted_chatgpt.py": "d82e159180cda9cf5cfaf0223d6e4c3bf038b110a1047d49d12e04d14ae061a9",
   "test_audit_d3_t2b_contracts_chatgpt.py": "7169e862b31cfec6a2aae82d34e00837001b76cd648e539b35b50961ed507141",
+  "test_audit_d3_t2bv2_closing_chatgpt.py": "29aa051a1c88c90ae1b1d4b924dfda642ca817d187f7a453231d563ed062b396",
   "test_audit_d3a_completion_boundaries_chatgpt.py": "3136dc65c0a994e0c1c14c771d844fd28d8d046501713f3888ba686c07f9aba4",
   "test_audit_d4_intake_v2_review_chatgpt.py": "ff5b2ae268e6d05f29b5f7e71d11010d4954e0ba5890b3314b4755b4649d04fe",
   "test_audit_v02_priority_chatgpt.py": "090a8efcb0747d8c0f66c2619e28351cd7567dd2b4a2cf8058389e811f4e0f11",
@@ -262,7 +264,7 @@
   "test_d3_covgen.py": "bb04af8644625ffc34400e7a1fed6971d946c3e84fcff67b54293b919455e625",
   "test_d3_partition_intake.py": "c981ee164b1fdff7df5144c0fd10ff4044058329c4abe06fc39929b36411b57e",
   "test_d3_tranche1.py": "f1719581c5098fb5524fabeb274cff3c3feb7373a7d0f2d2fa07ad8097cfce0a",
-  "test_d3_tranche2b.py": "065a2e7546b8a356ee1fc71fcc1c3052a502f7ff084e1bd99b7d8275ab12fe64",
+  "test_d3_tranche2b.py": "b1f91077d74a9ad0b1754209ca435be3431c3e67261584b785117902feec891e",
   "test_d3a_registered_intake.py": "f0d5f21366bbaade98552235684c4cb4244a675212cf6e813393d60e4d046b1c",
   "test_d4_calibration_first.py": "36acfbdc12263adad1cd49727f1d70c65a06f224de12cfe371dae578386d5656",
   "test_d4_intake.py": "38fb82bbe28f11efb480326e5cf182fda63ee56766b2bb1161d338f7a4bb9104",
@@ -320,7 +322,7 @@
   "Step1_rules_v1.0_draft4.1.md": "5f02c970eb39f9b3e7f7b17b48eb2d3daa16434517cf4442bac339f5ab719615",
   "rules_tables_v1.json": "522751be134aa3ff4fdf33c6be0d7397fb7bd3c89a6c67e26a67bd32dceeb0b4",
   "Step1_PhaseB_engine_spec_v0.2_addendum.md": "ed9b02858df08b3d2acec990b61ab0626f1a9c05cb88f267051bcc33f39ba21d",
-  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "94c5496bd057d489466672b1286c1bf8da42e7a7d6d2d52231ba5737956f034e",
+  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "186c9713499abb492a7dcb391d0c342111e95bf5d2287eed1baa7334388ca59b",
   "Step1_PhaseB_B3_3_receipts_and_deadlines.md": "407bbca8b872e88415921dcf7f244b8ff7a72a4e9c7308478f59641c6cdd42ae",
   "Step1_PhaseD_design_v0.3.md": "6be8ae30f5da27c22e711379f23de1b8a74f094238d7a06334f70b64acef2d75",
   "Step1_PhaseD_D4_design_v0.1.md": "5c329210b13e12213597cc9198e6d9f09e628655979709613d5ffb7ca78da290",
@@ -331,26 +333,26 @@
   "Step1_PhaseD_D3_tranche1_report.md": "662fde8313a992a9e0ff1bfbbdea6582b8a5e5c5f47521cd5f1d228497b617c2",
   "Step1_PhaseD_D3_tranche2a_report.md": "12618bb90362b2b11746d1f7cc1271ec99c48208ec7659ce895c42d94b3ddfaa",
   "Step1_PhaseD_D3a_completion_report.md": "c8a9af2a775dcfacc4692fc44bbba3e696991e674961acae3632be5be8e78d7a",
-  "Step1_PhaseD_D3_tranche2b_report.md": "0894f6f89c25f7a2e6707035d1b45213f6fbba36b61002bb5dfaad23411fa04b"
+  "Step1_PhaseD_D3_tranche2b_report.md": "dc6dc28125d6a8d957ca53fc8df8f54f3529789e1f3ed6699e663147c7f2231b"
  },
  "counts": {
   "modules": 51,
-  "test_files": 105,
-  "test_functions": 931,
+  "test_files": 106,
+  "test_functions": 944,
   "test_b_files": 28,
-  "test_audit_files": 62
+  "test_audit_files": 63
  },
  "b3_sha256": {
   "b3/MirrorTopology_Step1_B3_0_smoke_v0.3.ipynb": "c62537e5ce20210b15394b63a3a212a7c1cb3b14df277f481a86f928c1d6cde6",
   "b3/MirrorTopology_Step1_B3_1_control_v0.1.ipynb": "b665793fd12e745d765c510dc42c5c345fe80c0801d88b536bb4ccdf615d832d",
   "b3/MirrorTopology_Step1_B3_2A_assets_v0.2.ipynb": "b3400aca97a6bc5f6355324135e3a5b9e0a2094ccf1956716a8364a1c0f9b4bc",
   "b3/MirrorTopology_Step1_B3_2B_shared_null_v0.5.ipynb": "3fdeddb940694e777b2473742428df8fff68ff4192cbdf1bc78ee4949cc69135",
-  "b3/b3_0_pins.json": "252a5118489204b30c8da09a46e74a23d3d4160f129fb1a16e06ae212224d185",
+  "b3/b3_0_pins.json": "62af785e565e6c9e9f6b9f976130456fabad8cdc0f3b6654d546c492a3aa2782",
   "b3/b3_0_smoke.py": "9c2d125f93487a55bb74c020d7803843054b550ec36163012dac6ffc9e485dae",
   "b3/b3_1_control.py": "d62a77502ad6efdc8bb65df8b8bcb44d66a390c884eaf0a0ad885dd3f9db4eeb",
-  "b3/b3_1_pins.json": "1a91239bcffb0b32947bc802b44d212debe1ac55c2981ad92141ea45b0df7e2a",
+  "b3/b3_1_pins.json": "9c9a11a8f7567f7562abdf2fb7ad9ab45089b2bb4b1a48c3a10810f7e18796ca",
   "b3/b3_2_assets.py": "ed500397091966d2ff3dfeac8226c7bbd2688dae1b5a68a2440ce09b0a7fb1c6",
-  "b3/b3_2_pins.json": "c2a01dcde23f8c400ab8253b7c8a2cddcea2574b187937e38d72b62a5f7553f8",
+  "b3/b3_2_pins.json": "5f946a76fa554a8c13a6ac183f3016bd56488014c3f18ad0863bb42358360cc1",
   "b3/b3_2_shared_null.py": "fc1c3d81cb4e1d22edd246a78cbd801a6a16024dca57ed1b0bc35ae9d47c09c6"
  },
  "registered_assets_sha256": {
@@ -1413,11 +1415,11 @@
   "d/MirrorTopology_Step1_D3a_covgen_v0.1.ipynb": "831dbf11f2ef5c6e7518624be128d95ff6f47fedef05191a0baabf683e6da417",
   "d/MirrorTopology_Step1_D3a_covgen_v0.2.ipynb": "6444a32022a71debd9c3b2d96867375a5732f3c8cd13dfad4a1aa6da2aa0cc0d",
   "d/d1_covgen.py": "ec0dce90ec05e97a26ca43c5396195b9b1f796afdb5f2784d3459c91ec3b3400",
-  "d/d1_pins.json": "ef8f7feea421596b42555974b11e33738602a1642a8597cf1ab16290379b7415",
+  "d/d1_pins.json": "41f510f08a183de552f0f5663faee220f3ba71dbaec38e20e8e9917f75ba3c88",
   "d/d2_bank_spec.json": "c5650166b7ae49a53c849184c2bb0cb44435c38c79d8ec0f2c3fbcbe93bd7415",
   "d/d2_bankgen.py": "6ef809146402c81b086b3b21b2172cf61f56d85e794a7c988aab014b08aff3b8",
   "d/d2_crn_table.json": "99b68d8e78b741c918d4375c60cd64472c148316855bdeac19766faecf503f61",
-  "d/d2_pins.json": "571e10fc6beedf161a882d05a0a42c4510dceedb4b0883691bbd9113c0e8b109",
+  "d/d2_pins.json": "bb623c40c1deb392635b39361cbe240e525fb355d963045dda71c4c1e92771dd",
   "d/d2_verify_banks.py": "d3a348c6e18af3e26f6349e1e3bfb657c2f458cb2ca697496d925652a9e66228",
   "d/d3_bank_spec.json": "852d86b613c3c230aa790411b9e49045fe4af690da425c8ca030eed22c77a679",
   "d/d3_config_map.json": "6e3699d9a4315177a605734ee55911c0e7f07a171e1c77ceefee8cb567f6a36f",
@@ -1425,6 +1427,6 @@
   "d/d3_d2_reuse_binding_schema.json": "588a9dda3713b53e1280b46ed00fa315448f536ba27294645e1bce7774514ce1",
   "d/d3_pc1_case_table.json": "c86853e4dbd0a47ffaac8136d798385a58297f1405be2d0cbc6d4158ce392f1c",
   "d/d3_pc1_contract.json": "a132da70391f48f190b40781a6d49cffe45593d54dde5194e487ceda20733db4",
-  "d/d3_pins.json": "47921a1d97450174dfadc83833ef203bc36b1f5c6af432b42d9937ce858e34a3"
+  "d/d3_pins.json": "098993896a2ba4e3926b953a5c18e4f06f3ca7fda872ef6d13f5083d53bdf879"
  }
 }

@@ -1,5 +1,5 @@
-# Phase D-3 tranche ②b v2 報告（監査 R-D3T2B-A/B/C/D の反映：検証済み context・plan 全集合・上流固定・snapshot 消費）
-2026-09-29。Claude 作成。ChatGPT 宛。engine `step1_engine 0.90.0`（数値 kernel は 0.54.0 基盤の継承；v1（0.89.0）からの変更は `d3_profile.py` の 4 領域の補強と `d/d3_bank_spec.json`（context から再導出；payload `d5fda77b…`）・`d/d3_pins.json`（spec v2 SHA 更新）・版表示のみ；receipt（payload `ab545a6f…`）・生成 script・case 表・config map・kernel・登録 run 記録は不変）。v1 は `Step1_PhaseD_D3_tranche2b_0.89.0_decision.json` で「登録内容は整合／新 ②b 正式契約は HOLD」（4 領域）。D-3a 完了 v2（0.88.0）は監査で受入れ PASS（HOLD 解除；`Step1_PhaseD_D3a_completion_v2_0.88.0_decision.json`）。本 tranche は設計 v0.2 §D/E の未了項目（T1-PROFILE・PLAN-FIXATION・bank spec v2）を実装する。**数値は生成しない**（bank・PC-1・較正なし）。**見込み：監査 1〜2 往復（保証ではない）。**
+# Phase D-3 tranche ②b v3 報告（v2 監査 R-D3T2BV2-A/B の反映：公開 view の分離・空 evaluation plan の拒否）
+2026-09-29。Claude 作成。ChatGPT 宛。engine `step1_engine 0.91.0`（数値 kernel は 0.54.0 基盤の継承；v2（0.90.0）からの変更は `d3_profile.py` の 2 定義（§0.2）と版表示のみ；v1（0.89.0）からの変更は `d3_profile.py` の 4 領域の補強と `d/d3_bank_spec.json`（context から再導出；payload `d5fda77b…`）・`d/d3_pins.json`（spec v2 SHA 更新）・版表示のみ；receipt（payload `ab545a6f…`）・生成 script・case 表・config map・kernel・登録 run 記録は不変）。v1 は `Step1_PhaseD_D3_tranche2b_0.89.0_decision.json` で「登録内容は整合／新 ②b 正式契約は HOLD」（4 領域）。D-3a 完了 v2（0.88.0）は監査で受入れ PASS（HOLD 解除；`Step1_PhaseD_D3a_completion_v2_0.88.0_decision.json`）。本 tranche は設計 v0.2 §D/E の未了項目（T1-PROFILE・PLAN-FIXATION・bank spec v2）を実装する。**数値は生成しない**（bank・PC-1・較正なし）。**見込み：監査 1〜2 往復（保証ではない）。**
 
 ## 0. D-3a v2 監査の非 blocking 指摘への対応
 - receipt md の「配列検証付き受入れ pending」：v2 で既に配列受入れ（`…array_acceptance_20260929`）と 0.87.0 監査への参照に更新済み；本版で v2 受入れ（HOLD 解除）を ledger の `external_acceptance` に追記（ledger SHA が変わるため，receipt の `d3a.ledger_sha256` と新点の receipt id `D3A_<ledger12>` はこの ledger に束縛されて再導出）。
@@ -16,6 +16,14 @@
 | **D**（consumer） | 認証後に元 path を loader が再読（末尾追記で file SHA が変わっても元 SHA で認証済みと返す） | 捕捉した bytes を隔離 temp file に書き，読み戻して SHA 一致を確認したその path だけを凍結 loader に渡し，読込み後にも snapshot の不変を確認（D-3a `load_bound` と同じ経路）；元 path は認証後に再び開かない。監査の double 試験：末尾追記→loader が読んだ bytes＝認証 bytes；配列置換→snapshot を消費（loader が読んだのは認証 bytes）し，次回 intake は変更 path を拒否 |
 
 監査の 35 対照を `tests/test_audit_d3_t2b_contracts_chatgpt.py` として同梱（path 適応＋「API adaptation」と明記した正常 fixture の適応 5 箇所：context 引数・official gate への plan identity 供給・上流改変を scratch copy の tree で context に与える・validate 自体が拒否し得る・D の「正しい snapshot か安全な拒否」）：提出版 9/35 → v2 **35/35**。著者側 `test_d3_tranche2b.py` 5 件も 4 領域の対照を追加（受入れ済み receipt でない dict の拒否・混在 source の統合前拒否・provenance 再ラベル拒否・plan の全 seed／header／purpose・上流改変 root からの context 拒否・107 配置拒否・snapshot）。D-3a v2 監査の receipt md「pending」文言も更新。
+
+## 0.2 v3：v2 監査（`Step1_PhaseD_D3_tranche2b_v2_0.90.0_decision.json`；R-D3T2B-C/D 閉鎖，A/B の残 2 点）の反映
+| ID | 指摘 | v3 の対応 |
+|---|---|---|
+| **R-D3T2BV2-A** | 5 seed の record が揃っていても，各 evaluation plan の strata／rng_keys／multiplicities を空にし identity を再導出すると `verify_plan_identity` が True | 参考候補を採用：各 seed の型確認直後に `p.strata` が空 dict でないことを要求。加えて**各 stratum が空 list でない**ことも要求（候補より 1 条件強い；1 batch の N₀ 診断・2 batch・縮小 B／B_KDE は従来どおり許容） |
+| **R-D3T2BV2-B** | `TwelveContext.registry`／`twelve_assets` が内部 object をそのまま返し，公開 view の編集が検証済み state に波及（単 size の assembly が `full_surviving_scope=True` に変質） | 参考候補を採用：両 property を deepcopy で返す（dict view と同様に全 view が独立）；内部処理は private state を使う。公開 view を編集しても identities・verified・assembly の scope 宣言は不変（試験） |
+
+同梱 `d3_profile.py`（`e5a29131…`）は参考候補 `3f26a5b6…` と **2 定義を除く全定義の AST が同一**：`verify_plan_identity`（空 stratum list の拒否を 1 条件追加）と `assemble_twelve_family`（内部処理が deepcopy された公開 view ではなく private state を読む；契約は同一で，公開 view の編集は波及しない）。監査の新 28 対照を `tests/test_audit_d3_t2bv2_closing_chatgpt.py` として同梱（path 適応のみ）：提出版 22/28 → v3 **28/28**；前回 35 対照 35/35，著者側 5 件（A/B の対照を追加）通過。生成 script・receipt（`ab545a6f…`）・spec v2（`d5fda77b…`）・登録 run・共分散は不変。
 
 ## 1. 108 位置 covariance receipt（`registered_assets/d3/d3_covariance_receipt.json`；SHA `01387df2…`，payload `ab545a6f…`）
 | 項目 | 内容 |
@@ -52,7 +60,7 @@ family の bank cluster UID（family evaluation latent の順）から 5 seed �
 receipt（決定性・登録一致・108 の id 集合・全 file の byte 束縛・改変 5 種の拒否・pins 不一致／登録 NPY 改変時の構築拒否）；消費時 intake（新点・anchor の通過，E1／未知／非整数の拒否，FAIL receipt の拒否，登録後の byte 改変の拒否，mt_root 必須；凍結 checkout 必要）；profile（§3）；plan 固定（§4）；bank spec v2（§5）。既存の第 1 波経路（`build_family_input`・`official_gate`・D-2 tranche ③a・監査 t20／t21）は不変で通過。
 
 ## 6.1 全 suite
-51 module・105 test file・931 test 関数・**1450 pytest case 全通過**（11 chunk の JUnit を集合照合：node 集合＝collect・重複 0・failure/skip 0；`regression_logs/d3_t2bv2_pytest/`；v1 の記録 `regression_logs/d3_t2b_pytest/` は保持）。`verify_b2_packet.py` PASS。
+51 module・106 test file・944 test 関数・**1478 pytest case 全通過**（11 chunk の JUnit を集合照合：node 集合＝collect・重複 0・failure/skip 0；`regression_logs/d3_t2bv3_pytest/`；v1／v2 の記録も保持）。`verify_b2_packet.py` PASS。
 
 ## 7. 未了・限定
 - 本 tranche は receipt／intake／profile／plan／spec の**契約と小規模試験**であり，12 位置 bank の生成（D-3b）・正式 12 位置 profile の**実 bank による**受入れ・較正・PC-1 の物理受入れ・D-2W・noise・Phase E を含まない。監査の `not_approved`（108 位置 receipt／profile／plan の承認・D-3b GO）は本 packet の監査で判断される。
