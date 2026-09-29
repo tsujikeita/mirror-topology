@@ -20,7 +20,7 @@
 - 実行済 notebook 11 本：`d/MirrorTopology_Step1_D3a_covgen_v0.2.ipynb` と **parameter cell（REPO_COMMIT・EXPECTED_INVENTORY_SHA256・FAMILY・SIZE_FILTER）以外は同一**（cell 単位 diff で確認）。selftest flag・環境 gate 迂回・出力書換えなし（許可書条件）。
 - **外部受入れ（metadata）**：`Step1_PhaseD_D3_all9_fe7c201ef265_metadata_acceptance.json`／`ChatGPT_audit_Step1_PhaseD_D3_all9_fe7c201ef265.md`（2026-09-29；`PASS_WITH_EXPLICIT_SCOPE`；NPY 読込み 0/225）。監査が固定した 9 run manifest SHA・notebook SHA・環境 fingerprint `bcfae7ed…`・NPY 記録 bytes 1,616,400・script 秒合計 80868.49 は本 packet の ledger と**全一致**（照合済み）。監査の「次工程」（225 NPY を partition/run 別 folder で提出）には，登録 copy（`registered_assets/d3/runs/<partition>/d3/cov_cache`）に加え，要求された layout `D3a_covariances/<FAMILY>_<SIZE>_<RUN_ID>/cov_cache/*.npy` の提出 zip（index CSV 付き）で応える。
 - **監査が未受領とした未完 attempt の実記録**：本 packet の `registered_assets/d3/runs/*_INCOMPLETE_rc-9/` に launcher stderr（rc −9）・final record（`RECORD_MISSING_OR_INVALID`）・partial evidence・生成 manifest を登録（run_id：E2 `20260926T163437Z`，E8 `20260927T164804Z`）。kernel の OOM 記録・peak RSS は Colab 側に残っておらず提出できないため，原因は「標準 runtime での rc −9 が 2 partition で再現し，コード無変更・同一 fingerprint の High-RAM で完走」という観測事実の範囲で申告する。
-- **notebook の実行番号（監査 §4 の指摘）**：6 本（E2/L1.20・E2/L1.50・E7/L1.00・E7/L1.50・E8/L1.00・E8/L1.20）は親 Colab session を partition 間で再利用したため実行番号が 1 から始まっていない（同一 session で順に別 partition を起動）。計算は notebook から `sys.executable` の**別 child process**で，run ごとに fresh checkout・fresh OUT・child 内の環境／source gate を通っており，親 runtime の状態は結果に入らない。監査どおり再実行は不要とするが，**D-3b 以降は run ごとに fresh runtime** を手順に固定する。環境 fingerprint は RAM 容量・hardware を含まない（監査の `hardware_equivalence_not_claimed` と同じ立場）。
+- **notebook の実行番号（監査 §4 の指摘）**：6 本（E2/L1.20・E2/L1.50・E7/L1.00・E7/L1.50・E8/L1.00・E8/L1.20）は親 Colab session を partition 間で再利用したため実行番号が 1 から始まっていない（同一 session で順に別 partition を起動）。計算は notebook から `sys.executable` の**別 child process**で，run ごとに fresh checkout・fresh OUT・child 内の環境／source gate を通っている。確認した範囲は「別 child process・source／環境検査・保存配列の整合」であり，親 runtime の状態の一般的な無影響を child 起動だけから証明するものではない（監査 v2 §7 の限定に合わせて訂正）。監査どおり再実行は不要とするが，**D-3b 以降は run ごとに fresh runtime** を手順に固定する。環境 fingerprint は RAM 容量・hardware を含まない（監査の `hardware_equivalence_not_claimed` と同じ立場）。
 
 ## 2. 著者側の検証（受入れ記録で「未実施」だった 3 項目）
 | 項目 | 方法 | 結果 |
@@ -37,7 +37,7 @@ v2 では監査の参考補強（`d3_assets.py` 1 file，SHA `d7b6f79d…`）を
 ## 3. 成果物（本版で追加）
 | 物 | 内容 |
 |---|---|
-| `registered_assets/d3/runs/<partition>/` | 9 正式 run の完全記録（`d3/` の run manifest・registry・PC-1 results・partial evidence・env lock・stdout log・**cov_cache（NPY＋生成 manifest）**，launcher lock，final record，launcher stdout/stderr）と 2 未完 attempt（`…_INCOMPLETE_rc-9`；metadata のみ，`scratch` 除外）。合計 5.0 MB・604 file |
+| `registered_assets/d3/runs/<partition>/` | 9 正式 run の完全記録（`d3/` の run manifest・registry・PC-1 results・partial evidence・env lock・stdout log・**cov_cache（NPY＋生成 manifest）**，launcher lock，final record，launcher stdout/stderr）と 2 未完 attempt（`…_INCOMPLETE_rc-9`；metadata のみ，`scratch` 除外）。合計 5.0 MB・604 file（`runs/` 593＝成功 540＋未完 53，実行済 notebook 11） |
 | `registered_assets/d3/notebooks/` | 実行済 notebook 11 本（SHA を ledger に記録） |
 | `registered_assets/d3/d3a_generation_ledger.json` | source lock・partition 別（run_id・Drive path・runtime・秒・manifest／document／final record／launcher lock の SHA・gate・PC-1 集計）・未完 attempt（rc・原因・完走 run・再現件数）・notebook SHA・coverage SHA・外部受入れ参照 |
 | `registered_assets/d3/d3a_family_coverage.json` | `aggregate_partitions` の出力 3 family（`d3a_family_coverage_v3`；run_dir は登録相対 path） |

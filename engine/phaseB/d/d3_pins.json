@@ -1,6 +1,6 @@
 {
  "schema": "d3_pins_v1",
- "engine_version": "0.88.0",
+ "engine_version": "0.89.0",
  "profile": "production_official",
  "environment": {
   "python": "3.13.15",
@@ -50,5 +50,7 @@
   "discriminate_rel_gt": 0.01,
   "source": "A11 R5: match rel < 1e-5 (TOL_MATCH); discriminate rel > 1e-2 (TOL_DISCR)"
  },
- "expected_runtime": "per family: 27 bases + 36/36/54 clones (+9/9/18 anchor clones) at ~400 s each on Colab (D-1: 30 in 3.3 h) -> E2/E7 ~8 h, E8 ~11 h (not a guarantee; split by size if needed)"
+ "expected_runtime": "per family: 27 bases + 36/36/54 clones (+9/9/18 anchor clones) at ~400 s each on Colab (D-1: 30 in 3.3 h) -> E2/E7 ~8 h, E8 ~11 h (not a guarantee; split by size if needed)",
+ "covariance_receipt_sha256": "ab545a6f993da5890214a54cb0b3229dc064dbf37704fb229d3095dccc98dc89",
+ "bank_spec_v2_sha256": "a886c02f25a50669e23574b2c2c7e510f450d2c6b44d18f45f831b5579659f9e"
 }

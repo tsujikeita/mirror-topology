@@ -14,11 +14,11 @@
  },
  "ledger": {
   "file": "registered_assets/d3/d3a_generation_ledger.json",
-  "sha256": "eb8ccdc2e6a11d874a007f6896cdde1d43ac8d8277a82f436d1458f88638ea0e",
+  "sha256": "26bf552fdf41785e91bc61eed4017d2440f882f2e69b722ab5f9d096b9384ce0",
   "coverage_file": "registered_assets/d3/d3a_family_coverage.json",
   "coverage_sha256": "8a55452dbbbfb832ca0ece07ff0999a3f9e3ac4f8251216987c09e6c8d24365b",
   "commit": "<this packet commit>",
-  "engine": "0.88.0"
+  "engine": "0.89.0"
  },
  "partitions": {
   "d3_E2_L1.00_fe7c201ef265_audit": {
@@ -197,7 +197,8 @@
    "metadata_acceptance_E2_L100": "Step1_PhaseD_D3_E2_L1.00_fe7c201ef265_metadata_acceptance.json (2026-09-26)",
    "metadata_acceptance_all9": "Step1_PhaseD_D3_all9_fe7c201ef265_metadata_acceptance.json + ChatGPT_audit_Step1_PhaseD_D3_all9_fe7c201ef265.md (ba7a64905813\u2026; 2026-09-29; PASS_WITH_EXPLICIT_SCOPE; NPY read 0/225)",
    "array_verified_acceptance": "Step1_PhaseD_D3a_array_acceptance_20260929.json (2026-09-29; scoped PASS: 225 arrays, 144-case PC-1 recomputation, 3 array-verified families)",
-   "completion_packet_0_87_0": "Step1_PhaseD_D3a_completion_0.87.0_decision.json (DATA_AND_HISTORY_ACCEPTED__NEW_INTAKE_HOLD; R-D3AC-A/B adopted in 0.88.0)"
+   "completion_packet_0_87_0": "Step1_PhaseD_D3a_completion_0.87.0_decision.json (DATA_AND_HISTORY_ACCEPTED__NEW_INTAKE_HOLD; R-D3AC-A/B adopted in 0.88.0)",
+   "completion_packet_v2_0_88_0": "Step1_PhaseD_D3a_completion_v2_0.88.0_decision.json (PASS_WITH_EXPLICIT_SCOPE__REGISTERED_INTAKE_HOLD_LIFTED; commit 861ea95c\u2026)"
   },
   "not_claimed": [
    "PC-1 acceptance (external)",

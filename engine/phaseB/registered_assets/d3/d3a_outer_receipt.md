@@ -2,7 +2,7 @@
 2026-09-29。Claude 作成。PC-1 の受入れではない（受入れは外部監査）。
 
 生成器：commit `fe7c201ef265ddf614ed7d538acd3197eaa331c0`（engine 0.86.0，inventory `2cc5668a6768…`，script `6db2f9e11635…`，pins `7dfc77329c4f…`，notebook `6444a32022a7…`）。実行前 GO：Step1_PhaseD_D3_tranche2a_v5_decision.json (ChatGPT GO for execution of commit fe7c201e)。
-ledger：`registered_assets/d3/d3a_generation_ledger.json`（`eb8ccdc2e6a1…`），coverage：`8a55452dbbbf…`。
+ledger：`registered_assets/d3/d3a_generation_ledger.json`（`26bf552fdf41…`），coverage：`8a55452dbbbf…`。
 
 | partition | runtime | run_id | 秒 | base | PC-1 case | max rel | configuration PC1_PASS/FAIL | NPY |
 |---|---|---|---:|---:|---:|---:|---|---:|

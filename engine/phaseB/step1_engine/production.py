@@ -120,6 +120,9 @@ def validate_grid_identity(gi, family, system, evaluation_ids, prior=None):
     Conditional size subsets remain diagnostic inputs, not formal full-family release.
     """
     if gi is None: return True
+    if isinstance(gi, dict) and gi.get("stage") == "twelve":                      # D-3 tranche 2b: 12-position identity (superset schema; validated by d3_profile)
+        from .d3_profile import validate_twelve_grid_identity
+        return validate_twelve_grid_identity(gi, family, system, evaluation_ids, prior)
     if not isinstance(gi, dict) or set(gi) != _GRID_FIELDS:
         raise InputContractError("grid identity field inventory")
     if family not in FAMILIES or system not in SYSTEMS or gi["family"] != family or gi["system"] != system:

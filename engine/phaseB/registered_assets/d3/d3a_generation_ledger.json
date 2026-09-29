@@ -439,6 +439,27 @@
    "accepted": "registered 225 NPY + 315 metadata byte identity; 11 notebooks; 2 incomplete attempt records; 39 covariance identities / 21 rel reproduced by the completed runs; new intake normal path",
    "hold": "R-D3AC-A (incomplete final/partial bytes bound to ledger expected hashes; clone file/array/loader identity and partial scope) and R-D3AC-B (same captured bytes for hashing and decoding)",
    "resolution": "reference patch (d3_assets.py sha256 d7b6f79d3855770da2234338c17fef31a7b1fb8b44b712165151685e87b43062) examined and adopted in engine 0.88.0; audit contracts bundled as tests/test_audit_d3a_completion_boundaries_chatgpt.py (path adaptation only)"
+  },
+  "completion_packet_v2_0_88_0": {
+   "file": "Step1_PhaseD_D3a_completion_v2_0.88.0_decision.json",
+   "audit_report": "ChatGPT_audit_Step1_PhaseD_D3a_completion_v2_0.88.0.md",
+   "date": "2026-09-29",
+   "decision": "PASS_WITH_EXPLICIT_SCOPE__REGISTERED_INTAKE_HOLD_LIFTED",
+   "archive_sha256": "f79bad2979f72aee8de37d8d0ea587e3f68d884fb556273a76ce7aa75a045c2e",
+   "commit": "861ea95ca6e8bb924296ab2cb1a48ecb784f6664",
+   "closed": [
+    "R-D3AC-A",
+    "R-D3AC-B"
+   ],
+   "not_approved": [
+    "D3b bank generation",
+    "108-position receipt/profile",
+    "BankSupply/BootstrapPlan/FittingPlan binding",
+    "D2W",
+    "noise",
+    "calibration/usable/labels",
+    "kernel-level OOM cause"
+   ]
   }
  },
  "totals": {
