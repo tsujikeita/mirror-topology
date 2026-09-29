@@ -1,5 +1,5 @@
 # Phase D-3 tranche ②b v3 報告（v2 監査 R-D3T2BV2-A/B の反映：公開 view の分離・空 evaluation plan の拒否）
-2026-09-29。Claude 作成。ChatGPT 宛。engine `step1_engine 0.91.0`（数値 kernel は 0.54.0 基盤の継承；v2（0.90.0）からの変更は `d3_profile.py` の 2 定義（§0.2）と版表示のみ；v1（0.89.0）からの変更は `d3_profile.py` の 4 領域の補強と `d/d3_bank_spec.json`（context から再導出；payload `d5fda77b…`）・`d/d3_pins.json`（spec v2 SHA 更新）・版表示のみ；receipt（payload `ab545a6f…`）・生成 script・case 表・config map・kernel・登録 run 記録は不変）。v1 は `Step1_PhaseD_D3_tranche2b_0.89.0_decision.json` で「登録内容は整合／新 ②b 正式契約は HOLD」（4 領域）。D-3a 完了 v2（0.88.0）は監査で受入れ PASS（HOLD 解除；`Step1_PhaseD_D3a_completion_v2_0.88.0_decision.json`）。本 tranche は設計 v0.2 §D/E の未了項目（T1-PROFILE・PLAN-FIXATION・bank spec v2）を実装する。**数値は生成しない**（bank・PC-1・較正なし）。**見込み：監査 1〜2 往復（保証ではない）。**
+2026-09-29。Claude 作成。ChatGPT 宛。engine `step1_engine 0.91.0`（数値 kernel は 0.54.0 基盤の継承；v2（0.90.0）からの変更は `d3_profile.py` の 3 定義（`TwelveContext`／`assemble_twelve_family`／`verify_plan_identity`；監査の参考候補 `3f26a5b6…` 比では 2 定義，§0.2）と版表示のみ；v1（0.89.0）からの変更は `d3_profile.py` の 4 領域の補強と `d/d3_bank_spec.json`（context から再導出；payload `d5fda77b…`）・`d/d3_pins.json`（spec v2 SHA 更新）・版表示のみ；receipt（payload `ab545a6f…`）・生成 script・case 表・config map・kernel・登録 run 記録は不変）。v1 は `Step1_PhaseD_D3_tranche2b_0.89.0_decision.json` で「登録内容は整合／新 ②b 正式契約は HOLD」（4 領域）。D-3a 完了 v2（0.88.0）は監査で受入れ PASS（HOLD 解除；`Step1_PhaseD_D3a_completion_v2_0.88.0_decision.json`）。本 tranche は設計 v0.2 §D/E の未了項目（T1-PROFILE・PLAN-FIXATION・bank spec v2）を実装する。**数値は生成しない**（bank・PC-1・較正なし）。**見込み：監査 1〜2 往復（保証ではない）。**
 
 ## 0. D-3a v2 監査の非 blocking 指摘への対応
 - receipt md の「配列検証付き受入れ pending」：v2 で既に配列受入れ（`…array_acceptance_20260929`）と 0.87.0 監査への参照に更新済み；本版で v2 受入れ（HOLD 解除）を ledger の `external_acceptance` に追記（ledger SHA が変わるため，receipt の `d3a.ledger_sha256` と新点の receipt id `D3A_<ledger12>` はこの ledger に束縛されて再導出）。
@@ -22,6 +22,8 @@
 |---|---|---|
 | **R-D3T2BV2-A** | 5 seed の record が揃っていても，各 evaluation plan の strata／rng_keys／multiplicities を空にし identity を再導出すると `verify_plan_identity` が True | 参考候補を採用：各 seed の型確認直後に `p.strata` が空 dict でないことを要求。加えて**各 stratum が空 list でない**ことも要求（候補より 1 条件強い；1 batch の N₀ 診断・2 batch・縮小 B／B_KDE は従来どおり許容） |
 | **R-D3T2BV2-B** | `TwelveContext.registry`／`twelve_assets` が内部 object をそのまま返し，公開 view の編集が検証済み state に波及（単 size の assembly が `full_surviving_scope=True` に変質） | 参考候補を採用：両 property を deepcopy で返す（dict view と同様に全 view が独立）；内部処理は private state を使う。公開 view を編集しても identities・verified・assembly の scope 宣言は不変（試験） |
+
+（v3 は `Step1_PhaseD_D3_tranche2b_v3_0.91.0_decision.json` で **PASS_WITH_EXPLICIT_SCOPE**・HOLD 解除・D-3b 起草 GO；正式 Colab 生成 GO は含まない。同 decision の非 blocking 文書注記＝「v2 比 3 定義・参考候補比 2 定義」を本版冒頭に反映。）
 
 同梱 `d3_profile.py`（`e5a29131…`）は参考候補 `3f26a5b6…` と **2 定義を除く全定義の AST が同一**：`verify_plan_identity`（空 stratum list の拒否を 1 条件追加）と `assemble_twelve_family`（内部処理が deepcopy された公開 view ではなく private state を読む；契約は同一で，公開 view の編集は波及しない）。監査の新 28 対照を `tests/test_audit_d3_t2bv2_closing_chatgpt.py` として同梱（path 適応のみ）：提出版 22/28 → v3 **28/28**；前回 35 対照 35/35，著者側 5 件（A/B の対照を追加）通過。生成 script・receipt（`ab545a6f…`）・spec v2（`d5fda77b…`）・登録 run・共分散は不変。
 
