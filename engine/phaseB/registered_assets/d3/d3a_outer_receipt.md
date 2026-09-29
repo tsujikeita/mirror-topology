@@ -29,6 +29,6 @@ ledger：`registered_assets/d3/d3a_generation_ledger.json`（`26bf552fdf41…`�
 - executed notebooks: only the parameter cell differs from d/MirrorTopology_Step1_D3a_covgen_v0.2.ipynb (11/11)
 - incomplete attempts reproduced bit-identically by the completed High-RAM runs (39 covariance identities, 21 rel values)
 
-外部：metadata 受入れ＝E2/L1.00（2026-09-26）および全 9 partition（`Step1_PhaseD_D3_all9_fe7c201ef265_metadata_acceptance.json`，2026-09-29，PASS_WITH_EXPLICIT_SCOPE；run manifest SHA 9 件・notebook SHA・環境 fingerprint は本 ledger と一致；NPY 読込み 0/225）；配列検証付き受入れ＝pending: this packet supplies all 11 run records with arrays for the audit-side re-verification。
+外部：metadata 受入れ＝E2/L1.00（2026-09-26）および全 9 partition（`Step1_PhaseD_D3_all9_fe7c201ef265_metadata_acceptance.json`，2026-09-29，PASS_WITH_EXPLICIT_SCOPE；run manifest SHA 9 件・notebook SHA・環境 fingerprint は本 ledger と一致；NPY 読込み 0/225）；配列検証付き受入れ＝`Step1_PhaseD_D3a_array_acceptance_20260929.json`（2026-09-29，範囲付き PASS：225 配列・144 case の PC-1 独立再計算・3 family の配列付き集約）；0.87.0 packet＝`Step1_PhaseD_D3a_completion_0.87.0_decision.json`（データ・履歴受入れ／新 intake HOLD）；0.88.0 v2＝`Step1_PhaseD_D3a_completion_v2_0.88.0_decision.json`（HOLD 解除・登録 intake 受入れ PASS；commit `861ea95c…`）。
 
 本 receipt が主張しないこと：PC-1 acceptance (external)；12-position covariance receipt / plan-schema binding (tranche 2b)；D-3b bank generation。

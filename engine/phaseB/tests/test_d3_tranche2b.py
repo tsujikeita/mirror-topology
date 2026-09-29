@@ -10,7 +10,7 @@ import os, sys, json, copy, hashlib, shutil
 import numpy as np, pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from step1_engine import d3_profile as dp
-from step1_engine.d3_profile import build_d3_covariance_receipt, verify_d3_covariance_receipt, load_registered_receipt, intake_twelve_covariance, build_twelve_size_input, assemble_twelve_family, twelve_official_gate, fix_family_plans, verify_plan_identity, build_bank_spec_v2, verify_bank_spec_v2, validate_twelve_grid_identity, TWELVE_GRID_FIELDS
+from step1_engine.d3_profile import build_d3_covariance_receipt, verify_d3_covariance_receipt, load_registered_receipt, intake_twelve_covariance, build_twelve_size_input, assemble_twelve_family, twelve_official_gate, fix_family_plans, verify_plan_identity, build_bank_spec_v2, verify_bank_spec_v2, load_registered_bank_spec_v2, validate_twelve_grid_identity, twelve_context, TwelveContext, TWELVE_GRID_FIELDS
 from step1_engine.production import BankSupply, validate_grid_identity, _GRID_FIELDS, NATIVE_OFFSET
 from step1_engine.orchestrator import FittingBank, FamilyInput
 from step1_engine.types import ClusterUID
@@ -26,6 +26,7 @@ CM = json.load(open(os.path.join(P, 'd', 'd3_config_map.json'))); TABLE = json.l
 D2S = json.load(open(os.path.join(P, 'd', 'd2_bank_spec.json'))); D2L = json.load(open(os.path.join(P, 'registered_assets', 'd2', 'd2_generation_ledger.json')))
 REG = load_registry(os.path.join(P, 'tests/assets/a7_circle_geometry.csv'), os.path.join(P, 'tests/assets/a6_observer_design_points.json'))
 TA = intake_registered_twelve_assets(os.path.join(P, 'registered_assets', 'b3_2_twelve_assets.json'), REG, 'B3_2A_7240c06f255c')
+CTX = twelve_context(P)                                                                                                  # verified context (map / receipt / table / D-2 spec / D-2 ledger)
 
 
 def _copy_root(tmp_path):
@@ -92,8 +93,8 @@ class Fixture:
             out.append(BankSupply(cid, system, mod[:, 0], mod[:, 1], ref[:, 0], ref[:, 1], list(self.uids), self.m, {0: (0, self.K * self.m)}, fb, cov, None))
         return out
 
-    def size_input(self, size, system, **kw): return build_twelve_size_input(CM, RC, self.family, size, system, self.supplies(size, system, **kw), self.plans, self.fplans)
-    def family_inputs(self): return assemble_twelve_family(CM, REG, self.family, {s: (self.size_input(s, 'matched'), self.size_input(s, 'native')) for s in self.sizes}, TA)
+    def size_input(self, size, system, **kw): return build_twelve_size_input(CTX, self.family, size, system, self.supplies(size, system, **kw), self.plans, self.fplans)
+    def family_inputs(self): return assemble_twelve_family(CTX, self.family, {s: (self.size_input(s, 'matched'), self.size_input(s, 'native')) for s in self.sizes})
 
 
 def test_twelve_profile_size_inputs_assembly_and_gate():
@@ -106,27 +107,42 @@ def test_twelve_profile_size_inputs_assembly_and_gate():
     assert fm.grid_identity['sizes'] == fx.sizes and set(fm.grid_identity['cov_bound']) == {c.evaluation_id for c in fm.configs} and {v['origin'] for v in fm.grid_identity['cov_bound'].values()} == {'first_wave_D1', 'twelve_added_D3a'}
     fm.validate(); fn.validate()                                                                                            # dispatch: FamilyInput.validate -> production.validate_grid_identity -> twelve validator
     g = twelve_official_gate(fm, fn, 'smoke')
-    assert g.passed and g.mode == 'smoke' and all(c['passed'] for c in g.diagnostics['twelve_checks']) and 'twelve_checks' in g.diagnostics
+    assert g.passed and g.mode == 'smoke' and all(c['passed'] for c in g.diagnostics['twelve_checks'] if not c['code'].endswith('plan_identity_fixed')) and 'twelve_checks' in g.diagnostics   # no plan identity supplied -> official-only failure recorded
     go = twelve_official_gate(fm, fn, 'official')                                                                         # small synthetic banks fail the registered-scale checks, never the 12-position ones
-    assert not go.passed and all(c['passed'] for c in go.diagnostics['twelve_checks']) and any('N0' in f or 'm=' in f for f in go.required_failures)
+    assert not go.passed and all(c['passed'] for c in go.diagnostics['twelve_checks'] if not c['code'].endswith('plan_identity_fixed')) and any('N0' in f or 'm=' in f for f in go.required_failures)
+    go2 = twelve_official_gate(fm, fn, 'official', plan_identity=fx.plan_identity, table=CTX.table); assert not go2.passed and all(c['passed'] for c in go2.diagnostics['twelve_checks'])
     # single-size family (conditional scope) assembles but is not the formal full-size scope
-    fm2, fn2, ident2 = assemble_twelve_family(CM, REG, 'E2', {'L1.00': (fm1, fn1)}, TA)
-    assert ident2['full_surviving_scope'] is False and abs(fm2.configs[0].weight - 1 / 12) < 1e-15 and not twelve_official_gate(fm2, fn2, 'official').passed and twelve_official_gate(fm2, fn2, 'smoke').passed
+    fm2, fn2, ident2 = assemble_twelve_family(CTX, 'E2', {'L1.00': (fm1, fn1)})
+    assert ident2['full_surviving_scope'] is False and abs(fm2.configs[0].weight - 1 / 12) < 1e-15 and not twelve_official_gate(fm2, fn2, 'official', plan_identity=fx.plan_identity, table=CTX.table).passed and twelve_official_gate(fm2, fn2, 'smoke').passed
     # refusals: 11 supplies / duplicate / wrong system / covariance identity not the receipt's / receipt with a PC1_FAIL position / weight tamper / first-wave field set on a twelve identity
-    with pytest.raises(InputContractError): build_twelve_size_input(CM, RC, 'E2', 'L1.00', 'matched', fx.supplies('L1.00', 'matched')[:11], fx.plans, fx.fplans)
+    with pytest.raises(InputContractError): build_twelve_size_input(CTX, 'E2', 'L1.00', 'matched', fx.supplies('L1.00', 'matched')[:11], fx.plans, fx.fplans)
     sup = fx.supplies('L1.00', 'matched'); sup[0] = sup[1]
-    with pytest.raises(InputContractError): build_twelve_size_input(CM, RC, 'E2', 'L1.00', 'matched', sup, fx.plans, fx.fplans)
-    with pytest.raises(InputContractError): build_twelve_size_input(CM, RC, 'E2', 'L1.00', 'native', fx.supplies('L1.00', 'matched'), fx.plans, fx.fplans)
-    with pytest.raises(InputContractError): build_twelve_size_input(CM, RC, 'E2', 'L1.00', 'matched', fx.supplies('L1.00', 'matched', cov_override=dict(cov_file_sha256='0' * 64, cov_array_sha256='0' * 64)), fx.plans, fx.fplans)
-    fail = copy.deepcopy(RC); fail['positions']['20104']['pc1_status'] = 'PC1_FAIL'; fail['positions']['20104']['consumption_allowed'] = False; fail = _restamp(fail, 'receipt_sha256')
-    with pytest.raises(InputContractError): build_twelve_size_input(CM, fail, 'E2', 'L1.00', 'matched', fx.supplies('L1.00', 'matched'), fx.plans, fx.fplans)
+    with pytest.raises(InputContractError): build_twelve_size_input(CTX, 'E2', 'L1.00', 'matched', sup, fx.plans, fx.fplans)
+    with pytest.raises(InputContractError): build_twelve_size_input(CTX, 'E2', 'L1.00', 'native', fx.supplies('L1.00', 'matched'), fx.plans, fx.fplans)
+    with pytest.raises(InputContractError): build_twelve_size_input(CTX, 'E2', 'L1.00', 'matched', fx.supplies('L1.00', 'matched', cov_override=dict(cov_file_sha256='0' * 64, cov_array_sha256='0' * 64)), fx.plans, fx.fplans)
+    for notctx in (RC, CM, dict(CTX._d), None):                                                                             # R-D3T2B-B: caller dicts (even self-hashed receipts) are never a verified context
+        with pytest.raises(InputContractError): build_twelve_size_input(notctx, 'E2', 'L1.00', 'matched', fx.supplies('L1.00', 'matched'), fx.plans, fx.fplans)
+    with pytest.raises(InputContractError): TwelveContext(dict(CTX._d))
+    with pytest.raises(AttributeError): CTX.root = '/x'
+    # R-D3T2B-B: mixed source identities across sizes / systems are refused BEFORE assembly (never relabelled with the first input)
+    for field, si in (('covariance_receipt_sha256', 1), ('twelve_assets_sha256', 1), ('manifest_sha256', 0), ('registry_sha256', 1), ('config_map_sha256', 0)):
+        ss = {s: (fx.size_input(s, 'matched'), fx.size_input(s, 'native')) for s in fx.sizes}; ss['L1.20'][si].grid_identity[field] = '0' * 64
+        with pytest.raises(InputContractError): assemble_twelve_family(CTX, 'E2', ss)
+    # R-D3T2B-B: provenance relabelling in a grid identity is refused against the verified receipt (origin, receipt id, SHA, status)
+    for edit in (lambda g: g['cov_bound'][20104].__setitem__('origin', 'first_wave_D1'), lambda g: g['cov_bound'][20104].__setitem__('receipt', 'UNREGISTERED_RECEIPT'), lambda g: g['cov_bound'][20104].__setitem__('cov_file_sha256', '0' * 64), lambda g: g.__setitem__('covariance_receipt_sha256', '1' * 64), lambda g: g.__setitem__('twelve_assets_sha256', '1' * 64)):
+        bad = copy.deepcopy(fm1.grid_identity); edit(bad)
+        with pytest.raises(InputContractError): validate_twelve_grid_identity(bad, 'E2', 'matched', [c.evaluation_id for c in fm1.configs], [c.weight for c in fm1.configs])
     bad = copy.deepcopy(fm.grid_identity); bad['cov_bound'][20104]['pc1_status'] = 'PC1_FAIL'
     with pytest.raises(InputContractError): validate_twelve_grid_identity(bad, 'E2', 'matched', [c.evaluation_id for c in fm.configs], [c.weight for c in fm.configs])
     with pytest.raises(InputContractError): validate_twelve_grid_identity(fm.grid_identity, 'E2', 'matched', [c.evaluation_id for c in fm.configs], [c.weight * (1.01 if i == 0 else 1) for i, c in enumerate(fm.configs)])
     with pytest.raises(InputContractError): validate_grid_identity({k: v for k, v in fm.grid_identity.items() if k in _GRID_FIELDS}, 'E2', 'matched', [c.evaluation_id for c in fm.configs], None)   # 12 ids do not fit the first-wave schema
     with pytest.raises(InputContractError): validate_twelve_grid_identity(dict(fm.grid_identity, stage='first_wave'), 'E2', 'matched', [c.evaluation_id for c in fm.configs], None)
-    with pytest.raises(InputContractError): assemble_twelve_family(CM, REG, 'E2', {'L1.00': (fm1, None), 'L1.20': (fx.size_input('L1.20', 'matched'), fx.size_input('L1.20', 'native'))}, TA)   # partial native
-    with pytest.raises(InputContractError): assemble_twelve_family(CM, REG, 'E7', {'L1.00': (fm1, fn1)}, TA)              # family mismatch
+    with pytest.raises(InputContractError): assemble_twelve_family(CTX, 'E2', {'L1.00': (fm1, None), 'L1.20': (fx.size_input('L1.20', 'matched'), fx.size_input('L1.20', 'native'))})   # partial native
+    with pytest.raises(InputContractError): assemble_twelve_family(CTX, 'E7', {'L1.00': (fm1, fn1)})              # family mismatch
+    # plan identity connection (R-D3T2B-A): official requires the fixed identity; a different fixed identity fails the check
+    gp = twelve_official_gate(fm, fn, 'smoke', plan_identity=fx.plan_identity, table=CTX.table); assert gp.passed and all(c['passed'] for c in gp.diagnostics['twelve_checks'] if c['code'].endswith('plan_identity_fixed'))
+    other = fix_family_plans(CTX.table, 'E2', {0: fx.uids}, 60, CTX.table['master_seed'] + 1, B=20, B_KDE=25)[2]
+    assert not twelve_official_gate(fm, fn, 'smoke', plan_identity=other, table=CTX.table).passed and any(c['code'].endswith('plan_identity_fixed') and not c['passed'] for c in go.diagnostics['twelve_checks'])
 
 
 def test_plan_fixation_shared_by_first_wave_and_added_configurations():
@@ -141,18 +157,48 @@ def test_plan_fixation_shared_by_first_wave_and_added_configurations():
     other = fix_family_plans(TABLE, 'E7', {0: fx.uids}, 60, TABLE['master_seed'] + 1, B=20, B_KDE=25)
     with pytest.raises(InputContractError): verify_plan_identity(other[0], other[1], fx.plan_identity)                     # different master seed -> different plans -> refused against the fixed identity
     assert dp.PLAN_SCHEMA_V2['bootstrap']['seeds'] == RULES.seeds and dp.PLAN_SCHEMA_V2['bootstrap']['B'] == RULES.B
+    # R-D3T2B-A: every seed record required (no zip truncation), header must match the objects, evaluation UIDs must be purpose 200
+    for edit in (lambda d: d.__setitem__('evaluation', d['evaluation'][:4]), lambda d: d.__setitem__('fitting', []), lambda d: d.update(seeds=0, evaluation=[], fitting=[]), lambda d: d.__setitem__('family', 'E8'), lambda d: d.__setitem__('master_seed', 1), lambda d: d.__setitem__('evaluation_group', 999), lambda d: d.__setitem__('B_KDE', 1), lambda d: d.__setitem__('B', 21), lambda d: d['evaluation'].append(dict(d['evaluation'][0])), lambda d: d['fitting'][0].__setitem__('seed_id', 1)):
+        d = copy.deepcopy(fx.plan_identity); edit(d); d['identity_sha256'] = dp._payload_sha(d, 'identity_sha256')
+        with pytest.raises(InputContractError): verify_plan_identity(fx.plans, fx.fplans, d)
+    with pytest.raises(InputContractError): verify_plan_identity({}, {}, dict(copy.deepcopy(fx.plan_identity), seeds=0, evaluation=[], fitting=[], identity_sha256='0' * 64))
+    with pytest.raises(InputContractError): verify_plan_identity(fx.plans, fx.fplans, fx.plan_identity, family='E2')
+    with pytest.raises(InputContractError): verify_plan_identity(fx.plans, fx.fplans, dict(copy.deepcopy(fx.plan_identity), evaluation_group=group_for(TABLE, 'evaluation', 'E2'), identity_sha256=None), table=TABLE)
+    assert verify_plan_identity(fx.plans, fx.fplans, fx.plan_identity, table=TABLE, family='E7')
+    for purpose in (300, 400):
+        with pytest.raises(InputContractError): fix_family_plans(TABLE, 'E7', {0: [ClusterUID(1, purpose, group_for(TABLE, 'evaluation', 'E7'), 0, i) for i in range(40)]}, 60, TABLE['master_seed'], B=20, B_KDE=25)
+    with pytest.raises(InputContractError): fix_family_plans(TABLE, 'E7', {0: [ClusterUID(1, 200, group_for(TABLE, 'evaluation', 'E7'), 1, i) for i in range(40)]}, 60, TABLE['master_seed'], B=20, B_KDE=25)   # batch key / UID batch mismatch
 
 
-def test_bank_spec_v2_deterministic_and_bound():
-    spec = build_bank_spec_v2(CM, TABLE, RC, D2S, D2L); reg = json.load(open(os.path.join(P, 'd', 'd3_bank_spec.json')))
-    assert spec == reg and verify_bank_spec_v2(reg, CM, TABLE, RC, D2S, D2L) == reg and spec['counts'] == dict(configurations=108, generate=81, reuse=27, generation_units=243, generation_rows_evaluation=81 * D2S['N_max'], generation_rows_fitting=81 * 200000)
+def test_bank_spec_v2_deterministic_and_bound(tmp_path):
+    spec = build_bank_spec_v2(CTX); reg = json.load(open(os.path.join(P, 'd', 'd3_bank_spec.json')))
+    assert spec == reg and verify_bank_spec_v2(reg, CTX) == reg and load_registered_bank_spec_v2(CTX) == reg and spec['counts'] == dict(configurations=108, generate=81, reuse=27, generation_units=243, generation_rows_evaluation=81 * D2S['N_max'], generation_rows_fitting=81 * 200000)
+    assert spec['d2_ledger_file_sha256'] == dp.D2_REGISTERED_LEDGER['ledger_file_sha256'] == sha(open(os.path.join(P, 'registered_assets', 'd2', 'd2_generation_ledger.json'), 'rb').read()) and spec['inherits'].endswith(D2S['spec_sha256']) and spec['covariance_receipt_sha256'] == RC['receipt_sha256']
     gen = [v for v in spec['configurations'].values() if v['mode'] == 'generate_D3b']; reuse = [v for v in spec['configurations'].values() if v['mode'] == 'reuse_D2_fixed_input']
-    assert all(v['selections']['evaluation'] == {'0': ['float64'], '1': ['float64']} and v['selections']['required_f32_subset'] is False and v['w2_primary'] is None and v['covariance']['pc1_status'] == 'PC1_PASS' and v['position_index'] >= 3 for v in gen)
+    assert all(v['selections']['evaluation'] == {'0': ['float64'], '1': ['float64']} and v['selections']['required_f32_subset'] is False and v['w2_primary'] is None and v['covariance']['pc1_status'] == 'PC1_PASS' and v['position_index'] >= 3 and v['batches']['1']['rows'] == [D2S['N0'], D2S['N_max']] for v in gen)
     assert all(set(v['d2']['units']) == {f"cfg{v['config_id']}_b0", f"cfg{v['config_id']}_b1", f"cfg{v['config_id']}_fit"} and v['position_index'] < 3 and v['covariance']['receipt'] == 'D1_aa089fa492bc' for v in reuse)
-    assert all(len(spec['family_reference'][f]['units']) == 3 for f in ('E2', 'E7', 'E8')) and spec['e1_first_wave_only'] == [10101, 10201, 10301] and spec['covariance_receipt_sha256'] == RC['receipt_sha256']
-    for edit in (lambda d: d['configurations']['20104'].__setitem__('w2_primary', {}), lambda d: d['configurations']['20104']['selections']['evaluation'].__setitem__('0', ['float64', 'float32']), lambda d: d['configurations'].pop('40312')):
+    assert all(len(spec['family_reference'][f]['units']) == 3 for f in ('E2', 'E7', 'E8')) and spec['e1_first_wave_only'] == [10101, 10201, 10301]
+    for edit in (lambda d: d['configurations']['20104'].__setitem__('w2_primary', {}), lambda d: d['configurations']['20104']['selections']['evaluation'].__setitem__('0', ['float64', 'float32']), lambda d: d['configurations'].pop('40312'), lambda d: d.__setitem__('N_max', 2000000)):
         bad = copy.deepcopy(reg); edit(bad); bad = _restamp(bad, 'spec_sha256')
-        with pytest.raises(InputContractError): verify_bank_spec_v2(bad, CM, TABLE, RC, D2S, D2L)
-    fail = copy.deepcopy(RC); fail['positions']['20104']['pc1_status'] = 'PC1_FAIL'; fail = _restamp(fail, 'receipt_sha256')
-    assert build_bank_spec_v2(CM, TABLE, fail, D2S, D2L)['configurations']['20104']['covariance']['pc1_status'] == 'PC1_FAIL'   # the spec carries the asset status; consumption is refused at intake, not hidden
-    with pytest.raises(InputContractError): build_bank_spec_v2(CM, TABLE, RC, dict(D2S, crn_table_sha256='0' * 64), D2L)
+        with pytest.raises(InputContractError): verify_bank_spec_v2(bad, CTX)
+    for notctx in (CM, RC, D2S, None):                                                                                          # R-D3T2B-C: caller dicts are not a verified context
+        with pytest.raises(InputContractError): build_bank_spec_v2(notctx)
+    # R-D3T2B-C: the context itself refuses non-canonical upstream (stale D-2 spec / altered D-2 ledger / trimmed map+receipt / stale pins)
+    counter = [0]
+    def broken(edit):
+        counter[0] += 1; root = _copy_root(tmp_path / f'b{counter[0]}'); shutil.copytree(os.path.join(P, 'registered_assets', 'd2'), os.path.join(root, 'registered_assets', 'd2')); shutil.copy(os.path.join(P, 'registered_assets', 'b3_2_twelve_assets.json'), os.path.join(root, 'registered_assets')); edit(root)
+        with pytest.raises(InputContractError): twelve_context(root)
+    def rewrite(path, fn):
+        d = json.load(open(path)); fn(d); json.dump(d, open(path, 'w'), indent=1)
+    broken(lambda r: rewrite(os.path.join(r, 'd', 'd2_bank_spec.json'), lambda d: d.__setitem__('N_max', 2000000)))                                       # stale D-2 spec (old spec_sha256 kept)
+    broken(lambda r: rewrite(os.path.join(r, 'd', 'd2_bank_spec.json'), lambda d: d.__setitem__('master_seed', 17)))
+    broken(lambda r: rewrite(os.path.join(r, 'registered_assets', 'd2', 'd2_generation_ledger.json'), lambda d: d['families']['E2']['units']['cfg20101_b0'].__setitem__('manifest_sha256', '0' * 64)))   # ledger bytes != trusted identity
+    def trim(r):
+        cmp_, rcp = os.path.join(r, 'd', 'd3_config_map.json'), os.path.join(r, 'registered_assets', 'd3', 'd3_covariance_receipt.json'); cm = json.load(open(cmp_)); cm['configurations'] = [x for x in cm['configurations'] if x['config_id'] != 40312]; cm['map_sha256'] = dp._map_payload_sha(cm); json.dump(cm, open(cmp_, 'w'))
+        rc = json.load(open(rcp)); rc['config_map_sha256'] = cm['map_sha256']; rc['positions'].pop('40312'); rc = _restamp(rc, 'receipt_sha256'); json.dump(rc, open(rcp, 'w')); rewrite(os.path.join(r, 'd', 'd3_pins.json'), lambda d: d.update(config_map_sha256=cm['map_sha256'], covariance_receipt_sha256=rc['receipt_sha256']))
+    broken(trim)                                                                                                                                             # 107-row map + matching receipt + matching pins: still not the canonical map
+    broken(lambda r: rewrite(os.path.join(r, 'd', 'd3_pins.json'), lambda d: d.__setitem__('covariance_receipt_sha256', '0' * 64)))
+    # a verified context is required by the registered-spec reader; pins' spec identity must match
+    root = _copy_root(tmp_path / 'p'); shutil.copytree(os.path.join(P, 'registered_assets', 'd2'), os.path.join(root, 'registered_assets', 'd2')); shutil.copy(os.path.join(P, 'registered_assets', 'b3_2_twelve_assets.json'), os.path.join(root, 'registered_assets'))
+    rewrite(os.path.join(root, 'd', 'd3_pins.json'), lambda d: d.__setitem__('bank_spec_v2_sha256', '0' * 64)); c2 = twelve_context(root)
+    with pytest.raises(InputContractError): load_registered_bank_spec_v2(c2)
