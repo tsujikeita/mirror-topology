@@ -14,11 +14,11 @@
  },
  "ledger": {
   "file": "registered_assets/d3/d3a_generation_ledger.json",
-  "sha256": "ad809b9447399d8a4b426be19e697433c6383739d78e25ffc2ccfcd304c4714e",
+  "sha256": "eb8ccdc2e6a11d874a007f6896cdde1d43ac8d8277a82f436d1458f88638ea0e",
   "coverage_file": "registered_assets/d3/d3a_family_coverage.json",
   "coverage_sha256": "8a55452dbbbfb832ca0ece07ff0999a3f9e3ac4f8251216987c09e6c8d24365b",
   "commit": "<this packet commit>",
-  "engine": "0.87.0"
+  "engine": "0.88.0"
  },
  "partitions": {
   "d3_E2_L1.00_fe7c201ef265_audit": {
@@ -163,14 +163,16 @@
    "size": "L1.50",
    "script_returncode": -9,
    "completed_by": "d3_E2_L1.50_fe7c201ef265_audit_High_Memory",
-   "partial_reproduced": 9
+   "partial_reproduced": 9,
+   "cause": "rc -9 on the standard runtime; OOM is the author inference (no kernel OOM log / peak RSS)"
   },
   "d3_E8_L1.50_fe7c201ef265_audit_INCOMPLETE_rc-9": {
    "family": "E8",
    "size": "L1.50",
    "script_returncode": -9,
    "completed_by": "d3_E8_L1.50_fe7c201ef265_audit_High_Memory",
-   "partial_reproduced": 30
+   "partial_reproduced": 30,
+   "cause": "rc -9 on the standard runtime; OOM is the author inference (no kernel OOM log / peak RSS)"
   }
  },
  "totals": {
@@ -194,7 +196,8 @@
   "external": {
    "metadata_acceptance_E2_L100": "Step1_PhaseD_D3_E2_L1.00_fe7c201ef265_metadata_acceptance.json (2026-09-26)",
    "metadata_acceptance_all9": "Step1_PhaseD_D3_all9_fe7c201ef265_metadata_acceptance.json + ChatGPT_audit_Step1_PhaseD_D3_all9_fe7c201ef265.md (ba7a64905813\u2026; 2026-09-29; PASS_WITH_EXPLICIT_SCOPE; NPY read 0/225)",
-   "array_verified_acceptance": "pending: this packet supplies all 11 run records with arrays (and D3a_covariances.zip in the requested layout) for the audit-side re-verification"
+   "array_verified_acceptance": "Step1_PhaseD_D3a_array_acceptance_20260929.json (2026-09-29; scoped PASS: 225 arrays, 144-case PC-1 recomputation, 3 array-verified families)",
+   "completion_packet_0_87_0": "Step1_PhaseD_D3a_completion_0.87.0_decision.json (DATA_AND_HISTORY_ACCEPTED__NEW_INTAKE_HOLD; R-D3AC-A/B adopted in 0.88.0)"
   },
   "not_claimed": [
    "PC-1 acceptance (external)",

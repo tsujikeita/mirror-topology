@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """D-3a registered asset intake (step1_engine.d3_assets): (1) the REGISTERED 9 formal partition runs re-verify with arrays, re-aggregate to the registered coverage, expose the 81
 new base covariances with PC-1 status, and the 2 retained incomplete attempts are reproduced by the completed runs; (2) tampering anywhere (ledger identity, run manifest, registry
-entry, covariance bytes, coverage, pins binding, incomplete attempt promoted to complete, partial evidence edited, run removed) is refused; (3) mapping-free physical PC-1
+entry, covariance bytes, coverage, pins binding, incomplete attempt promoted to complete, partial evidence edited incl. clone file identity / final record stage (R-D3AC-A), run removed) is refused; (3) mapping-free physical PC-1
 recomputation from the registered NPY files alone: every unordered (file, file, action) pair with rel < 1e-5 under C1 = D(M) C0 D(M)^T is enumerated without consulting any
 registry, and the pair set equals the registered case set (108 new-point + 36 anchor, anchor bases from registered_assets/d1); no registered file is unmatched."""
 import os, sys, json, copy, hashlib, shutil, io
@@ -85,6 +85,14 @@ def test_registered_d3a_assets_tampering_refused(tmp_path):
     _rewrite(os.path.join(root, rec['registered_dir'], '..', 'launcher_lock.json'), lambda d: d.__setitem__('commit', 'a' * 40)); _rewrite(os.path.join(root, 'registered_assets', 'd3', 'd3a_generation_ledger.json'), lambda d: d['formal_runs'][name].__setitem__('launcher_lock_sha256', sha(open(os.path.join(root, rec['registered_dir'], '..', 'launcher_lock.json'), 'rb').read()))); refused('launcher lock')
     root = fresh()
     _rewrite(os.path.join(root, 'registered_assets', 'd3', 'd3a_generation_ledger.json'), lambda d: d['source_lock'].pop('script_sha256')); refused('source lock')
+    root = fresh(); idir = os.path.join(root, irec['registered_dir'])
+    # (l) R-D3AC-A: an incomplete attempt's partial evidence with only a CLONE file SHA changed (base SHAs / rel untouched, ledger untouched) -> partial bytes differ from the registered identity -> refused
+    pe = os.path.join(idir, 'd3', 'd3_partial_evidence.json'); d0 = json.load(open(pe))
+    if d0['cases']: _rewrite(pe, lambda d: next(iter(d['cases'].values()))['clone_identity'].__setitem__('file_sha256', '0' * 64)); refused('clone file sha')
+    else: open(pe, 'a').write('\n'); refused('partial bytes')
+    root = fresh(); idir = os.path.join(root, irec['registered_dir'])
+    # (m) R-D3AC-A: incomplete final record promoted to stage=complete with the ledger untouched -> refused
+    _rewrite(os.path.join(idir, 'd3_final_record.json'), lambda d: d['stages'].__setitem__('stage', 'complete')); refused('final stage')
 
 
 @need_mt

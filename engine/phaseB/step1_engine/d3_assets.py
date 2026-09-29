@@ -3,8 +3,8 @@
 
 What is registered (Step1_PhaseD_D3a_completion_report.md): the 9 formal size-partition runs of the accepted D-3a generator (commit fe7c201e, step1_engine 0.86.0,
 d/d3_covgen.py) = E2/E7/E8 x L1.00/L1.20/L1.50, each with its complete out/d3 record (run manifest, registry, PC-1 results, partial evidence, env lock, launcher records,
-covariance cache: 21 or 33 NPY files with their generator manifests), the 2 INCOMPLETE attempts (E2/L1.50 and E8/L1.50 on the standard Colab runtime: rc -9 = OOM;
-retained, never deleted, metadata only), and the 11 executed notebooks. The ledger (d3a_generation_ledger.json) and the family coverage (d3a_family_coverage.json)
+covariance cache: 21 or 33 NPY files with their generator manifests), the 2 INCOMPLETE attempts (E2/L1.50 and E8/L1.50 on the standard Colab runtime: process killed, rc -9; the author's
+inference is out-of-memory, not established from kernel OOM logs or peak RSS; retained, never deleted, metadata only), and the 11 executed notebooks. The ledger (d3a_generation_ledger.json) and the family coverage (d3a_family_coverage.json)
 are author-side records; this intake does not trust them: every formal run is RE-VERIFIED through d3_stage.verify_partition_run(require_arrays=True) bound to the
 ledger's run-manifest identity, re-aggregated with d3_stage.aggregate_partitions against the CURRENT registered case table / pins, and the result is compared with the
 registered coverage. Incomplete attempts are checked to be incomplete (no run manifest, D3_PASS False) and their partial evidence is cross-checked against the completed
@@ -35,7 +35,7 @@ def _hex64(v) -> bool:
     return isinstance(v, str) and _HEX.fullmatch(v) is not None
 
 
-def _load_json(path: str, what: str) -> dict:
+def _load_json(path: str, what: str, *, data: Optional[bytes] = None) -> dict:
     def pairs(items):
         d = {}
         for k, v in items:
@@ -43,7 +43,10 @@ def _load_json(path: str, what: str) -> dict:
             d[k] = v
         return d
     try:
-        with open(path, "rb") as fh: b = fh.read()
+        if data is None:
+            with open(path, "rb") as fh: b = fh.read()
+        else:
+            b = data
         v = json.loads(b.decode("utf-8"), object_pairs_hook=pairs, parse_constant=lambda c: (_ for _ in ()).throw(InputContractError(f"{what}: non-finite constant")))
     except (OSError, ValueError, UnicodeDecodeError) as e:
         raise InputContractError(f"{what}: unreadable ({type(e).__name__})")
@@ -120,16 +123,33 @@ def _coverage_key(cov: dict) -> dict:
 def intake_registered_d3a_assets(phaseb_root: Optional[str] = None, expected_ledger_sha256: Optional[str] = None) -> D3aAssets:
     """Re-verify the registered D-3a runs and return the sealed asset object (see module docstring). Every failure raises InputContractError; nothing is repaired or skipped."""
     root = os.path.abspath(phaseb_root or _ROOT)
+    # One byte snapshot per document: identity and decoded content must describe
+    # the same read. No requirement is made that the on-disk path stays immutable.
+    captured = {}
+    def read_bytes(path):
+        key = os.path.realpath(path)
+        if key not in captured:
+            try:
+                with open(path, "rb") as fh: captured[key] = fh.read()
+            except OSError as ex:
+                raise InputContractError(f"registered input unreadable: {path} ({type(ex).__name__})") from ex
+        return captured[key]
+    def read_json(path, what):
+        return _load_json(path, what, data=read_bytes(path))
+    def file_sha(path):
+        return hashlib.sha256(read_bytes(path)).hexdigest()
+    if expected_ledger_sha256 is not None and not _hex64(expected_ledger_sha256):
+        raise InputContractError("expected ledger SHA must be a complete 64-hex identity")
     ledger_path = os.path.join(root, "registered_assets", "d3", "d3a_generation_ledger.json"); cov_path = os.path.join(root, "registered_assets", "d3", "d3a_family_coverage.json")
-    ledger = _load_json(ledger_path, "D-3a ledger"); ledger_sha = _sha(ledger_path)
+    ledger = read_json(ledger_path, "D-3a ledger"); ledger_sha = file_sha(ledger_path)
     if expected_ledger_sha256 is not None and ledger_sha != expected_ledger_sha256: raise InputContractError("D-3a ledger bytes differ from the expected identity")
     if ledger.get("schema") != LEDGER_SCHEMA: raise InputContractError("D-3a ledger schema differs")
     lock = ledger.get("source_lock") or {}; src = _expected_source(lock)
-    pins = _load_json(os.path.join(root, "d", "d3_pins.json"), "d3 pins"); table = _load_json(os.path.join(root, "d", "d3_pc1_case_table.json"), "case table")
+    pins = read_json(os.path.join(root, "d", "d3_pins.json"), "d3 pins"); table = read_json(os.path.join(root, "d", "d3_pc1_case_table.json"), "case table")
     ct_sha, cm_sha = ledger.get("case_table_sha256"), ledger.get("config_map_sha256")
     if not _hex64(ct_sha) or not _hex64(cm_sha) or pins.get("case_table_sha256") != ct_sha or pins.get("config_map_sha256") != cm_sha or table.get("table_sha256") != ct_sha:
         raise InputContractError("ledger case-table / config-map identities differ from the current registered pins / table")
-    registered_cov = _load_json(cov_path, "D-3a coverage"); cov_sha = _sha(cov_path)
+    registered_cov = read_json(cov_path, "D-3a coverage"); cov_sha = file_sha(cov_path)
     if registered_cov.get("schema") != COVERAGE_SCHEMA or ledger.get("coverage_sha256") != cov_sha: raise InputContractError("registered coverage schema / identity differs from the ledger")
     runs = ledger.get("formal_runs")
     if not isinstance(runs, dict) or not runs: raise InputContractError("ledger lists no formal runs")
@@ -147,8 +167,8 @@ def intake_registered_d3a_assets(phaseb_root: Optional[str] = None, expected_led
         if rec.get("document_sha256") != p.document_sha256: raise InputContractError(f"run {name}: published-document identities differ from the ledger")
         for extra, fname in (("final_record_sha256", "d3_final_record.json"), ("launcher_lock_sha256", "launcher_lock.json")):
             fp = os.path.join(os.path.dirname(rd), fname)
-            if not _hex64(rec.get(extra)) or not os.path.isfile(fp) or _sha(fp) != rec[extra]: raise InputContractError(f"run {name}: {fname} identity differs from the ledger")
-        fr = _load_json(os.path.join(os.path.dirname(rd), "d3_final_record.json"), f"run {name} final record"); ll = _load_json(os.path.join(os.path.dirname(rd), "launcher_lock.json"), f"run {name} launcher lock")
+            if not _hex64(rec.get(extra)) or not os.path.isfile(fp) or file_sha(fp) != rec[extra]: raise InputContractError(f"run {name}: {fname} identity differs from the ledger")
+        fr = read_json(os.path.join(os.path.dirname(rd), "d3_final_record.json"), f"run {name} final record"); ll = read_json(os.path.join(os.path.dirname(rd), "launcher_lock.json"), f"run {name} launcher lock")
         if fr.get("D3_PASS") is not True or (fr.get("launcher") or {}) != ll or ll.get("commit") != lock["commit"] or ll.get("inventory_sha256") != src["inventory_sha256"] or ll.get("pins_sha256") != src["pins_sha256"] or ll.get("engine_version") != src["engine_version"] or ll.get("family") != fam or ll.get("size_filter") != sizes[0] or ll.get("with_h2") is not False:
             raise InputContractError(f"run {name}: final record / launcher lock not bound to the ledger source lock")
         by_family.setdefault(fam, []).append(p); run_records[name] = dict(family=fam, sizes=sizes, registered_dir=rec["registered_dir"], run_manifest_sha256=rec["run_manifest_sha256"], runtime=rec.get("runtime"), seconds=p.run_manifest.get("seconds"), drive_run_dir=ll.get("run_dir"))
@@ -167,17 +187,50 @@ def intake_registered_d3a_assets(phaseb_root: Optional[str] = None, expected_led
     for name, rec in inc.items():
         d = _safe_rel(root, rec.get("registered_dir"), f"attempt {name}")
         if os.path.exists(os.path.join(d, "d3", "d3_run_manifest.json")): raise InputContractError(f"attempt {name}: has a run manifest; not an incomplete attempt")
-        fr = _load_json(os.path.join(d, "d3_final_record.json"), f"attempt {name} final record")
-        if fr.get("D3_PASS") is not False or (fr.get("stages") or {}).get("script_returncode") != rec.get("script_returncode"): raise InputContractError(f"attempt {name}: final record differs from the ledger")
+        # These hashes were already registered in the ledger. Check the very
+        # bytes that will be decoded, not only selected fields or a second read.
+        final_path = os.path.join(d, "d3_final_record.json")
+        partial_path = os.path.join(d, "d3", "d3_partial_evidence.json")
+        for path, field in ((final_path, "final_record_sha256"), (partial_path, "partial_evidence_sha256")):
+            if not _hex64(rec.get(field)) or file_sha(path) != rec[field]:
+                raise InputContractError(f"attempt {name}: {field} differs from the registered ledger")
+        fr = read_json(final_path, f"attempt {name} final record")
+        ll = read_json(os.path.join(d, "launcher_lock.json"), f"attempt {name} launcher lock")
+        stages = fr.get("stages") or {}
+        if (fr.get("D3_PASS") is not False or type(rec.get("script_returncode")) is not int
+                or type(stages.get("script_returncode")) is not int
+                or stages["script_returncode"] != rec["script_returncode"]
+                or stages.get("stage") != "RECORD_MISSING_OR_INVALID"
+                or stages.get("launcher_fallback") is not True
+                or fr.get("launcher") != ll or fr.get("family") != rec.get("family")
+                or fr.get("size_filter") not in (rec.get("sizes") or [])
+                or ll.get("commit") != lock["commit"]
+                or any(ll.get(k) != src[k] for k in ("engine_version", "inventory_sha256", "pins_sha256"))
+                or ll.get("family") != rec.get("family") or ll.get("size_filter") != fr.get("size_filter")
+                or ll.get("run_dir") != rec.get("drive_run_dir") or ll.get("with_h2") is not False):
+            raise InputContractError(f"attempt {name}: final record / launcher scope differs from the ledger")
         comp = rec.get("completed_by")
         if comp not in run_records or run_records[comp]["family"] != rec.get("family") or run_records[comp]["sizes"] != rec.get("sizes"): raise InputContractError(f"attempt {name}: completed_by does not name the completed partition run")
-        pe = _load_json(os.path.join(d, "d3", "d3_partial_evidence.json"), f"attempt {name} partial evidence")
+        pe = read_json(partial_path, f"attempt {name} partial evidence")
+        if (pe.get("schema") != "d3_partial_evidence_v1" or pe.get("family") != rec.get("family")
+                or pe.get("status") != "IN_PROGRESS" or pe.get("failed") != []
+                or not isinstance(pe.get("bases"), dict) or not isinstance(pe.get("cases"), dict)):
+            raise InputContractError(f"attempt {name}: invalid incomplete partial-evidence scope")
         comp_p = next(p for p in by_family[rec["family"]] if list(p.run_manifest["selection"]["sizes"]) == rec["sizes"])
         rg = comp_p.registry["configurations"]; pr = comp_p.pc1_results["cases"]
         pb, pc = pe.get("bases") or {}, pe.get("cases") or {}
         if not set(pb) <= set(rg) or not set(pc) <= set(pr): raise InputContractError(f"attempt {name}: partial evidence names unknown bases / cases")
         same_b = all(pb[k].get("cov_file_sha256") == rg[k]["cov_file_sha256"] and pb[k].get("cov_array_sha256") == rg[k]["cov_array_sha256"] for k in pb)
-        same_c = all(pc[k].get("rel") == pr[k]["rel"] and (pc[k].get("clone_identity") or {}).get("array_sha256") == pr[k]["clone_identity"]["array_sha256"] for k in pc)
+        same_c = all(type(pc[k].get("rel")) is float and np.isfinite(pc[k]["rel"])
+                     and pc[k]["rel"] == pr[k]["rel"]
+                     and all((pc[k].get("clone_identity") or {}).get(field) == pr[k]["clone_identity"][field]
+                             for field in ("file_sha256", "array_sha256", "loader_meta_sha"))
+                     and all(pc[k].get(field) == pr[k].get(field)
+                             for field in ("case_id", "config_id", "action", "evaluation", "match", "D_sha256", "base_identity", "tolerance_match_rel_lt"))
+                     for k in pc)
+        if (type(rec.get("partial_bases")) is not int or type(rec.get("partial_cases")) is not int
+                or len(pb) != rec["partial_bases"] or len(pc) != rec["partial_cases"]):
+            raise InputContractError(f"attempt {name}: individual partial counts differ from the ledger")
         if not (same_b and same_c): raise InputContractError(f"attempt {name}: partial evidence is NOT reproduced by the completed run (covariance identities / rel differ)")
         crosscheck[name] = dict(completed_by=comp, partial_bases_reproduced=len(pb), partial_cases_reproduced=len(pc), script_returncode=rec.get("script_returncode"), runtime=rec.get("runtime"))
         if rec.get("reproduction") != crosscheck[name]["partial_bases_reproduced"] + crosscheck[name]["partial_cases_reproduced"]: raise InputContractError(f"attempt {name}: ledger reproduction count differs")
@@ -190,7 +243,7 @@ def intake_registered_d3a_assets(phaseb_root: Optional[str] = None, expected_led
                 if cid in bases: raise InputContractError(f"config {cid}: registered twice")
                 cov_rel = rel_dir + "/" + e["cov_file"]
                 fp = _safe_rel(root, cov_rel, f"config {cid}")
-                b = open(fp, "rb").read()
+                b = read_bytes(fp)
                 if hashlib.sha256(b).hexdigest() != e["cov_file_sha256"]: raise InputContractError(f"config {cid}: registered covariance bytes differ")
                 import io
                 arr = np.load(io.BytesIO(b), allow_pickle=False)

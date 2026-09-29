@@ -2,9 +2,9 @@
 2026-09-29。Claude 作成。PC-1 の受入れではない（受入れは外部監査）。
 
 生成器：commit `fe7c201ef265ddf614ed7d538acd3197eaa331c0`（engine 0.86.0，inventory `2cc5668a6768…`，script `6db2f9e11635…`，pins `7dfc77329c4f…`，notebook `6444a32022a7…`）。実行前 GO：Step1_PhaseD_D3_tranche2a_v5_decision.json (ChatGPT GO for execution of commit fe7c201e)。
-ledger：`registered_assets/d3/d3a_generation_ledger.json`（`ad809b944739…`），coverage：`8a55452dbbbf…`。
+ledger：`registered_assets/d3/d3a_generation_ledger.json`（`eb8ccdc2e6a1…`），coverage：`8a55452dbbbf…`。
 
-| partition | runtime | run_id | 秒 | base | case | max rel | PC1 pass/fail | NPY |
+| partition | runtime | run_id | 秒 | base | PC-1 case | max rel | configuration PC1_PASS/FAIL | NPY |
 |---|---|---|---:|---:|---:|---:|---|---:|
 | E2/L1.00 | standard | 20260926T074141Z | 8872 | 9 | 12 | 4.50e-08 | 12/0 | 21 |
 | E2/L1.20 | standard | 20260926T135737Z | 9092 | 9 | 12 | 3.30e-08 | 12/0 | 21 |
@@ -19,8 +19,8 @@ ledger：`registered_assets/d3/d3a_generation_ledger.json`（`ad809b944739…`�
 合計：family 3・partition 9・base 81・case 144（新規 108・anchor 36）・PC1_PASS 108・PC1_FAIL 0。
 
 未完 attempt（削除せず保持）：
-- `d3_E2_L1.50_fe7c201ef265_audit_INCOMPLETE_rc-9`：E2/L1.50，標準 runtime で rc -9（OOM）；完走 run `d3_E2_L1.50_fe7c201ef265_audit_High_Memory` が partial evidence 9 件を bit 同一に再現。
-- `d3_E8_L1.50_fe7c201ef265_audit_INCOMPLETE_rc-9`：E8/L1.50，標準 runtime で rc -9（OOM）；完走 run `d3_E8_L1.50_fe7c201ef265_audit_High_Memory` が partial evidence 30 件を bit 同一に再現。
+- `d3_E2_L1.50_fe7c201ef265_audit_INCOMPLETE_rc-9`：E2/L1.50，標準 runtime で rc −9（OOM は著者側の推定；kernel の OOM 記録・peak RSS はない）；完走 run `d3_E2_L1.50_fe7c201ef265_audit_High_Memory` が partial evidence 9 件を bit 同一に再現。
+- `d3_E8_L1.50_fe7c201ef265_audit_INCOMPLETE_rc-9`：E8/L1.50，標準 runtime で rc −9（OOM は著者側の推定；kernel の OOM 記録・peak RSS はない）；完走 run `d3_E8_L1.50_fe7c201ef265_audit_High_Memory` が partial evidence 30 件を bit 同一に再現。
 
 著者側検証：
 - verify_partition_run(require_arrays=True, expected_run_manifest_sha256=<ledger>) x 9 (all pass)

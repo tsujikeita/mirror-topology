@@ -1,7 +1,7 @@
 {
  "schema": "d3a_generation_ledger_v1",
  "created": "2026-09-29",
- "created_by": "Claude (author-side ledger of the formal D-3a partition runs; external acceptance by ChatGPT referenced)",
+ "created_by": "Claude (author-side ledger of the formal D-3a partition runs; external acceptances by ChatGPT referenced in external_acceptance)",
  "repository": "https://github.com/tsujikeita/mirror-topology.git",
  "source_lock": {
   "commit": "fe7c201ef265ddf614ed7d538acd3197eaa331c0",
@@ -320,7 +320,7 @@
    "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E2_L1.50_20260926T163437Z",
    "runtime": "standard",
    "script_returncode": -9,
-   "cause": "process killed (rc -9 = out of memory on the standard Colab runtime; CMBtopology preprocessing at the clone positions with larger |x0|)",
+   "cause": "process killed (rc -9) on the standard Colab runtime; AUTHOR INFERENCE: out of memory during CMBtopology preprocessing at the clone positions (larger |x0|); not established from kernel OOM logs or peak RSS (none retained by Colab); the same partition completed on the High-RAM runtime with unchanged code and identical env fingerprint (fingerprint does not cover RAM / hardware)",
    "partial_bases": 9,
    "partial_cases": 0,
    "completed_by": "d3_E2_L1.50_fe7c201ef265_audit_High_Memory",
@@ -338,7 +338,7 @@
    "drive_run_dir": "/content/drive/MyDrive/MirrorTopology_D3/E8_L1.50_20260927T164804Z",
    "runtime": "standard",
    "script_returncode": -9,
-   "cause": "process killed (rc -9 = out of memory on the standard Colab runtime; CMBtopology preprocessing at the clone positions with larger |x0|)",
+   "cause": "process killed (rc -9) on the standard Colab runtime; AUTHOR INFERENCE: out of memory during CMBtopology preprocessing at the clone positions (larger |x0|); not established from kernel OOM logs or peak RSS (none retained by Colab); the same partition completed on the High-RAM runtime with unchanged code and identical env fingerprint (fingerprint does not cover RAM / hardware)",
    "partial_bases": 9,
    "partial_cases": 21,
    "completed_by": "d3_E8_L1.50_fe7c201ef265_audit_High_Memory",
@@ -422,7 +422,24 @@
     "notebook execution counters: 6 notebooks were run in a parent Colab session reused across partitions (counters not starting at 1); computation runs in a separate child Python process on a fresh checkout / fresh OUT per run; fresh parent runtime per run will be used from D-3b on"
    ]
   },
-  "array_verified": "pending (this packet)"
+  "array_verified": {
+   "file": "Step1_PhaseD_D3a_array_acceptance_20260929.json",
+   "audit_report": "ChatGPT_audit_Step1_PhaseD_D3a_array_acceptance_20260929.md",
+   "date": "2026-09-29",
+   "decision": "SCOPED_ARRAY_PC1_AND_V5_AGGREGATION_PASS__NEW_087_PACKET_REVIEW_PENDING",
+   "scope": "225 NPY file/array identity; 144-case PC-1 independently recomputed from arrays (max rel 8.351226668761409e-8; max |diff| from stored 2.7e-17); mapping-free 144 pairs / 16,668 comparisons; 9 array-verified partitions and 3 families via accepted 0.86.0 intake/aggregator"
+  },
+  "completion_packet_0_87_0": {
+   "file": "Step1_PhaseD_D3a_completion_0.87.0_decision.json",
+   "audit_report": "ChatGPT_audit_Step1_PhaseD_D3a_completion_0.87.0.md",
+   "date": "2026-09-29",
+   "decision": "DATA_AND_HISTORY_ACCEPTED__NEW_INTAKE_HOLD",
+   "archive_sha256": "393ed483b6bb0188e87ac37b8709252c4526936d6a135244a30f64411b7760d5",
+   "commit": "3ddb87010fe8914f5a8e978bd0a4704d937cc628",
+   "accepted": "registered 225 NPY + 315 metadata byte identity; 11 notebooks; 2 incomplete attempt records; 39 covariance identities / 21 rel reproduced by the completed runs; new intake normal path",
+   "hold": "R-D3AC-A (incomplete final/partial bytes bound to ledger expected hashes; clone file/array/loader identity and partial scope) and R-D3AC-B (same captured bytes for hashing and decoding)",
+   "resolution": "reference patch (d3_assets.py sha256 d7b6f79d3855770da2234338c17fef31a7b1fb8b44b712165151685e87b43062) examined and adopted in engine 0.88.0; audit contracts bundled as tests/test_audit_d3a_completion_boundaries_chatgpt.py (path adaptation only)"
+  }
  },
  "totals": {
   "families": 3,
