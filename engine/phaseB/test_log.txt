@@ -1490,6 +1490,17 @@ tests/test_d3b_script.py::test_notebook_launcher_final_pass_requires_both[-9-inv
 tests/test_d3b_script.py::test_notebook_launcher_final_pass_requires_both[0-list] PASSED
 tests/test_d3b_script.py::test_notebook_launcher_final_pass_requires_both[0-null] PASSED
 tests/test_d1_registered.py::test_d1_cache_registry_receipt_and_grid_binding PASSED
+tests/test_d3b_tranche2.py::test_ledger_deterministic_registered_and_edit_refused PASSED
+tests/test_d3b_tranche2.py::test_registered_units_sealed_view_and_formal_intake_binding PASSED
+tests/test_d3b_tranche2.py::test_readonly_verifier_test_mode_and_accepted_binding PASSED
+tests/test_d3b_tranche2.py::test_verify_notebook_final_pass_requires_all[0-ok] PASSED
+tests/test_d3b_tranche2.py::test_verify_notebook_final_pass_requires_all[0-not_ok] PASSED
+tests/test_d3b_tranche2.py::test_verify_notebook_final_pass_requires_all[1-ok] PASSED
+tests/test_d3b_tranche2.py::test_verify_notebook_final_pass_requires_all[0-partial] PASSED
+tests/test_d3b_tranche2.py::test_verify_notebook_final_pass_requires_all[0-unbound] PASSED
+tests/test_d3b_tranche2.py::test_verify_notebook_final_pass_requires_all[-9-missing] PASSED
+tests/test_d3b_tranche2.py::test_verify_notebook_final_pass_requires_all[0-invalid] PASSED
+tests/test_d3b_tranche2.py::test_verify_notebook_final_pass_requires_all[0-list] PASSED
 tests/test_audit_d3b_t1_contracts_chatgpt.py::test_same_d2_path_both_batches_fitting_and_chunk[E2-20104-20101] PASSED
 tests/test_audit_d3b_t1_contracts_chatgpt.py::test_same_d2_path_both_batches_fitting_and_chunk[E7-30104-30101] PASSED
 tests/test_audit_d3b_t1_contracts_chatgpt.py::test_same_d2_path_both_batches_fitting_and_chunk[E8-40104-40101] PASSED

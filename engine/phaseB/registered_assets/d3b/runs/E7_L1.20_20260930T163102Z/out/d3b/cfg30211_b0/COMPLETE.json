@@ -1,0 +1,91 @@
+{
+ "schema": "d3_bank_manifest_v1",
+ "family": "E7",
+ "config_id": 30211,
+ "origin": "twelve_added",
+ "position_index": 10,
+ "evaluation_ids": {
+  "matched": 30211,
+  "native": 80211
+ },
+ "purpose": "evaluation",
+ "crn_group": 1003,
+ "wave_id": 1,
+ "batch_id": 0,
+ "shards": [
+  {
+   "file": "cfg30211_b0_s0.npz",
+   "sidecar": "cfg30211_b0_s0.npz.sidecar.json",
+   "file_sha256": "ed43e63ae45816a2d305d61f26b918b87e5d6f87fbee53f9c818eb19a9615a0b",
+   "sidecar_sha256": "dfd19b7c63553a09c823de509f7468c5326319ab4d11482104c2909ddb74710e",
+   "rows": [
+    0,
+    1000000
+   ]
+  }
+ ],
+ "roles": [
+  "model_matched",
+  "model_native",
+  "ref_native"
+ ],
+ "root_sha256": {
+  "model_matched": "d4e50d4f43e427eb9859ca6ca0b7ef3ebb9503d1a0bee611e946d0b8086451fa",
+  "model_native": "e627794e6664ff22d676d83de3ba31125610270f67af62873c1974b0a8ca3305",
+  "ref_native": "9ccc3bfa125f5fdd507ddffd8baa596cbf8dde31eeb06e7adb444dfed72e3624"
+ },
+ "selections": [
+  "float64"
+ ],
+ "n_rows": 1000000,
+ "n_clusters": 10000,
+ "m": 100,
+ "complete": true,
+ "scale": 1.0,
+ "formal": true,
+ "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+ "spec_v1_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+ "spec_v2_sha256": "d5fda77b4f921935b9ceb5a80df2b3c6ac41ccafa1141f877620cdd866dffcd4",
+ "covariance_receipt_sha256": "ab545a6f993da5890214a54cb0b3229dc064dbf37704fb229d3095dccc98dc89",
+ "config_map_sha256": "da1e68bcec4934d4332b774e31598b8753a0509c76440b7da4137c0110a0fdb5",
+ "master_seed": 20260912,
+ "calls": [
+  {
+   "purpose": "evaluation",
+   "group": 1003,
+   "batch_id": 0,
+   "key_rotation": [
+    20260912,
+    1,
+    200,
+    1003,
+    0,
+    1
+   ],
+   "key_gaussian": [
+    20260912,
+    1,
+    200,
+    1003,
+    0,
+    0
+   ],
+   "clusters": [
+    0,
+    10000
+   ],
+   "roles": [
+    "model_matched",
+    "model_native",
+    "ref_native"
+   ],
+   "selections": [
+    "float64"
+   ],
+   "chunk_clusters": 2000,
+   "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+   "t": 1790791975.0218744
+  }
+ ],
+ "manifest_sha256": "de02078ebd2d15ed23b46917f881409eb6896b97ff4b11d8b09d8baaf2c6e52b"
+}

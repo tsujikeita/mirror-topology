@@ -1,0 +1,91 @@
+{
+ "schema": "d3_bank_manifest_v1",
+ "family": "E8",
+ "config_id": 40311,
+ "origin": "twelve_added",
+ "position_index": 10,
+ "evaluation_ids": {
+  "matched": 40311,
+  "native": 90311
+ },
+ "purpose": "fitting",
+ "crn_group": 2004,
+ "wave_id": 1,
+ "batch_id": 0,
+ "shards": [
+  {
+   "file": "cfg40311_fit_s0.npz",
+   "sidecar": "cfg40311_fit_s0.npz.sidecar.json",
+   "file_sha256": "1c85d02366e2de72925366d454f9d50906523f05aef95051368e49779417566b",
+   "sidecar_sha256": "20f4d360004c0c041dde54a6a7c0da67fe19b1cebd89dd69e00fabe22d084f5e",
+   "rows": [
+    0,
+    200000
+   ]
+  }
+ ],
+ "roles": [
+  "model_matched",
+  "model_native",
+  "ref_native"
+ ],
+ "root_sha256": {
+  "model_matched": "5f8ff057b27f2a234da2dda6ab43db20dac89cad282d43e2012360449860ca46",
+  "model_native": "b3fd307f6b91cc91a60cfc8e749bb5dee418c2b9255bf833ae54a5883c4d27de",
+  "ref_native": "f9ad767c2c7f3e323da3bc58b88e6a3823da0fa50a6e1df7c4b50f72bef76cf8"
+ },
+ "selections": [
+  "float64"
+ ],
+ "n_rows": 200000,
+ "n_clusters": 2000,
+ "m": 100,
+ "complete": true,
+ "scale": 1.0,
+ "formal": true,
+ "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+ "spec_v1_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+ "spec_v2_sha256": "d5fda77b4f921935b9ceb5a80df2b3c6ac41ccafa1141f877620cdd866dffcd4",
+ "covariance_receipt_sha256": "ab545a6f993da5890214a54cb0b3229dc064dbf37704fb229d3095dccc98dc89",
+ "config_map_sha256": "da1e68bcec4934d4332b774e31598b8753a0509c76440b7da4137c0110a0fdb5",
+ "master_seed": 20260912,
+ "calls": [
+  {
+   "purpose": "fitting",
+   "group": 2004,
+   "batch_id": 0,
+   "key_rotation": [
+    20260912,
+    1,
+    300,
+    2004,
+    0,
+    1
+   ],
+   "key_gaussian": [
+    20260912,
+    1,
+    300,
+    2004,
+    0,
+    0
+   ],
+   "clusters": [
+    0,
+    2000
+   ],
+   "roles": [
+    "model_matched",
+    "model_native",
+    "ref_native"
+   ],
+   "selections": [
+    "float64"
+   ],
+   "chunk_clusters": 2000,
+   "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+   "t": 1790869553.3903131
+  }
+ ],
+ "manifest_sha256": "3f2a5d36570a142b9dd344fba32dca923b9084292bd01e3db49667eb7b640922"
+}

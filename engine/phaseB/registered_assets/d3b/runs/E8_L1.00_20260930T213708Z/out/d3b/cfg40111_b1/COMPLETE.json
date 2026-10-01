@@ -1,0 +1,111 @@
+{
+ "schema": "d3_bank_manifest_v1",
+ "family": "E8",
+ "config_id": 40111,
+ "origin": "twelve_added",
+ "position_index": 10,
+ "evaluation_ids": {
+  "matched": 40111,
+  "native": 90111
+ },
+ "purpose": "evaluation",
+ "crn_group": 1004,
+ "wave_id": 1,
+ "batch_id": 1,
+ "shards": [
+  {
+   "file": "cfg40111_b1_s1.npz",
+   "sidecar": "cfg40111_b1_s1.npz.sidecar.json",
+   "file_sha256": "74a3b63f1bb094411f42d6b204587e6a1d4f30f4066d134e751fc721b64722ef",
+   "sidecar_sha256": "f443e6e89016175c6590782ad216bf12c3f7c7543576520813053bc6f9b63c45",
+   "rows": [
+    0,
+    1000000
+   ]
+  },
+  {
+   "file": "cfg40111_b1_s2.npz",
+   "sidecar": "cfg40111_b1_s2.npz.sidecar.json",
+   "file_sha256": "af925c3586ecf981ac74be559247242c9aca09fcae9f02d0985c789e44c2ac38",
+   "sidecar_sha256": "5aa167521f2d52398ad11f1ec7969f01533ac8c4dc85e498445c219b1eb999f9",
+   "rows": [
+    1000000,
+    2000000
+   ]
+  },
+  {
+   "file": "cfg40111_b1_s3.npz",
+   "sidecar": "cfg40111_b1_s3.npz.sidecar.json",
+   "file_sha256": "9450dcb56257be298f66ee9729018fbaeb34efdf7b423aac026e36ca4c268b11",
+   "sidecar_sha256": "e1defea7213a1b800490e51289906597d4044bc4ab6ef6a7b55e1e576866812e",
+   "rows": [
+    2000000,
+    3000000
+   ]
+  }
+ ],
+ "roles": [
+  "model_matched",
+  "model_native",
+  "ref_native"
+ ],
+ "root_sha256": {
+  "model_matched": "8e01aa7ee40761d64474c03e65aa3a4b03f0fa2d9132c994e399d3ac228e3894",
+  "model_native": "bc3f6b10bc2ea6bcac7d677e20533fbe2d3bae4684ab13b195dbc209e38b2bc5",
+  "ref_native": "e91cd825ddcfb9fff7d85f8803d7c2089dd3cc1431b0a2e44dc1f46ea90b8e7a"
+ },
+ "selections": [
+  "float64"
+ ],
+ "n_rows": 3000000,
+ "n_clusters": 30000,
+ "m": 100,
+ "complete": true,
+ "scale": 1.0,
+ "formal": true,
+ "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+ "spec_v1_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
+ "spec_v2_sha256": "d5fda77b4f921935b9ceb5a80df2b3c6ac41ccafa1141f877620cdd866dffcd4",
+ "covariance_receipt_sha256": "ab545a6f993da5890214a54cb0b3229dc064dbf37704fb229d3095dccc98dc89",
+ "config_map_sha256": "da1e68bcec4934d4332b774e31598b8753a0509c76440b7da4137c0110a0fdb5",
+ "master_seed": 20260912,
+ "calls": [
+  {
+   "purpose": "evaluation",
+   "group": 1004,
+   "batch_id": 1,
+   "key_rotation": [
+    20260912,
+    1,
+    200,
+    1004,
+    1,
+    1
+   ],
+   "key_gaussian": [
+    20260912,
+    1,
+    200,
+    1004,
+    1,
+    0
+   ],
+   "clusters": [
+    0,
+    30000
+   ],
+   "roles": [
+    "model_matched",
+    "model_native",
+    "ref_native"
+   ],
+   "selections": [
+    "float64"
+   ],
+   "chunk_clusters": 2000,
+   "table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
+   "t": 1790810552.5850222
+  }
+ ],
+ "manifest_sha256": "742ef6749198262b35640eb613ad987c1de90bd3512062e86c5042ba519db3f1"
+}

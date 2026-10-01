@@ -190,11 +190,13 @@ def verify_reused_reference_dir(dir_: str, ctx: TwelveContext, family: str, unit
     return man
 
 
-def intake_twelve_bank(config_id: int, system: str, eval_dirs: Dict[int, str], ref_dirs: Dict[int, str], fit_dir: str, ref_fit_dir: str, roots: Dict[str, np.ndarray], ctx: TwelveContext, formal: bool = True):
+def intake_twelve_bank(config_id: int, system: str, eval_dirs: Dict[int, str], ref_dirs: Dict[int, str], fit_dir: str, ref_fit_dir: str, roots: Dict[str, np.ndarray], ctx: TwelveContext, formal: bool = True, registered_units=None):
     """STRONG intake of ONE added configuration for the 12-position profile: configuration directories re-verified against the context (verify_twelve_bank_dir), the D-2 family
     reference directories re-verified by the D-2 verifier and bound to the ledger identities of spec v2 (fixed inputs), roots == the caller's intake_twelve_covariance roots /
     PR3 isotropic root, reference and configuration on the same latent (identical cid per batch), fitting paired, formal flags. Returns (BankSupply, info); the BankSupply's
-    cov_manifest is the receipt identity (file / array SHA, receipt, PC-1 status) so that d3_profile.build_twelve_size_input can bind it."""
+    cov_manifest is the receipt identity (file / array SHA, receipt, PC-1 status) so that d3_profile.build_twelve_size_input can bind it.
+    formal=True additionally requires registered_units (d3b_ledger.intake_registered_d3b_units): each consumed configuration directory must be one of the ACCEPTED D-3b units
+    (manifest SHA / rows / purpose equal to the generation ledger) — a directory that merely re-verifies against the context is not a registered bank."""
     from .production import BankSupply; from .orchestrator import FittingBank
     ctx = _require_ctx(ctx); table = ctx._d["table"]; spec2 = _spec2(ctx)
     if system not in ("matched", "native"): raise InputContractError("system")
@@ -208,8 +210,13 @@ def intake_twelve_bank(config_id: int, system: str, eval_dirs: Dict[int, str], r
         if a.shape != (21, 21) or a.dtype.kind not in "iuf" or not np.isfinite(a).all(): raise InputContractError(f"root {r}: expected a finite real numeric 21x21 matrix")
         want[r] = _asha(np.array(a, dtype=np.float64, order="C", copy=True))
     if set(eval_dirs) != {0, 1} or set(ref_dirs) != {0, 1}: raise InputContractError("evaluation / reference batches {0, 1} are both required")
+    if formal:
+        from .d3b_ledger import D3bUnits
+        if not isinstance(registered_units, D3bUnits) or not registered_units.verified: raise InputContractError("formal intake requires the registered D-3b units (d3b_ledger.intake_registered_d3b_units)")
     mans = {b: verify_twelve_bank_dir(eval_dirs[b], ctx, sorted(CONFIG_ROLES)) for b in (0, 1)}; fman = verify_twelve_bank_dir(fit_dir, ctx, sorted(CONFIG_ROLES))
     if formal:
+        for b in (0, 1): registered_units.require_unit_manifest(f"cfg{config_id}_b{b}", mans[b]["manifest_sha256"], mans[b]["n_rows"], "evaluation")
+        registered_units.require_unit_manifest(f"cfg{config_id}_fit", fman["manifest_sha256"], fman["n_rows"], "fitting")
         rmans = {b: verify_reused_reference_dir(ref_dirs[b], ctx, fam, f"ref_{fam}_b{b}") for b in (0, 1)}; rfman = verify_reused_reference_dir(ref_fit_dir, ctx, fam, f"ref_{fam}_fit")
     else:
         rmans = {b: verify_bank_dir(ref_dirs[b], ("ref_matched",)) for b in (0, 1)}; rfman = verify_bank_dir(ref_fit_dir, ("ref_matched",))
@@ -236,4 +243,4 @@ def intake_twelve_bank(config_id: int, system: str, eval_dirs: Dict[int, str], r
     fit = FittingBank(np.c_[fm["T1"], fm["T2"]], np.c_[fr["T1"], fr["T2"]], fm["cid"].astype(np.int64))
     cov = dict(cov_file_sha256=c["covariance"]["cov_file_sha256"], cov_array_sha256=c["covariance"]["cov_array_sha256"], receipt=c["covariance"]["receipt"], pc1_status=c["covariance"]["pc1_status"], registered_file=c["covariance"]["registered_file"], covariance_receipt_sha256=ctx.identities["covariance_receipt_sha256"])
     supply = BankSupply(int(config_id), system, np.concatenate(T1m), np.concatenate(T2m), np.concatenate(T1r), np.concatenate(T2r), uids, M, batches, fit, cov_manifest=cov, cov_npy_path=None)
-    return supply, dict(scope="strong intake: added-configuration directories re-verified against the context (spec v2 / receipt / table), D-2 reference directories re-verified and ledger-bound (formal), roots == caller's, same latent, fitting paired; formal=%s" % formal, batches=batches, n_clusters={b: mans[b]["n_clusters"] for b in (0, 1)}, fitting_clusters=fman["n_clusters"], manifests=dict(eval={b: mans[b]["manifest_sha256"] for b in (0, 1)}, ref={b: rmans[b]["manifest_sha256"] for b in (0, 1)}, fit=fman["manifest_sha256"], ref_fit=rfman["manifest_sha256"]))
+    return supply, dict(scope="strong intake: added-configuration directories re-verified against the context (spec v2 / receipt / table) and bound to the D-3b generation ledger (formal), D-2 reference directories re-verified and ledger-bound (formal), roots == caller's, same latent, fitting paired; formal=%s" % formal, d3b_ledger_sha256=(registered_units.ledger_sha256 if formal else None), batches=batches, n_clusters={b: mans[b]["n_clusters"] for b in (0, 1)}, fitting_clusters=fman["n_clusters"], manifests=dict(eval={b: mans[b]["manifest_sha256"] for b in (0, 1)}, ref={b: rmans[b]["manifest_sha256"] for b in (0, 1)}, fit=fman["manifest_sha256"], ref_fit=rfman["manifest_sha256"]))
