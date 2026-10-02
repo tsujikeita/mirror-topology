@@ -1585,3 +1585,11 @@ tests/test_audit_d3b_t2_boundaries_chatgpt.py::test_reference_reread_uses_verifi
 tests/test_audit_d3b_t2_boundaries_chatgpt.py::test_reference_reread_uses_verified_bytes[fit] PASSED
 tests/test_audit_d3b_t2_boundaries_chatgpt.py::test_nonledger_reference_is_rejected_without_doubles PASSED
 tests/test_audit_d3b_t2_boundaries_chatgpt.py::test_sealed_units_and_view_isolation PASSED
+tests/test_d3c_tranche1.py::test_profile_script_selftest_end_to_end_and_refusals PASSED
+tests/test_d3c_tranche1.py::test_profile_notebook_final_pass_requires_all[0-ok] PASSED
+tests/test_d3c_tranche1.py::test_profile_notebook_final_pass_requires_all[0-pass_false] PASSED
+tests/test_d3c_tranche1.py::test_profile_notebook_final_pass_requires_all[1-ok] PASSED
+tests/test_d3c_tranche1.py::test_profile_notebook_final_pass_requires_all[0-gate_false] PASSED
+tests/test_d3c_tranche1.py::test_profile_notebook_final_pass_requires_all[-9-missing] PASSED
+tests/test_d3c_tranche1.py::test_profile_notebook_final_pass_requires_all[0-invalid] PASSED
+tests/test_d3c_tranche1.py::test_profile_notebook_final_pass_requires_all[0-list] PASSED

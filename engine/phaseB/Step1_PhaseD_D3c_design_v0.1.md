@@ -30,3 +30,12 @@ rc 0・stage complete・`D3C_PASS True`・gate `passed=True`（required_failures
 2. 第 1 波 3 配置の供給は D-2 `intake_registered_bank`（D-1 sidecar・spec v1）経由とし，12 位置 size input の receipt 照合（file／array SHA）はその cov_manifest で満たすこと（受入れ済み `test_audit_d3b_t1` の old3＋new9 統合試験と同じ経路）。
 3. gate 通過後の記録（plan identity・input fingerprint）を「較正前に固定し target まで不変」の identity として登録資産に置く段（tranche ②）を，実行後監査の後に分けること。
 4. B／B_KDE＝2000・seeds 5・K_fit 2000 は rules／official_gate の登録値から取り，script 引数にしない。
+
+## F. v0.1.1 追記（監査 `Step1_PhaseD_D3b_tranche3_0.96.0_decision.json`：設計受入れ＋実装条件；tranche ①で反映）
+- gate 呼出しは keyword：`twelve_official_gate(fm, fn, mode="official", plan_identity=plan_identity, table=table)`（第 4 位置引数は env；正式 script は env を注入せず `environment_source="live_collected"` を要求）。本文 A の呼出し例はこの形に読み替える。
+- 実行順：formal intake（全供給）→ **ordered** UID（batch 別 10 000＋30 000・rotation index 順）／K_fit 照合 → family で 1 回の plan 構築 → size input 6 → 全 size 組立て → fingerprint → gate → gate 後の identity 再確認 → publication。
+- E2：第 1 波の供給は `intake_registered_bank` の返す unit manifest（b0／b1／fit・reference）を spec v2 の `configurations[cid].d2.units`／`family_reference.units` に照合する（wrapper の接続条件）。
+- E3：plan identity は hash だけでなく **ordered UID 列・key・定数・source／環境** を記録し，別 process での再構築が全 strata／multiplicity SHA を再現することを要求する。
+- E4：B／B_KDE／seeds／N_fit／m_fit は登録定数（`rules_config.RULES`・`official_gate`）から取り，実 K_fit＝N_fit／m_fit を確認；self-test の値は分離し `D3C_PASS` に昇格しない。
+- 資源：保持 payload の算術は **13.152 GB**（評価 T 9.216＋fitting 0.576＋評価 multiplicity 3.2＋fitting multiplicity 0.16）；全 size 組立ては配列を共有する view（連結しない）。intake は同じ NPZ を複数回開く（D-3b 配置 2〜3 回，D-2 配置 3〜4 回，reference 3〜2 回：size 加重 open 量 ≈95.5 GB／family）ため，launcher は入力を **ローカル disk に 1 回複製**（unique ≈12.3 GB）してから読む（検証は同一：bytes／配列 SHA）。51 GB High-RAM の十分性は保証せず，段階別 RSS を記録する。
+- 「配列計算なし」は「新しい物理共分散・MC bank の生成なし」に限定（root 再検証・hash・bootstrap multiplicity 構築は本段でも行う）。
