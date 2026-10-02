@@ -7,7 +7,11 @@ Step1_PhaseD_D3c_design_v0.1.md + audit implementation conditions of Step1_Phase
 Preflight (before any bank is read): d3 pins / inventory / script binding; Phase C members; registered numerical environment HARD gate (the official gate requires the live
 registered versions incl. CAMB and the BLAS pools); frozen loader; verified TwelveContext; bank spec v2; registered D-3b units WITH array acceptance (outer receipt); D-2 ledger /
 receipt binding through the context; input roots resolved against the ledgers (D-2 run of this family; the three D-3b partitions of this family; formal: run ids == ledgers).
-INPUTS are read-only (realpath-resolved, protected from the output); OUTPUT is a fresh directory; every JSON is published through the verified whole-document helper.
+INPUTS and SOURCE ROOTS are read-only (--mt, --phaseb, --phasec, --d2-root, --d3b-root; realpath-resolved and protected from the output BEFORE anything is created);
+OUTPUT is a non-existent or EMPTY real directory (the given path must not be a symlink); every JSON is published through the verified whole-document helper.
+Plan OBJECT identity (R-D3C1-C): the six size inputs and both assembled systems must carry the very dictionaries returned by fix_family_plans (plans AND fit_plans; `is`),
+checked before and after the gate alongside the content identity; the roundtrip reconstruction and the snapshot are released right after their comparison (R-D3C1-E);
+peak RSS (ru_maxrss) is recorded per stage. --attempt-id / --launcher-lock-sha256 are echoed verbatim into the record and the plan document so the launcher can bind them.
 --selftest-small: synthetic small banks of the generators' self-tests (formal=False intakes; smoke gate; small B / B_KDE); never D3C_PASS."""
 from __future__ import annotations
 import os
@@ -26,6 +30,14 @@ def _rss_mb():
     try:
         import psutil; return float(psutil.Process().memory_info().rss / 1e6)
     except Exception: return float(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e3)
+
+
+def _peak_rss_mb(): return float(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e3)   # Linux: KiB -> MB (decimal); monotone high-water mark of this process
+
+
+def _plan_objects(label, obj, plans, fplans):
+    """Exact object identity of the plan dictionaries carried by a FamilyInput (never a value-equal copy)."""
+    return {label: dict(plans_is_fixed=(obj.plans is plans), fit_plans_is_fixed=(obj.fit_plans is fplans))}
 
 
 def _publish_json(path, document):
@@ -65,23 +77,31 @@ def main():
     ap.add_argument("--profile", default="production_official")
     ap.add_argument("--selftest-small", action="store_true", help="synthetic small banks (formal=False intakes, smoke gate, small B / B_KDE); never D3C_PASS"); ap.add_argument("--selftest-skip-env-lock", action="store_true"); ap.add_argument("--selftest-sizes", default=None, help="self-test only: subset of sizes")
     ap.add_argument("--selftest-B", type=int, default=20); ap.add_argument("--selftest-B-KDE", type=int, default=25)
+    ap.add_argument("--attempt-id", default=None, help="launcher attempt identity; echoed verbatim into the record and the plan document"); ap.add_argument("--launcher-lock-sha256", default=None, help="sha256 of the launcher lock JSON; echoed verbatim")
     a = ap.parse_args(); t0 = time.time(); selftest = a.selftest_small or a.selftest_skip_env_lock or a.selftest_sizes is not None
-    out = os.path.realpath(a.out)
-    if os.path.lexists(out) and (not os.path.isdir(out) or os.path.islink(out) or os.listdir(out)): print("OUT must be a fresh (non-existent or empty) real directory", file=sys.stderr); return 2
+    # ---- output contract (R-D3C1-D): the GIVEN path must not be a symlink (property of the unresolved path); the RESOLVED path must be non-existent or an empty real directory,
+    #      and must be disjoint (containment on resolved paths) from EVERY read-only input and source root, checked BEFORE anything is created
+    if os.path.islink(a.out): print("OUT must not be a symbolic link", file=sys.stderr); return 2
+    out = os.path.realpath(a.out); out_exists = os.path.lexists(out)
+    if out_exists and (not os.path.isdir(out) or os.listdir(out)): print("OUT must be a fresh (non-existent or empty) real directory", file=sys.stderr); return 2
     def inside(p, q): p, q = os.path.realpath(p), os.path.realpath(q); return p == q or p.startswith(q.rstrip(os.sep) + os.sep)
     d3b_roots = {}
     for x in a.d3b_root:
         if "=" not in x: print("--d3b-root must be SIZE=PATH", file=sys.stderr); return 2
         s, p = x.split("=", 1); d3b_roots[s] = p
-    protected = [os.path.abspath(a.phaseb), os.path.abspath(a.d2_root)] + [os.path.abspath(p) for p in d3b_roots.values()]
-    if any(inside(out, p) or inside(p, out) for p in protected): print("output must be disjoint from the inputs and the source", file=sys.stderr); return 2
-    os.makedirs(out); log = open(os.path.join(out, "d3c_profile_stdout.log"), "w"); G = {k: None for k in REQUIRED}
-    R = dict(schema="d3c_profile_record_v1", stage="init", family=a.family, failures=[], notes=[], selftest=bool(selftest), profile=a.profile, out=out, stages_rss_mb={}, timings={})
+    protected = dict(mt=a.mt, phaseb=a.phaseb, phasec=a.phasec, d2_root=a.d2_root, **{f"d3b_root_{s}": p for s, p in d3b_roots.items()})
+    clash = [k for k, p in protected.items() if inside(out, p) or inside(p, out)]
+    if clash: print("output must be disjoint from the inputs and the source roots (" + ", ".join(clash) + ")", file=sys.stderr); return 2
+    if out_exists: pass                                      # verified empty real directory: used as is
+    else: os.makedirs(out)                                   # fresh: created now (a concurrent creation would raise here, by design)
+    log = open(os.path.join(out, "d3c_profile_stdout.log"), "w"); G = {k: None for k in REQUIRED}
+    R = dict(schema="d3c_profile_record_v2", stage="init", family=a.family, failures=[], notes=[], selftest=bool(selftest), profile=a.profile, out=out, out_preexisting_empty=bool(out_exists), protected_roots={k: os.path.realpath(p) for k, p in protected.items()},
+             attempt=dict(attempt_id=a.attempt_id, launcher_lock_sha256=a.launcher_lock_sha256), stages_rss_mb={}, stages_peak_rss_mb={}, timings={})
     def note(*s):
         m = " ".join(str(x) for x in s); print(m, flush=True)
         try: log.write(m + "\n"); log.flush()
         except ValueError: pass
-    def mark(stage): R["stages_rss_mb"][stage] = round(_rss_mb(), 1); R["timings"][stage] = round(time.time() - t0, 3)
+    def mark(stage): R["stages_rss_mb"][stage] = round(_rss_mb(), 1); R["stages_peak_rss_mb"][stage] = round(_peak_rss_mb(), 1); R["timings"][stage] = round(time.time() - t0, 3)
     def finish(code, stage="final"):
         R["stage"] = stage; R["gates"] = G; R["required_inventory"] = list(REQUIRED); R["required_all_true"] = all(G.get(k) is True for k in REQUIRED); R["D3C_PASS"] = bool(R["required_all_true"] and a.profile == "production_official" and not selftest and code == 0); R["seconds"] = time.time() - t0; mark("final")
         note("run finalization | stage:", stage, "| gates:", json.dumps(G)); log.close()
@@ -96,6 +116,7 @@ def main():
         G["G_pins_loaded"] = bool(pins.get("schema") == "d3_pins_v1" and inv0.get("d_sha256", {}).get("d/d3_pins.json") == R["pins_sha256"])
         from step1_engine import __version__; from step1_engine.checkpoint import module_shas
         G["G_engine_inventory"] = (inv0["modules"] == module_shas() and inv0["engine_version"] == __version__ == pins["engine_version"]); me = os.path.abspath(__file__); G["G_script_sha"] = (inv0.get("d_sha256", {}).get("d/d3c_profile.py") == sha(me)); R["engine_version"] = __version__
+        R["source"] = dict(script_sha256=sha(me), inventory_sha256=sha(inv_path), pins_sha256=R["pins_sha256"], engine_version=__version__, phaseb=os.path.realpath(a.phaseb), mt=os.path.realpath(a.mt))   # bound by the launcher to its lock (R-D3C1-A)
         if not (G["G_pins_loaded"] and G["G_engine_inventory"] and G["G_script_sha"]): R["failures"].append("preflight binding failed"); return finish(1, "preflight")
         pc = json.load(open(os.path.join(a.phasec, "PACKET_INVENTORY.json"))); members = {}
         for d, _, fs in os.walk(a.phasec):
@@ -193,24 +214,38 @@ def main():
         ok_p = verify_plan_identity(plans, fplans, plan_ident, table=table, family=fam) and plan_ident["B"] == B and plan_ident["B_KDE"] == Bk and plan_ident["seeds"] == RULES.seeds and plan_ident["master_seed"] == master_seed
         # roundtrip: the identity must be reproducible from the recorded ORDERED UIDs alone
         plans_r, fplans_r, ident_r = fix_family_plans(table, fam, {0: [tuple(u.as_tuple()) for u in uids_b0], 1: [tuple(u.as_tuple()) for u in uids_b1]}, K_fit, master_seed, B=B, B_KDE=Bk); ok_p &= (ident_r == plan_ident) and verify_plan_identity(plans_r, fplans_r, plan_ident, table=table, family=fam)
+        R["roundtrip_plans_peak_rss_mb"] = round(_peak_rss_mb(), 1); del plans_r, fplans_r, ident_r         # R-D3C1-E: the reconstruction is released right after its comparison (never carried into the profile)
         G["G_plans_fixed"] = bool(ok_p); mark("plans")
-        plan_doc = dict(schema="d3c_plan_identity_record_v1", family=fam, identity=plan_ident, ordered_uids={"0": [list(u.as_tuple()) for u in uids_b0], "1": [list(u.as_tuple()) for u in uids_b1]}, K_fit=K_fit, master_seed=master_seed, B=B, B_KDE=Bk, seeds=RULES.seeds, constants_source=("registered (rules_config.RULES / official_gate)" if formal else "SELF-TEST values (never formal)"),
-                        reconstruction="fix_family_plans(table, family, {0: ordered_uids['0'], 1: ordered_uids['1']}, K_fit, master_seed, B, B_KDE) reproduces identity (all strata / multiplicity SHAs)", crn_table_sha256=table["table_sha256"], context_identities=dict(ident), engine_version=__version__, formal=formal, selftest=bool(selftest), source_lock=dict(commit_binding="see launcher lock", script_sha256=sha(me), inventory_sha256=sha(inv_path)), environment=dict(python=env.get("python"), numpy=env.get("numpy"), scipy=env.get("scipy")))
+        plan_doc = dict(schema="d3c_plan_identity_record_v2", family=fam, identity=plan_ident, ordered_uids={"0": [list(u.as_tuple()) for u in uids_b0], "1": [list(u.as_tuple()) for u in uids_b1]}, K_fit=K_fit, master_seed=master_seed, B=B, B_KDE=Bk, seeds=RULES.seeds, constants_source=("registered (rules_config.RULES / official_gate)" if formal else "SELF-TEST values (never formal)"),
+                        reconstruction="fix_family_plans(table, family, {0: ordered_uids['0'], 1: ordered_uids['1']}, K_fit, master_seed, B, B_KDE) reproduces identity (all strata / multiplicity SHAs)", crn_table_sha256=table["table_sha256"], context_identities=dict(ident), engine_version=__version__, formal=formal, selftest=bool(selftest),
+                        source_lock=dict(commit_binding="launcher lock (attempt below)", script_sha256=sha(me), inventory_sha256=sha(inv_path), pins_sha256=R["pins_sha256"]), attempt=dict(R["attempt"]), environment=dict(python=env.get("python"), numpy=env.get("numpy"), scipy=env.get("scipy")))
         if not ok_p: R["failures"].append("plan identity not reproducible / registered constants"); return finish(1, "plans")
-        # ---- six size inputs, all-size assembly
-        size_inputs = {}
+        # ---- six size inputs (each must carry the very plan dictionaries: `is`), all-size assembly (both systems: `is`)
+        size_inputs = {}; obj_id = {}
         for s in sizes:
             fm_s = build_twelve_size_input(ctx, fam, s, "matched", supplies[s]["matched"], plans, fplans); fn_s = build_twelve_size_input(ctx, fam, s, "native", supplies[s]["native"], plans, fplans); size_inputs[s] = (fm_s, fn_s)
-        G["G_size_inputs"] = bool(len(size_inputs) == len(sizes) and all(len(f.configs) == 12 for pair in size_inputs.values() for f in pair)); mark("size_inputs")
-        fm, fn, fam_ident = assemble_twelve_family(ctx, fam, size_inputs); G["G_family_assembled"] = bool(len(fm.configs) == 12 * len(sizes) and len(fn.configs) == 12 * len(sizes) and fm.plans is plans and fn.plans is plans and (fam_ident.get("full_surviving_scope") is True or not formal)); R["family_identity"] = fam_ident; mark("assembly")
-        fp_m0, fp_n0 = input_fingerprint(fm), input_fingerprint(fn); snap_m = input_snapshot(fm); R["input_fingerprints_before_gate"] = dict(matched=fp_m0, native=fp_n0, snapshot_matched_sha256=hashlib.sha256(json.dumps(snap_m, sort_keys=True, default=str).encode()).hexdigest())
+            obj_id.update(_plan_objects(f"{s}/matched", fm_s, plans, fplans)); obj_id.update(_plan_objects(f"{s}/native", fn_s, plans, fplans))
+        def same_objects(d): return all(v["plans_is_fixed"] is True and v["fit_plans_is_fixed"] is True for v in d.values())
+        G["G_size_inputs"] = bool(len(size_inputs) == len(sizes) and len(obj_id) == 2 * len(sizes) and all(len(f.configs) == 12 for pair in size_inputs.values() for f in pair) and same_objects(obj_id)); mark("size_inputs")
+        if not G["G_size_inputs"]: R["plan_object_identity"] = dict(size_inputs=obj_id); R["failures"].append("size inputs do not carry the fixed plan objects (or are incomplete)"); return finish(1, "size_inputs")
+        fm, fn, fam_ident = assemble_twelve_family(ctx, fam, size_inputs); asm_id = {}; asm_id.update(_plan_objects("family/matched", fm, plans, fplans)); asm_id.update(_plan_objects("family/native", fn, plans, fplans))
+        G["G_family_assembled"] = bool(len(fm.configs) == 12 * len(sizes) and len(fn.configs) == 12 * len(sizes) and same_objects(asm_id) and (fam_ident.get("full_surviving_scope") is True or not formal)); R["family_identity"] = fam_ident; mark("assembly")
+        R["plan_object_identity"] = dict(size_inputs_before_gate=obj_id, assembled_before_gate=asm_id)
+        if not G["G_family_assembled"]: R["failures"].append("family assembly incomplete / plan objects not shared"); return finish(1, "assembly")
+        fp_m0, fp_n0 = input_fingerprint(fm), input_fingerprint(fn); snap_m = input_snapshot(fm); snap_sha = hashlib.sha256(json.dumps(snap_m, sort_keys=True, default=str).encode()).hexdigest(); del snap_m
+        R["input_fingerprints_before_gate"] = dict(matched=fp_m0, native=fp_n0, snapshot_matched_sha256=snap_sha)
         # ---- the formal 12-position official gate (live environment; keyword plan identity / table)
         gate = twelve_official_gate(fm, fn, mode=("official" if formal else "smoke"), plan_identity=plan_ident, table=table)
         R["gate"] = dict(mode=gate.mode, passed=bool(gate.passed), required_failures=list(gate.required_failures), diagnostics=gate.diagnostics); G["G_gate_passed"] = bool(gate.passed and (gate.diagnostics.get("environment_source") == "live_collected")); mark("gate")
-        # ---- identity stable after the gate; the same plan objects
-        fp_m1, fp_n1 = input_fingerprint(fm), input_fingerprint(fn); ok_i = (fp_m1 == fp_m0 and fp_n1 == fp_n0 and fm.plans is plans and fn.plans is plans and fm.fit_plans is fplans and verify_plan_identity(fm.plans, fm.fit_plans, plan_ident, table=table, family=fam) and verify_plan_identity(fn.plans, fn.fit_plans, plan_ident, table=table, family=fam))
+        # ---- identity stable after the gate: fingerprints (content), the SAME plan objects in both assembled systems AND all six size inputs (`is`), and the content identity of the plans
+        fp_m1, fp_n1 = input_fingerprint(fm), input_fingerprint(fn); obj_id1 = {}; asm_id1 = {}
+        for s, (fm_s, fn_s) in size_inputs.items(): obj_id1.update(_plan_objects(f"{s}/matched", fm_s, plans, fplans)); obj_id1.update(_plan_objects(f"{s}/native", fn_s, plans, fplans))
+        asm_id1.update(_plan_objects("family/matched", fm, plans, fplans)); asm_id1.update(_plan_objects("family/native", fn, plans, fplans)); R["plan_object_identity"].update(size_inputs_after_gate=obj_id1, assembled_after_gate=asm_id1)
+        ok_obj = bool(len(obj_id1) == 2 * len(sizes) and same_objects(obj_id1) and same_objects(asm_id1))
+        ok_i = (fp_m1 == fp_m0 and fp_n1 == fp_n0 and ok_obj and verify_plan_identity(fm.plans, fm.fit_plans, plan_ident, table=table, family=fam) and verify_plan_identity(fn.plans, fn.fit_plans, plan_ident, table=table, family=fam))
         G["G_identity_stable"] = bool(ok_i); R["input_fingerprints_after_gate"] = dict(matched=fp_m1, native=fp_n1)
         if not G["G_gate_passed"]: R["failures"].append("official gate failed: " + "; ".join(gate.required_failures[:5]))
+        if not ok_obj: R["failures"].append("plan objects replaced across the gate (evaluation / fitting dictionaries are not the fixed objects)")
         if not ok_i: R["failures"].append("input / plan identity changed across the gate")
         # ---- publication
         R["plan_identity_sha256"] = plan_ident["identity_sha256"]; G["G_record_saved"] = False; R["publication_stage"] = "plan_identity"

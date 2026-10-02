@@ -39,3 +39,9 @@ rc 0・stage complete・`D3C_PASS True`・gate `passed=True`（required_failures
 - E4：B／B_KDE／seeds／N_fit／m_fit は登録定数（`rules_config.RULES`・`official_gate`）から取り，実 K_fit＝N_fit／m_fit を確認；self-test の値は分離し `D3C_PASS` に昇格しない。
 - 資源：保持 payload の算術は **13.152 GB**（評価 T 9.216＋fitting 0.576＋評価 multiplicity 3.2＋fitting multiplicity 0.16）；全 size 組立ては配列を共有する view（連結しない）。intake は同じ NPZ を複数回開く（D-3b 配置 2〜3 回，D-2 配置 3〜4 回，reference 3〜2 回：size 加重 open 量 ≈95.5 GB／family）ため，launcher は入力を **ローカル disk に 1 回複製**（unique ≈12.3 GB）してから読む（検証は同一：bytes／配列 SHA）。51 GB High-RAM の十分性は保証せず，段階別 RSS を記録する。
 - 「配列計算なし」は「新しい物理共分散・MC bank の生成なし」に限定（root 再検証・hash・bootstrap multiplicity 構築は本段でも行う）。
+
+## G. v0.1.2 追記（監査 `D3c_tranche1_0.97.0_audit_decision.json`：R-D3C1-A〜E；tranche ① v2 で反映）
+- 資源（R-E）：plan identity の roundtrip 再構築（ordered UID からの `fix_family_plans` 再実行）は，照合の間だけ追加の multiplicity（評価 5×2000×40 000×8 B＝3.2 GB＋fitting 5×2000×2000×8 B＝0.16 GB＝**3.36 GB**）を保持する → 算術上の一時 peak は **16.512 GB**（13.152＋3.36）；照合直後に解放し，以後は 13.152 GB に戻る。script は段階別 RSS に加えて `ru_maxrss` の peak を記録する（実測は Colab 実行の record で示す；51 GB の十分性は保証しない）。
+- plan object（R-C）：size input 6 本と組立て後の両 system が `fix_family_plans` の返した**同一 dictionary object**（評価 plans・fitting plans とも `is`）を持つことを gate 前後で要求する（内容 identity の検証と併置；値が同一の別 object は拒否）。
+- 出力契約（R-D）：`--mt`／`--phaseb`／`--phasec`／入力 root を出力作成前に保護（realpath の包含）；指定 OUT が symlink なら拒否；既存の空 directory は受け入れる。
+- launcher（R-A／B）：1 attempt＝attempt ID＋initial 非成功 record → 実行設定と live source（HEAD・file SHA）の lock 再照合 → staging（容量検査）→ 起動（attempt ID と lock SHA を script に渡す）→ record の semantic 検証と lock／attempt への束縛 → final record。前回の final record は退避し，今回の証拠にしない。
