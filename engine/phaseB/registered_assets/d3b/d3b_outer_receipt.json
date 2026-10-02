@@ -1,0 +1,818 @@
+{
+ "schema": "d3b_outer_receipt_v1",
+ "generation": {
+  "ledger_payload_sha256": "a7d2c8c4375c37a24142c1fd2bd400b9559c220418ee7af9e41f430ba968b9da",
+  "ledger_file_sha256": "bdaa8aeb9b3e591d73540c4edce482c3f59f6edcafa0f21f171332102c624837",
+  "source_lock": {
+   "commit": "7b09c646b3691260bf06b00055c5b5ad9f8540ca",
+   "inventory_sha256": "4767847789a01d7f74282adfd7d3e6cfc924000307fcf10abf896c29bce1be5e",
+   "engine_version": "0.93.0",
+   "script_sha256": "655939737a30ff9d64531ea8ab19c31c5b0b7bd93c56ff5b1690c171399b70cd",
+   "notebook_sha256": "8455ba94fbceff21628a2b0625e0accc1a2f719282543cb36028ca9876af45dd",
+   "pins_sha256": "284ca06a7115b13327be6dba458533702985fa61e3f22a3b0064b52dd1455173",
+   "producer_digest": "39510da28c19d242142c4d076841c473ba38875c8ea12041ebee2d8f78e44a7d",
+   "preexecution_authorization": {
+    "file": "Step1_PhaseD_D3b_tranche1_v2_0.93.0_decision.json",
+    "sha256": "f1df0788abc08641d8bbfb28e81209c1bfa9756778fc44d478cda953690a4b95",
+    "decision": "PASS_WITH_EXPLICIT_SCOPE__CONDITIONAL_PREEXECUTION_GO"
+   }
+  },
+  "metadata_acceptance": {
+   "decision_file": "Step1_PhaseD_D3b_all9_7b09c646b369_metadata_acceptance.json",
+   "decision_sha256": "461f75259418db852c4257a1b84ee327fbd718e54203be39696ee0ed85c9d652",
+   "audit_md": "ChatGPT_audit_Step1_PhaseD_D3b_all9_7b09c646b369.md",
+   "audit_md_sha256": "6ca3c5902dbaf40abc549eb0f8b26489609b2f43b53ce95ab807b80925a97283",
+   "input_zip": "bankgen_results.zip",
+   "input_zip_sha256": "fbe94c55600a15eb43822825b3edead09dafb2af2a57968b43b4daba9d1687b2",
+   "decision": "PASS_WITH_EXPLICIT_SCOPE",
+   "scope": "nine completed production generation run records and metadata; NPZ arrays not read (0/405)",
+   "date_JST": "2026-10-02"
+  },
+  "ledger_array_acceptance_field": "PENDING (generation-time record; never rewritten)"
+ },
+ "verification": {
+  "commit": "269c6d56fb7588b21472ddea0618df3f88a6cd75",
+  "engine_version": "0.95.0",
+  "inventory_sha256": "008e125c50d2215c5dc3f5a4831f368c7feca856dc3a3819614770afc1abe7ff",
+  "script_sha256": "dc57de8ba8c2a15a4ab531d8be02cc1ecbd1c28e9912b23dead915f632a780a1",
+  "notebook_sha256": "5a556682d2dff84abfdcb21314cb4d43f8271386b384c0dcf96cdf6df831a7ca",
+  "modules_digest": "f0a4ee17bf82cf1a517f898ea3fede9486964ef63ef0e704ba8c63fa6d874df8",
+  "preexecution_authorization": {
+   "file": "Step1_PhaseD_D3b_tranche2_v2_0.95.0_decision.json",
+   "sha256": "48a0d3b14768f5a06958a1b8d97f4e22d3b684e5ab2701a6cd9d9f78cec2db9a",
+   "decision": "PASS_WITH_EXPLICIT_SCOPE / GO_CONDITIONAL_ON_EXACT_LOCK_AND_EXISTING_CHECKS"
+  },
+  "environment_identity_order_independent": [
+   "b42ff789e4d96c5976fb6c9f6197c30aab9a51871d827620a310b62dc6637b32"
+  ],
+  "camb_note": "the read-only verifier neither installs nor requires CAMB; the verification environment is recorded separately from the generation environment"
+ },
+ "array_acceptance": {
+  "decision_file": "Step1_PhaseD_D3b_readonly_269c6d56fb75_acceptance.json",
+  "decision_sha256": "424a547127276a2f0e8e8170b67573621f6f4583632d1b98a7627b1a4a558ee3",
+  "audit_md": "ChatGPT_audit_Step1_PhaseD_D3b_readonly_269c6d56fb75.md",
+  "audit_md_sha256": "237c68c612038fd94ddea363f26ba6805e993dfa5c7a62256780be3768870616",
+  "input_zip": "d3b_verify_results.zip",
+  "input_zip_sha256": "80596237ff33d2283a6762174100a71ff448ec714ee39d59a260ad5110afd7c1",
+  "decision": "PASS_WITH_EXPLICIT_SCOPE",
+  "acceptance_kind": "AUDITED_COLAB_FULL_ARRAY_INTEGRITY_RESULTS",
+  "date_JST": "2026-10-02",
+  "scope": "nine accepted-full read-only verification runs: 243 units / 405 NPZ file SHA and bytes == ledger expectations, every array SHA == sidecar (verify_twelve_bank_dir), finiteness / dtype / cid / ranges / UIDs / keys, cid equality across each partition and with the fixed D-2 family reference (3 units re-verified through the reuse binding); the auditor read no production NPZ (0/405) and recomputed no statistics",
+  "not_approved": [
+   "independent rehash of the 405 production NPZ by the auditor",
+   "raw latent R/z or generation-root comparison",
+   "real-bank twelve-position official profile / gate",
+   "fixed BootstrapPlan / FittingPlan identities",
+   "D-2W / noise / calibration / usable / observed labels / ENGINE_VALID"
+  ]
+ },
+ "partitions": {
+  "E2_L1.00": {
+   "family": "E2",
+   "size_id": "L1.00",
+   "generation_run_id": "20260930T010656Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D3b/E2_L1.00_20260930T010656Z/out",
+   "d2_ref_root": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2",
+   "units": 27,
+   "npz_files": 45,
+   "npz_bytes": 3024163620,
+   "seconds": 225.56537294387817,
+   "all_ok": true,
+   "accepted_run_binding": true,
+   "coverage_complete": true,
+   "cid_correspondence_ok": true,
+   "d2_reference_verified": true,
+   "d2_reference_units": {
+    "ref_E2_b0": {
+     "manifest_sha256": "4573eea23e0911194c44f1c79179b28225b30232744a9d62e7d3ed94756a1247",
+     "n_rows": 1000000,
+     "shards": [
+      {
+       "file": "ref_b0_s0.npz",
+       "file_sha256": "5ebf405b4ca6a328ef8dcd4214fd89c6aa9723fbeaaf71c7e006d13c6649020f",
+       "bytes": 56002500
+      }
+     ]
+    },
+    "ref_E2_b1": {
+     "manifest_sha256": "b15492a74e7b980594c42520cca5bfe1db08906b066688f59ae8bc92c33b17b7",
+     "n_rows": 3000000,
+     "shards": [
+      {
+       "file": "ref_b1_s1.npz",
+       "file_sha256": "402082d55434ce9013299b7a7c6df147a43ba15fb83831366a358fd2b188cefb",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s2.npz",
+       "file_sha256": "eb31d0199fe23ba8543d7af559403cacf1954e3de2d57b0e5c175470e1859e45",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s3.npz",
+       "file_sha256": "92e9df7bace028dcaaec6d44df967e52b9df7b8563af06c11e47f29eb0a75e5f",
+       "bytes": 32001380
+      }
+     ]
+    },
+    "ref_E2_fit": {
+     "manifest_sha256": "360429a8b62d384ffb1646994490c1a1625ae009c3308161d3ca83355680f8b2",
+     "n_rows": 200000,
+     "shards": [
+      {
+       "file": "ref_fit_s0.npz",
+       "file_sha256": "2b17227fa2f63680b1152069afad7a3f89b4254c4c442b9b0a5098ad2554c84a",
+       "bytes": 6401380
+      }
+     ]
+    }
+   },
+   "records": {
+    "report_sha256": "e7064b4a1111f79513ccf85c018d43d498b86d13ce13b8f6d71f4556a7ba3ebf",
+    "lock_sha256": "676bc9a8b8b0db9b7a0868d0375f01fa397075c584518524e0514731f59daa07",
+    "final_sha256": "46904a17019e674dd4da26286a03978e68c03addec6ebef64ff86503ea20bd49",
+    "stdout_sha256": "36ebf6e3a857cf378d1cd1e4fc0cc74bc498fa63fc6100a4ae9573d4f4a07f08",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed_notebook": {
+     "file": "MirrorTopology_Step1_D3b_verify_v0_1_E2_L1.00_executed_269c6d56fb75.ipynb",
+     "sha256": "2b7cae964d9393ad81f0ec5d74b8c9e72aeef5211de824b3c8af71a6dc3a6a8e",
+     "bytes": 13724
+    },
+    "registered_dir": "registered_assets/d3b/verify/E2_L1.00"
+   },
+   "verification_environment": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "healpy": "1.20.0",
+    "pot": "0.9.7.post1",
+    "camb": null
+   }
+  },
+  "E2_L1.20": {
+   "family": "E2",
+   "size_id": "L1.20",
+   "generation_run_id": "20260930T054800Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D3b/E2_L1.20_20260930T054800Z/out",
+   "d2_ref_root": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2",
+   "units": 27,
+   "npz_files": 45,
+   "npz_bytes": 3024163620,
+   "seconds": 293.8364315032959,
+   "all_ok": true,
+   "accepted_run_binding": true,
+   "coverage_complete": true,
+   "cid_correspondence_ok": true,
+   "d2_reference_verified": true,
+   "d2_reference_units": {
+    "ref_E2_b0": {
+     "manifest_sha256": "4573eea23e0911194c44f1c79179b28225b30232744a9d62e7d3ed94756a1247",
+     "n_rows": 1000000,
+     "shards": [
+      {
+       "file": "ref_b0_s0.npz",
+       "file_sha256": "5ebf405b4ca6a328ef8dcd4214fd89c6aa9723fbeaaf71c7e006d13c6649020f",
+       "bytes": 56002500
+      }
+     ]
+    },
+    "ref_E2_b1": {
+     "manifest_sha256": "b15492a74e7b980594c42520cca5bfe1db08906b066688f59ae8bc92c33b17b7",
+     "n_rows": 3000000,
+     "shards": [
+      {
+       "file": "ref_b1_s1.npz",
+       "file_sha256": "402082d55434ce9013299b7a7c6df147a43ba15fb83831366a358fd2b188cefb",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s2.npz",
+       "file_sha256": "eb31d0199fe23ba8543d7af559403cacf1954e3de2d57b0e5c175470e1859e45",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s3.npz",
+       "file_sha256": "92e9df7bace028dcaaec6d44df967e52b9df7b8563af06c11e47f29eb0a75e5f",
+       "bytes": 32001380
+      }
+     ]
+    },
+    "ref_E2_fit": {
+     "manifest_sha256": "360429a8b62d384ffb1646994490c1a1625ae009c3308161d3ca83355680f8b2",
+     "n_rows": 200000,
+     "shards": [
+      {
+       "file": "ref_fit_s0.npz",
+       "file_sha256": "2b17227fa2f63680b1152069afad7a3f89b4254c4c442b9b0a5098ad2554c84a",
+       "bytes": 6401380
+      }
+     ]
+    }
+   },
+   "records": {
+    "report_sha256": "9b9a8adca0e906155fe329eea9d5c106a52eff1b1addedd91533abb77cd03f71",
+    "lock_sha256": "b1fef53d54edecd1e3d79453c825838081231f7b95d958ebf5086749d9dd3769",
+    "final_sha256": "b4aad41a981b8d6bde97d50bc2ffb82a9dfc1928d5863a28e500eb50a5e0ad3e",
+    "stdout_sha256": "24bdd6cfea5e715e56553916030c4fcba1b1f90307d6db9e05c4e586118e0818",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed_notebook": {
+     "file": "MirrorTopology_Step1_D3b_verify_v0_1_E2_L1.20_executed_269c6d56fb75.ipynb",
+     "sha256": "3dc89732f90acfb019b9be1b0ed11d066b5256459d395e725467234e5cca493a",
+     "bytes": 13723
+    },
+    "registered_dir": "registered_assets/d3b/verify/E2_L1.20"
+   },
+   "verification_environment": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "healpy": "1.20.0",
+    "pot": "0.9.7.post1",
+    "camb": null
+   }
+  },
+  "E2_L1.50": {
+   "family": "E2",
+   "size_id": "L1.50",
+   "generation_run_id": "20260930T080141Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D3b/E2_L1.50_20260930T080141Z/out",
+   "d2_ref_root": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2",
+   "units": 27,
+   "npz_files": 45,
+   "npz_bytes": 3024163620,
+   "seconds": 151.48540568351746,
+   "all_ok": true,
+   "accepted_run_binding": true,
+   "coverage_complete": true,
+   "cid_correspondence_ok": true,
+   "d2_reference_verified": true,
+   "d2_reference_units": {
+    "ref_E2_b0": {
+     "manifest_sha256": "4573eea23e0911194c44f1c79179b28225b30232744a9d62e7d3ed94756a1247",
+     "n_rows": 1000000,
+     "shards": [
+      {
+       "file": "ref_b0_s0.npz",
+       "file_sha256": "5ebf405b4ca6a328ef8dcd4214fd89c6aa9723fbeaaf71c7e006d13c6649020f",
+       "bytes": 56002500
+      }
+     ]
+    },
+    "ref_E2_b1": {
+     "manifest_sha256": "b15492a74e7b980594c42520cca5bfe1db08906b066688f59ae8bc92c33b17b7",
+     "n_rows": 3000000,
+     "shards": [
+      {
+       "file": "ref_b1_s1.npz",
+       "file_sha256": "402082d55434ce9013299b7a7c6df147a43ba15fb83831366a358fd2b188cefb",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s2.npz",
+       "file_sha256": "eb31d0199fe23ba8543d7af559403cacf1954e3de2d57b0e5c175470e1859e45",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s3.npz",
+       "file_sha256": "92e9df7bace028dcaaec6d44df967e52b9df7b8563af06c11e47f29eb0a75e5f",
+       "bytes": 32001380
+      }
+     ]
+    },
+    "ref_E2_fit": {
+     "manifest_sha256": "360429a8b62d384ffb1646994490c1a1625ae009c3308161d3ca83355680f8b2",
+     "n_rows": 200000,
+     "shards": [
+      {
+       "file": "ref_fit_s0.npz",
+       "file_sha256": "2b17227fa2f63680b1152069afad7a3f89b4254c4c442b9b0a5098ad2554c84a",
+       "bytes": 6401380
+      }
+     ]
+    }
+   },
+   "records": {
+    "report_sha256": "a19715a1ea75bb2fc3b7a9ea856de1fc58281139ff13707ebd450a4eaa42f701",
+    "lock_sha256": "f7316e601d3f6bbe77469122e281d64dcaad14eda6895a29a4af3d101be37606",
+    "final_sha256": "838bc367572b60c17958869636bbdc21171516abc5cab3b9a676dae5428b1344",
+    "stdout_sha256": "c6d95942dad23934951a139f4459dcad5fbb34043cb05ff8c552c3f956a99189",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed_notebook": {
+     "file": "MirrorTopology_Step1_D3b_verify_v0_1_E2_L1.50_executed_269c6d56fb75.ipynb",
+     "sha256": "d3d7f8974fbc63a5bc5e861c8fa81f97d3aad5f09eb12aed2ef4f26ab3c5c831",
+     "bytes": 13719
+    },
+    "registered_dir": "registered_assets/d3b/verify/E2_L1.50"
+   },
+   "verification_environment": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "healpy": "1.20.0",
+    "pot": "0.9.7.post1",
+    "camb": null
+   }
+  },
+  "E7_L1.00": {
+   "family": "E7",
+   "size_id": "L1.00",
+   "generation_run_id": "20260930T101421Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D3b/E7_L1.00_20260930T101421Z/out",
+   "d2_ref_root": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2",
+   "units": 27,
+   "npz_files": 45,
+   "npz_bytes": 3024163620,
+   "seconds": 289.28653287887573,
+   "all_ok": true,
+   "accepted_run_binding": true,
+   "coverage_complete": true,
+   "cid_correspondence_ok": true,
+   "d2_reference_verified": true,
+   "d2_reference_units": {
+    "ref_E7_b0": {
+     "manifest_sha256": "882228b10f1a8c2476d5dc9b677d751408973af0fa0b9e079d74a03522a6643a",
+     "n_rows": 1000000,
+     "shards": [
+      {
+       "file": "ref_b0_s0.npz",
+       "file_sha256": "bdc2654acb14e01d5599d4c284c7e08c2654bcd4d76c92eca04bb5465726ab24",
+       "bytes": 56002500
+      }
+     ]
+    },
+    "ref_E7_b1": {
+     "manifest_sha256": "6b458a2f3773128cecdaea0a3596b75e578d55653335a22bdf3ec8f6d2dbfecc",
+     "n_rows": 3000000,
+     "shards": [
+      {
+       "file": "ref_b1_s1.npz",
+       "file_sha256": "5dff38d482a2d1787fd8213e432b6dd9095b38188381f34b4b00abb5632f5b16",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s2.npz",
+       "file_sha256": "47e7a441031402168eb282e86656a0598eb6e95a11686c2b713bd8fab4492297",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s3.npz",
+       "file_sha256": "d7a618917e715e5ee0965f1c68b44d21ac3cac0df324d0e6a3767677c92492e5",
+       "bytes": 32001380
+      }
+     ]
+    },
+    "ref_E7_fit": {
+     "manifest_sha256": "60567d15de71cfe56f2b031c8ec18db75e06f952f51b8a07cb973df5546dfa34",
+     "n_rows": 200000,
+     "shards": [
+      {
+       "file": "ref_fit_s0.npz",
+       "file_sha256": "79997b711c89d77c3d51a4fad62157c5b7f9763f65d5494f09c8272e3e8e3094",
+       "bytes": 6401380
+      }
+     ]
+    }
+   },
+   "records": {
+    "report_sha256": "0fe53491989ce76bbcdb4aa126e495fb1104abfea32769f0659cbced5a37f2da",
+    "lock_sha256": "79b6a9675e20d39eff0d48011e90489df04744daf00694d89014f741545183e9",
+    "final_sha256": "02bef9f8f797852df5fbc96adda65536d919e484a059d82c13cf9f4e70345cb4",
+    "stdout_sha256": "49d47936fe0482e5cd42ae4516f74deca4618a8f5d5bd873407de738271bbfc7",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed_notebook": {
+     "file": "MirrorTopology_Step1_D3b_verify_v0_1_E7_L1.00_executed_269c6d56fb75.ipynb",
+     "sha256": "8c06a69659aba9cd7692369813b863b9b864bef396a43770e7e10a03b72631b4",
+     "bytes": 13723
+    },
+    "registered_dir": "registered_assets/d3b/verify/E7_L1.00"
+   },
+   "verification_environment": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "healpy": "1.20.0",
+    "pot": "0.9.7.post1",
+    "camb": null
+   }
+  },
+  "E7_L1.20": {
+   "family": "E7",
+   "size_id": "L1.20",
+   "generation_run_id": "20260930T163102Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D3b/E7_L1.20_20260930T163102Z/out",
+   "d2_ref_root": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2",
+   "units": 27,
+   "npz_files": 45,
+   "npz_bytes": 3024163620,
+   "seconds": 280.17109513282776,
+   "all_ok": true,
+   "accepted_run_binding": true,
+   "coverage_complete": true,
+   "cid_correspondence_ok": true,
+   "d2_reference_verified": true,
+   "d2_reference_units": {
+    "ref_E7_b0": {
+     "manifest_sha256": "882228b10f1a8c2476d5dc9b677d751408973af0fa0b9e079d74a03522a6643a",
+     "n_rows": 1000000,
+     "shards": [
+      {
+       "file": "ref_b0_s0.npz",
+       "file_sha256": "bdc2654acb14e01d5599d4c284c7e08c2654bcd4d76c92eca04bb5465726ab24",
+       "bytes": 56002500
+      }
+     ]
+    },
+    "ref_E7_b1": {
+     "manifest_sha256": "6b458a2f3773128cecdaea0a3596b75e578d55653335a22bdf3ec8f6d2dbfecc",
+     "n_rows": 3000000,
+     "shards": [
+      {
+       "file": "ref_b1_s1.npz",
+       "file_sha256": "5dff38d482a2d1787fd8213e432b6dd9095b38188381f34b4b00abb5632f5b16",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s2.npz",
+       "file_sha256": "47e7a441031402168eb282e86656a0598eb6e95a11686c2b713bd8fab4492297",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s3.npz",
+       "file_sha256": "d7a618917e715e5ee0965f1c68b44d21ac3cac0df324d0e6a3767677c92492e5",
+       "bytes": 32001380
+      }
+     ]
+    },
+    "ref_E7_fit": {
+     "manifest_sha256": "60567d15de71cfe56f2b031c8ec18db75e06f952f51b8a07cb973df5546dfa34",
+     "n_rows": 200000,
+     "shards": [
+      {
+       "file": "ref_fit_s0.npz",
+       "file_sha256": "79997b711c89d77c3d51a4fad62157c5b7f9763f65d5494f09c8272e3e8e3094",
+       "bytes": 6401380
+      }
+     ]
+    }
+   },
+   "records": {
+    "report_sha256": "42ccc4dc2e5576934e63803b613743e895b696b6b985ef94ffddf2cf0e9847eb",
+    "lock_sha256": "e5be49a700b9ccc36cbed090c76d8b1601b94b089dac30fed097cfb88380441d",
+    "final_sha256": "2f5bfe10cc46bb8f46582dbe375e091b1ffcdad732f9ba7d4c8978c61cb9568c",
+    "stdout_sha256": "645e0a291f7e07bffacb6baeea5d084bd71288d31d9708eeef124a303debe36d",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed_notebook": {
+     "file": "MirrorTopology_Step1_D3b_verify_v0_1_E7_L1.20_executed_269c6d56fb75.ipynb",
+     "sha256": "b84008791d3107bb19b951386c2d92fe19d7e25d15b2ad7a034583516e0661a8",
+     "bytes": 13723
+    },
+    "registered_dir": "registered_assets/d3b/verify/E7_L1.20"
+   },
+   "verification_environment": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "healpy": "1.20.0",
+    "pot": "0.9.7.post1",
+    "camb": null
+   }
+  },
+  "E7_L1.50": {
+   "family": "E7",
+   "size_id": "L1.50",
+   "generation_run_id": "20260930T191817Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D3b/E7_L1.50_20260930T191817Z/out",
+   "d2_ref_root": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2",
+   "units": 27,
+   "npz_files": 45,
+   "npz_bytes": 3024163620,
+   "seconds": 205.4079737663269,
+   "all_ok": true,
+   "accepted_run_binding": true,
+   "coverage_complete": true,
+   "cid_correspondence_ok": true,
+   "d2_reference_verified": true,
+   "d2_reference_units": {
+    "ref_E7_b0": {
+     "manifest_sha256": "882228b10f1a8c2476d5dc9b677d751408973af0fa0b9e079d74a03522a6643a",
+     "n_rows": 1000000,
+     "shards": [
+      {
+       "file": "ref_b0_s0.npz",
+       "file_sha256": "bdc2654acb14e01d5599d4c284c7e08c2654bcd4d76c92eca04bb5465726ab24",
+       "bytes": 56002500
+      }
+     ]
+    },
+    "ref_E7_b1": {
+     "manifest_sha256": "6b458a2f3773128cecdaea0a3596b75e578d55653335a22bdf3ec8f6d2dbfecc",
+     "n_rows": 3000000,
+     "shards": [
+      {
+       "file": "ref_b1_s1.npz",
+       "file_sha256": "5dff38d482a2d1787fd8213e432b6dd9095b38188381f34b4b00abb5632f5b16",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s2.npz",
+       "file_sha256": "47e7a441031402168eb282e86656a0598eb6e95a11686c2b713bd8fab4492297",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s3.npz",
+       "file_sha256": "d7a618917e715e5ee0965f1c68b44d21ac3cac0df324d0e6a3767677c92492e5",
+       "bytes": 32001380
+      }
+     ]
+    },
+    "ref_E7_fit": {
+     "manifest_sha256": "60567d15de71cfe56f2b031c8ec18db75e06f952f51b8a07cb973df5546dfa34",
+     "n_rows": 200000,
+     "shards": [
+      {
+       "file": "ref_fit_s0.npz",
+       "file_sha256": "79997b711c89d77c3d51a4fad62157c5b7f9763f65d5494f09c8272e3e8e3094",
+       "bytes": 6401380
+      }
+     ]
+    }
+   },
+   "records": {
+    "report_sha256": "92876ca788db72548384e5dd6d67698876b24b467e4b68a5d3dd99ba1bb0f7f0",
+    "lock_sha256": "734ed1b8e189054605e3d7eff008c23022a57826c81fd0283329fc106a8a9335",
+    "final_sha256": "15aef3b4d35aa1cb09966f463b9bdffc9f246d3d8e6eda9707ea4fa8f201a72f",
+    "stdout_sha256": "8a9aa188b4be803c15b1984af35666e4681777527c6d4599351720f62b2e476d",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed_notebook": {
+     "file": "MirrorTopology_Step1_D3b_verify_v0_1_E7_L1.50_executed_269c6d56fb75.ipynb",
+     "sha256": "945d809b193c9cf7a3a5df666d4174cee27a6e45d057dedcce939914230da6d6",
+     "bytes": 13723
+    },
+    "registered_dir": "registered_assets/d3b/verify/E7_L1.50"
+   },
+   "verification_environment": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "healpy": "1.20.0",
+    "pot": "0.9.7.post1",
+    "camb": null
+   }
+  },
+  "E8_L1.00": {
+   "family": "E8",
+   "size_id": "L1.00",
+   "generation_run_id": "20260930T213708Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D3b/E8_L1.00_20260930T213708Z/out",
+   "d2_ref_root": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2",
+   "units": 27,
+   "npz_files": 45,
+   "npz_bytes": 3024163620,
+   "seconds": 242.1496388912201,
+   "all_ok": true,
+   "accepted_run_binding": true,
+   "coverage_complete": true,
+   "cid_correspondence_ok": true,
+   "d2_reference_verified": true,
+   "d2_reference_units": {
+    "ref_E8_b0": {
+     "manifest_sha256": "af8816fe66ebccd4840bbc10bdbc14ace957ed57143c567522adfbdb7c55cf48",
+     "n_rows": 1000000,
+     "shards": [
+      {
+       "file": "ref_b0_s0.npz",
+       "file_sha256": "5f57badd535a7e4a3eda881b9daf384a9435c9a31c89b98a75a99442c90366b9",
+       "bytes": 56002500
+      }
+     ]
+    },
+    "ref_E8_b1": {
+     "manifest_sha256": "1432fa6910905f255c73697cbee39bdc05182093f7ebac25b0d09f85393d59d3",
+     "n_rows": 3000000,
+     "shards": [
+      {
+       "file": "ref_b1_s1.npz",
+       "file_sha256": "1035eea7001bed22c42c7275c6cf3cd3619eb907ab89e7981bd3ee088790724c",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s2.npz",
+       "file_sha256": "2f8b10450891f43adfd5307e2f39b15c5eec8f73d443cb1cc54ae30f0177ba5f",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s3.npz",
+       "file_sha256": "bbdd5afddc2b3ef19b168c48a15812578832eff8dfdd0da7917199e5d254322b",
+       "bytes": 32001380
+      }
+     ]
+    },
+    "ref_E8_fit": {
+     "manifest_sha256": "13d6802c1111732850672e4b6a234ac337764a3950f57aaed54b06359f1f7b37",
+     "n_rows": 200000,
+     "shards": [
+      {
+       "file": "ref_fit_s0.npz",
+       "file_sha256": "01616a6df56e6df9e01fae95d8b77efac91ac221e20170cca1622fd0a64267c7",
+       "bytes": 6401380
+      }
+     ]
+    }
+   },
+   "records": {
+    "report_sha256": "9d6f3501db6598e53f1cc0ead25e03ff484d65d8a28ccc70f7f5ef8581c3d275",
+    "lock_sha256": "9357a1a58c9fa2d2c066547af6c84201ba66e843db82d6b0f84814bf74b57e19",
+    "final_sha256": "fac56a94788bcce2f230c0734aeded60c216351446bed70a9925b579de91ab8f",
+    "stdout_sha256": "f207c6b819de732e4cea32b3a563bdeec9bd5bda8600cfd7ae394852fb22f0f9",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed_notebook": {
+     "file": "MirrorTopology_Step1_D3b_verify_v0_1_E8_L1.00_executed_269c6d56fb75.ipynb",
+     "sha256": "0711e7ef9daab6d03dc029d04f7d2fdabc1ad663bf0b57a0eddc0f5f3d3746db",
+     "bytes": 13723
+    },
+    "registered_dir": "registered_assets/d3b/verify/E8_L1.00"
+   },
+   "verification_environment": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "healpy": "1.20.0",
+    "pot": "0.9.7.post1",
+    "camb": null
+   }
+  },
+  "E8_L1.20": {
+   "family": "E8",
+   "size_id": "L1.20",
+   "generation_run_id": "20261001T004059Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D3b/E8_L1.20_20261001T004059Z/out",
+   "d2_ref_root": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2",
+   "units": 27,
+   "npz_files": 45,
+   "npz_bytes": 3024163620,
+   "seconds": 147.77741837501526,
+   "all_ok": true,
+   "accepted_run_binding": true,
+   "coverage_complete": true,
+   "cid_correspondence_ok": true,
+   "d2_reference_verified": true,
+   "d2_reference_units": {
+    "ref_E8_b0": {
+     "manifest_sha256": "af8816fe66ebccd4840bbc10bdbc14ace957ed57143c567522adfbdb7c55cf48",
+     "n_rows": 1000000,
+     "shards": [
+      {
+       "file": "ref_b0_s0.npz",
+       "file_sha256": "5f57badd535a7e4a3eda881b9daf384a9435c9a31c89b98a75a99442c90366b9",
+       "bytes": 56002500
+      }
+     ]
+    },
+    "ref_E8_b1": {
+     "manifest_sha256": "1432fa6910905f255c73697cbee39bdc05182093f7ebac25b0d09f85393d59d3",
+     "n_rows": 3000000,
+     "shards": [
+      {
+       "file": "ref_b1_s1.npz",
+       "file_sha256": "1035eea7001bed22c42c7275c6cf3cd3619eb907ab89e7981bd3ee088790724c",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s2.npz",
+       "file_sha256": "2f8b10450891f43adfd5307e2f39b15c5eec8f73d443cb1cc54ae30f0177ba5f",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s3.npz",
+       "file_sha256": "bbdd5afddc2b3ef19b168c48a15812578832eff8dfdd0da7917199e5d254322b",
+       "bytes": 32001380
+      }
+     ]
+    },
+    "ref_E8_fit": {
+     "manifest_sha256": "13d6802c1111732850672e4b6a234ac337764a3950f57aaed54b06359f1f7b37",
+     "n_rows": 200000,
+     "shards": [
+      {
+       "file": "ref_fit_s0.npz",
+       "file_sha256": "01616a6df56e6df9e01fae95d8b77efac91ac221e20170cca1622fd0a64267c7",
+       "bytes": 6401380
+      }
+     ]
+    }
+   },
+   "records": {
+    "report_sha256": "0593cbc014f2cac9cabcd8c50770c4d5b578e43a170c0cf917a3c2cd9f1dcef1",
+    "lock_sha256": "aee13581ff9a48dedbda2d6e967f8e5bfe1ef90be4a173ea0e27b5987a97e1f1",
+    "final_sha256": "cc115752e392ae419492b25ca09c2a7b3f209938168282920e85dd8216c15a44",
+    "stdout_sha256": "4fdacdc37d26f75656f21866993189e247f988b61b274b898e07b17f8d0e5cb2",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed_notebook": {
+     "file": "MirrorTopology_Step1_D3b_verify_v0_1_E8_L1.20_executed_269c6d56fb75.ipynb",
+     "sha256": "c4c6cc2dc96ab53b4c0f28256446f23d9279c7bd6924befa52343abc58fcecb1",
+     "bytes": 13719
+    },
+    "registered_dir": "registered_assets/d3b/verify/E8_L1.20"
+   },
+   "verification_environment": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "healpy": "1.20.0",
+    "pot": "0.9.7.post1",
+    "camb": null
+   }
+  },
+  "E8_L1.50": {
+   "family": "E8",
+   "size_id": "L1.50",
+   "generation_run_id": "20261001T132201Z",
+   "run_root": "/content/drive/MyDrive/MirrorTopology_D3b/E8_L1.50_20261001T132201Z/out",
+   "d2_ref_root": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2",
+   "units": 27,
+   "npz_files": 45,
+   "npz_bytes": 3024163620,
+   "seconds": 192.6157066822052,
+   "all_ok": true,
+   "accepted_run_binding": true,
+   "coverage_complete": true,
+   "cid_correspondence_ok": true,
+   "d2_reference_verified": true,
+   "d2_reference_units": {
+    "ref_E8_b0": {
+     "manifest_sha256": "af8816fe66ebccd4840bbc10bdbc14ace957ed57143c567522adfbdb7c55cf48",
+     "n_rows": 1000000,
+     "shards": [
+      {
+       "file": "ref_b0_s0.npz",
+       "file_sha256": "5f57badd535a7e4a3eda881b9daf384a9435c9a31c89b98a75a99442c90366b9",
+       "bytes": 56002500
+      }
+     ]
+    },
+    "ref_E8_b1": {
+     "manifest_sha256": "1432fa6910905f255c73697cbee39bdc05182093f7ebac25b0d09f85393d59d3",
+     "n_rows": 3000000,
+     "shards": [
+      {
+       "file": "ref_b1_s1.npz",
+       "file_sha256": "1035eea7001bed22c42c7275c6cf3cd3619eb907ab89e7981bd3ee088790724c",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s2.npz",
+       "file_sha256": "2f8b10450891f43adfd5307e2f39b15c5eec8f73d443cb1cc54ae30f0177ba5f",
+       "bytes": 32001380
+      },
+      {
+       "file": "ref_b1_s3.npz",
+       "file_sha256": "bbdd5afddc2b3ef19b168c48a15812578832eff8dfdd0da7917199e5d254322b",
+       "bytes": 32001380
+      }
+     ]
+    },
+    "ref_E8_fit": {
+     "manifest_sha256": "13d6802c1111732850672e4b6a234ac337764a3950f57aaed54b06359f1f7b37",
+     "n_rows": 200000,
+     "shards": [
+      {
+       "file": "ref_fit_s0.npz",
+       "file_sha256": "01616a6df56e6df9e01fae95d8b77efac91ac221e20170cca1622fd0a64267c7",
+       "bytes": 6401380
+      }
+     ]
+    }
+   },
+   "records": {
+    "report_sha256": "81fc9f363a018600e438c6068bf413fbb68b3d198cfa067b089b4387b8a448d0",
+    "lock_sha256": "287bed5abd3c872add320870f1edbd5b90b9dc6d589ca61304987c514ef80487",
+    "final_sha256": "4f2f398b679e3dbbaef4f5ae25983ab300336f4ed5290fe1ed66f4c448b1fbc1",
+    "stdout_sha256": "9ac1200b60e27da571437b2625c521f3fb278c9ebb7fcf10c55de9d7d60fc61d",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed_notebook": {
+     "file": "MirrorTopology_Step1_D3b_verify_v0_1_E8_L1.50_executed_269c6d56fb75.ipynb",
+     "sha256": "980cfe1c30042cc0ff557cac33f2e9d3f9d7c9a37b226fbecf4d0d347f1328d7",
+     "bytes": 13723
+    },
+    "registered_dir": "registered_assets/d3b/verify/E8_L1.50"
+   },
+   "verification_environment": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "healpy": "1.20.0",
+    "pot": "0.9.7.post1",
+    "camb": null
+   }
+  }
+ },
+ "totals": {
+  "partitions": 9,
+  "units": 243,
+  "npz_files": 405,
+  "npz_bytes": 27217472580,
+  "seconds": 2028.2955758571625
+ },
+ "statement": "ACCEPTED (scoped): the 405 NPZ of the 81 added configurations were read in full on Colab by the accepted verifier at the verification lock and found identical to the registered expectations (file SHA / bytes / every array SHA / structure / cid correspondence incl. the fixed D-2 family reference); the acceptance is the auditor's scoped acceptance of these records, not an independent re-read. Consumption of the added banks as FORMAL inputs (d3_bank.intake_twelve_bank formal=True) is therefore allowed through the registered units; everything scientific downstream (real-bank profile / gate, plan fixation, calibration, labels) remains separately gated.",
+ "receipt_sha256": "7c42bc112a5413360837bc4e1d28f7583713e111d12e2bd903faf3966f402c18"
+}

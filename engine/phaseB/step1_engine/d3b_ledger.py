@@ -161,6 +161,12 @@ class D3bUnits:
     @property
     def ledger_file_sha256(self): return self._d["ledger"]["_file_sha256"]
     @property
+    def array_accepted(self): return self._d.get("receipt") is not None
+    @property
+    def outer_receipt(self): return copy.deepcopy(self._d.get("receipt"))
+    @property
+    def receipt_sha256(self): return None if self._d.get("receipt") is None else self._d["receipt"]["receipt_sha256"]
+    @property
     def source_lock(self): return copy.deepcopy(self._d["ledger"]["source_lock"])
     @property
     def partitions(self): return copy.deepcopy(self._d["ledger"]["partitions"])
@@ -180,11 +186,103 @@ class D3bUnits:
         return u
 
 
-def intake_registered_d3b_units(phaseb_root: str, ctx: TwelveContext) -> D3bUnits:
-    ledger = load_registered_d3b_ledger(phaseb_root, ctx); units = {}
+def intake_registered_d3b_units(phaseb_root: str, ctx: TwelveContext, require_array_acceptance: bool = True) -> D3bUnits:
+    """Sealed units of the accepted generation ledger. With require_array_acceptance (default) the registered outer receipt (array-verified acceptance) must exist, verify and
+    bind to this ledger; the returned view then reports array_accepted=True (required by the formal path of d3_bank.intake_twelve_bank). require_array_acceptance=False yields
+    the ledger-only view (array_accepted=False) used by the read-only verifier itself, which must not depend on its own outcome."""
+    ledger = load_registered_d3b_ledger(phaseb_root, ctx); units = {}; receipt = None
+    if require_array_acceptance:
+        receipt = load_registered_d3b_outer_receipt(phaseb_root, ctx)
+        if receipt["generation"]["ledger_payload_sha256"] != ledger["ledger_sha256"] or receipt["generation"]["ledger_file_sha256"] != ledger["_file_sha256"]: raise InputContractError("outer receipt is not bound to the registered ledger")
     for key, p in ledger["partitions"].items():
         for name, u in p["units"].items():
             if name in units: raise InputContractError(f"{name}: duplicate unit across partitions")
             units[name] = dict(u, partition=key, run_id=p["run_id"])
     if len(units) != 243: raise InputContractError("accepted unit count")
-    return D3bUnits(dict(ledger=ledger, units=units), _token=_TOKEN)
+    return D3bUnits(dict(ledger=ledger, units=units, receipt=receipt), _token=_TOKEN)
+
+
+# ------------------------------------------------------------------------------------------------------------------------------------ outer receipt (array acceptance)
+RECEIPT_SCHEMA = "d3b_outer_receipt_v1"
+VERIFICATION_LOCK = dict(commit="269c6d56fb7588b21472ddea0618df3f88a6cd75", engine_version="0.95.0", inventory_sha256="008e125c50d2215c5dc3f5a4831f368c7feca856dc3a3819614770afc1abe7ff", script_sha256="dc57de8ba8c2a15a4ab531d8be02cc1ecbd1c28e9912b23dead915f632a780a1",
+                         notebook_sha256="5a556682d2dff84abfdcb21314cb4d43f8271386b384c0dcf96cdf6df831a7ca", modules_digest="f0a4ee17bf82cf1a517f898ea3fede9486964ef63ef0e704ba8c63fa6d874df8",
+                         preexecution_authorization=dict(file="Step1_PhaseD_D3b_tranche2_v2_0.95.0_decision.json", sha256="48a0d3b14768f5a06958a1b8d97f4e22d3b684e5ab2701a6cd9d9f78cec2db9a", decision="PASS_WITH_EXPLICIT_SCOPE / GO_CONDITIONAL_ON_EXACT_LOCK_AND_EXISTING_CHECKS"))
+ARRAY_ACCEPTANCE = dict(decision_file="Step1_PhaseD_D3b_readonly_269c6d56fb75_acceptance.json", decision_sha256="424a547127276a2f0e8e8170b67573621f6f4583632d1b98a7627b1a4a558ee3", audit_md="ChatGPT_audit_Step1_PhaseD_D3b_readonly_269c6d56fb75.md", audit_md_sha256="237c68c612038fd94ddea363f26ba6805e993dfa5c7a62256780be3768870616",
+                        input_zip="d3b_verify_results.zip", input_zip_sha256="80596237ff33d2283a6762174100a71ff448ec714ee39d59a260ad5110afd7c1", decision="PASS_WITH_EXPLICIT_SCOPE", acceptance_kind="AUDITED_COLAB_FULL_ARRAY_INTEGRITY_RESULTS", date_JST="2026-10-02",
+                        scope="nine accepted-full read-only verification runs: 243 units / 405 NPZ file SHA and bytes == ledger expectations, every array SHA == sidecar (verify_twelve_bank_dir), finiteness / dtype / cid / ranges / UIDs / keys, cid equality across each partition and with the fixed D-2 family reference (3 units re-verified through the reuse binding); the auditor read no production NPZ (0/405) and recomputed no statistics",
+                        not_approved=["independent rehash of the 405 production NPZ by the auditor", "raw latent R/z or generation-root comparison", "real-bank twelve-position official profile / gate", "fixed BootstrapPlan / FittingPlan identities", "D-2W / noise / calibration / usable / observed labels / ENGINE_VALID"])
+_VERIFY_FILES = ("verify_lock.json", "verify_final_record.json", "verify_stdout.txt", "verify_stderr.txt")
+
+
+def build_d3b_outer_receipt(phaseb_root: str, ctx: TwelveContext) -> dict:
+    """Deterministic outer receipt of the array-verified acceptance: for each of the nine partitions the registered read-only verification record (report / lock / final / stdout /
+    stderr / executed notebook under registered_assets/d3b/verify*) is re-read and bound to the verification lock constants, to the generation ledger (partition run id / run
+    root / unit manifest SHAs / NPZ file SHA + bytes), and to the acceptance conditions (accepted_full, binding, coverage, all_ok, no failures, cid correspondence incl. the D-2
+    reference, structure, verifier source bound). Records every file's SHA. The generation ledger itself is never rewritten (array_acceptance stays PENDING there)."""
+    ctx = _require_ctx(ctx); root = os.path.abspath(phaseb_root)
+    if os.path.realpath(root) != os.path.realpath(ctx.root): raise InputContractError("the registered D-3b receipt must be read from the root of the verified context")
+    ledger = load_registered_d3b_ledger(root, ctx); vroot = os.path.join(root, "registered_assets", "d3b", "verify"); nbdir = os.path.join(root, "registered_assets", "d3b", "verify_notebooks"); spec2 = load_registered_bank_spec_v2(ctx)
+    parts = {}; tot = dict(partitions=0, units=0, npz_files=0, npz_bytes=0, seconds=0.0); env_ids = set()
+    for key, P in ledger["partitions"].items():
+        fam, sz = P["family"], P["size_id"]; d = os.path.join(vroot, key)
+        rb, rep = _json(os.path.join(d, "report", f"d3b_verify_{fam}_{sz}.json")); lkb, lk = _json(os.path.join(d, "verify_lock.json")); fnb, fn = _json(os.path.join(d, "verify_final_record.json")); so = _read(os.path.join(d, "verify_stdout.txt")); se = _read(os.path.join(d, "verify_stderr.txt"))
+        nbp = os.path.join(nbdir, f"MirrorTopology_Step1_D3b_verify_v0_1_{fam}_{sz}_executed_269c6d56fb75.ipynb"); nbb = _read(nbp)
+        VL = VERIFICATION_LOCK
+        if lk.get("commit") != VL["commit"] or lk.get("inventory_sha256") != VL["inventory_sha256"] or lk.get("script_sha256") != VL["script_sha256"] or lk.get("engine") != VL["engine_version"] or lk.get("ledger_sha256") != ledger["ledger_sha256"] or lk.get("family") != fam or lk.get("size") != sz or lk.get("run_root") != P["run_root"] or lk.get("run_id") != P["run_id"] or not lk.get("d2_ref_root"): raise InputContractError(f"{key}: verification lock")
+        if fn.get("verify_pass") is not True or fn.get("exit_code") != 0 or fn.get("launcher_fallback") is not False or fn.get("lock") != lk: raise InputContractError(f"{key}: verification final record")
+        vs = rep.get("verifier_source") or {}
+        if rep.get("schema") != "d3b_postrun_verification_v1" or rep.get("mode") != "accepted" or rep.get("stage") != "complete" or rep.get("exit_code") != 0 or rep.get("verification_scope") != "accepted_full" or rep.get("accepted_run_binding") is not True or rep.get("coverage_complete") is not True or rep.get("all_ok") is not True or rep.get("failures") != [] or rep.get("unchecked_units") != [] or rep.get("cid_correspondence_ok") is not True or rep.get("n0_plus_3n0_structure_ok") is not True: raise InputContractError(f"{key}: verification report flags")
+        if vs.get("source_bound") is not True or vs.get("ledger_bound") is not True or vs.get("engine") != VL["engine_version"] or vs.get("inventory_sha256") != VL["inventory_sha256"] or vs.get("script_sha256") != VL["script_sha256"] or vs.get("modules_digest") != VL["modules_digest"] or rep.get("d3b_ledger_sha256") != ledger["ledger_sha256"]: raise InputContractError(f"{key}: verifier source")
+        gs = rep.get("generator_source") or {}
+        if gs.get("commit") != GENERATION_LOCK["commit"] or gs.get("run_id") != P["run_id"] or gs.get("producer_digest") != P["producer_digest"] or gs.get("environment_fingerprint") != P["environment_fingerprint"] or rep.get("run_root") != P["run_root"] or rep.get("path_map") != {} or rep.get("family") != fam or rep.get("size_id") != sz or len(se) != 0: raise InputContractError(f"{key}: generator binding / relocation / stderr")
+        units = rep.get("units") or {}
+        if set(units) != set(P["units"]) or rep.get("checked_units") != list(P["units"]): raise InputContractError(f"{key}: unit set")
+        n_npz = 0; n_bytes = 0
+        for name, u in units.items():
+            E = P["units"][name]
+            if u.get("ok") is not True or u.get("arrays_verified_against_sidecar") is not True or u.get("manifest_sha256_ok") is not True or u.get("formal") is not True or u.get("manifest_sha256") != E["manifest_sha256"] or u.get("n_rows") != E["n_rows"] or u.get("purpose") != E["purpose"] or u.get("config_id") != E["config_id"]: raise InputContractError(f"{key}/{name}: unit record")
+            shards = u.get("shards") or []
+            if {s["file"] for s in shards} != set(E["npz"]): raise InputContractError(f"{key}/{name}: NPZ set")
+            for s in shards:
+                e = E["npz"][s["file"]]
+                if s.get("file_sha256") != e["sha256"] or s.get("bytes") != e["bytes"] or s.get("matches_manifest") is not True or s.get("matches_ledger") is not True or s.get("inventory_bytes_match") is not True: raise InputContractError(f"{key}/{name}/{s['file']}: measured NPZ identity differs from the ledger")
+                n_npz += 1; n_bytes += s["bytes"]
+            cid = u.get("cid") or {}
+            if cid.get("n") != E["n_rows"] or cid.get("monotone") is not True or cid.get("unique") != E["n_clusters"]: raise InputContractError(f"{key}/{name}: cid record")
+            for role, a in (u.get("arrays") or {}).items():
+                if a["T1"]["n"] != E["n_rows"] or a["T1"]["finite"] != E["n_rows"] or a["T2"]["finite"] != E["n_rows"]: raise InputContractError(f"{key}/{name}/{role}: finiteness")
+            if set(u.get("arrays") or {}) != {"model_matched__float64", "model_native__float64", "ref_native__float64"}: raise InputContractError(f"{key}/{name}: role x selection set")
+        d2 = rep.get("d2_reference") or {}; fr = spec2["family_reference"][fam]["units"]
+        if d2.get("verified") is not True or set(d2.get("units") or {}) != set(fr) or any(d2["units"][u]["manifest_sha256"] != fr[u]["manifest_sha256"] or d2["units"][u]["n_rows"] != fr[u]["n_rows"] for u in fr): raise InputContractError(f"{key}: D-2 reference binding")
+        corr = rep.get("cid_correspondence") or {}
+        if len(corr) != 27 or any(not (c.get("equal_across_partition") is True and c.get("reference_present") is True and c.get("equal_to_d2_reference") is True) for c in corr.values()): raise InputContractError(f"{key}: cid correspondence")
+        if n_npz != 45 or n_bytes != P["npz_bytes"]: raise InputContractError(f"{key}: NPZ totals")
+        env_ids.add(_env_identity(rep["verification_environment"]))
+        parts[key] = dict(family=fam, size_id=sz, generation_run_id=P["run_id"], run_root=P["run_root"], d2_ref_root=lk["d2_ref_root"], units=27, npz_files=n_npz, npz_bytes=n_bytes, seconds=rep["seconds"], all_ok=True, accepted_run_binding=True, coverage_complete=True, cid_correspondence_ok=True, d2_reference_verified=True,
+                          d2_reference_units={u: dict(manifest_sha256=d2["units"][u]["manifest_sha256"], n_rows=d2["units"][u]["n_rows"], shards=d2["units"][u]["shards"]) for u in sorted(d2["units"])},
+                          records=dict(report_sha256=_sha(rb), lock_sha256=_sha(lkb), final_sha256=_sha(fnb), stdout_sha256=_sha(so), stderr_sha256=_sha(se), executed_notebook=dict(file=os.path.basename(nbp), sha256=_sha(nbb), bytes=len(nbb)), registered_dir=f"registered_assets/d3b/verify/{key}"),
+                          verification_environment=dict(python=rep["verification_environment"].get("python"), numpy=rep["verification_environment"].get("numpy"), scipy=rep["verification_environment"].get("scipy"), healpy=rep["verification_environment"].get("healpy"), pot=rep["verification_environment"].get("pot"), camb=rep["verification_environment"].get("camb")))
+        tot["partitions"] += 1; tot["units"] += 27; tot["npz_files"] += n_npz; tot["npz_bytes"] += n_bytes; tot["seconds"] += rep["seconds"]
+    if tot != dict(partitions=9, units=243, npz_files=405, npz_bytes=ledger["totals"]["npz_bytes"], seconds=tot["seconds"]): raise InputContractError("receipt totals")
+    doc = dict(schema=RECEIPT_SCHEMA, generation=dict(ledger_payload_sha256=ledger["ledger_sha256"], ledger_file_sha256=ledger["_file_sha256"], source_lock=copy.deepcopy(GENERATION_LOCK), metadata_acceptance=copy.deepcopy(METADATA_ACCEPTANCE), ledger_array_acceptance_field="PENDING (generation-time record; never rewritten)"),
+               verification=dict(copy.deepcopy(VERIFICATION_LOCK), environment_identity_order_independent=sorted(env_ids), camb_note="the read-only verifier neither installs nor requires CAMB; the verification environment is recorded separately from the generation environment"),
+               array_acceptance=copy.deepcopy(ARRAY_ACCEPTANCE), partitions=parts, totals=tot,
+               statement="ACCEPTED (scoped): the 405 NPZ of the 81 added configurations were read in full on Colab by the accepted verifier at the verification lock and found identical to the registered expectations (file SHA / bytes / every array SHA / structure / cid correspondence incl. the fixed D-2 family reference); the acceptance is the auditor's scoped acceptance of these records, not an independent re-read. Consumption of the added banks as FORMAL inputs (d3_bank.intake_twelve_bank formal=True) is therefore allowed through the registered units; everything scientific downstream (real-bank profile / gate, plan fixation, calibration, labels) remains separately gated.")
+    doc["receipt_sha256"] = _sha(json.dumps({k: v for k, v in doc.items() if k != "receipt_sha256"}, sort_keys=True, allow_nan=False, ensure_ascii=False).encode("utf-8")); return doc
+
+
+def verify_d3b_outer_receipt(doc: dict, phaseb_root: str, ctx: TwelveContext) -> dict:
+    if not isinstance(doc, dict) or doc.get("schema") != RECEIPT_SCHEMA: raise InputContractError("D-3b outer receipt schema")
+    if doc.get("receipt_sha256") != _sha(json.dumps({k: v for k, v in doc.items() if k != "receipt_sha256"}, sort_keys=True, allow_nan=False, ensure_ascii=False).encode("utf-8")): raise InputContractError("D-3b outer receipt payload SHA")
+    fresh = build_d3b_outer_receipt(phaseb_root, ctx)
+    if doc != fresh: raise InputContractError("D-3b outer receipt differs from its re-derivation from the registered verification records")
+    return copy.deepcopy(fresh)
+
+
+def load_registered_d3b_outer_receipt(phaseb_root: str, ctx: TwelveContext) -> dict:
+    """The committed registered_assets/d3b/d3b_outer_receipt.json: payload identity == d3 pins (d3b_outer_receipt_sha256) and content == re-derivation."""
+    ctx = _require_ctx(ctx); root = os.path.abspath(phaseb_root)
+    if os.path.realpath(root) != os.path.realpath(ctx.root): raise InputContractError("the registered D-3b receipt must be read from the root of the verified context")
+    b, doc = _json(os.path.join(root, "registered_assets", "d3b", "d3b_outer_receipt.json"))
+    if doc.get("receipt_sha256") != ctx._d["pins"].get("d3b_outer_receipt_sha256"): raise InputContractError("registered D-3b outer receipt identity differs from the pins")
+    out = verify_d3b_outer_receipt(doc, root, ctx); out["_file_sha256"] = _sha(b); return out

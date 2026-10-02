@@ -1,6 +1,6 @@
 {
  "schema": "d3_pins_v1",
- "engine_version": "0.95.0",
+ "engine_version": "0.96.0",
  "profile": "production_official",
  "environment": {
   "python": "3.13.15",
@@ -53,5 +53,6 @@
  "expected_runtime": "per family: 27 bases + 36/36/54 clones (+9/9/18 anchor clones) at ~400 s each on Colab (D-1: 30 in 3.3 h) -> E2/E7 ~8 h, E8 ~11 h (not a guarantee; split by size if needed)",
  "covariance_receipt_sha256": "ab545a6f993da5890214a54cb0b3229dc064dbf37704fb229d3095dccc98dc89",
  "bank_spec_v2_sha256": "d5fda77b4f921935b9ceb5a80df2b3c6ac41ccafa1141f877620cdd866dffcd4",
- "d3b_ledger_sha256": "a7d2c8c4375c37a24142c1fd2bd400b9559c220418ee7af9e41f430ba968b9da"
+ "d3b_ledger_sha256": "a7d2c8c4375c37a24142c1fd2bd400b9559c220418ee7af9e41f430ba968b9da",
+ "d3b_outer_receipt_sha256": "7c42bc112a5413360837bc4e1d28f7583713e111d12e2bd903faf3966f402c18"
 }

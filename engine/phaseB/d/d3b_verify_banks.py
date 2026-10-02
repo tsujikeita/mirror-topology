@@ -120,7 +120,7 @@ def main():
         from step1_engine.d3_profile import twelve_context, load_registered_bank_spec_v2
         from step1_engine.d3_bank import verify_twelve_bank_dir, verify_reused_reference_dir, CONFIG_ROLES
         from step1_engine.d3b_ledger import intake_registered_d3b_units
-        ctx = twelve_context(a.phaseb); spec2 = load_registered_bank_spec_v2(ctx); units_reg = intake_registered_d3b_units(a.phaseb, ctx); R["context_identities"] = dict(ctx.identities); R["d3b_ledger_sha256"] = units_reg.ledger_sha256
+        ctx = twelve_context(a.phaseb); spec2 = load_registered_bank_spec_v2(ctx); units_reg = intake_registered_d3b_units(a.phaseb, ctx, require_array_acceptance=False); R["context_identities"] = dict(ctx.identities); R["d3b_ledger_sha256"] = units_reg.ledger_sha256
         if R["family"] == "unknown" or R["size_id"] == "unknown": R["failures"].append("registry family / size"); R["stage"] = "inputs"; return finish(1)
         cfgs = sorted(c["config_id"] for c in spec2["configurations"].values() if c["family"] == fam and c["size_id"] == R["size_id"] and c["mode"] == "generate_D3b"); required = [f"cfg{c}_{x}" for c in cfgs for x in ("b0", "b1", "fit")]; R["required_units"] = required
         # ---- accepted-run binding (RV-1)
