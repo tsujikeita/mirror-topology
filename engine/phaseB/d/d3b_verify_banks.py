@@ -41,6 +41,32 @@ def _json_snapshot(path):
     return data, json.loads(data, object_pairs_hook=pairs, parse_constant=invalid)
 
 
+
+def _verified_reference_cid(directory, manifest):
+    """Extract cid only from bytes matching the previously verified manifest.
+
+    The full D-2 validator checks file/member/array contracts before this helper.
+    Re-reading a live path is permitted only when these captured bytes match the
+    exact file identity that passed that validator. Decode the SAME bytes used
+    for this check; a later filesystem change cannot change this snapshot.
+    """
+    cids = []; files = []
+    for shard in manifest["shards"]:
+        path = os.path.join(directory, shard["file"])
+        data = open(path, "rb").read()
+        digest = hashlib.sha256(data).hexdigest()
+        if digest != shard["file_sha256"]:
+            raise ValueError(f"D-2 reference changed after verification: {path}")
+        with np.load(io.BytesIO(data), allow_pickle=False) as z:
+            cids.append(np.array(z["cid"], copy=True))
+        files.append(dict(file=shard["file"], file_sha256=digest, bytes=len(data)))
+    if not cids:
+        raise ValueError("D-2 reference has no verified cid shards")
+    cid = np.concatenate(cids)
+    return hashlib.sha256(np.ascontiguousarray(cid).tobytes()).hexdigest(), dict(
+        manifest_sha256=manifest["manifest_sha256"], n_rows=int(cid.size), shards=files)
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--phaseb", required=True); ap.add_argument("--run-root", required=True, help="the partition run's OUT directory (…/<FAMILY>_<SIZE>_<run id>/out)"); ap.add_argument("--out", required=True); ap.add_argument("--mode", choices=("accepted", "test"), default="accepted")
     ap.add_argument("--max-dirs", type=int, default=None); ap.add_argument("--path-map", action="append", default=[], help="OLD=NEW physical path mapping for relocated caches (recorded; logical names stay those of the accepted record)")
@@ -72,7 +98,16 @@ def main():
         rgb, rg = _json_snapshot(rg_p); rmb, rm = _json_snapshot(rm_p)
         frb, fr = _json_snapshot(fr_p) if os.path.isfile(fr_p) else (None, None); lkb, lk = _json_snapshot(lk_p) if os.path.isfile(lk_p) else (None, None)
         fam = rg.get("family"); sizes = rg.get("sizes"); R["family"] = fam if fam in ("E2", "E7", "E8") else "unknown"; R["size_id"] = sizes[0] if isinstance(sizes, list) and len(sizes) == 1 and sizes[0] in ("L1.00", "L1.20", "L1.50") else "unknown"
-        protected = [os.path.realpath(phys(d["path"])) for d in rg["directories"].values()]
+        # Protect every input, including D-2 references and targets of symlinked
+        # units in a relocated run, BEFORE even failure reports may be written.
+        # Retain paths rather than only their resolved targets so finish() also
+        # checks the current resolution at the publication boundary.
+        protected = [run_root, os.path.abspath(a.phaseb)]
+        protected += [phys(d["path"]) for d in rg["directories"].values()]
+        protected += [os.path.join(run_root, "d3b", name) for name in rg["directories"]]
+        if a.d2_ref_root:
+            protected.append(os.path.abspath(a.d2_ref_root))
+            protected += [os.path.join(a.d2_ref_root, f"ref_{fam}_{suffix}") for suffix in ("b0", "b1", "fit")]
         if any(inside(out, p) or inside(p, out) for p in protected): R["stage"] = "output"; R["failures"].append("output overlaps a referenced bank"); return finish(2)
         output_safe = True
         # ---- verifier source (separate from the generator source)
@@ -110,6 +145,13 @@ def main():
         logical_root = L["run_root"] if a.mode == "accepted" else None; R["logical_run_root"] = logical_root
         if logical_root is not None and os.path.realpath(logical_root) != run_root and not any(logical_root == o.rstrip(os.sep) for o in pmap):
             pmap[logical_root] = run_root; R["path_map"] = pmap; R["notes"].append("accepted run relocated: logical run root mapped to RUN_ROOT (names stay those of the accepted record)")
+        # Automatic relocation may have changed the physical paths. Confirm
+        # the final mapping, not just the original logical Drive locations.
+        protected += [phys(rg["directories"][name]["path"]) for name in required]
+        if any(inside(out, p) or inside(p, out) for p in protected):
+            output_safe = False; R["stage"] = "output"
+            R["failures"].append("output overlaps a resolved input after relocation")
+            return finish(2)
         def inventory_name(name, shard_file):
             original = os.path.join(rg["directories"][name]["path"], shard_file)
             if logical_root is not None: return os.path.relpath(original, logical_root)
@@ -120,14 +162,15 @@ def main():
         ref_cid = {}
         if a.d2_ref_root:
             try:
+                reference_units = {}
                 for b in (0, 1):
-                    rman = verify_reused_reference_dir(os.path.join(a.d2_ref_root, f"ref_{fam}_b{b}"), ctx, fam, f"ref_{fam}_b{b}"); cids = []
-                    for sh in rman["shards"]:
-                        with np.load(os.path.join(a.d2_ref_root, f"ref_{fam}_b{b}", sh["file"]), allow_pickle=False) as z: cids.append(np.asarray(z["cid"]))
-                    ref_cid[("evaluation", b)] = hashlib.sha256(np.ascontiguousarray(np.concatenate(cids)).tobytes()).hexdigest()
-                rman = verify_reused_reference_dir(os.path.join(a.d2_ref_root, f"ref_{fam}_fit"), ctx, fam, f"ref_{fam}_fit")
-                with np.load(os.path.join(a.d2_ref_root, f"ref_{fam}_fit", rman["shards"][0]["file"]), allow_pickle=False) as z: ref_cid[("fitting", 0)] = hashlib.sha256(np.ascontiguousarray(np.asarray(z["cid"])).tobytes()).hexdigest()
-                R["d2_reference"] = dict(root=a.d2_ref_root, verified=True, cid_sha256={f"{k[0]}/b{k[1]}": v for k, v in ref_cid.items()})
+                    name = f"ref_{fam}_b{b}"; directory = os.path.join(a.d2_ref_root, name)
+                    rman = verify_reused_reference_dir(directory, ctx, fam, name)
+                    ref_cid[("evaluation", b)], reference_units[name] = _verified_reference_cid(directory, rman)
+                name = f"ref_{fam}_fit"; directory = os.path.join(a.d2_ref_root, name)
+                rman = verify_reused_reference_dir(directory, ctx, fam, name)
+                ref_cid[("fitting", 0)], reference_units[name] = _verified_reference_cid(directory, rman)
+                R["d2_reference"] = dict(root=a.d2_ref_root, verified=True, cid_sha256={f"{k[0]}/b{k[1]}": v for k, v in ref_cid.items()}, units=reference_units)
             except Exception as ex_:
                 R["d2_reference"] = dict(root=a.d2_ref_root, verified=False, error=repr(ex_)); R["failures"].append("--d2-ref-root does not hold the accepted D-2 family reference units"); R["stage"] = "d2_reference"; return finish(1)
         else: R["d2_reference"] = None

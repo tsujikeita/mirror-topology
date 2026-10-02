@@ -134,6 +134,20 @@ def test_readonly_verifier_test_mode_and_accepted_binding(tmp_path):
     import importlib.util; spec = importlib.util.spec_from_file_location('t1b', os.path.join(P, 'tests', 'test_d3b_tranche1.py')); H = importlib.util.module_from_spec(spec); spec.loader.exec_module(H)
     refroot = tmp_path / 'refs'; refroot.mkdir(); H._gen_ref(refroot, 'E7', H._Kern(), CallInventory())
     r6 = verify(tmp_path / 'v_ref', run, '--mode', 'test', '--d2-ref-root', str(refroot)); v6 = _man(tmp_path / 'v_ref' / 'd3b_verify_E7_L1.20.json'); assert r6.returncode == 1 and v6['stage'] == 'd2_reference' and v6['d2_reference']['verified'] is False and 'units' not in v6
+    # R-D3BT2-A: the D-2 reference root (and its units) is a protected input — even the failure report is not written there (rc 2, no file); a relocated run whose unit is a
+    # symlink to an external directory protects the resolved target after the automatic path map
+    import hashlib as _h
+    def tree(d): return {str(f.relative_to(d)): _h.sha256(f.read_bytes()).hexdigest() for f in __import__('pathlib').Path(d).rglob('*') if f.is_file()}
+    b_ref = tree(refroot); r7 = verify(refroot / 'review', run, '--mode', 'test', '--d2-ref-root', str(refroot)); assert r7.returncode == 2 and tree(refroot) == b_ref and not (refroot / 'review').exists()
+    r7b = verify(refroot / 'ref_E7_b0' / 'review', reg, '--mode', 'accepted', '--d2-ref-root', str(refroot)); assert r7b.returncode == 2 and tree(refroot) == b_ref
+    reloc = tmp_path / 'reloc'; shutil.copytree(reg, reloc); ext = tmp_path / 'external_bank'; shutil.move(str(reloc / 'd3b' / 'cfg30204_b0'), str(ext)); (reloc / 'd3b' / 'cfg30204_b0').symlink_to(ext, target_is_directory=True); b_ext = tree(ext)
+    r8 = verify(ext / 'review', reloc, '--mode', 'accepted', '--max-dirs', '1'); assert r8.returncode == 2 and tree(ext) == b_ext and not (ext / 'review').exists()
+    # R-D3BT2-B: the D-2 reference cid is derived from bytes whose SHA equals the verified manifest; a reference changed after its verification is refused (not reported verified)
+    import importlib.util as _iu; vspec = _iu.spec_from_file_location('d3b_verify_under_test', VERIFY); V = _iu.module_from_spec(vspec); vspec.loader.exec_module(V)
+    from step1_engine import d2_bank as _d2
+    man0 = _d2.verify_bank_dir(str(refroot / 'ref_E7_b0'), ('ref_matched',)); cid_sha, rec = V._verified_reference_cid(str(refroot / 'ref_E7_b0'), man0); assert len(cid_sha) == 64 and rec['manifest_sha256'] == man0['manifest_sha256'] and rec['n_rows'] == man0['n_rows'] and rec['shards'][0]['file_sha256'] == man0['shards'][0]['file_sha256']
+    f = refroot / 'ref_E7_b0' / man0['shards'][0]['file']; z = dict(np.load(f)); z['ref_matched__float64__T1'][0] += 1000.0; np.savez(f, **z)
+    with pytest.raises(ValueError): V._verified_reference_cid(str(refroot / 'ref_E7_b0'), man0)
 
 
 @pytest.mark.parametrize('rc,report', [(0, 'ok'), (0, 'not_ok'), (1, 'ok'), (0, 'partial'), (0, 'unbound'), (-9, 'missing'), (0, 'invalid'), (0, 'list')])
