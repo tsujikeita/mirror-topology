@@ -1,0 +1,187 @@
+{
+  "schema": "step1_D3c_tranche1_v3_099_preexecution_audit_v1",
+  "date_JST": "2026-10-03",
+  "decision": "PASS_WITH_EXPLICIT_SCOPE_AND_LOCKED_EXECUTION_GO",
+  "formal_Colab_execution_GO": true,
+  "previous_HOLD_lifted": true,
+  "mandatory_code_revision_required": false,
+  "subject": {
+    "engine": "0.99.0",
+    "author_supplied_commit": "7a2b17749e88074834bf5bebe3ebd8ac8af5dd29",
+    "remote_tree_independently_compared": false,
+    "zip_name": "phaseB_D3c_tranche1_v3_0.99.0.zip",
+    "zip_bytes": 15945925,
+    "zip_sha256": "2f6a89b9d8145168e6d25dfa8487199ebcec6c4a51aa96328aba47f4b57fad22",
+    "inventory_sha256": "c0b0333b2f4250f1498c04b30090a1449d8135983264052bf602941852e580a9",
+    "script_sha256": "9f243b08a5aa8ba0cc3ded42343fb8d99717dc4bd50ebf26a7cc9a519221638d",
+    "notebook_sha256": "4ad3ba0ac86ff20508aa4bd32784449f5824c5fff2c19712f7c6eb464d7ff54a",
+    "report_sha256": "3331a65361baf69a98d8026143a9112fdf712a07c9ace1b2db7568e79cb83f7f"
+  },
+  "prior_decision": {
+    "file": "D3c_tranche1_v2_0.98.0_audit_decision.json",
+    "sha256": "913538e8975ca1bed49abbbd546639c8a759413f9fb7800f4ff76f133d6b675d"
+  },
+  "resolved_findings": {
+    "R-D3C1-A/launch-boundary": {
+      "status": "RESOLVED",
+      "evidence": "results/launcher_summary.json",
+      "detail": "One verifier runs before staging and at the prelaunch boundary. All 10 requested last-copy mutations and 3 additional configuration mutations refused before child invocation; real local Git checks, synthetic source/input and explicit child double."
+    },
+    "R-D3C1-B/output-anchor": {
+      "status": "RESOLVED",
+      "evidence": "results/launcher_out_changed_to_input.json",
+      "detail": "Current OUT changed to D2 input: no input member/byte changes; no staging/launch; current-attempt FAIL only at validated locked anchor. Unsafe anchor rejected before publication/rename."
+    },
+    "N-D3C1v2-RSS-UNITS": {
+      "status": "RESOLVED",
+      "evidence": "results/rss_unit_probe.json",
+      "detail": "Test-double ru_maxrss=1000 KiB yields 1.024 decimal MB for peak and fallback."
+    },
+    "N-D3C1v2-PLAN-PINS-HEADER": {
+      "status": "RESOLVED",
+      "evidence": "results/launcher_plan_pins_mismatch.json",
+      "detail": "Plan source_lock.pins_sha256 mismatch is refused even with consistent publication hash/size."
+    }
+  },
+  "prior_C_D_E_acceptance": {
+    "preserved": true,
+    "profile_main_AST_unchanged_from_v2": true,
+    "only_changed_script_function_ASTs": [
+      "_rss_mb",
+      "_peak_rss_mb"
+    ],
+    "object_identity_and_fingerprint_refusals_reproduced": true,
+    "script_path_probes": 10,
+    "roundtrip_arrays_released_before_gate": true,
+    "roundtrip_arrays_per_normal_case": 15,
+    "formal_memory_sufficiency_proven": false
+  },
+  "tests": {
+    "packet_sha_entries": 2095,
+    "python_source_compile_files": 200,
+    "notebook_code_cells_compile": 4,
+    "author_JUnit_cases": 1643,
+    "author_JUnit_files": 16,
+    "author_JUnit_failure_error_skip": 0,
+    "collect_count": 1643,
+    "collect_JUnit_multiset_equal": true,
+    "all_1643_independently_executed": false,
+    "independent_pytest": {
+      "by_file": [
+        {
+          "file": "independent_core.xml",
+          "skipped": 10,
+          "passed": 58
+        },
+        {
+          "file": "regression_closing.xml",
+          "passed": 28
+        },
+        {
+          "file": "regression_contracts.xml",
+          "passed": 29
+        },
+        {
+          "file": "regression_consumer.xml",
+          "passed": 3
+        },
+        {
+          "file": "regression_families.xml",
+          "passed": 3
+        }
+      ],
+      "total": {
+        "passed": 121,
+        "skipped": 10,
+        "failure": 0,
+        "error": 0
+      },
+      "unique_nodes": 131,
+      "duplicate_nodes": [],
+      "all_suite_independently_executed": false
+    },
+    "independent_author_notebook_cases_passed": 47,
+    "additional_launcher_scenarios": 31,
+    "last_copy_mutation_scenarios": 13,
+    "additional_script_path_scenarios": 10,
+    "additional_profile_wrapper_scenarios": 12,
+    "wrapper_normal_families": [
+      "E2",
+      "E7",
+      "E8"
+    ],
+    "wrapper_supplies_per_normal_family": 72,
+    "wrapper_size_inputs_per_normal_family": 6,
+    "wrapper_D3C_PASS": false,
+    "rss_unit_probes": 1,
+    "initial_incomplete_45_second_command_excluded": true
+  },
+  "changes_from_v2": {
+    "source_files_current": 2435,
+    "source_files_previous": 2418,
+    "added": 17,
+    "changed": 15,
+    "deleted": 0,
+    "registered_asset_files": 1827,
+    "registered_asset_files_changed": 0,
+    "engine_module_change": "__init__.py version string only",
+    "pins_changes": "engine_version only"
+  },
+  "execution_authorization": {
+    "families_in_order": [
+      "E2",
+      "E7",
+      "E8"
+    ],
+    "one_family_per_run": true,
+    "simultaneous_family_runs_authorized": false,
+    "REPO_COMMIT": "7a2b17749e88074834bf5bebe3ebd8ac8af5dd29",
+    "EXPECTED_INVENTORY_SHA256": "c0b0333b2f4250f1498c04b30090a1449d8135983264052bf602941852e580a9",
+    "STAGE_LOCAL": true,
+    "STAGE_ROOT": "/content/stage",
+    "source_of_input_roots": "Unchanged D2 and D3b generation ledgers; see execution_settings.json",
+    "conditions": [
+      "Use the audited notebook and profile script; edits are confined to the designated outer-lock settings.",
+      "Run preflight afresh for every family; keep live-source, environment, input, memory and disk gates enabled.",
+      "A checkout that does not match the specified commit/inventory must stop; remote tree was not independently fetched by this audit.",
+      "Keep the registered B/B_KDE/seeds/UID order/K_fit; no test flags or injected environment in production.",
+      "Use the validated non-symlink output anchor and disjoint local staging; no parallel modification of the same scratch/staging/output trees.",
+      "Preserve each attempt and family ZIP including failed/incomplete attempts; never reuse earlier success as evidence for a new attempt.",
+      "On a failed gate or insufficient resources, preserve the failure and stop; do not reduce constants or weaken guards to obtain PASS."
+    ],
+    "after_runs": "Audit real-bank records, official gate, fingerprints, plan identity/reconstruction and resource telemetry; only then authorize tranche2 registration."
+  },
+  "requires_bank_regeneration": false,
+  "requires_prior_D3b_array_verification_rerun": false,
+  "numeric_kernel_change_required": false,
+  "not_claimed": [
+    "Remote Git commit full-tree equality to the attached ZIP",
+    "Production NPZ intake/rehash in this audit",
+    "Independent authentication of frozen external checkout / Phase C assets",
+    "Registered-environment official gate success",
+    "Actual formal giant-plan fixation or tranche2 registration",
+    "Colab/Drive execution, runtime availability or RAM/disk sufficiency",
+    "New covariance/PC1 calculation, calibration, labels, noise, D2W or ENGINE_VALID",
+    "Atomic security against arbitrary concurrent filesystem/source mutation"
+  ],
+  "preservation": {
+    "source_files": 2435,
+    "modified_or_missing": [],
+    "extra_files": [],
+    "zip_unchanged": true,
+    "outer_report_matches_inner": true,
+    "previous_source_files": 2418,
+    "previous_source_mismatch": []
+  },
+  "artifacts": {
+    "audit": "ChatGPT_audit_D3c_tranche1_v3_0.99.0.md",
+    "evidence": "D3c_tranche1_v3_0.99.0_audit_evidence.zip",
+    "settings_in_evidence": "execution_settings.json"
+  },
+  "reproducibility": {
+    "all_reported_constituent_commands_completed": true,
+    "reproducer_syntax_and_help_checked": true,
+    "full_orchestrator_fresh_second_run_completed": false,
+    "note": "Selected tests/probes were individually executed on the submitted tree. A fresh second end-to-end run of reproduce.py is not claimed."
+  }
+}

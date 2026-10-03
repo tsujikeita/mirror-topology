@@ -1,0 +1,329 @@
+{
+  "schema": "step1_D3c_099_official_profile_postexecution_acceptance_v1",
+  "date_JST": "2026-10-03",
+  "decision": "PASS_WITH_EXPLICIT_SCOPE__TRANCHE2_REGISTRATION_IMPLEMENTATION_GO",
+  "accepted_scope": "AUDITED_COLAB_OFFICIAL_PROFILE_EXECUTION_RECORDS_AND_INDEPENDENTLY_REPRODUCED_PLAN_IDENTITIES",
+  "tranche2_registration_implementation_GO": true,
+  "tranche2_registration_completed": false,
+  "tranche2_new_API_accepted": false,
+  "D4_calibration_execution_GO": false,
+  "new_mandatory_code_patch_required": false,
+  "requires_profile_rerun": false,
+  "requires_bank_regeneration": false,
+  "requires_prior_D3b_array_verification_rerun": false,
+  "subject": {
+    "commit_recorded_in_run": "7a2b17749e88074834bf5bebe3ebd8ac8af5dd29",
+    "engine": "0.99.0",
+    "run_packet": {
+      "sha256": "775683fd20ca3d3295cca0a287c7b6b5a7fb2f142aa52072355c619c7c0008b0",
+      "bytes": 428182
+    },
+    "approved_source_archive": {
+      "sha256": "2f6a89b9d8145168e6d25dfa8487199ebcec6c4a51aa96328aba47f4b57fad22",
+      "bytes": 15945925
+    },
+    "inventory_sha256": "c0b0333b2f4250f1498c04b30090a1449d8135983264052bf602941852e580a9",
+    "profile_script_sha256": "9f243b08a5aa8ba0cc3ded42343fb8d99717dc4bd50ebf26a7cc9a519221638d",
+    "unexecuted_notebook_sha256": "4ad3ba0ac86ff20508aa4bd32784449f5824c5fff2c19712f7c6eb464d7ff54a",
+    "preexecution_decision": {
+      "sha256": "ef2e7db0a381a0d6278cc6361b16e76eff37e4927beb75a89390b6f2f4bdce93",
+      "bytes": 7807
+    }
+  },
+  "families": {
+    "E2": {
+      "archive": {
+        "archive_sha256": "4cd9a8d0f3e6f045bc8900fdd3086cab215b82ccef0a4478b029333d94d38ee4",
+        "archive_bytes": 128233,
+        "files": {
+          "profile_lock.json": {
+            "sha256": "582e5b102e137ffae609f57903521504f2b83f7583ea22757208ca2287e7441f",
+            "bytes": 1538
+          },
+          "profile_stdout_20261003T083353Z_dc4ddf4f0f.txt": {
+            "sha256": "e165c366ba82bcb96e982105a787a1e549f0fb00e2645cfcddd55bdba18a4a08",
+            "bytes": 2942
+          },
+          "profile_stderr_20261003T083353Z_dc4ddf4f0f.txt": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "profile_final_record.json": {
+            "sha256": "d0293e52bee85d4b879119948ccfb3ca9a69f5d89ca5346c9e087a04b12b93ae",
+            "bytes": 5957
+          },
+          "run_20261003T083353Z_dc4ddf4f0f/d3c_profile_record_E2.json": {
+            "sha256": "a0867c86b05c4c47fdbf46259c8eb0c8c3c3fecf88345cdb0395314d0971b1e4",
+            "bytes": 155981
+          },
+          "run_20261003T083353Z_dc4ddf4f0f/d3c_plan_identity_E2.json": {
+            "sha256": "d129a51ffadac594a54c07c6e54d62c1f4286525e63f9f49487dd75391ed7667",
+            "bytes": 2144623
+          },
+          "run_20261003T083353Z_dc4ddf4f0f/d3c_profile_stdout.log": {
+            "sha256": "d364aa7d6a08127d18c315903494b86cba7c395931379fcac7f3ce8ed52ba9ca",
+            "bytes": 2887
+          }
+        }
+      },
+      "executed_notebook": {
+        "file": "MirrorTopology_Step1_D3c_profile_v0_1_E2_executed_7a2b17749e88.ipynb",
+        "sha256": "c95b067ba1012eba7bb9408659c88c0081f9aadba088e85555e5df407d04bd82",
+        "bytes": 33682
+      },
+      "attempt_id": "20261003T083353Z_dc4ddf4f0f",
+      "started_utc": "2026-10-03T08:33:53Z",
+      "finished_utc": "2026-10-03T09:00:43Z",
+      "lock_sha256": "582e5b102e137ffae609f57903521504f2b83f7583ea22757208ca2287e7441f",
+      "profile_record_sha256": "a0867c86b05c4c47fdbf46259c8eb0c8c3c3fecf88345cdb0395314d0971b1e4",
+      "plan_document_receipt": {
+        "sha256": "d129a51ffadac594a54c07c6e54d62c1f4286525e63f9f49487dd75391ed7667",
+        "bytes": 2144623
+      },
+      "plan_identity_sha256": "86a7db7b4aa31d172cf402785072adbd2ff2beefce964d9cf6a1cd3948c81d3e",
+      "ordered_uid_sha256": "00e8c1c0c3dfebdbcf64252cbea5b3e87ba7793e2eab82188d6568f53ed3b77b",
+      "input_fingerprints": {
+        "matched": "9e4d3dfb9b178ce50e8268171412daf18267b37d36494a2757551e0d827b7ac4",
+        "native": "ad872efdc6f84687bd7b718efab3bed8b7f5e3db4a4b67c4a691f4e6bc0cb89f"
+      },
+      "recorded_profile_pass": true,
+      "recorded_D3C_PASS": true,
+      "recorded_official_gate_passed": true,
+      "recorded_environment_source": "live_collected",
+      "required_gates": 18,
+      "profile_checks": 330,
+      "twelve_checks": 14,
+      "supplies": 72,
+      "independent_full_scale_plan_reconstruction": true
+    },
+    "E7": {
+      "archive": {
+        "archive_sha256": "4783fc1f0eac2e83410cb3262b98535bae9321d8d3759223dbcff132ead99c8e",
+        "archive_bytes": 128230,
+        "files": {
+          "profile_lock.json": {
+            "sha256": "dab0cec94f18ab0990baf5df2f966a59de712698aad62deb24b680c7aef59e7f",
+            "bytes": 1538
+          },
+          "profile_stderr_20261003T090646Z_106fe1bd17.txt": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "profile_stdout_20261003T090646Z_106fe1bd17.txt": {
+            "sha256": "a33023d897262d6552f7437ce5cfd2a4e8fdb9537993d389673d9a1bf43786cc",
+            "bytes": 2942
+          },
+          "profile_final_record.json": {
+            "sha256": "d2313b252d023ae56a5c8370bb3a9e1c610d59ab42df19e3c4dba2577f9661b8",
+            "bytes": 5957
+          },
+          "run_20261003T090646Z_106fe1bd17/d3c_profile_record_E7.json": {
+            "sha256": "86926ff662c7cb2296c6aa7417f918a36ee567085e0b22615b9217f6fa57610f",
+            "bytes": 155980
+          },
+          "run_20261003T090646Z_106fe1bd17/d3c_profile_stdout.log": {
+            "sha256": "a5fb43a072022b0002f408611e182663bc909d32c7686a4f89fefc8c1f0f29c7",
+            "bytes": 2887
+          },
+          "run_20261003T090646Z_106fe1bd17/d3c_plan_identity_E7.json": {
+            "sha256": "9bc5975f24875e358600d5fae541a03dfbc06e0c7c6face72079b8ebe27baa32",
+            "bytes": 2144623
+          }
+        }
+      },
+      "executed_notebook": {
+        "file": "MirrorTopology_Step1_D3c_profile_v0_1_E7_executed_7a2b17749e88.ipynb",
+        "sha256": "64b2a18fed15b4eb3635fc2f9093474ceb256473d6cd4e82ba911e43ebfc21b1",
+        "bytes": 33682
+      },
+      "attempt_id": "20261003T090646Z_106fe1bd17",
+      "started_utc": "2026-10-03T09:06:46Z",
+      "finished_utc": "2026-10-03T09:33:16Z",
+      "lock_sha256": "dab0cec94f18ab0990baf5df2f966a59de712698aad62deb24b680c7aef59e7f",
+      "profile_record_sha256": "86926ff662c7cb2296c6aa7417f918a36ee567085e0b22615b9217f6fa57610f",
+      "plan_document_receipt": {
+        "sha256": "9bc5975f24875e358600d5fae541a03dfbc06e0c7c6face72079b8ebe27baa32",
+        "bytes": 2144623
+      },
+      "plan_identity_sha256": "3c28d3eb66042436ebf1788e3ed23a1f2fd593f0d305bed40299540c8f610e61",
+      "ordered_uid_sha256": "8972c1c7c4b61dd2a381679478fb80eba2cbf9ae5f62d6c36bb8cad0eef7ce88",
+      "input_fingerprints": {
+        "matched": "06634d33e749754ef342d2a19fa5eef6bb4ae0d5aa678f174ede1a61f86db645",
+        "native": "08a6ddb9bc9dd8b1109a5e9dc5d342359bc190501ba113e2d06b87739a2a5ccb"
+      },
+      "recorded_profile_pass": true,
+      "recorded_D3C_PASS": true,
+      "recorded_official_gate_passed": true,
+      "recorded_environment_source": "live_collected",
+      "required_gates": 18,
+      "profile_checks": 330,
+      "twelve_checks": 14,
+      "supplies": 72,
+      "independent_full_scale_plan_reconstruction": true
+    },
+    "E8": {
+      "archive": {
+        "archive_sha256": "49b6591d5c8d0228e6356232d69dce8d15d380c683b387dc890b1f4eb5a65a81",
+        "archive_bytes": 128226,
+        "files": {
+          "profile_lock.json": {
+            "sha256": "79fd19e25c53fc6b36cd346949ecfa2f59e522f8dcfb2d5c3d41e6da2c721904",
+            "bytes": 1538
+          },
+          "profile_stderr_20261003T093536Z_cb05343c01.txt": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "profile_final_record.json": {
+            "sha256": "4be93dcf79e7da53f5755ce0c1e956e8ba7e5c06e999b7a8b2c4dadde02c6f9a",
+            "bytes": 5957
+          },
+          "profile_stdout_20261003T093536Z_cb05343c01.txt": {
+            "sha256": "4a70cf56cb632b067004781e879aede5db1b1e3d73d1fd9c640fd3879960a7fc",
+            "bytes": 2906
+          },
+          "run_20261003T093536Z_cb05343c01/d3c_profile_record_E8.json": {
+            "sha256": "248616bbb49112375fc6f0593fed2a8c4586cd286b1232769f94bd31f92bb13e",
+            "bytes": 155978
+          },
+          "run_20261003T093536Z_cb05343c01/d3c_plan_identity_E8.json": {
+            "sha256": "9bc84ac87b58af511a508fe33266c1a58953f66ff60d0faae5039e293090832b",
+            "bytes": 2144623
+          },
+          "run_20261003T093536Z_cb05343c01/d3c_profile_stdout.log": {
+            "sha256": "8e5aca11ac9d318cf7e8ba1f8a7a8b7c0a8e6274d3be8c44b052209ff290d538",
+            "bytes": 2851
+          }
+        }
+      },
+      "executed_notebook": {
+        "file": "MirrorTopology_Step1_D3c_profile_v0_1_E8_executed_7a2b17749e88.ipynb",
+        "sha256": "611dae39670eeb60bd33b9ffc679852c4ffb158b3b2b0fd00c60b04a3b4f2947",
+        "bytes": 33646
+      },
+      "attempt_id": "20261003T093536Z_cb05343c01",
+      "started_utc": "2026-10-03T09:35:36Z",
+      "finished_utc": "2026-10-03T09:54:44Z",
+      "lock_sha256": "79fd19e25c53fc6b36cd346949ecfa2f59e522f8dcfb2d5c3d41e6da2c721904",
+      "profile_record_sha256": "248616bbb49112375fc6f0593fed2a8c4586cd286b1232769f94bd31f92bb13e",
+      "plan_document_receipt": {
+        "sha256": "9bc84ac87b58af511a508fe33266c1a58953f66ff60d0faae5039e293090832b",
+        "bytes": 2144623
+      },
+      "plan_identity_sha256": "d239ad9d39da8a0d73aa32f4a65826f39a47631b1244b699ae81482e6c2bb59d",
+      "ordered_uid_sha256": "079eac01371ccfae5094bb4795a7bc371a2671a4746edc5cbd1a736fd8a6fc20",
+      "input_fingerprints": {
+        "matched": "8ea1486c3b296e0f0ab001097655ce63fbf6c461be5c6ca78c59d0645dde8504",
+        "native": "2a5704c44fe96cc23c5ff0944d22144d7c4a045dfab470f3c3ee5bd45c7e9391"
+      },
+      "recorded_profile_pass": true,
+      "recorded_D3C_PASS": true,
+      "recorded_official_gate_passed": true,
+      "recorded_environment_source": "live_collected",
+      "required_gates": 18,
+      "profile_checks": 330,
+      "twelve_checks": 14,
+      "supplies": 72,
+      "independent_full_scale_plan_reconstruction": true
+    }
+  },
+  "verification": {
+    "independent_evidence_checks": 3359,
+    "source_inventory_SHA_entries": 2095,
+    "failed_evidence_checks": 0,
+    "strict_JSON_duplicate_keys_and_nonfinite_constants_rejected_by_loader": true,
+    "full_scale_reconstructed_arrays": 45,
+    "full_scale_plan_negative_controls": 15,
+    "metadata_semantic_negative_controls": 6,
+    "pytest_full_suite_rerun_this_postexecution_audit": false,
+    "source_factory_rederivations": [
+      "TwelveContext",
+      "bank spec v2",
+      "array-accepted D3bUnits with registered outer receipt",
+      "rules binding"
+    ],
+    "gate_check_inventory_compared_to_source": true
+  },
+  "plan_reconstruction": {
+    "method": "One seed at a time using unmodified BootstrapPlan.build and FittingPlan.build at the full registered scale; numerical arrays retained as read-only audit-local NPY memory maps. Canonical full identity reassembled; original verify_plan_identity called on all five plans. Aggregation equivalence checked against fix_family_plans at small B using all actual ordered UIDs.",
+    "full_scale_B": 2000,
+    "full_scale_B_KDE": 2000,
+    "seeds": 5,
+    "K0": 10000,
+    "K1": 30000,
+    "K_fit": 2000,
+    "master_seed": 20260912,
+    "dtype": "<i8",
+    "direct_all_in_RAM_fix_family_plans_completed": false,
+    "first_direct_attempt_exit_code": 137,
+    "cgroup_memory_limit_bytes": 4294967296,
+    "observed_oom_kill_count_after_attempt": 1,
+    "intermediate_90_second_command_timed_out_and_excluded": true,
+    "completed_separate_family_processes": [
+      "E2",
+      "E7",
+      "E8"
+    ],
+    "verification_of_original_fullscale_plan_API_completed": true,
+    "reconstruction_environment": {
+      "python": "3.13.5",
+      "numpy": "2.3.5",
+      "platform": "Linux-6.18.44-x86_64-with-glibc2.41"
+    },
+    "registered_environment_recreated": false
+  },
+  "registration_conditions": [
+    "Register the exact accepted original profile, plan, lock, final, logs and executed notebooks; preserve the three original inner ZIP hashes and current run packet hash. Do not rewrite old execution source versions or paths when the registration engine/pins version changes.",
+    "Derive a deterministic outer receipt from the accepted snapshots and bind it to the new d3_pins.json and this acceptance SHA. Do not accept a self-asserted PASS flag or only a recomputed untrusted hash.",
+    "Keep exactly E2/E7/E8 and one accepted attempt per family; bind family, plan identity, ordered UID order, registered constants/CRN groups, context/spec/ledger/array-acceptance receipt, both input fingerprints, live source and required named gate inventories.",
+    "A standalone registered gate record must equal the gate extracted from the original accepted profile record; similarly derived fingerprint summaries must equal that record. Keep raw source documents immutable.",
+    "The consuming API must reject missing/mixed/tampered or nonformal evidence before calibration; verify that new consumer inputs and regenerated plans match the accepted identities, not just file presence or an old success flag.",
+    "Submit tranche2 registration/receipt/API implementation and normal/refusal tests for review before formal D4 calibration or target use. Preserve first-wave E1 and prior acceptances within their original scope."
+  ],
+  "nonblocking_documentation_notes": [
+    "RAM total was 54,750,404,608 bytes, approximately 54.750 decimal GB / 50.990 GiB. Clarify the report phrase 51 GB; these are observed runs, not a universal High-RAM guarantee.",
+    "record.timings are cumulative seconds from script start. Differences are stage durations; gate bucket includes pre-gate fingerprint/snapshot work, final bucket includes post-gate identity checking and publication.",
+    "Faster E8 execution is observed, but the disk-cache explanation remains an unisolated hypothesis; several non-intake stages are also faster."
+  ],
+  "not_independently_reperformed_or_proven": [
+    "Reading or hashing production D2/D3b NPZ arrays in this audit; those arrays are not in this packet.",
+    "Recomputing all six bank input fingerprints or rerunning the entire official gate from real bank arrays. Acceptance relies on audited source and cross-bound submitted runtime evidence, plus independent plan reconstruction.",
+    "Direct observation of historical Colab process objects or live HEAD, full remote Git tree comparison, or hardware attestation. Recorded HEAD/clean/source checks and notebook source are verified against approved bytes.",
+    "Independent byte comparison to the separate original combined d3c_profile_results.zip (not supplied here); acceptance identifies the present outer packet and three inner ZIPs.",
+    "Recreating the registered Colab software environment in this local audit.",
+    "New covariance/PC1 physical computations, labels/thresholds/calibration/D2W/noise/ENGINE_VALID, or completion of tranche2 registration."
+  ],
+  "preservation": {
+    "source_files": 2435,
+    "source_byte_mismatches": [],
+    "source_extra_files": [],
+    "inputs": {
+      "D3c_profile_runs_7a2b1774_audit_packet.zip": {
+        "sha256": "775683fd20ca3d3295cca0a287c7b6b5a7fb2f142aa52072355c619c7c0008b0",
+        "bytes": 428182
+      },
+      "phaseB_D3c_tranche1_v3_0.99.0.zip": {
+        "sha256": "2f6a89b9d8145168e6d25dfa8487199ebcec6c4a51aa96328aba47f4b57fad22",
+        "bytes": 15945925
+      },
+      "D3c_tranche1_v3_0.99.0_audit_decision.json": {
+        "sha256": "ef2e7db0a381a0d6278cc6361b16e76eff37e4927beb75a89390b6f2f4bdce93",
+        "bytes": 7807
+      },
+      "Step1_PhaseD_D3c_profile_runs_report.md": {
+        "sha256": "bb9d2c99cc034a846058470bb581b93c61a620dad48c5a166ae4352787fedc86",
+        "bytes": 6973
+      }
+    },
+    "production_NPZ_present": false
+  },
+  "artifacts": {
+    "audit": "ChatGPT_audit_D3c_profile_runs_7a2b1774.md",
+    "evidence": "D3c_profile_runs_7a2b1774_audit_evidence.zip"
+  },
+  "reproducibility": {
+    "reported_constituent_commands_completed": true,
+    "portable_reproducer_syntax_and_help_checked": true,
+    "fresh_second_full_orchestrator_execution_completed": false
+  }
+}

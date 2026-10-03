@@ -1,0 +1,147 @@
+{
+ "schema": "d3c_outer_receipt_v1",
+ "ledger": {
+  "payload_sha256": "8e5cd2dff074fdda678a864356bc87ae339c25f3564fbaecfc5abcbf118393cc",
+  "file_sha256": "27a0334fb339e29659ea6c13aa26e287c44abe6d3c57e0ccbce5e059cc9a92c5",
+  "schema": "d3c_profile_ledger_v1"
+ },
+ "execution_lock": {
+  "commit": "7a2b17749e88074834bf5bebe3ebd8ac8af5dd29",
+  "engine_version": "0.99.0",
+  "inventory_sha256": "c0b0333b2f4250f1498c04b30090a1449d8135983264052bf602941852e580a9",
+  "script_sha256": "9f243b08a5aa8ba0cc3ded42343fb8d99717dc4bd50ebf26a7cc9a519221638d",
+  "notebook_sha256": "4ad3ba0ac86ff20508aa4bd32784449f5824c5fff2c19712f7c6eb464d7ff54a",
+  "pins_sha256": "136d238f84896d3c838b9972622076ba095486bee1cbd91f19460a4440063a46",
+  "d3b_ledger_file_sha256": "bdaa8aeb9b3e591d73540c4edce482c3f59f6edcafa0f21f171332102c624837",
+  "d3b_receipt_file_sha256": "ed0fbccba739f26a906da0948885d3b4205ca6c58d5aa8338a62c877b166dabb",
+  "source_archive": {
+   "file": "phaseB_D3c_tranche1_v3_0.99.0.zip",
+   "sha256": "2f6a89b9d8145168e6d25dfa8487199ebcec6c4a51aa96328aba47f4b57fad22",
+   "bytes": 15945925
+  },
+  "preexecution_authorization": {
+   "file": "D3c_tranche1_v3_0.99.0_audit_decision.json",
+   "sha256": "ef2e7db0a381a0d6278cc6361b16e76eff37e4927beb75a89390b6f2f4bdce93",
+   "bytes": 7807,
+   "decision": "PASS_WITH_EXPLICIT_SCOPE_AND_LOCKED_EXECUTION_GO"
+  },
+  "runtime": "Colab High-RAM CPU (RAM total 54,750,404,608 bytes); STAGE_LOCAL=True, STAGE_ROOT=/content/stage; one family per run, E2 -> E7 -> E8"
+ },
+ "acceptance": {
+  "decision_file": "D3c_profile_runs_7a2b1774_acceptance.json",
+  "decision_sha256": "de8fa49f40a897ee74289c26fa798cad8faa142af9566e5d0a36de93a20b0f04",
+  "decision_bytes": 16559,
+  "audit_md": "ChatGPT_audit_D3c_profile_runs_7a2b1774.md",
+  "audit_md_sha256": "426c3361a5d0899b241400ef9455e5d6eb896e1c33e7a8cba6523b0cb7ad4c2e",
+  "audit_md_bytes": 15845,
+  "run_packet": "D3c_profile_runs_7a2b1774_audit_packet.zip",
+  "run_packet_sha256": "775683fd20ca3d3295cca0a287c7b6b5a7fb2f142aa52072355c619c7c0008b0",
+  "run_packet_bytes": 428182,
+  "decision": "PASS_WITH_EXPLICIT_SCOPE__TRANCHE2_REGISTRATION_IMPLEMENTATION_GO",
+  "accepted_scope": "AUDITED_COLAB_OFFICIAL_PROFILE_EXECUTION_RECORDS_AND_INDEPENDENTLY_REPRODUCED_PLAN_IDENTITIES",
+  "date_JST": "2026-10-03",
+  "independent_plan_reconstruction": "full registered scale (B 2000 / B_KDE 2000 / seeds 5 / K0 10000 / K1 30000 / K_fit 2000): 45 multiplicity arrays and all three identities reproduced by the auditor",
+  "not_approved": [
+   "tranche 2 registration API (this module) until its own review",
+   "D-4 calibration execution",
+   "thresholds / labels / calibration / D-2W / noise / ENGINE_VALID",
+   "E1 twelve-position profile",
+   "independent re-read of the production NPZ by the auditor",
+   "remote Git full-tree comparison"
+  ]
+ },
+ "acceptance_files": {
+  "decision": {
+   "file": "D3c_profile_runs_7a2b1774_acceptance.json",
+   "sha256": "de8fa49f40a897ee74289c26fa798cad8faa142af9566e5d0a36de93a20b0f04",
+   "bytes": 16559
+  },
+  "audit_md": {
+   "file": "ChatGPT_audit_D3c_profile_runs_7a2b1774.md",
+   "sha256": "426c3361a5d0899b241400ef9455e5d6eb896e1c33e7a8cba6523b0cb7ad4c2e",
+   "bytes": 15845
+  },
+  "preexecution": {
+   "file": "D3c_tranche1_v3_0.99.0_audit_decision.json",
+   "sha256": "ef2e7db0a381a0d6278cc6361b16e76eff37e4927beb75a89390b6f2f4bdce93",
+   "bytes": 7807
+  }
+ },
+ "families": {
+  "E2": {
+   "attempt_id": "20261003T083353Z_dc4ddf4f0f",
+   "plan_identity_sha256": "86a7db7b4aa31d172cf402785072adbd2ff2beefce964d9cf6a1cd3948c81d3e",
+   "ordered_uid_sha256": "00e8c1c0c3dfebdbcf64252cbea5b3e87ba7793e2eab82188d6568f53ed3b77b",
+   "input_fingerprints": {
+    "matched": "9e4d3dfb9b178ce50e8268171412daf18267b37d36494a2757551e0d827b7ac4",
+    "native": "ad872efdc6f84687bd7b718efab3bed8b7f5e3db4a4b67c4a691f4e6bc0cb89f"
+   },
+   "lock_sha256": "582e5b102e137ffae609f57903521504f2b83f7583ea22757208ca2287e7441f",
+   "profile_record_sha256": "a0867c86b05c4c47fdbf46259c8eb0c8c3c3fecf88345cdb0395314d0971b1e4",
+   "plan_document_sha256": "d129a51ffadac594a54c07c6e54d62c1f4286525e63f9f49487dd75391ed7667",
+   "inner_archive_sha256": "4cd9a8d0f3e6f045bc8900fdd3086cab215b82ccef0a4478b029333d94d38ee4",
+   "executed_notebook_sha256": "c95b067ba1012eba7bb9408659c88c0081f9aadba088e85555e5df407d04bd82",
+   "gate_passed": true,
+   "gate_mode": "official",
+   "registered_dir": "registered_assets/d3c/runs/E2_20261003T083353Z_dc4ddf4f0f"
+  },
+  "E7": {
+   "attempt_id": "20261003T090646Z_106fe1bd17",
+   "plan_identity_sha256": "3c28d3eb66042436ebf1788e3ed23a1f2fd593f0d305bed40299540c8f610e61",
+   "ordered_uid_sha256": "8972c1c7c4b61dd2a381679478fb80eba2cbf9ae5f62d6c36bb8cad0eef7ce88",
+   "input_fingerprints": {
+    "matched": "06634d33e749754ef342d2a19fa5eef6bb4ae0d5aa678f174ede1a61f86db645",
+    "native": "08a6ddb9bc9dd8b1109a5e9dc5d342359bc190501ba113e2d06b87739a2a5ccb"
+   },
+   "lock_sha256": "dab0cec94f18ab0990baf5df2f966a59de712698aad62deb24b680c7aef59e7f",
+   "profile_record_sha256": "86926ff662c7cb2296c6aa7417f918a36ee567085e0b22615b9217f6fa57610f",
+   "plan_document_sha256": "9bc5975f24875e358600d5fae541a03dfbc06e0c7c6face72079b8ebe27baa32",
+   "inner_archive_sha256": "4783fc1f0eac2e83410cb3262b98535bae9321d8d3759223dbcff132ead99c8e",
+   "executed_notebook_sha256": "64b2a18fed15b4eb3635fc2f9093474ceb256473d6cd4e82ba911e43ebfc21b1",
+   "gate_passed": true,
+   "gate_mode": "official",
+   "registered_dir": "registered_assets/d3c/runs/E7_20261003T090646Z_106fe1bd17"
+  },
+  "E8": {
+   "attempt_id": "20261003T093536Z_cb05343c01",
+   "plan_identity_sha256": "d239ad9d39da8a0d73aa32f4a65826f39a47631b1244b699ae81482e6c2bb59d",
+   "ordered_uid_sha256": "079eac01371ccfae5094bb4795a7bc371a2671a4746edc5cbd1a736fd8a6fc20",
+   "input_fingerprints": {
+    "matched": "8ea1486c3b296e0f0ab001097655ce63fbf6c461be5c6ca78c59d0645dde8504",
+    "native": "2a5704c44fe96cc23c5ff0944d22144d7c4a045dfab470f3c3ee5bd45c7e9391"
+   },
+   "lock_sha256": "79fd19e25c53fc6b36cd346949ecfa2f59e522f8dcfb2d5c3d41e6da2c721904",
+   "profile_record_sha256": "248616bbb49112375fc6f0593fed2a8c4586cd286b1232769f94bd31f92bb13e",
+   "plan_document_sha256": "9bc84ac87b58af511a508fe33266c1a58953f66ff60d0faae5039e293090832b",
+   "inner_archive_sha256": "49b6591d5c8d0228e6356232d69dce8d15d380c683b387dc890b1f4eb5a65a81",
+   "executed_notebook_sha256": "611dae39670eeb60bd33b9ffc679852c4ffb158b3b2b0fd00c60b04a3b4f2947",
+   "gate_passed": true,
+   "gate_mode": "official",
+   "registered_dir": "registered_assets/d3c/runs/E8_20261003T093536Z_cb05343c01"
+  }
+ },
+ "totals": {
+  "families": 3,
+  "attempts": 3,
+  "supplies": 216,
+  "profile_checks": 990,
+  "twelve_checks": 42,
+  "seconds_script": 2714.513556957245,
+  "seconds_launcher": 4348.228,
+  "peak_rss_mb_max": 19465.9
+ },
+ "registered_d3b": {
+  "ledger_payload_sha256": "a7d2c8c4375c37a24142c1fd2bd400b9559c220418ee7af9e41f430ba968b9da",
+  "ledger_file_sha256": "bdaa8aeb9b3e591d73540c4edce482c3f59f6edcafa0f21f171332102c624837",
+  "outer_receipt_sha256": "7c42bc112a5413360837bc4e1d28f7583713e111d12e2bd903faf3966f402c18"
+ },
+ "pins_binding": {
+  "d3b_ledger_sha256": "a7d2c8c4375c37a24142c1fd2bd400b9559c220418ee7af9e41f430ba968b9da",
+  "d3b_outer_receipt_sha256": "7c42bc112a5413360837bc4e1d28f7583713e111d12e2bd903faf3966f402c18",
+  "config_map_sha256": "da1e68bcec4934d4332b774e31598b8753a0509c76440b7da4137c0110a0fdb5",
+  "covariance_receipt_sha256": "ab545a6f993da5890214a54cb0b3229dc064dbf37704fb229d3095dccc98dc89",
+  "bank_spec_v2_sha256": "d5fda77b4f921935b9ceb5a80df2b3c6ac41ccafa1141f877620cdd866dffcd4"
+ },
+ "statement": "ACCEPTED (scoped): the three formal profile runs and their fixed plan identities are the registered inputs of calibration; this receipt is the auditor's scoped acceptance of the registered records (independently reproduced plan identities), not a re-read of the production banks; D-4 execution, thresholds, labels, D-2W and noise remain separately gated.",
+ "receipt_sha256": "aca443d02d95af89837b7c35b9d31175118c8a1c25efa2b8d21b4eab29540b29"
+}

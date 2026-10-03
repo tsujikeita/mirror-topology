@@ -45,3 +45,7 @@ rc 0・stage complete・`D3C_PASS True`・gate `passed=True`（required_failures
 - plan object（R-C）：size input 6 本と組立て後の両 system が `fix_family_plans` の返した**同一 dictionary object**（評価 plans・fitting plans とも `is`）を持つことを gate 前後で要求する（内容 identity の検証と併置；値が同一の別 object は拒否）。
 - 出力契約（R-D）：`--mt`／`--phaseb`／`--phasec`／入力 root を出力作成前に保護（realpath の包含）；指定 OUT が symlink なら拒否；既存の空 directory は受け入れる。
 - launcher（R-A／B；v0.1.3 で v2 監査の launch-boundary／output-anchor を反映）：1 attempt＝**lock の出力先（anchor）の先行検証（不合格なら何も書かない）**→ attempt ID＋initial 非成功 record（anchor にのみ）→ 実行設定と live source（HEAD・file SHA）の lock 再照合 → staging（容量検査）→ **同じ再照合を起動の直前にもう一度** → 起動（attempt ID と lock SHA を script に渡す）→ record の semantic 検証と lock／attempt への束縛（plan document の pins も）→ final record。前回の final record は退避し，今回の証拠にしない。peak RSS は `ru_maxrss`×1024／1e6（十進 MB）。
+
+## H. v0.1.4 追記（tranche ②：登録；監査 `D3c_profile_runs_7a2b1774_acceptance.json` の実装条件）
+- 正式 profile 実行（E2／E7／E8；commit `7a2b1774…`，engine 0.99.0）の原本を `registered_assets/d3c/` に登録（inner archive の member と byte 一致；実行 source は `d3c_ledger.EXECUTION_LOCK` の定数で，engine／pins の版が変わっても書き換えない）。`build_d3c_profile_ledger`／`build_d3c_outer_receipt` の決定論的再導出を pins（`d3c_ledger_sha256`・`d3c_outer_receipt_sha256`・`d3c_acceptance_sha256`）に束縛。
+- consumer（D-4）：`intake_registered_d3c_profiles` → `rebuild_registered_plans`（登録 ordered UID から再構築し受入れ identity を再現）→ `verify_consumer_family_inputs`（両 system の fingerprint・plan identity・plan object・全配置の UID；任意で gate inventory）。PASS flag／attempt id／旧成功は identity の代わりにならない。
