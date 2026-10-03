@@ -7,7 +7,9 @@ is never True in self-test; the published plan identity is reproducible from the
 R-D3C1-C: in-process runs that replace a plan dictionary by a value-equal deepcopy (native / matched; evaluation / fitting; after the gate or inside a size input) are
 refused (G_identity_stable / G_size_inputs False), an array change after the gate is refused (content), the normal shared plans pass.
 R-D3C1-D: OUT below --phasec / --mt / --phaseb / an input root -> rc 2 and nothing written; a symlink OUT -> rc 2; a pre-existing EMPTY OUT is accepted (record written in it).
-R-D3C1-A/B (notebook attempt cell): configuration / live-source mismatch with the lock is refused BEFORE staging / launch; staging copy failure, insufficient disk, launch
+R-D3C1-A/B (notebook attempt cell, v0.3): the output anchor comes from the LOCK and is validated before anything is written (an unsafe anchor stops the cell without
+writing; a current OUT pointing into an input leaves the input tree unchanged and the FAIL at the anchor); configuration / live-source mismatch with the lock is refused
+BEFORE staging AND again IMMEDIATELY before the launch (changes injected at the end of the last staging copy -> no child process); staging copy failure, insufficient disk, launch
 failure, missing / invalid / nested-invalid records and result records not bound to this attempt / lock / family all leave a FAIL record of THIS attempt (a previous success
 is superseded, never reused); only the fully bound success gives profile_pass."""
 import os, sys, json, shutil, subprocess, hashlib, copy, importlib.util, io, contextlib, types
@@ -124,9 +126,13 @@ def test_profile_plan_object_identity_guards(banks, tmp_path, monkeypatch, case)
 LAUNCH_CASES = ['ok', 'staged_ok', 'retry_after_old_success', 'pass_false', 'gate_false', 'rc1', 'missing', 'invalid_json', 'list_record', 'nested_gate_list', 'seconds_str', 'stages_rss_missing',
                 'family_changed', 'root_changed', 'stage_local_changed', 'commit_changed', 'dirty_tree', 'inventory_changed', 'script_changed', 'lock_file_changed',
                 'result_family_mismatch', 'result_source_mismatch', 'result_attempt_mismatch', 'result_lock_mismatch', 'plan_file_missing', 'plan_file_unbound',
-                'copy_failure', 'copy_failure_after_old_success', 'disk_insufficient', 'launch_failure', 'stage_root_inside_input']
-NO_LAUNCH = {'family_changed', 'root_changed', 'stage_local_changed', 'commit_changed', 'dirty_tree', 'inventory_changed', 'script_changed', 'lock_file_changed', 'copy_failure', 'copy_failure_after_old_success', 'disk_insufficient', 'stage_root_inside_input'}
-STAGED = {'staged_ok', 'copy_failure', 'copy_failure_after_old_success', 'disk_insufficient', 'stage_root_inside_input'}
+                'copy_failure', 'copy_failure_after_old_success', 'disk_insufficient', 'launch_failure', 'stage_root_inside_input',
+                'head_changed_during_staging', 'dirty_during_staging', 'script_changed_during_staging', 'inventory_changed_during_staging', 'pins_changed_during_staging', 'ledger_changed_during_staging', 'receipt_changed_during_staging', 'lock_changed_during_staging', 'family_changed_during_staging', 'root_changed_during_staging',
+                'out_changed_to_input', 'out_changed_elsewhere', 'plan_pins_mismatch', 'anchor_lock_missing', 'anchor_symlink', 'anchor_inside_input']
+DURING = {'head_changed_during_staging', 'dirty_during_staging', 'script_changed_during_staging', 'inventory_changed_during_staging', 'pins_changed_during_staging', 'ledger_changed_during_staging', 'receipt_changed_during_staging', 'lock_changed_during_staging', 'family_changed_during_staging', 'root_changed_during_staging'}
+NO_LAUNCH = {'family_changed', 'root_changed', 'stage_local_changed', 'commit_changed', 'dirty_tree', 'inventory_changed', 'script_changed', 'lock_file_changed', 'copy_failure', 'copy_failure_after_old_success', 'disk_insufficient', 'stage_root_inside_input', 'out_changed_to_input', 'out_changed_elsewhere', 'anchor_lock_missing'} | DURING
+NO_RECORD = {'anchor_symlink', 'anchor_inside_input'}
+STAGED = {'staged_ok', 'copy_failure', 'copy_failure_after_old_success', 'disk_insufficient', 'stage_root_inside_input'} | DURING
 
 
 def _fake_source(root):
@@ -160,16 +166,39 @@ def test_profile_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path,
     if case == 'inventory_changed': inv = json.load(open(ns['INV'])); inv['engine_version'] = '0.0.1-TEST'; open(ns['INV'], 'w').write(json.dumps(inv))
     if case == 'script_changed': open(ns['SCRIPT'], 'a').write('# changed after the lock\n')
     if case == 'lock_file_changed': open(ns['LOCK_PATH'], 'a').write('\n')
-    head = 'b' * 40 if case == 'commit_changed' else commit; dirty = ' M x' if case == 'dirty_tree' else ''
+    if case == 'out_changed_to_input': ns['OUT'] = str(d2)
+    if case == 'out_changed_elsewhere': ns['OUT'] = str(tmp_path / 'other_out'); os.makedirs(ns['OUT'])
+    if case == 'anchor_lock_missing': os.remove(ns['LOCK_PATH'])
+    if case == 'anchor_inside_input': ns['lock']['out'] = str(d2); lock = ns['lock']
+    if case == 'anchor_symlink': link_target = tmp_path / 'anchor_target'; shutil.move(str(out), str(link_target)); os.symlink(link_target, out)
+    git = dict(head=('b' * 40 if case == 'commit_changed' else commit), dirty=(' M x' if case == 'dirty_tree' else ''))
+    d2_before = sorted(os.listdir(d2)); d2_bytes = {f: sha(d2 / f) for f in d2_before}
+    def mutate_during_staging():
+        """Injected when the LAST staging copy completes (the audit's launch-boundary probe): the state the lock covers changes after the pre-staging check."""
+        if case == 'head_changed_during_staging': git['head'] = 'c' * 40
+        if case == 'dirty_during_staging': git['dirty'] = ' M y'
+        if case == 'script_changed_during_staging': open(ns['SCRIPT'], 'a').write('# changed during staging\n')
+        if case == 'inventory_changed_during_staging': inv = json.load(open(ns['INV'])); inv['engine_version'] = '0.0.2-TEST'; open(ns['INV'], 'w').write(json.dumps(inv))
+        if case == 'pins_changed_during_staging': open(ns['PINS'], 'a').write('\n')
+        if case == 'ledger_changed_during_staging': open(ns['LEDGER'], 'a').write('\n')
+        if case == 'receipt_changed_during_staging': open(ns['RECEIPT'], 'a').write('\n')
+        if case == 'lock_changed_during_staging': open(ns['LOCK_PATH'], 'a').write('\n')
+        if case == 'family_changed_during_staging': ns['FAMILY'] = 'E7'
+        if case == 'root_changed_during_staging': ns['D2_RUN_ROOT'] = str(tmp_path / 'other_d2'); os.makedirs(ns['D2_RUN_ROOT'], exist_ok=True)
+    n_copies = [0]
+    def copytree_then_mutate(src, dst, **kw):
+        r = shutil.copytree(src, dst, **kw); n_copies[0] += 1
+        if n_copies[0] == 4: mutate_during_staging()
+        return r
     # ---- the child process (TEST DOUBLE: writes a record shaped like the script's, bound to the attempt / lock it was given, except where the case breaks the binding)
     calls = []
-    def check_output(args, **kw): return (head if 'rev-parse' in args else dirty) + '\n'
+    def check_output(args, **kw): return (git['head'] if 'rev-parse' in args else git['dirty']) + '\n'
     def run(args, **kw):
         calls.append(list(args))
         if case == 'launch_failure': raise OSError('TEST_ONLY cannot start subprocess')
         run_dir = args[args.index('--out') + 1]; fam = args[args.index('--family') + 1]; att = args[args.index('--attempt-id') + 1]; lk = args[args.index('--launcher-lock-sha256') + 1]; os.makedirs(run_dir)
         rec_fam = 'E7' if case == 'result_family_mismatch' else fam; rp = os.path.join(run_dir, f'd3c_profile_record_{fam}.json'); pp = os.path.join(run_dir, f'd3c_plan_identity_{fam}.json')
-        plan = dict(schema='d3c_plan_identity_record_v2', family=fam, formal=True, selftest=False, identity=dict(identity_sha256='I' * 64), attempt=dict(attempt_id=('X' if case == 'plan_file_unbound' else att), launcher_lock_sha256=lk), source_lock=dict(script_sha256=sha(ns['SCRIPT']), inventory_sha256=sha(ns['INV'])))
+        plan = dict(schema='d3c_plan_identity_record_v2', family=fam, formal=True, selftest=False, identity=dict(identity_sha256='I' * 64), attempt=dict(attempt_id=('X' if case == 'plan_file_unbound' else att), launcher_lock_sha256=lk), source_lock=dict(script_sha256=sha(ns['SCRIPT']), inventory_sha256=sha(ns['INV']), pins_sha256=('0' * 64 if case == 'plan_pins_mismatch' else sha(ns['PINS']))))
         if case != 'plan_file_missing': open(pp, 'w').write(json.dumps(plan))
         v = dict(schema='d3c_profile_record_v2', D3C_PASS=(case != 'pass_false'), stage='complete', family=rec_fam, gates={'G_x': True}, gate=dict(passed=(case != 'gate_false'), required_failures=[]), failures=[], stages_rss_mb={'final': 1.0}, stages_peak_rss_mb={'final': 1.0}, seconds=1.0, selftest=False, profile='production_official',
                  attempt=dict(attempt_id=('X' if case == 'result_attempt_mismatch' else att), launcher_lock_sha256=('0' * 64 if case == 'result_lock_mismatch' else lk)),
@@ -187,15 +216,30 @@ def test_profile_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path,
     if case in ('copy_failure', 'copy_failure_after_old_success'):
         def fail_copy(*a, **k): raise OSError(28, 'TEST_ONLY No space left on device')
         ns['shutil'] = types.SimpleNamespace(rmtree=shutil.rmtree, copytree=fail_copy, disk_usage=shutil.disk_usage)
+    if case in DURING: ns['shutil'] = types.SimpleNamespace(rmtree=shutil.rmtree, copytree=copytree_then_mutate, disk_usage=shutil.disk_usage)
     if case == 'disk_insufficient': ns['shutil'] = types.SimpleNamespace(rmtree=shutil.rmtree, copytree=shutil.copytree, disk_usage=lambda p: types.SimpleNamespace(free=10))
-    with contextlib.redirect_stdout(io.StringIO()): exec(compile(c3, 'nb_cell3_attempt', 'exec'), ns)        # the attempt cell never raises: every failure becomes a FAIL record
+    if case in NO_RECORD:      # an unsafe anchor: the cell stops BEFORE writing anything (stderr message; no attempt id, no record, no launch)
+        err = io.StringIO()
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(err), pytest.raises(RuntimeError, match='unsafe output anchor'): exec(compile(c3, 'nb_cell3_attempt', 'exec'), ns)
+        target = (tmp_path / 'anchor_target') if case == 'anchor_symlink' else out
+        assert 'ATTEMPT NOT STARTED' in err.getvalue() and 'ATTEMPT' not in ns and calls == [] and sorted(os.listdir(target)) == ['profile_lock.json'] and sorted(os.listdir(d2)) == d2_before
+        return
+    with contextlib.redirect_stdout(io.StringIO()): exec(compile(c3, 'nb_cell3_attempt', 'exec'), ns)        # the attempt cell never raises: every failure becomes a FAIL record at the ANCHOR
     fin = json.load(open(out / 'profile_final_record.json')); att = ns['ATTEMPT']; expect = case in ('ok', 'staged_ok', 'retry_after_old_success')
-    assert fin['schema'] == 'd3c_launcher_final_record_v2' and fin['attempt_id'] == att and fin['lock_sha256'] == lock_sha and fin['lock'] == lock and fin['profile_pass'] is expect and ns['profile_pass'] is expect and fin['seconds_total'] is not None and fin['finished_utc']
+    assert fin['output_anchor'] == str(out) and sorted(os.listdir(d2)) == d2_before and all(sha(d2 / f) == d2_bytes[f] for f in d2_before)      # records only at the anchor; the input tree is never touched
+    if case in ('out_changed_to_input', 'out_changed_elsewhere'): assert fin['stage'] == 'precheck_config' and 'configuration differs from the lock' in fin['failures'][0] and "'out'" in fin['failures'][0] and (case != 'out_changed_elsewhere' or os.listdir(ns['OUT']) == [])
+    assert fin['schema'] == 'd3c_launcher_final_record_v3' and fin['attempt_id'] == att and fin['lock_sha256'] == lock_sha and fin['lock'] == lock and fin['profile_pass'] is expect and ns['profile_pass'] is expect and fin['seconds_total'] is not None and fin['finished_utc']
     assert fin['run_dir'] == f'{out}/run_{att}' and (len(calls) == (0 if case in NO_LAUNCH else 1))
     if case in NO_LAUNCH: assert fin['exit_code'] is None and fin['D3C_PASS'] is None and fin['exception'] and fin['failures']
-    if case in ('family_changed', 'root_changed', 'stage_local_changed'): assert fin['stage'] == 'config_check' and 'configuration differs from the lock' in fin['failures'][0]
-    if case in ('commit_changed', 'dirty_tree', 'inventory_changed', 'script_changed'): assert fin['stage'] == 'source_check' and 'live source differs' in fin['failures'][0] and fin['bindings']['live_source']
-    if case == 'lock_file_changed': assert fin['stage'] == 'config_check' and 'lock file on disk' in fin['failures'][0]
+    if case in ('family_changed', 'root_changed', 'stage_local_changed'): assert fin['stage'] == 'precheck_config' and 'configuration differs from the lock' in fin['failures'][0]
+    if case in ('commit_changed', 'dirty_tree', 'inventory_changed', 'script_changed'): assert fin['stage'] == 'precheck_source' and 'live source differs' in fin['failures'][0] and fin['bindings']['live_source_precheck']
+    if case == 'lock_file_changed': assert fin['stage'] == 'precheck_config' and 'lock file on disk' in fin['failures'][0]
+    if case == 'anchor_lock_missing': assert fin['stage'] == 'precheck_config' and 'FileNotFoundError' in fin['exception'] and sorted(os.listdir(out)) == ['profile_final_record.json']
+    if case in DURING:       # the launch-boundary verifier: staging completed (4 copies), then the SAME checks rejected the changed state; no child process
+        assert n_copies[0] == 4 and fin['staged_inputs']['d2'] == f'{stage_root}/d2' and os.path.isfile(f'{stage_root}/d3b_L1.50/blob.bin') and 'args' not in fin and fin['bindings']['live_source_precheck']
+        if case in ('family_changed_during_staging', 'root_changed_during_staging'): assert fin['stage'] == 'prelaunch_config' and 'configuration differs from the lock' in fin['failures'][0]
+        elif case == 'lock_changed_during_staging': assert fin['stage'] == 'prelaunch_config' and 'lock file on disk' in fin['failures'][0]
+        else: assert fin['stage'] == 'prelaunch_source' and 'live source differs from the lock (prelaunch)' in fin['failures'][0] and fin['bindings']['live_source_prelaunch'] != fin['bindings']['live_source_precheck']
     if case in ('copy_failure', 'copy_failure_after_old_success', 'disk_insufficient', 'stage_root_inside_input'): assert fin['stage'] == 'staging' and ('No space left' in fin['exception'] if case.startswith('copy') else True) and ('insufficient local disk' in fin['failures'][0] if case == 'disk_insufficient' else True) and ('STAGE_ROOT must be disjoint' in fin['failures'][0] if case == 'stage_root_inside_input' else True)
     if case == 'launch_failure': assert fin['stage'] == 'launch' and fin['exit_code'] is None and 'cannot start subprocess' in fin['exception'] and fin['args'][fin['args'].index('--attempt-id') + 1] == att
     if case in ('retry_after_old_success', 'copy_failure_after_old_success'):
@@ -204,6 +248,6 @@ def test_profile_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path,
         a = calls[0]; assert fin['stage'] == 'complete' and a[a.index('--attempt-id') + 1] == att and a[a.index('--launcher-lock-sha256') + 1] == lock_sha and a[a.index('--profile') + 1] == 'production_official' and '--selftest-small' not in a and a.count('--d3b-root') == 3 and a[a.index('--family') + 1] == 'E2' and a[a.index('--out') + 1] == fin['run_dir']
         assert fin['launcher_fallback'] is (case in ('missing', 'invalid_json', 'list_record', 'nested_gate_list', 'seconds_str', 'stages_rss_missing')) and fin['exit_code'] == (1 if case == 'rc1' else 0)
         if case == 'staged_ok': assert a[a.index('--d2-root') + 1] == f'{stage_root}/d2' and os.path.isfile(f'{stage_root}/d3b_L1.00/blob.bin') and fin['staged_inputs']['d2'] == f'{stage_root}/d2' and fin['staging']['input_bytes'] == 3000 + os.path.getsize(d2 / 'd2_bank_registry.json') + 3 * 2
-        if case in ('result_family_mismatch', 'result_source_mismatch', 'result_attempt_mismatch', 'result_lock_mismatch', 'plan_file_missing', 'plan_file_unbound'): assert fin['bindings_ok'] is False and fin['D3C_PASS'] is True and fin['gate_passed'] is True and any('not bound' in f for f in fin['failures'])
+        if case in ('result_family_mismatch', 'result_source_mismatch', 'result_attempt_mismatch', 'result_lock_mismatch', 'plan_file_missing', 'plan_file_unbound', 'plan_pins_mismatch'): assert fin['bindings_ok'] is False and fin['D3C_PASS'] is True and fin['gate_passed'] is True and any('not bound' in f for f in fin['failures'])
         if case in ('ok', 'staged_ok', 'retry_after_old_success'): assert fin['bindings_ok'] is True and fin['plan_identity_file_ok'] is True and fin['failures'] == [] and fin['record_sha256'] == sha(f"{fin['run_dir']}/d3c_profile_record_E2.json") and fin['stages_peak_rss_mb'] == {'final': 1.0}
         if case in ('pass_false', 'gate_false', 'rc1'): assert fin['bindings_ok'] is True and fin['failures'] == []

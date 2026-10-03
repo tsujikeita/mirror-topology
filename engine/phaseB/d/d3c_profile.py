@@ -11,7 +11,7 @@ INPUTS and SOURCE ROOTS are read-only (--mt, --phaseb, --phasec, --d2-root, --d3
 OUTPUT is a non-existent or EMPTY real directory (the given path must not be a symlink); every JSON is published through the verified whole-document helper.
 Plan OBJECT identity (R-D3C1-C): the six size inputs and both assembled systems must carry the very dictionaries returned by fix_family_plans (plans AND fit_plans; `is`),
 checked before and after the gate alongside the content identity; the roundtrip reconstruction and the snapshot are released right after their comparison (R-D3C1-E);
-peak RSS (ru_maxrss) is recorded per stage. --attempt-id / --launcher-lock-sha256 are echoed verbatim into the record and the plan document so the launcher can bind them.
+peak RSS (ru_maxrss, KiB x 1024 / 1e6 -> decimal MB) is recorded per stage. --attempt-id / --launcher-lock-sha256 are echoed verbatim into the record and the plan document so the launcher can bind them.
 --selftest-small: synthetic small banks of the generators' self-tests (formal=False intakes; smoke gate; small B / B_KDE); never D3C_PASS."""
 from __future__ import annotations
 import os
@@ -29,10 +29,10 @@ def sha(p): return hashlib.sha256(open(p, "rb").read()).hexdigest()
 def _rss_mb():
     try:
         import psutil; return float(psutil.Process().memory_info().rss / 1e6)
-    except Exception: return float(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e3)
+    except Exception: return _peak_rss_mb()
 
 
-def _peak_rss_mb(): return float(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e3)   # Linux: KiB -> MB (decimal); monotone high-water mark of this process
+def _peak_rss_mb(): return float(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024.0 / 1e6)   # Linux: ru_maxrss in KiB -> decimal MB (x1024/1e6); monotone high-water mark of this process
 
 
 def _plan_objects(label, obj, plans, fplans):
