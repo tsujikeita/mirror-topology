@@ -77,7 +77,7 @@ def test_ledger_and_receipt_deterministic_registered_and_bound():
     with pytest.raises(InputContractError): D3cProfiles(dict(ledger=LEDGER, receipt=RECEIPT, root=P))
 
 
-EDITS = ['record_pass', 'record_gate_check_dropped', 'record_gate_mode', 'record_fingerprint_after', 'record_family', 'record_selftest', 'record_supply_manifest', 'record_context', 'plan_uid_swap', 'plan_B', 'plan_attempt', 'lock_commit', 'lock_root', 'final_pass', 'final_attempt', 'final_prelaunch_head', 'final_args_selftest', 'stderr', 'extra_superseded', 'missing_family', 'archive', 'notebook_missing', 'acceptance_edit', 'pins']
+EDITS = ['pins_acceptance_wrong', 'pins_acceptance_missing', 'pins_acceptance_null', 'pins_receipt', 'record_pass', 'record_gate_check_dropped', 'record_gate_mode', 'record_fingerprint_after', 'record_family', 'record_selftest', 'record_supply_manifest', 'record_context', 'plan_uid_swap', 'plan_B', 'plan_attempt', 'lock_commit', 'lock_root', 'final_pass', 'final_attempt', 'final_prelaunch_head', 'final_args_selftest', 'stderr', 'extra_superseded', 'missing_family', 'archive', 'notebook_missing', 'acceptance_edit', 'pins']
 
 
 @pytest.mark.parametrize('edit', EDITS)
@@ -110,14 +110,22 @@ def test_registered_original_edits_refused(tmp_path, edit):
         ap = os.path.join(root, 'registered_assets', 'd3c', 'archives', INNER_ARCHIVES[fam]['file']); b = bytearray(open(ap, 'rb').read()); b[-1] ^= 1; open(ap, 'wb').write(bytes(b))
     elif edit == 'notebook_missing': os.remove(os.path.join(root, 'registered_assets', 'd3c', 'notebooks', EXECUTED_NOTEBOOKS[fam]['file']))
     elif edit == 'acceptance_edit': _rewrite(os.path.join(root, 'registered_assets', 'd3c', 'acceptance', PROFILE_ACCEPTANCE['decision_file']), lambda a: a['families']['E7'].update(plan_identity_sha256='0' * 64))
+    elif edit == 'pins_acceptance_wrong': _rewrite(os.path.join(root, 'd', 'd3_pins.json'), lambda p: p.update(d3c_acceptance_sha256='0' * 64))
+    elif edit == 'pins_acceptance_missing': _rewrite(os.path.join(root, 'd', 'd3_pins.json'), lambda p: p.pop('d3c_acceptance_sha256'))
+    elif edit == 'pins_acceptance_null': _rewrite(os.path.join(root, 'd', 'd3_pins.json'), lambda p: p.update(d3c_acceptance_sha256=None))
+    elif edit == 'pins_receipt': _rewrite(os.path.join(root, 'd', 'd3_pins.json'), lambda p: p.update(d3c_outer_receipt_sha256='0' * 64))
     else: _rewrite(os.path.join(root, 'd', 'd3_pins.json'), lambda p: p.update(d3c_ledger_sha256='0' * 64))
     cx = twelve_context(root)
-    if edit == 'pins':
+    if edit.startswith('pins'):      # pins edits: the pure deterministic build still equals the registered content; every registered entry path (ledger load / receipt load / intake) refuses — R-D3C2-A: the acceptance pin (wrong / missing / null) is refused on the common loader path
         assert build_d3c_profile_ledger(root, cx) == LEDGER
-        with pytest.raises(InputContractError): load_registered_d3c_ledger(root, cx)
+        if edit == 'pins_receipt': assert load_registered_d3c_ledger(root, cx)['ledger_sha256'] == LEDGER['ledger_sha256']
+        else:
+            with pytest.raises(InputContractError): load_registered_d3c_ledger(root, cx)
+        with pytest.raises(InputContractError): load_registered_d3c_outer_receipt(root, cx)
     else:
         with pytest.raises(InputContractError): build_d3c_profile_ledger(root, cx)
         with pytest.raises(InputContractError): load_registered_d3c_ledger(root, cx)
+        with pytest.raises(InputContractError): load_registered_d3c_outer_receipt(root, cx)
     with pytest.raises(InputContractError): intake_registered_d3c_profiles(root, cx)
     with pytest.raises(InputContractError): build_d3c_profile_ledger(root, CTX)        # the context must be the one verified at this root
     assert build_d3c_profile_ledger(P, CTX) == LEDGER                                   # the registered root is untouched
@@ -143,12 +151,18 @@ def test_consumer_api_rebuild_and_refusals():
     with pytest.raises(InputContractError): verify_consumer_inputs(Pr, fam, fpr, plans, fplans, alt)
     swapped = {0: plans[1], 1: plans[0], 2: plans[2], 3: plans[3], 4: plans[4]}
     with pytest.raises(InputContractError): verify_consumer_inputs(Pr, fam, fpr, swapped, fplans, ident)
-    for g_edit in ('drop', 'fail', 'smoke', 'twelve_drop'):
+    for g_edit in ('drop', 'fail', 'smoke', 'twelve_drop', 'duplicate', 'version_mismatch', 'blas', 'rules', 'profile_failures', 'injected_env'):
         g = Pr.gate_record(fam)
         if g_edit == 'drop': g['diagnostics']['checks'].pop()
         elif g_edit == 'fail': g['diagnostics']['checks'][0]['passed'] = False
         elif g_edit == 'smoke': g['mode'] = 'smoke'
-        else: g['diagnostics']['twelve_checks'].pop()
+        elif g_edit == 'twelve_drop': g['diagnostics']['twelve_checks'].pop()
+        elif g_edit == 'duplicate': g['diagnostics']['checks'].append(dict(g['diagnostics']['checks'][0]))       # same code set, duplicated code / wrong count
+        elif g_edit == 'version_mismatch': g['diagnostics']['version_mismatch'] = {'numpy': ['2.1.3', '2.3.5']}
+        elif g_edit == 'blas': g['diagnostics']['blas_threads_ok'] = False
+        elif g_edit == 'rules': g['diagnostics']['rules_binding']['ok'] = False
+        elif g_edit == 'profile_failures': g['diagnostics']['profile_failures'] = ['x']
+        else: g['diagnostics']['environment_source'] = 'injected'
         with pytest.raises(InputContractError): verify_consumer_inputs(Pr, fam, fpr, plans, fplans, ident, gate=g)
     with pytest.raises(InputContractError): verify_consumer_inputs(Pr, 'E1', fpr, plans, fplans, ident)
     with pytest.raises(InputContractError): verify_consumer_inputs(dict(Pr._d), fam, fpr, plans, fplans, ident)

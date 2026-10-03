@@ -10,7 +10,9 @@ registered D-2 / D-3b ledgers (input runs, unit manifests of all 72 supplies, fa
 (B / B_KDE / seeds / K_fit / N0 / N_max / m / CRN groups), to the REQUIRED gate inventory, the official gate record (mode official, live_collected, 330 profile checks and
 14 twelve checks all passed), the fingerprints (before == after), the plan-object identity, the plan document (payload identity, ordered UIDs, publication receipt) and to the
 acceptance document (file bytes == constant SHA; its per-family entries == the re-derivation). verify_d3c_profile_ledger requires equality with that re-derivation (an edited
-ledger, even re-stamped, is refused); load_registered_d3c_ledger binds the committed file to the d3 pins (d3c_ledger_sha256).
+ledger, even re-stamped, is refused); load_registered_d3c_ledger binds the committed file to the d3 pins (d3c_ledger_sha256) AND requires the pins to carry the acceptance identity (d3c_acceptance_sha256 ==
+PROFILE_ACCEPTANCE.decision_sha256; wrong / missing / null refused) — this common loader path is also the entry of the receipt load and of the sealed intake (R-D3C2-A). The pure
+deterministic build (build_d3c_profile_ledger) stays independent of that pin: it authenticates the acceptance FILE bytes against the module constant instead.
 The outer receipt (build_d3c_outer_receipt) binds the ledger (payload + file SHA), the acceptance constants + file bytes and the per-family identities; it is bound to the pins
 (d3c_outer_receipt_sha256). intake_registered_d3c_profiles(root, ctx) returns the sealed D3cProfiles consumed by calibration (D-4): registered plan identity / ordered UIDs /
 fingerprints / gate record per family, rebuild_registered_plans (the consumer's plans are REBUILT from the registered ordered UIDs and must reproduce the accepted identity) and
@@ -215,6 +217,7 @@ def load_registered_d3c_ledger(phaseb_root: str, ctx: TwelveContext) -> dict:
     """The committed registered_assets/d3c/d3c_profile_ledger.json: payload identity == d3 pins (d3c_ledger_sha256) and content == re-derivation."""
     ctx = _require_ctx(ctx); root = os.path.abspath(phaseb_root)
     if os.path.realpath(root) != os.path.realpath(ctx.root): raise InputContractError("the registered D-3c ledger must be read from the root of the verified context")
+    if ctx._d["pins"].get("d3c_acceptance_sha256") != PROFILE_ACCEPTANCE["decision_sha256"]: raise InputContractError("registered D-3c acceptance identity differs from the pins (d3c_acceptance_sha256 must equal the accepted decision document)")   # R-D3C2-A: the current verified context must pin the acceptance (wrong / missing / null refused); the acceptance FILE bytes are checked separately in the build
     b, doc = _json(os.path.join(_d3c_root(root), "d3c_profile_ledger.json"))
     if doc.get("ledger_sha256") != ctx._d["pins"].get("d3c_ledger_sha256"): raise InputContractError("registered D-3c ledger identity differs from the pins")
     out = verify_d3c_profile_ledger(doc, root, ctx); out["_file_sha256"] = _sha(b); return out
@@ -316,16 +319,19 @@ def rebuild_registered_plans(profiles: D3cProfiles, family: str, table: dict):
 
 def verify_consumer_inputs(profiles: D3cProfiles, family: str, fingerprints: dict, plans: dict, fit_plans: dict, plan_identity: dict, table: Optional[dict] = None, gate: Optional[dict] = None) -> dict:
     """A consumer's inputs are accepted only if (i) both input fingerprints equal the accepted ones, (ii) the plan objects reproduce the accepted identity (verify_plan_identity)
-    and the supplied identity document equals the accepted one, and (iii) an optional consumer gate record is an official, passed record with the accepted check inventory and
-    the accepted plan identity. No PASS flag, attempt id or earlier success is accepted in place of these identities. Returns the binding record."""
+    and the supplied identity document equals the accepted one, and (iii) an optional consumer gate RECORD is an official, passed record with exactly the accepted check inventory
+    (unique codes, exact counts, all passed) and coherent diagnostics. gate_checked=True means only this record check: it is NOT a newly executed official gate and not a full
+    semantic validation of every diagnostic field; D-4 must run the live official gate on its own inputs and environment. No PASS flag, attempt id or earlier success is
+    accepted in place of these identities. Returns the binding record."""
     if not isinstance(profiles, D3cProfiles) or not profiles.verified: raise InputContractError("a verified D3cProfiles (intake_registered_d3c_profiles()) is required")
     e = profiles.family(family); fp = e["input_fingerprints"]
     if not isinstance(fingerprints, dict) or fingerprints.get("matched") != fp["matched"] or fingerprints.get("native") != fp["native"]: raise InputContractError(f"{family}: consumer input fingerprints differ from the accepted profile (matched / native)")
     if plan_identity != e["plan_identity"]: raise InputContractError(f"{family}: consumer plan identity differs from the accepted identity")
     if not verify_plan_identity(plans, fit_plans, e["plan_identity"], table=table, family=family): raise InputContractError(f"{family}: consumer plans do not reproduce the accepted identity")
-    if gate is not None:
-        G = e["gate"]; dg = gate.get("diagnostics") or {}
-        if gate.get("mode") != "official" or gate.get("passed") is not True or gate.get("required_failures") != [] or dg.get("environment_source") != "live_collected" or {c["code"] for c in dg.get("checks") or []} != {c["code"] for c in G["diagnostics"]["checks"]} or {c["code"] for c in dg.get("twelve_checks") or []} != {c["code"] for c in G["diagnostics"]["twelve_checks"]} or not all(c.get("passed") is True for c in (dg.get("checks") or []) + (dg.get("twelve_checks") or [])): raise InputContractError(f"{family}: consumer gate record is not an official passed record with the accepted check inventory")
+    if gate is not None:   # a RECORD check only (N-D3C2-GATE-SCOPE): flags, the exact accepted check inventory (unique codes, exact counts, all passed) and coherent diagnostics; it never re-runs the official gate — D-4 must run the live gate on its own inputs / environment
+        G = e["gate"]; dg = gate.get("diagnostics") or {}; ch = dg.get("checks") or []; tw = dg.get("twelve_checks") or []; codes = [c.get("code") for c in ch]; tcodes = [c.get("code") for c in tw]
+        if gate.get("mode") != "official" or gate.get("passed") is not True or gate.get("required_failures") != [] or dg.get("environment_source") != "live_collected" or dg.get("profile_failures") != [] or dg.get("version_mismatch") != {} or dg.get("blas_threads_ok") is not True or (dg.get("rules_binding") or {}).get("ok") is not True: raise InputContractError(f"{family}: consumer gate record is not an official passed record with coherent diagnostics")
+        if len(codes) != len(set(codes)) or len(tcodes) != len(set(tcodes)) or set(codes) != {c["code"] for c in G["diagnostics"]["checks"]} or set(tcodes) != {c["code"] for c in G["diagnostics"]["twelve_checks"]} or len(ch) != len(G["diagnostics"]["checks"]) or len(tw) != len(G["diagnostics"]["twelve_checks"]) or not all(c.get("passed") is True for c in ch + tw): raise InputContractError(f"{family}: consumer gate record does not carry exactly the accepted check inventory (unique codes, exact counts, all passed)")
     return dict(family=family, attempt_id=e["attempt_id"], plan_identity_sha256=e["plan_identity"]["identity_sha256"], input_fingerprints={k: fp[k] for k in ("matched", "native")}, ledger_sha256=profiles.ledger_sha256, receipt_sha256=profiles.receipt_sha256, gate_checked=gate is not None)
 
 

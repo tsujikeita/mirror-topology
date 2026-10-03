@@ -1642,6 +1642,10 @@ tests/test_d3c_tranche1.py::test_profile_plan_object_identity_guards[size_input_
 tests/test_d3c_tranche1.py::test_profile_plan_object_identity_guards[array_changed_after_gate] PASSED
 tests/test_d3c_tranche1.py::test_profile_plan_object_identity_guards[normal] PASSED
 tests/test_d3c_tranche2.py::test_ledger_and_receipt_deterministic_registered_and_bound PASSED
+tests/test_d3c_tranche2.py::test_registered_original_edits_refused[pins_acceptance_wrong] PASSED
+tests/test_d3c_tranche2.py::test_registered_original_edits_refused[pins_acceptance_missing] PASSED
+tests/test_d3c_tranche2.py::test_registered_original_edits_refused[pins_acceptance_null] PASSED
+tests/test_d3c_tranche2.py::test_registered_original_edits_refused[pins_receipt] PASSED
 tests/test_d3c_tranche2.py::test_registered_original_edits_refused[record_pass] PASSED
 tests/test_d3c_tranche2.py::test_registered_original_edits_refused[record_gate_check_dropped] PASSED
 tests/test_d3c_tranche2.py::test_registered_original_edits_refused[record_gate_mode] PASSED
