@@ -57,6 +57,41 @@ def _json_snapshot(path):
     return data, json.loads(data, object_pairs_hook=pairs, parse_constant=lambda v: (_ for _ in ()).throw(ValueError(v)))
 
 
+def resolve_d2_inputs(d2_roots, d2l, plan, keys, selftest):
+    """Resolve the supplied D-2 roots against the registered D-2 generation ledger. Returns (ok, info_per_family, registered_w2_units, reasons).
+    Formal path (not selftest): every family of the requested cases must be supplied (and the three formal families for the formal run); each root must hold the
+    accepted run's `d2_bank_registry.json` BYTE-IDENTICAL to the registered copy (file SHA == ledger families[F].records.bank_registry_sha256; the registry itself carries
+    no run id), with family == F and formal True; every `cfg<id>_w2` unit of the ledger must appear in the registry `directories` with the same manifest SHA and with its
+    registered path under the ledger run root (this binds the run id); every W2 unit directory of the requested cases must hold COMPLETE.json. Self-test path: only the
+    presence of the roots and of the unit directories is required (the synthetic banks carry no registry). Reasons are recorded verbatim in the run record."""
+    import os
+    fams = sorted({plan[k]["family"] for k in keys}); reasons = []; info = {}; reg_units = {}
+    if set(d2_roots) != set(fams): reasons.append(f"supplied roots {sorted(d2_roots)} != families of the requested cases {fams}")
+    if not selftest and set(fams) != set(FAMILIES): reasons.append(f"formal run requires the families {list(FAMILIES)}")
+    for f in fams:
+        root = os.path.realpath(d2_roots.get(f, "")); info[f] = root; rp = os.path.join(root, "d2_bank_registry.json")
+        if not os.path.isdir(root): reasons.append(f"{f}: root is not a directory"); continue
+        if not selftest:
+            fam_l = (d2l.get("families") or {}).get(f)
+            if fam_l is None: reasons.append(f"{f}: family not in the registered D-2 ledger"); continue
+            if not os.path.isfile(rp) or os.path.islink(rp): reasons.append(f"{f}: d2_bank_registry.json missing"); continue
+            want = ((fam_l.get("records") or {}).get("bank_registry_sha256"))
+            if sha(rp) != want: reasons.append(f"{f}: d2_bank_registry.json bytes differ from the registered run record (ledger bank_registry_sha256)"); continue
+            _, d2reg = _json_snapshot(rp)
+            if d2reg.get("family") != f or d2reg.get("formal") is not True: reasons.append(f"{f}: registry family / formal flag")
+            units = {u: v for u, v in fam_l["units"].items() if u.endswith("_w2")}; dirs = d2reg.get("directories") or {}
+            for u, v in units.items():
+                e = dirs.get(u) or {}
+                if e.get("manifest_sha256") != v["manifest_sha256"]: reasons.append(f"{f}: {u} manifest SHA differs from the ledger unit")
+                if not (isinstance(e.get("path"), str) and e["path"].rstrip("/") == v["path"].rstrip("/") and e["path"].startswith(fam_l["run_root"].rstrip("/") + "/")): reasons.append(f"{f}: {u} registered path is not under the ledger run root")
+            reg_units.update(units); info[f] = dict(root=root, run_id=fam_l["run_id"], run_root=fam_l["run_root"], registry_sha256=sha(rp), w2_units=len(units))
+        for k in keys:
+            if plan[k]["family"] == f:
+                for cid in plan[k]["config_ids"]:
+                    if not os.path.isfile(os.path.join(root, f"cfg{cid}_w2", "COMPLETE.json")): reasons.append(f"{k}: cfg{cid}_w2/COMPLETE.json missing")
+    return (not reasons), info, reg_units, reasons
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--mt", required=True); ap.add_argument("--phaseb", required=True); ap.add_argument("--phasec", required=True); ap.add_argument("--out", required=True)
     ap.add_argument("--d2-root", action="append", default=[], help="FAMILY=PATH: the accepted D-2 run of that family (its out/d2 directory holding cfg<id>_w2); E2, E7 and E8 for the formal run")
@@ -127,18 +162,10 @@ def main():
         # ---- inputs resolved against the D-2 ledger
         plan = wc.case_plan(table); keys = sorted(plan) if a.selftest_cases is None else [k.strip() for k in a.selftest_cases.split(",")]
         if any(k not in plan for k in keys) or len(set(keys)) != len(keys): R["failures"].append("--selftest-cases must name formal case keys"); return finish(1, "inputs")
-        fams = sorted({plan[k]["family"] for k in keys}); d2l = ctx.d2_ledger; ok_in = set(d2_roots) == set(fams) and (selftest or set(fams) == set(FAMILIES)); R["inputs"] = dict(d2_roots={}, cases=keys); reg_units = {}
-        for f in fams:
-            root = os.path.realpath(d2_roots.get(f, "")); R["inputs"]["d2_roots"][f] = root; rp = os.path.join(root, "d2_bank_registry.json")
-            if not os.path.isdir(root): ok_in = False; continue
-            if not selftest:
-                if not os.path.isfile(rp): ok_in = False; continue
-                _, d2reg = _json_snapshot(rp); fam_l = d2l["families"][f]; ok_in &= (d2reg.get("family") == f and d2reg.get("formal") is True and d2reg.get("run_id") == fam_l["run_id"])
-                units = {u: v for u, v in fam_l["units"].items() if u.endswith("_w2")}; ok_in &= all(d2reg["directories"].get(u, {}).get("manifest_sha256") == v["manifest_sha256"] for u, v in units.items()); reg_units.update(units); R["inputs"]["d2_roots"][f] = dict(root=root, run_id=fam_l["run_id"], run_root=fam_l["run_root"], w2_units=len(units))
-            for k in keys:
-                if plan[k]["family"] == f: ok_in &= all(os.path.isfile(os.path.join(root, f"cfg{cid}_w2", "COMPLETE.json")) for cid in plan[k]["config_ids"])
+        fams = sorted({plan[k]["family"] for k in keys}); d2l = ctx.d2_ledger
+        ok_in, inputs_info, reg_units, reasons = resolve_d2_inputs(d2_roots, d2l, plan, keys, selftest); R["inputs"] = dict(d2_roots=inputs_info, cases=keys, resolution_failures=reasons)
         G["G_d2_inputs_resolved"] = bool(ok_in)
-        if not ok_in: R["failures"].append("inputs do not resolve to the accepted D-2 runs / W2 units"); return finish(1, "inputs")
+        if not ok_in: R["failures"].append("inputs do not resolve to the accepted D-2 runs / W2 units: " + "; ".join(reasons)); return finish(1, "inputs")
         mark("preflight")
         # ---- matched roots from the registered D-1 covariances; case assembly (strong W2 intake; ledger binding when formal)
         reg = load_registry(os.path.join(a.phaseb, "tests/assets/a7_circle_geometry.csv"), os.path.join(a.phaseb, "tests/assets/a6_observer_design_points.json")); d1dir = os.path.join(a.phaseb, "registered_assets", "d1")

@@ -19,7 +19,10 @@ and byte of the destination unchanged; the attempt cell exercised on a fake sour
 TRUSTED REQUIRED inventory (13 / 10 names; notebook constant == the AST-extracted REQUIRED of the lock-bound script) with all gates `is True` and required_all_true, the
 CANONICAL nine W2 cases (E1 or eight cases refused), content-verified AND semantically bound evidence files (re-hashed tampering refused), binding to this attempt / lock /
 source; the thirteen contradictory success records of the audit (false / missing / empty gates, exception stage, non-empty failures, wrong schema, wrong case set) are refused,
-and a scientifically unresolved W2 outcome is not a failure."""
+and a scientifically unresolved W2 outcome is not a failure.
+v3 (0.104.0): the formal Colab attempt 20261004T102439Z failed at G_d2_inputs_resolved because the script compared a run_id that the D-2 registry never carries; the
+resolution is now a tested function binding the registry BYTES to the ledger (bank_registry_sha256), family / formal, every W2 unit's manifest SHA and registered path
+under the run root, and COMPLETE.json; the registered registries resolve and the formal branch is exercised in-process up to the intake refusal."""
 import os, sys, json, shutil, subprocess, hashlib, copy, io, contextlib, re
 import numpy as np, pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
@@ -294,6 +297,66 @@ def test_d2w_assemble_binds_registered_units_and_roots(w2_small):
     with pytest.raises(InputContractError): wc.assemble_w2_cases({'E7': bank}, roots, table, formal=False, families=('E2',), sizes=('L1.00',))
     with pytest.raises(InputContractError): wc.assemble_w2_cases({'E2': bank}, roots, table, formal=True, families=('E2',), sizes=('L1.00',))        # formal intake refuses the small bank
     with pytest.raises(InputContractError): wc.assemble_w2_cases({'E2': bank}, roots, table, formal=False, families=('E2',), sizes=('L1.20',))      # units of L1.20 absent
+
+
+# ================================================================================================================================================= D4C-0a: formal input resolution (v3; the Colab attempt 20261004T102439Z failure)
+def _load_script_module():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('d2w_cases_script', D2W); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+
+
+def _registered_roots(tmp_path, families=('E2', 'E7', 'E8')):
+    """Fake run roots holding the REGISTERED copies of d2_bank_registry.json (byte-identical to the accepted runs: ledger records.bank_registry_sha256) and the registered COMPLETE.json of every W2 unit (no NPZ)."""
+    from step1_engine.d3_profile import twelve_context
+    plan = wc.case_plan(twelve_context(P).table); roots = {}
+    for f in families:
+        r = tmp_path / f'd2_{f}'; r.mkdir(); shutil.copy(os.path.join(P, 'registered_assets', 'd2', f, 'd2', 'd2_bank_registry.json'), r)
+        for k, v in plan.items():
+            if v['family'] == f:
+                for cid in v['config_ids']: (r / f'cfg{cid}_w2').mkdir(); shutil.copy(os.path.join(P, 'registered_assets', 'd2', f, 'd2', f'cfg{cid}_w2', 'COMPLETE.json'), r / f'cfg{cid}_w2')
+        roots[f] = str(r)
+    return roots, plan
+
+
+def test_d2w_resolve_inputs_binds_registered_registry_and_ledger(tmp_path):
+    """v3 (the formal Colab attempt failed at G_d2_inputs_resolved because the registry carries no run_id): the formal resolution binds each root's d2_bank_registry.json BYTES to the
+    ledger (records.bank_registry_sha256), family / formal, every ledger W2 unit's manifest SHA and registered path under the run root, and COMPLETE.json of the requested units;
+    the registered copies resolve; byte change / swapped family / missing unit / missing root / ledger unit mismatch / missing family are refused with recorded reasons."""
+    from step1_engine.d3_profile import twelve_context
+    m = _load_script_module(); ctx = twelve_context(P); d2l = ctx.d2_ledger; roots, plan = _registered_roots(tmp_path); keys = sorted(plan)
+    ok, info, units, reasons = m.resolve_d2_inputs(roots, d2l, plan, keys, False)
+    assert ok and reasons == [] and len(units) == 27 and all(u.endswith('_w2') for u in units) and {f: v['run_id'] for f, v in info.items()} == {'E2': '20260923T092030Z', 'E7': '20260923T125656Z', 'E8': '20260923T174910Z'} and all(v['w2_units'] == 9 and v['registry_sha256'] == d2l['families'][f]['records']['bank_registry_sha256'] for f, v in info.items())
+    assert units['cfg20101_w2']['manifest_sha256'] == '12dc676420ff847ac863481670d39952f4d37d98181e9de534592364f78bd61e'
+    # the registered registry carries NO run_id (the v1/v2 script compared it and could never resolve a formal run)
+    assert 'run_id' not in json.load(open(os.path.join(roots['E2'], 'd2_bank_registry.json')))
+    ok, _, _, r = m.resolve_d2_inputs(dict(roots, E7=roots['E2']), d2l, plan, keys, False); assert not ok and any('E7' in x and 'bytes differ' in x for x in r)
+    ok, _, _, r = m.resolve_d2_inputs({k: v for k, v in roots.items() if k != 'E8'}, d2l, plan, keys, False); assert not ok and any('supplied roots' in x for x in r)
+    ok, _, _, r = m.resolve_d2_inputs(roots, d2l, plan, [k for k in keys if k.startswith('E2')], False); assert not ok and any('formal run requires' in x for x in r)
+    ok, _, _, r = m.resolve_d2_inputs(roots, d2l, plan, [k for k in keys if k.startswith('E2')], True); assert not ok and any('supplied roots' in x for x in r)      # self-test still requires root set == families of the cases
+    ok, _, _, r = m.resolve_d2_inputs({'E2': roots['E2']}, d2l, plan, [k for k in keys if k.startswith('E2')], True); assert ok and r == []
+    os.remove(os.path.join(roots['E7'], 'cfg30203_w2', 'COMPLETE.json')); ok, _, _, r = m.resolve_d2_inputs(roots, d2l, plan, keys, False); assert not ok and r == ['E7/L1.20: cfg30203_w2/COMPLETE.json missing']
+    shutil.copy(os.path.join(P, 'registered_assets', 'd2', 'E7', 'd2', 'cfg30203_w2', 'COMPLETE.json'), os.path.join(roots['E7'], 'cfg30203_w2'))
+    bad = copy.deepcopy(d2l); bad['families']['E8']['units']['cfg40101_w2']['manifest_sha256'] = '0' * 64; ok, _, _, r = m.resolve_d2_inputs(roots, bad, plan, keys, False); assert not ok and r == ['E8: cfg40101_w2 manifest SHA differs from the ledger unit']
+    bad = copy.deepcopy(d2l); bad['families']['E8']['units']['cfg40101_w2']['path'] = '/content/drive/MyDrive/other/cfg40101_w2'; ok, _, _, r = m.resolve_d2_inputs(roots, bad, plan, keys, False); assert not ok and r == ['E8: cfg40101_w2 registered path is not under the ledger run root']
+    bad = copy.deepcopy(d2l); bad['families']['E8']['run_root'] = '/content/drive/MyDrive/MirrorTopology_D2/E8_other'; ok, _, _, r = m.resolve_d2_inputs(roots, bad, plan, keys, False); assert not ok and len(r) == 9 and all('registered path is not under the ledger run root' in x for x in r)
+    open(os.path.join(roots['E2'], 'd2_bank_registry.json'), 'a').write('\n'); ok, _, _, r = m.resolve_d2_inputs(roots, d2l, plan, keys, False); assert not ok and r == ['E2: d2_bank_registry.json bytes differ from the registered run record (ledger bank_registry_sha256)']
+    os.remove(os.path.join(roots['E2'], 'd2_bank_registry.json')); ok, _, _, r = m.resolve_d2_inputs(roots, d2l, plan, keys, False); assert not ok and r == ['E2: d2_bank_registry.json missing']
+    shutil.rmtree(roots['E2']); ok, _, _, r = m.resolve_d2_inputs(roots, d2l, plan, keys, False); assert not ok and r == ['E2: root is not a directory']
+
+
+@need_ext
+def test_d2w_formal_branch_resolves_then_refuses_missing_arrays(tmp_path, monkeypatch, capsys):
+    """The FORMAL branch of the script (no self-test flag) executed in-process with a TEST-ONLY environment stand-in (the sandbox is not the registered environment; the stand-in
+    only lets the preflight reach the input stage): the registered registries resolve (G_d2_inputs_resolved True, 27 registered units bound), then the strong intake refuses the
+    unit directories without their NPZ (no case assembled, no evaluation, D2W_PASS False, rc 1)."""
+    import step1_engine.official_gate as og
+    roots, plan = _registered_roots(tmp_path); out = tmp_path / 'out'; pins = json.load(open(os.path.join(P, 'd', 'd3_pins.json')))
+    fake_env = dict(pins['environment']); fake_env.update({k: v for k, v in og.EXPECTED_VERS.items()}); fake_env['blas_threads'] = []
+    monkeypatch.setattr(og, 'current_env', lambda: dict(fake_env)); monkeypatch.setattr(og, '_blas_check', lambda x: True)
+    m = _load_script_module(); argv = [D2W, '--mt', MT, '--phaseb', P, '--phasec', PC, '--out', str(out)] + [x for f in sorted(roots) for x in ('--d2-root', f'{f}={roots[f]}')] + ['--attempt-id', 'TEST_FORMAL_BRANCH', '--launcher-lock-sha256', 'c' * 64]
+    monkeypatch.setattr(sys, 'argv', argv); rc = m.main(); capsys.readouterr(); r = json.load(open(out / 'd2w_run_record.json'))
+    assert rc == 1 and r['selftest'] is False and r['gates']['G_env_lock'] is True and r['gates']['G_d2_inputs_resolved'] is True and r['inputs']['resolution_failures'] == [] and r['inputs']['cases'] == sorted(plan) and {f: v['run_id'] for f, v in r['inputs']['d2_roots'].items()} == {'E2': '20260923T092030Z', 'E7': '20260923T125656Z', 'E8': '20260923T174910Z'}
+    assert r['gates']['G_cases_assembled'] is not True and r['gates']['G_context_built'] is None and r['D2W_PASS'] is False and 'evaluation_seconds' not in r['timings'] and not os.path.exists(out / 'd2w_context_record.json') and r['stage'] in ('exception', 'intake')
 
 
 # ================================================================================================================================================= notebooks

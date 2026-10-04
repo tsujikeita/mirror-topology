@@ -1681,6 +1681,8 @@ tests/test_d4c0.py::test_d2w_script_selftest_end_to_end_records_restore_and_outc
 tests/test_d4c0.py::test_d2w_restore_refusals PASSED
 tests/test_d4c0.py::test_d2w_script_refusals PASSED
 tests/test_d4c0.py::test_d2w_assemble_binds_registered_units_and_roots PASSED
+tests/test_d4c0.py::test_d2w_resolve_inputs_binds_registered_registry_and_ledger PASSED
+tests/test_d4c0.py::test_d2w_formal_branch_resolves_then_refuses_missing_arrays PASSED
 tests/test_d4c0.py::test_notebooks_structure[/home/claude/phaseB/d/MirrorTopology_Step1_D2W_cases_v0.1.ipynb-d2w_cases.py-d2w_lock.json-d2w_final_record.json-D2W_PASS-d2w_run_record.json] PASSED
 tests/test_d4c0.py::test_notebooks_structure[/home/claude/phaseB/d/MirrorTopology_Step1_D4_pseudo_v0.1.ipynb-d4_pseudo.py-d4_pseudo_lock.json-d4_pseudo_final_record.json-PSEUDO_PASS-d4_pseudo_record.json] PASSED
 tests/test_d4c0.py::test_preflight_output_policy_refuses_before_any_write[w2-symlink_before_preflight] PASSED

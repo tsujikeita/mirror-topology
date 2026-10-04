@@ -1,7 +1,7 @@
 {
- "engine_version": "0.103.0",
+ "engine_version": "0.104.0",
  "modules": {
-  "__init__.py": "b174567cd7b097fca94c91247e5f272175c8a1e07c206867feeb92e120733857",
+  "__init__.py": "5935c6f9b6b18810c65f38cb73abaa32f1ff09617e5b76983207920739c95b5e",
   "archive.py": "354e75e3f89e3477c4b1bd05e7423ddd735431984bb27301cf3d60162cedeee6",
   "bootstrap_plan.py": "6941a7ac19fddfd9d3ca465632e3c68f18809d55e8e82cefa0a206fac2dcd3f7",
   "calibration.py": "1cc25d502021025191f3181b454b999555998884964f3c3dfe915bc9e0db18ea",
@@ -174,9 +174,9 @@
   "test_d4_calibration_first.py": 2,
   "test_d4_intake.py": 5,
   "test_d4_run_reader.py": 8,
-  "test_d4c0.py": 14
+  "test_d4c0.py": 16
  },
- "total_test_functions": 1004,
+ "total_test_functions": 1006,
  "tests_sha256": {
   "test_audit_b2_tranche10_chatgpt.py": "304ee655483cc9780e9bf778fb2aa659b6eb6ab017c69b01481db6f56efe2603",
   "test_audit_b2_tranche11_chatgpt.py": "d1aaa931fab2572a9ac8f007bde23bc426f4071f0e1054356ead14061f4f5c4a",
@@ -293,7 +293,7 @@
   "test_d4_calibration_first.py": "36acfbdc12263adad1cd49727f1d70c65a06f224de12cfe371dae578386d5656",
   "test_d4_intake.py": "38fb82bbe28f11efb480326e5cf182fda63ee56766b2bb1161d338f7a4bb9104",
   "test_d4_run_reader.py": "1075375688d89b0fe2dcd6c3625032db89ec1eeca3fd5b1aa8f03b08bc90893e",
-  "test_d4c0.py": "8982b44fd44caeffb0479af924f879a5a4440e4abcd906c065bd0de305d147be"
+  "test_d4c0.py": "96a5d470caa3cf81f1e902e47a329e49f86e640eb1eb2855fe2b371047265a79"
  },
  "fixtures_sha256": {
   "audit_fixture30.py": "ef2217297a9b89b7a7ebb146f26564c5f48fc7ac62240dfc90e9aa2be0477930",
@@ -347,7 +347,7 @@
   "Step1_rules_v1.0_draft4.1.md": "5f02c970eb39f9b3e7f7b17b48eb2d3daa16434517cf4442bac339f5ab719615",
   "rules_tables_v1.json": "522751be134aa3ff4fdf33c6be0d7397fb7bd3c89a6c67e26a67bd32dceeb0b4",
   "Step1_PhaseB_engine_spec_v0.2_addendum.md": "ed9b02858df08b3d2acec990b61ab0626f1a9c05cb88f267051bcc33f39ba21d",
-  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "2c661832235d18c08dc8cd16b642541a4c6398cca324ab7ed3134b418e90b96b",
+  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "65005bf78acd51acd66bbcbb74e7c406a3fde6e8e57fa7ff8329263fe74b6983",
   "Step1_PhaseB_B3_3_receipts_and_deadlines.md": "407bbca8b872e88415921dcf7f244b8ff7a72a4e9c7308478f59641c6cdd42ae",
   "Step1_PhaseD_design_v0.3.md": "6be8ae30f5da27c22e711379f23de1b8a74f094238d7a06334f70b64acef2d75",
   "Step1_PhaseD_D4_design_v0.1.md": "5c329210b13e12213597cc9198e6d9f09e628655979709613d5ffb7ca78da290",
@@ -367,12 +367,13 @@
   "Step1_PhaseD_D3c_tranche2_report.md": "df38052753e04d5e1fe2db96f9b0b5c980f1db56a1b388ecc94626098da2aba5",
   "Step1_PhaseD_D4_calibration_design_v0.1.md": "51088b5802b594d941364d4cab76771001e32bd6ace0ae94eabd0b83905a15ab",
   "Step1_PhaseD_D4_calibration_design_v0.2.md": "b7296631d98a6ff2275472932a90e0a8c664738caf19c26d1567dfae860ee2c9",
-  "Step1_PhaseD_D4C0_report.md": "4a23c1e348f281f4a1c01bf4b5dffda29b3983bfd8ba378c926917042848a3e4"
+  "Step1_PhaseD_D4C0_report.md": "d38614acfb936e770da0274731293822e0efff5cbca705c15d464a59a89ab602",
+  "Step1_PhaseD_D4C0_runs_report.md": "6ce1c539d0b5dd18450ed748152ae18aa3f2634ef35dec5799434f4a9a3139e6"
  },
  "counts": {
   "modules": 56,
   "test_files": 116,
-  "test_functions": 1004,
+  "test_functions": 1006,
   "test_b_files": 28,
   "test_audit_files": 66
  },
@@ -381,12 +382,12 @@
   "b3/MirrorTopology_Step1_B3_1_control_v0.1.ipynb": "b665793fd12e745d765c510dc42c5c345fe80c0801d88b536bb4ccdf615d832d",
   "b3/MirrorTopology_Step1_B3_2A_assets_v0.2.ipynb": "b3400aca97a6bc5f6355324135e3a5b9e0a2094ccf1956716a8364a1c0f9b4bc",
   "b3/MirrorTopology_Step1_B3_2B_shared_null_v0.5.ipynb": "3fdeddb940694e777b2473742428df8fff68ff4192cbdf1bc78ee4949cc69135",
-  "b3/b3_0_pins.json": "11b8b11f6d50fc33cbc1ddf5d1246437dd1dca3fef3c99c4344cbca379bad90c",
+  "b3/b3_0_pins.json": "221981fcc3d1e25779b59257af501e5cab0e02513361d79683ee9b27cd794e15",
   "b3/b3_0_smoke.py": "9c2d125f93487a55bb74c020d7803843054b550ec36163012dac6ffc9e485dae",
   "b3/b3_1_control.py": "d62a77502ad6efdc8bb65df8b8bcb44d66a390c884eaf0a0ad885dd3f9db4eeb",
-  "b3/b3_1_pins.json": "52f03df6a2c46e569c25547de98839257d1aae63c3c84052911cf425520cb546",
+  "b3/b3_1_pins.json": "48ac6881b3714d467933c9f73ff2b7897e127090b273d9c67b396bad5a503e82",
   "b3/b3_2_assets.py": "ed500397091966d2ff3dfeac8226c7bbd2688dae1b5a68a2440ce09b0a7fb1c6",
-  "b3/b3_2_pins.json": "130fc805d36af939fd135175d290df1333127f22b290dff6c3d7261864a74603",
+  "b3/b3_2_pins.json": "476505c618b70e8e6b3b9106fbc76b4387a5b74a374c8852f16f211c314098b0",
   "b3/b3_2_shared_null.py": "fc1c3d81cb4e1d22edd246a78cbd801a6a16024dca57ed1b0bc35ae9d47c09c6"
  },
  "registered_assets_sha256": {
@@ -2264,13 +2265,13 @@
   "d/MirrorTopology_Step1_D3c_profile_v0.1.ipynb": "4ad3ba0ac86ff20508aa4bd32784449f5824c5fff2c19712f7c6eb464d7ff54a",
   "d/MirrorTopology_Step1_D4_pseudo_v0.1.ipynb": "40f9b7e5c6555f40bb4633c0e7ee57f0d799f2a6ee95ebda1cb064f7cdcac3b4",
   "d/d1_covgen.py": "ec0dce90ec05e97a26ca43c5396195b9b1f796afdb5f2784d3459c91ec3b3400",
-  "d/d1_pins.json": "2362ed90bec66098d8c01f91487f149f10f9d30e9a0286e99af14f33466aa96a",
+  "d/d1_pins.json": "ce669b21d4f82c94bf9be9566ec3b1a39b88d3c757eada6cd14be469425cd52a",
   "d/d2_bank_spec.json": "c5650166b7ae49a53c849184c2bb0cb44435c38c79d8ec0f2c3fbcbe93bd7415",
   "d/d2_bankgen.py": "6ef809146402c81b086b3b21b2172cf61f56d85e794a7c988aab014b08aff3b8",
   "d/d2_crn_table.json": "99b68d8e78b741c918d4375c60cd64472c148316855bdeac19766faecf503f61",
-  "d/d2_pins.json": "eb9ea6297dc608b5ed20c0c29139bbc79d0d57a04f3c6a1d170f84f7878da386",
+  "d/d2_pins.json": "a256c41e2feea795b7778e59d0432f08c13c8eeca0350cdf6faafd9b48c0d7d4",
   "d/d2_verify_banks.py": "d3a348c6e18af3e26f6349e1e3bfb657c2f458cb2ca697496d925652a9e66228",
-  "d/d2w_cases.py": "6e379a30d4622423edf13da31b4b884cadf21bf227c9745ef116a44b117f0ef7",
+  "d/d2w_cases.py": "dcd64283d87ef0e0b14a68fc0e8a889743db4f66ae6ee0bd0881652bf4ead8e6",
   "d/d3_bank_spec.json": "852d86b613c3c230aa790411b9e49045fe4af690da425c8ca030eed22c77a679",
   "d/d3_bankgen.py": "655939737a30ff9d64531ea8ab19c31c5b0b7bd93c56ff5b1690c171399b70cd",
   "d/d3_config_map.json": "6e3699d9a4315177a605734ee55911c0e7f07a171e1c77ceefee8cb567f6a36f",
@@ -2278,7 +2279,7 @@
   "d/d3_d2_reuse_binding_schema.json": "588a9dda3713b53e1280b46ed00fa315448f536ba27294645e1bce7774514ce1",
   "d/d3_pc1_case_table.json": "c86853e4dbd0a47ffaac8136d798385a58297f1405be2d0cbc6d4158ce392f1c",
   "d/d3_pc1_contract.json": "a132da70391f48f190b40781a6d49cffe45593d54dde5194e487ceda20733db4",
-  "d/d3_pins.json": "a3d90b81745bd877922d750d270167478b28614bd593a29f6cf8382c5119d8c7",
+  "d/d3_pins.json": "de1794b592c16c9327055af4a926d001106589124c7d5fe3647247c2b3a0a78b",
   "d/d3b_verify_banks.py": "c7335284d8dafb561e65e4fc868b19d9679ea525854e9e028ea5532b277f1dfa",
   "d/d3c_profile.py": "9f243b08a5aa8ba0cc3ded42343fb8d99717dc4bd50ebf26a7cc9a519221638d",
   "d/d4_pseudo.py": "a6e0772ae62c1a41d0592031276547592830418b47e50ae156aaf180f381d267",
