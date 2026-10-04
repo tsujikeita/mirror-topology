@@ -1,0 +1,199 @@
+{
+ "schema": "d2w_launcher_final_record_v2",
+ "attempt_id": "20261004T144349Z_cb8bc8e5f7",
+ "started_utc": "2026-10-04T14:43:49Z",
+ "lock_sha256": "9f01508a898f11440e146633e4b95395db4b8471f5a7d184a2e9bec9c0c2f720",
+ "lock": {
+  "schema": "d2w_launcher_lock_v1",
+  "commit": "f3aec79358452a293ccced14efd4f7e3ad240477",
+  "inventory_sha256": "49976b3e24e27ee614c8e31bb2b292554cf550b95a189c96e9cd190fc92df6f2",
+  "script_sha256": "dcd64283d87ef0e0b14a68fc0e8a889743db4f66ae6ee0bd0881652bf4ead8e6",
+  "inventory_script_sha256": "dcd64283d87ef0e0b14a68fc0e8a889743db4f66ae6ee0bd0881652bf4ead8e6",
+  "ledger_file_sha256": "07574dfa58dcabdf42955b8cc90cd7adf8fa581ae8075587e540c68f07263555",
+  "asset_file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+  "pins_sha256": "de1794b592c16c9327055af4a926d001106589124c7d5fe3647247c2b3a0a78b",
+  "engine": "0.104.0",
+  "d2_run_roots": {
+   "E2": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2",
+   "E7": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2",
+   "E8": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2"
+  },
+  "stage_local": true,
+  "stage_root": "/content/stage",
+  "mt": "/content/d2w_scratch",
+  "phaseb": "/content/d2w_scratch/engine/phaseB",
+  "phasec": "/content/d2w_scratch/phaseC",
+  "script": "/content/d2w_scratch/engine/phaseB/d/d2w_cases.py",
+  "out": "/content/d2w_cases",
+  "locked_utc": "2026-10-04T14:43:49Z"
+ },
+ "output_anchor": "/content/d2w_cases",
+ "ram": {
+  "total_bytes": 13605822464,
+  "available_bytes": 11862900736
+ },
+ "stage": "complete",
+ "d2w_pass": true,
+ "exit_code": 0,
+ "D2W_PASS": true,
+ "launcher_fallback": false,
+ "gates_ok": true,
+ "bindings_ok": true,
+ "evidence_ok": true,
+ "failures": [],
+ "exception": null,
+ "run_dir": "/content/d2w_cases/run_20261004T144349Z_cb8bc8e5f7",
+ "staged_inputs": {
+  "d2": {
+   "E2": "/content/stage/d2_E2",
+   "E7": "/content/stage/d2_E7",
+   "E8": "/content/stage/d2_E8"
+  }
+ },
+ "bindings": {
+  "live_source_precheck": {
+   "head": "f3aec79358452a293ccced14efd4f7e3ad240477",
+   "clean": true,
+   "inventory_sha256": "49976b3e24e27ee614c8e31bb2b292554cf550b95a189c96e9cd190fc92df6f2",
+   "script_sha256": "dcd64283d87ef0e0b14a68fc0e8a889743db4f66ae6ee0bd0881652bf4ead8e6",
+   "inventory_script_sha256": "dcd64283d87ef0e0b14a68fc0e8a889743db4f66ae6ee0bd0881652bf4ead8e6",
+   "ledger_file_sha256": "07574dfa58dcabdf42955b8cc90cd7adf8fa581ae8075587e540c68f07263555",
+   "asset_file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+   "pins_sha256": "de1794b592c16c9327055af4a926d001106589124c7d5fe3647247c2b3a0a78b",
+   "engine": "0.104.0",
+   "checked_utc": "2026-10-04T14:43:50Z"
+  },
+  "live_source_prelaunch": {
+   "head": "f3aec79358452a293ccced14efd4f7e3ad240477",
+   "clean": true,
+   "inventory_sha256": "49976b3e24e27ee614c8e31bb2b292554cf550b95a189c96e9cd190fc92df6f2",
+   "script_sha256": "dcd64283d87ef0e0b14a68fc0e8a889743db4f66ae6ee0bd0881652bf4ead8e6",
+   "inventory_script_sha256": "dcd64283d87ef0e0b14a68fc0e8a889743db4f66ae6ee0bd0881652bf4ead8e6",
+   "ledger_file_sha256": "07574dfa58dcabdf42955b8cc90cd7adf8fa581ae8075587e540c68f07263555",
+   "asset_file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+   "pins_sha256": "de1794b592c16c9327055af4a926d001106589124c7d5fe3647247c2b3a0a78b",
+   "engine": "0.104.0",
+   "checked_utc": "2026-10-04T14:44:23Z"
+  }
+ },
+ "seconds_total": 874.132,
+ "finished_utc": "2026-10-04T14:58:23Z",
+ "staging": {
+  "root": "/content/stage",
+  "units": {
+   "E2": 9,
+   "E7": 9,
+   "E8": 9
+  },
+  "input_bytes": 303031554,
+  "disk_free_bytes_before": 219956256768,
+  "seconds": 32.9,
+  "disk_free_bytes_after": 219344990208
+ },
+ "args": [
+  "/usr/bin/python3",
+  "/content/d2w_scratch/engine/phaseB/d/d2w_cases.py",
+  "--mt",
+  "/content/d2w_scratch",
+  "--phaseb",
+  "/content/d2w_scratch/engine/phaseB",
+  "--phasec",
+  "/content/d2w_scratch/phaseC",
+  "--out",
+  "/content/d2w_cases/run_20261004T144349Z_cb8bc8e5f7",
+  "--profile",
+  "production_official",
+  "--attempt-id",
+  "20261004T144349Z_cb8bc8e5f7",
+  "--launcher-lock-sha256",
+  "9f01508a898f11440e146633e4b95395db4b8471f5a7d184a2e9bec9c0c2f720",
+  "--d2-root",
+  "E2=/content/stage/d2_E2",
+  "--d2-root",
+  "E7=/content/stage/d2_E7",
+  "--d2-root",
+  "E8=/content/stage/d2_E8"
+ ],
+ "record_sha256": "5438e14918aa60f9d88121743112b3eec7b2c3a0391877c82e323b92980fbf6d",
+ "record_stage": "complete",
+ "record_failures": [],
+ "gates": {
+  "G_pins_loaded": true,
+  "G_engine_inventory": true,
+  "G_script_sha": true,
+  "G_phaseC_members": true,
+  "G_env_lock": true,
+  "G_external_loader_sha": true,
+  "G_twelve_context": true,
+  "G_shared_null": true,
+  "G_d2_inputs_resolved": true,
+  "G_cases_assembled": true,
+  "G_context_built": true,
+  "G_records_restored": true,
+  "G_record_saved": true
+ },
+ "stages_rss_mb": {
+  "preflight": 1147.6,
+  "intake": 1437.9,
+  "evaluation": 1489.9,
+  "restore": 1615.9,
+  "final": 1615.9
+ },
+ "stages_peak_rss_mb": {
+  "preflight": 1148.2,
+  "intake": 1437.6,
+  "evaluation": 2310.6,
+  "restore": 2310.6,
+  "final": 2310.6
+ },
+ "seconds_script": 838.1755182743073,
+ "context_sha256": "50ec5a54d593d9bc53ce3661292d7dd3cb385369511a3444fda62226e77acb9c",
+ "case_outcomes": {
+  "E2/L1.00": {
+   "trigger": false,
+   "validation_state": "valid",
+   "B_final": 400
+  },
+  "E2/L1.20": {
+   "trigger": "unknown",
+   "validation_state": "w2-unresolved",
+   "B_final": 800
+  },
+  "E2/L1.50": {
+   "trigger": false,
+   "validation_state": "valid",
+   "B_final": 400
+  },
+  "E7/L1.00": {
+   "trigger": false,
+   "validation_state": "valid",
+   "B_final": 400
+  },
+  "E7/L1.20": {
+   "trigger": "unknown",
+   "validation_state": "w2-unresolved",
+   "B_final": 600
+  },
+  "E7/L1.50": {
+   "trigger": "unknown",
+   "validation_state": "w2-unresolved",
+   "B_final": 400
+  },
+  "E8/L1.00": {
+   "trigger": "unknown",
+   "validation_state": "w2-unresolved",
+   "B_final": 400
+  },
+  "E8/L1.20": {
+   "trigger": false,
+   "validation_state": "valid",
+   "B_final": 400
+  },
+  "E8/L1.50": {
+   "trigger": false,
+   "validation_state": "valid",
+   "B_final": 400
+  }
+ },
+ "stderr_tail": ""
+}

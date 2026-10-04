@@ -15,7 +15,7 @@
 |---|---|
 | D4C-0a D-2W | **実装済み（本 packet）**：`step1_engine/w2_cases.py`・`d/d2w_cases.py`・`d/MirrorTopology_Step1_D2W_cases_v0.1.ipynb`；小規模 self-test PASS。正式実行は実行前監査後（1 run・3 family・9 case）。 |
 | D4C-0b pseudo | **実装済み（本 packet）**：`step1_engine/d4_pseudo.py`・`d/d4_pseudo_table.json`（pins `d4_pseudo_table_sha256`）・`d/d4_pseudo.py`・`d/MirrorTopology_Step1_D4_pseudo_v0.1.ipynb`；self-test（n＝50）PASS。正式生成は実行前監査後。 |
-| D4C-0 登録 | 受入れ後：`registered_assets/d2w/`（9 case record・context record・run record・lock・acceptance）と `registered_assets/d4/pseudo/`（NPZ・record・lock・acceptance）を原本登録し，`w2_cases.D2W_REGISTRATION`／`d4_pseudo.PSEUDO_REGISTRATION` に commit・inventory・script・notebook・lock・acceptance・context SHA／列 SHA を充填，pins に `d2w_context_sha256`・`d2w_acceptance_sha256`・`pseudo_columns_sha256`・`pseudo_acceptance_sha256` を追加して registered loader を有効化（未登録の間は両 loader が拒否：実装済み）。 |
+| D4C-0 登録 | **実装済み（0.105.0；`d4c0_registry.py`・`registered_assets/d4c0/`・pins 7）**；当初案：`registered_assets/d2w/`（9 case record・context record・run record・lock・acceptance）と `registered_assets/d4/pseudo/`（NPZ・record・lock・acceptance）を原本登録し，`w2_cases.D2W_REGISTRATION`／`d4_pseudo.PSEUDO_REGISTRATION` に commit・inventory・script・notebook・lock・acceptance・context SHA／列 SHA を充填，pins に `d2w_context_sha256`・`d2w_acceptance_sha256`・`pseudo_columns_sha256`・`pseudo_acceptance_sha256` を追加して registered loader を有効化（未登録の間は両 loader が拒否：実装済み）。 |
 | D4C-1 driver 接続（§D） | 起草 GO。D4C-0 の登録後に実行前監査。 |
 | D4C-2 Colab 正式較正 / D4C-3 登録 | v0.1 のとおり。 |
 

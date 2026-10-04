@@ -5,14 +5,14 @@ D4C-0b (pseudo; R-D4DESIGN-C): the SEPARATE pseudo table (schema / SHA / purpose
 the formal rng keys never coincide with any key of the registered D-2 table groups (purpose id 400 is unique); generation on the real kernel (self-test prefix n = 50) is
 deterministic, a prefix of the full ordered column (n = 20 == first 20 rows of n = 50), paired in generation order, cid == arange, UIDs == the table's ordered UIDs; the
 saved NPZ is re-verified and every modification (a value, a row order, the file bytes, the identity) is refused; the script self-test publishes a record bound to the
-attempt / lock / source with PSEUDO_PASS False and rc 1 (env lock); the registered loader refuses while PSEUDO_REGISTRATION is None; commit_target is the existing helper.
+attempt / lock / source with PSEUDO_PASS False and rc 1 (env lock); the registered loader refuses an unverified context; commit_target is the existing helper.
 D4C-0a (D-2W; R-D4DESIGN-A/B): on a SMALL synthetic W2 bank (real kernel, registered matched roots, scale 0.025 -> K = 50 x m = 100) the script self-test (E2/L1.00)
 assembles the case with the strong intake (root SHA / whitening values / spec identity), evaluates the exact W2 context, publishes the case + context records, RESTORES the
 context from the published record (array-free replay) and requires equality (G_records_restored); the restore refuses a modified result / decision / manifest, a record bound
 to another asset, a duplicate / mixed case, a non-formal record under require_formal, and a formal-size claim on a small bank; a technical (non-finite) value in the stored
 evidence is refused, never promoted; the scientific outcome (w2-unresolved / unknown) is preserved as such; RegisteredBankIdentity carries the identity exactly and is
 immutable; the script refuses OUT inside an input / symlink OUT (rc 2, nothing written), unresolved inputs (G_d2_inputs_resolved False) and the formal path on a non-formal
-bank; the registered loader refuses while D2W_REGISTRATION is None. Notebooks (v0.2; R-D4C0-A/B): 5 cells, parseable, D-3c v0.3 structure (anchor / ONE verifier twice /
+bank; the registered loader refuses an unverified context (the registration itself is tested in test_d4c0_registration.py). Notebooks (v0.2; R-D4C0-A/B): 5 cells, parseable, D-3c v0.3 structure (anchor / ONE verifier twice /
 initial record / superseded record / content-verified evidence); the PREFLIGHT output policy (_safe_output_anchor) runs BEFORE the first mkdir / lock publication and refuses a
 symlink present before the preflight starts, an OUT inside an input / the source / Phase C / the stage root, and an existing directory holding foreign entries — with every member
 and byte of the destination unchanged; the attempt cell exercised on a fake source with a test-double child requires the exact schema / complete stage / empty failures / the
@@ -174,8 +174,8 @@ def test_case_plan_is_the_nine_first_wave_cases():
     assert set(plan) == {f'{f}/{s}' for f in wc.FAMILIES for s in wc.SIZES} and plan['E2/L1.00'] == dict(family='E2', size_id='L1.00', config_ids=[20101, 20102, 20103], observer_ids=[1, 2, 3], groups=[50101, 50102, 50103])
     assert all(v['config_ids'] == sorted(v['config_ids']) and v['groups'] == [30000 + c for c in v['config_ids']] and v['observer_ids'] == [1, 2, 3] for v in plan.values()) and len({c for v in plan.values() for c in v['config_ids']}) == 27
     asset = wc.registered_shared_null_asset(P); assert asset.sha256 == wc.SHARED_NULL['asset_sha256'] and int(asset.identity['m']) == 100 and int(asset.identity['master_seed']) == 20260912
-    with pytest.raises(InputContractError): wc.load_registered_w2_context(P, None)
-    assert wc.D2W_REGISTRATION is None and dp.PSEUDO_REGISTRATION is None
+    with pytest.raises(InputContractError): wc.load_registered_w2_context(P, None)      # an unverified context is refused
+    assert isinstance(wc.D2W_REGISTRATION, dict) and isinstance(dp.PSEUDO_REGISTRATION, dict)      # registered since 0.105.0 (tests/test_d4c0_registration.py)
 
 
 def test_registered_bank_identity_contract():

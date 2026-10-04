@@ -1,0 +1,244 @@
+{
+ "schema": "d4_pseudo_record_v1",
+ "stage": "complete",
+ "failures": [],
+ "notes": [],
+ "selftest": false,
+ "profile": "production_official",
+ "out": "/content/d4_pseudo/run_20261004T102334Z_6e681d78a0",
+ "out_preexisting_empty": false,
+ "protected_roots": {
+  "mt": "/content/d4_pseudo_scratch",
+  "phaseb": "/content/d4_pseudo_scratch/engine/phaseB",
+  "phasec": "/content/d4_pseudo_scratch/phaseC"
+ },
+ "attempt": {
+  "attempt_id": "20261004T102334Z_6e681d78a0",
+  "launcher_lock_sha256": "4b31d9efa65d8cbde62ebd1a081eaf9a71b9426cd70595bab940e5f3ba7a4773"
+ },
+ "stages_rss_mb": {
+  "preflight": 1118.3,
+  "generation": 1190.9,
+  "verification": 1190.2,
+  "final": 1190.2
+ },
+ "stages_peak_rss_mb": {
+  "preflight": 1142.0,
+  "generation": 1318.4,
+  "verification": 1318.4,
+  "final": 1318.4
+ },
+ "timings": {
+  "preflight": 14.721,
+  "generation": 16.783,
+  "verification": 16.831,
+  "final": 16.831
+ },
+ "pins_sha256": "a3d90b81745bd877922d750d270167478b28614bd593a29f6cf8382c5119d8c7",
+ "engine_version": "0.103.0",
+ "source": {
+  "script_sha256": "a6e0772ae62c1a41d0592031276547592830418b47e50ae156aaf180f381d267",
+  "inventory_sha256": "f04e739d79bb950ff906c341d504c2d30cb8f6c3ad40ad5d3f9f11ff10446429",
+  "pins_sha256": "a3d90b81745bd877922d750d270167478b28614bd593a29f6cf8382c5119d8c7",
+  "engine_version": "0.103.0",
+  "phaseb": "/content/d4_pseudo_scratch/engine/phaseB",
+  "mt": "/content/d4_pseudo_scratch"
+ },
+ "env": {
+  "python": "3.13.15",
+  "numpy": "2.1.3",
+  "scipy": "1.16.3",
+  "healpy": "1.20.0",
+  "camb": "2.0.4",
+  "pot": "0.9.7.post1",
+  "blas_threads": [
+   {
+    "api": "blas",
+    "n": 1,
+    "owner": "other",
+    "lib": "openblas",
+    "filepath": "/usr/local/lib/python3.13/dist-packages/cvxopt.libs/libopenblas-r0-11edc3fa.3.15.so",
+    "version": "0.3.15"
+   },
+   {
+    "api": "blas",
+    "n": 2,
+    "owner": "other",
+    "lib": "openblas",
+    "filepath": "/usr/local/lib/python3.13/dist-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+    "version": "0.3.29.dev"
+   },
+   {
+    "api": "blas",
+    "n": 2,
+    "owner": "other",
+    "lib": "openblas",
+    "filepath": "/usr/local/lib/python3.13/dist-packages/opencv_contrib_python.libs/libopenblasp-r0-59ffcd50.3.15.so",
+    "version": "0.3.15"
+   },
+   {
+    "api": "blas",
+    "n": 2,
+    "owner": "numpy",
+    "lib": "openblas",
+    "filepath": "/usr/local/lib/python3.13/dist-packages/numpy.libs/libscipy_openblas64_-ff651d7f.so",
+    "version": "0.3.27"
+   }
+  ]
+ },
+ "env_gate": {
+  "versions_ok": true,
+  "pools_ok": true,
+  "expected": {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "pot": "0.9.7.post1",
+   "camb": "2.0.4",
+   "numpy_openblas_threads": 2,
+   "other_pools_max": 2,
+   "note": "rules §12.1 hard gate (checked live in the generating process); A11-style fingerprint/lock diff recorded as metadata only"
+  }
+ },
+ "loader": {
+  "t1_engine_path": "/content/d4_pseudo_scratch/t1_engine.py",
+  "t1_engine_sha256": "87bf8424073af021264b12fe312ab5255b71008bdd5fe874d164d48daf034dc8",
+  "t2b2_bridge_path": "/content/d4_pseudo_scratch/t2b2_bridge.py",
+  "t2b2_bridge_sha256": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872"
+ },
+ "pseudo_table": {
+  "table_sha256": "88f5659e1cc373b051f2786d151e474af3bd689e1a21474d0d4da3f6579d3c31",
+  "file_sha256": "31fc50c310be59ba82ad9236408174fe3be8db291adf1cfcb96bbc961374d44c",
+  "n_pseudo": 2000,
+  "m": 1,
+  "group": 5001,
+  "purpose_id": 400,
+  "master_seed": 20260912,
+  "wave_id": 1,
+  "rng_keys": {
+   "rotation": [
+    20260912,
+    1,
+    400,
+    5001,
+    0,
+    1
+   ],
+   "gaussian": [
+    20260912,
+    1,
+    400,
+    5001,
+    0,
+    0
+   ]
+  }
+ },
+ "generation": {
+  "n": 2000,
+  "m": 1,
+  "root_sha256": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c",
+  "rng_keys": {
+   "rotation": [
+    20260912,
+    1,
+    400,
+    5001,
+    0,
+    1
+   ],
+   "gaussian": [
+    20260912,
+    1,
+    400,
+    5001,
+    0,
+    0
+   ]
+  },
+  "kernel": {
+   "mt": "/content/d4_pseudo_scratch",
+   "loader": {
+    "t1_engine_path": "/content/d4_pseudo_scratch/t1_engine.py",
+    "t1_engine_sha256": "87bf8424073af021264b12fe312ab5255b71008bdd5fe874d164d48daf034dc8",
+    "t2b2_bridge_path": "/content/d4_pseudo_scratch/t2b2_bridge.py",
+    "t2b2_bridge_sha256": "45107d1608d50816712f1aa452d9fa39af4adc9ec035fbe9279b264760d65872"
+   }
+  },
+  "formal": true,
+  "note": "prefix of the table order (self-test) or the full table (formal)"
+ },
+ "columns": {
+  "identity": {
+   "n": 2000,
+   "m": 1,
+   "T1_sha256": "6e2669b529440d94a3808061788e3c0100b374075f319127914d4f7725af091d",
+   "T2_sha256": "1a5588fd8dc3efb6cca7beaf446a3a88ffb9d3ff0b2835a2cf07751f4c3ee3d3",
+   "AX_sha256": "60d61625987b85fac70befb1ad7a0f89c829b37e115cbccff6613c478616ddc7",
+   "PL_sha256": "85a035007b2f831c9d4d84a8a9ad70264d5a9300f54d59d23b1f2a03ede343c3",
+   "cid_sha256": "55f385cf2332d9056aaed6f496e7bebd2df52c6a9547ce2144b309432d4b0290",
+   "uids_sha256": "cb90d89c16d8d06acc52c7aa5b043eae36c489d23d08037a3652e3ff56bf11ea",
+   "dtype": {
+    "T1": "float64",
+    "T2": "float64",
+    "AX": "int32",
+    "PL": "int32",
+    "cid": "int64"
+   },
+   "paired_sha256": "c9f75cdb86c90b0c73409a3e7a015faaef1e5903788358082dde3c21d66a1d15",
+   "first_uid": [
+    1,
+    400,
+    5001,
+    0,
+    0
+   ],
+   "last_uid": [
+    1,
+    400,
+    5001,
+    0,
+    1999
+   ]
+  },
+  "file": {
+   "file": "d4_pseudo_columns.npz",
+   "sha256": "c62a965b3b649870977d95ba247bf84a9580131109fc8572971e06b98da490f2",
+   "bytes": 145444
+  },
+  "summary": {
+   "T1_min": 18.858365887910672,
+   "T1_max": 523.3281398530635,
+   "T2_min": 119.16642469573097,
+   "T2_max": 2376.542951615036
+  }
+ },
+ "gates": {
+  "G_pins_loaded": true,
+  "G_engine_inventory": true,
+  "G_script_sha": true,
+  "G_phaseC_members": true,
+  "G_env_lock": true,
+  "G_external_loader_sha": true,
+  "G_pseudo_table": true,
+  "G_generated": true,
+  "G_columns_verified": true,
+  "G_record_saved": true
+ },
+ "required_inventory": [
+  "G_pins_loaded",
+  "G_engine_inventory",
+  "G_script_sha",
+  "G_phaseC_members",
+  "G_env_lock",
+  "G_external_loader_sha",
+  "G_pseudo_table",
+  "G_generated",
+  "G_columns_verified",
+  "G_record_saved"
+ ],
+ "required_all_true": true,
+ "PSEUDO_PASS": true,
+ "seconds": 16.831143617630005
+}

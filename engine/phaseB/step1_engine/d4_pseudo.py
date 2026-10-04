@@ -25,7 +25,7 @@ from .types import ClusterUID
 
 TABLE_SCHEMA = "d4_pseudo_table_v1"; RECORD_SCHEMA = "d4_pseudo_record_v1"
 PSEUDO_PURPOSE = "pseudo"; PSEUDO_GROUP = 5001; PSEUDO_ROLE = "pseudo_iso"; PSEUDO_M = 1; PSEUDO_SELECTION = "float64"
-PSEUDO_REGISTRATION = None     # filled after the accepted formal generation (commit / inventory / script / notebook / column SHAs / acceptance); None => registered load refused
+PSEUDO_REGISTRATION = None     # bound at the end of the module to the d4c0_registry constants (accepted formal generation 12980202); None would refuse the registered load
 _D2_TABLE_GROUP_RANGES = ((1001, 1008), (2001, 2008), (4000, 4999), (40000, 79999))   # evaluation (1000+family code) / fitting (2000+code) / w2_crn (4000+10*code+size) / w2_independent (30000+config_id, config ids 10101..49999) of the registered D-2 table
 
 
@@ -119,6 +119,17 @@ def verify_pseudo_columns(path: str, identity: dict, t: dict, expected_file: Opt
 
 
 def load_registered_pseudo_columns(phaseb_root: str, ctx):
-    """Formal registered load (after the accepted D4C-0b generation): bound to PSEUDO_REGISTRATION constants and the d3 pins; refused while not registered."""
-    if PSEUDO_REGISTRATION is None: raise InputContractError("pseudo columns are not registered yet (D4C-0b formal generation / acceptance pending)")
-    raise InputContractError("registered pseudo load is defined only with the registration constants (unreachable until PSEUDO_REGISTRATION is filled)")
+    """Formal registered load (D4C-0 registration tranche): the body lives in d4c0_registry.load_registered_pseudo_columns — pins (acceptance / paired / NPZ / ledger / receipt)
+    and the ORIGINAL NPZ bytes are authenticated and the columns re-verified against the registered CONSTANT identity (never a regenerated or tolerance-equivalent array).
+    PSEUDO_REGISTRATION mirrors the registration constants; a None value (pre-registration) is refused."""
+    if PSEUDO_REGISTRATION is None: raise InputContractError("pseudo columns are not registered yet")
+    from .d4c0_registry import load_registered_pseudo_columns as _load
+    return _load(phaseb_root, ctx)
+
+
+def _registration_constants():
+    from .d4c0_registry import PSEUDO
+    return dict(attempt=PSEUDO["attempt"], commit=PSEUDO["execution_lock"]["commit"], engine_version=PSEUDO["execution_lock"]["engine_version"], paired_sha256=PSEUDO["columns"]["paired_sha256"], npz_sha256=PSEUDO["npz"]["sha256"], acceptance_sha256=PSEUDO["acceptance"]["sha256"], archive_sha256=PSEUDO["archive"]["sha256"], executed_notebook_sha256=PSEUDO["executed_notebook"]["sha256"])
+
+
+PSEUDO_REGISTRATION = _registration_constants()

@@ -1,0 +1,166 @@
+{
+ "schema": "d2w_launcher_final_record_v2",
+ "attempt_id": "20261004T102439Z_9bac8f8730",
+ "started_utc": "2026-10-04T10:24:39Z",
+ "lock_sha256": "9b57d303e6f2c88a976651ba980f03197b2acee961847462c17487cae215033b",
+ "lock": {
+  "schema": "d2w_launcher_lock_v1",
+  "commit": "12980202ee111a26c0a608e7e5bba6caed5302ae",
+  "inventory_sha256": "f04e739d79bb950ff906c341d504c2d30cb8f6c3ad40ad5d3f9f11ff10446429",
+  "script_sha256": "6e379a30d4622423edf13da31b4b884cadf21bf227c9745ef116a44b117f0ef7",
+  "inventory_script_sha256": "6e379a30d4622423edf13da31b4b884cadf21bf227c9745ef116a44b117f0ef7",
+  "ledger_file_sha256": "07574dfa58dcabdf42955b8cc90cd7adf8fa581ae8075587e540c68f07263555",
+  "asset_file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+  "pins_sha256": "a3d90b81745bd877922d750d270167478b28614bd593a29f6cf8382c5119d8c7",
+  "engine": "0.103.0",
+  "d2_run_roots": {
+   "E2": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2",
+   "E7": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2",
+   "E8": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2"
+  },
+  "stage_local": true,
+  "stage_root": "/content/stage",
+  "mt": "/content/d2w_scratch",
+  "phaseb": "/content/d2w_scratch/engine/phaseB",
+  "phasec": "/content/d2w_scratch/phaseC",
+  "script": "/content/d2w_scratch/engine/phaseB/d/d2w_cases.py",
+  "out": "/content/d2w_cases",
+  "locked_utc": "2026-10-04T10:24:39Z"
+ },
+ "output_anchor": "/content/d2w_cases",
+ "ram": {
+  "total_bytes": 13605830656,
+  "available_bytes": 11874582528
+ },
+ "stage": "complete",
+ "d2w_pass": false,
+ "exit_code": 1,
+ "D2W_PASS": false,
+ "launcher_fallback": true,
+ "gates_ok": false,
+ "bindings_ok": true,
+ "evidence_ok": false,
+ "failures": [
+  "run record field invalid: stage",
+  "run record field invalid: failures",
+  "run record field invalid: context",
+  "run record field invalid: published_evidence",
+  "required gates not all True: ['G_d2_inputs_resolved', 'G_cases_assembled', 'G_context_built', 'G_records_restored', 'G_record_saved']",
+  "required_all_true is not True",
+  "case set differs from the canonical nine cases: []",
+  "published evidence set [] != canonical ['d2w_case_E2_L1.00.json', 'd2w_case_E2_L1.20.json', 'd2w_case_E2_L1.50.json', 'd2w_case_E7_L1.00.json', 'd2w_case_E7_L1.20.json', 'd2w_case_E7_L1.50.json', 'd2w_case_E8_L1.00.json', 'd2w_case_E8_L1.20.json', 'd2w_case_E8_L1.50.json', 'd2w_context_record.json']",
+  "published evidence file not content-verified: d2w_case_E2_L1.00.json",
+  "published evidence file not content-verified: d2w_case_E2_L1.20.json",
+  "published evidence file not content-verified: d2w_case_E2_L1.50.json",
+  "published evidence file not content-verified: d2w_case_E7_L1.00.json",
+  "published evidence file not content-verified: d2w_case_E7_L1.20.json",
+  "published evidence file not content-verified: d2w_case_E7_L1.50.json",
+  "published evidence file not content-verified: d2w_case_E8_L1.00.json",
+  "published evidence file not content-verified: d2w_case_E8_L1.20.json",
+  "published evidence file not content-verified: d2w_case_E8_L1.50.json",
+  "published evidence file not content-verified: d2w_context_record.json"
+ ],
+ "exception": null,
+ "run_dir": "/content/d2w_cases/run_20261004T102439Z_9bac8f8730",
+ "staged_inputs": {
+  "d2": {
+   "E2": "/content/stage/d2_E2",
+   "E7": "/content/stage/d2_E7",
+   "E8": "/content/stage/d2_E8"
+  }
+ },
+ "bindings": {
+  "live_source_precheck": {
+   "head": "12980202ee111a26c0a608e7e5bba6caed5302ae",
+   "clean": true,
+   "inventory_sha256": "f04e739d79bb950ff906c341d504c2d30cb8f6c3ad40ad5d3f9f11ff10446429",
+   "script_sha256": "6e379a30d4622423edf13da31b4b884cadf21bf227c9745ef116a44b117f0ef7",
+   "inventory_script_sha256": "6e379a30d4622423edf13da31b4b884cadf21bf227c9745ef116a44b117f0ef7",
+   "ledger_file_sha256": "07574dfa58dcabdf42955b8cc90cd7adf8fa581ae8075587e540c68f07263555",
+   "asset_file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+   "pins_sha256": "a3d90b81745bd877922d750d270167478b28614bd593a29f6cf8382c5119d8c7",
+   "engine": "0.103.0",
+   "checked_utc": "2026-10-04T10:24:39Z"
+  },
+  "live_source_prelaunch": {
+   "head": "12980202ee111a26c0a608e7e5bba6caed5302ae",
+   "clean": true,
+   "inventory_sha256": "f04e739d79bb950ff906c341d504c2d30cb8f6c3ad40ad5d3f9f11ff10446429",
+   "script_sha256": "6e379a30d4622423edf13da31b4b884cadf21bf227c9745ef116a44b117f0ef7",
+   "inventory_script_sha256": "6e379a30d4622423edf13da31b4b884cadf21bf227c9745ef116a44b117f0ef7",
+   "ledger_file_sha256": "07574dfa58dcabdf42955b8cc90cd7adf8fa581ae8075587e540c68f07263555",
+   "asset_file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+   "pins_sha256": "a3d90b81745bd877922d750d270167478b28614bd593a29f6cf8382c5119d8c7",
+   "engine": "0.103.0",
+   "checked_utc": "2026-10-04T10:25:10Z"
+  }
+ },
+ "seconds_total": 43.022,
+ "finished_utc": "2026-10-04T10:25:22Z",
+ "staging": {
+  "root": "/content/stage",
+  "units": {
+   "E2": 9,
+   "E7": 9,
+   "E8": 9
+  },
+  "input_bytes": 303031554,
+  "disk_free_bytes_before": 219956588544,
+  "seconds": 31.4,
+  "disk_free_bytes_after": 219345371136
+ },
+ "args": [
+  "/usr/bin/python3",
+  "/content/d2w_scratch/engine/phaseB/d/d2w_cases.py",
+  "--mt",
+  "/content/d2w_scratch",
+  "--phaseb",
+  "/content/d2w_scratch/engine/phaseB",
+  "--phasec",
+  "/content/d2w_scratch/phaseC",
+  "--out",
+  "/content/d2w_cases/run_20261004T102439Z_9bac8f8730",
+  "--profile",
+  "production_official",
+  "--attempt-id",
+  "20261004T102439Z_9bac8f8730",
+  "--launcher-lock-sha256",
+  "9b57d303e6f2c88a976651ba980f03197b2acee961847462c17487cae215033b",
+  "--d2-root",
+  "E2=/content/stage/d2_E2",
+  "--d2-root",
+  "E7=/content/stage/d2_E7",
+  "--d2-root",
+  "E8=/content/stage/d2_E8"
+ ],
+ "record_sha256": "e28a3423eddf45bbcadf818c32f2f3402f01f04fb62fe153fd1147a278670722",
+ "record_stage": "inputs",
+ "record_failures": [
+  "inputs do not resolve to the accepted D-2 runs / W2 units"
+ ],
+ "gates": {
+  "G_pins_loaded": true,
+  "G_engine_inventory": true,
+  "G_script_sha": true,
+  "G_phaseC_members": true,
+  "G_env_lock": true,
+  "G_external_loader_sha": true,
+  "G_twelve_context": true,
+  "G_shared_null": true,
+  "G_d2_inputs_resolved": false,
+  "G_cases_assembled": null,
+  "G_context_built": null,
+  "G_records_restored": null,
+  "G_record_saved": null
+ },
+ "stages_rss_mb": {
+  "final": 1147.3
+ },
+ "stages_peak_rss_mb": {
+  "final": 1146.9
+ },
+ "seconds_script": 8.427759170532227,
+ "context_sha256": null,
+ "case_outcomes": {},
+ "stderr_tail": ""
+}

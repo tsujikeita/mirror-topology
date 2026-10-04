@@ -1,0 +1,1836 @@
+{
+  "schema": "step1_D4C0_D2W_formal_run_acceptance_v1",
+  "date_JST": "2026-10-05",
+  "decision": "PASS_WITH_EXPLICIT_SCOPE__D2W_FORMAL_RUN_ACCEPTED__REGISTRATION_DRAFTING_AND_TESTS_GO",
+  "formal_D2W_run_accepted": true,
+  "new_mandatory_patch": false,
+  "requires_D2W_rerun": false,
+  "requires_bank_regeneration": false,
+  "requires_pseudo_regeneration": false,
+  "registration_drafting_and_tests_GO": true,
+  "registered_loader_implementation_accepted": false,
+  "formal_calibration_GO": false,
+  "subject": {
+    "result_packet": {
+      "name": "D2W_run_f3aec793_audit_packet.zip",
+      "sha256": "a153d8300bf9d1f126e065f6717e6fb017c0cdec68620451a142e04af29e2af6",
+      "bytes": 5676775,
+      "files": {
+        "d2w_cases_f3aec7935845.zip": {
+          "sha256": "13e222e57d624473eba4fda045d400b34bf9a3fda6623fe74eacb1325a53a72b",
+          "bytes": 5646698
+        },
+        "executed_notebooks/MirrorTopology_Step1_D2W_cases_v0_1_executed_f3aec7935845.ipynb": {
+          "sha256": "3d8a7ff7519e971b8981ff73256c2d975c8a7bc8ab11b7cc876c98a55807e89c",
+          "bytes": 38708
+        },
+        "executed_notebooks/MirrorTopology_Step1_D4_pseudo_v0_1_executed_12980202ee11.ipynb": {
+          "sha256": "fb7a0d663694eac623a169006d9f0ac21c8a382213655ad357d9fbf938add973",
+          "bytes": 29797
+        },
+        "d4c0_d2w_sandbox_verification.json": {
+          "sha256": "7b9947768e146bc05c0b87dedb1af880daf7f09a2b8f6385e0100639d9ab5390",
+          "bytes": 9113
+        },
+        "Step1_PhaseD_D2W_run_report.md": {
+          "sha256": "85e82012fbe2c6cb1f3c925e08f8be9407a94a9f63250be4e0ff96e03723a452",
+          "bytes": 7024
+        }
+      }
+    },
+    "execution_commit": "f3aec79358452a293ccced14efd4f7e3ad240477",
+    "engine": "0.104.0",
+    "execution_GO": {
+      "file": "D4C0_v3_0.104.0_audit_decision.json",
+      "sha256": "c54673b5b265cf03029ceb0504ec9d35d92f7e662a314b7a04264a49fcf4cb80",
+      "bytes": 9489
+    },
+    "source_archive": {
+      "file": "phaseB_D4C0_v3_0.104.0.zip",
+      "sha256": "df5eb95915a6b794c453eb74dbf30203b2e1fa116e1393ed533932e0c6f688a7",
+      "bytes": 16814344,
+      "files": 2576
+    },
+    "archive": "13e222e57d624473eba4fda045d400b34bf9a3fda6623fe74eacb1325a53a72b",
+    "archive_bytes": 5646698,
+    "files": {
+      "d2w_stdout_20261004T144349Z_cb8bc8e5f7.txt": {
+        "sha256": "c452d944fb5b01c576c834202671b9ec1d200d6d01f27de4e4490107456ce9c8",
+        "bytes": 1212
+      },
+      "d2w_final_record.json": {
+        "sha256": "c29fc6c6be7e6ee614e67e93743b35d60f37a8a94c532671fb8d0eb37b6de01a",
+        "bytes": 6184
+      },
+      "d2w_lock.json": {
+        "sha256": "9f01508a898f11440e146633e4b95395db4b8471f5a7d184a2e9bec9c0c2f720",
+        "bytes": 1219
+      },
+      "d2w_stderr_20261004T144349Z_cb8bc8e5f7.txt": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "run_20261004T144349Z_cb8bc8e5f7/d2w_stdout.log": {
+        "sha256": "d229b0c47f4f6adc554015d262e224814ce97c7f3988b4e4b5e8a6b525405e93",
+        "bytes": 1161
+      },
+      "run_20261004T144349Z_cb8bc8e5f7/d2w_run_record.json": {
+        "sha256": "5438e14918aa60f9d88121743112b3eec7b2c3a0391877c82e323b92980fbf6d",
+        "bytes": 16757
+      },
+      "run_20261004T144349Z_cb8bc8e5f7/d2w_context_record.json": {
+        "sha256": "58406d1b432611823fe8b3ac47b66d8c28186b007095c74d00bf6815dea603ed",
+        "bytes": 8707
+      },
+      "run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E2_L1.50.json": {
+        "sha256": "9a4ca36b32bcb508751203c75f93e192e931408ab5d54364bc13e29b61961087",
+        "bytes": 3857414
+      },
+      "run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E8_L1.50.json": {
+        "sha256": "4a5590bc25b70c9a8c9827da94c15f48fd1a417c4a591d30b3f04d6239f693ca",
+        "bytes": 3857449
+      },
+      "run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E8_L1.20.json": {
+        "sha256": "0351be84ae5c17475c060b88ff7332de0dbd4d8912fb2dcefecf8e838e8e7062",
+        "bytes": 3857353
+      },
+      "run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E7_L1.50.json": {
+        "sha256": "c94fc2f0ddb56ccec853763fd3cd06fdf3aa185bfe27e793c5231844fc065e2f",
+        "bytes": 3857346
+      },
+      "run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E8_L1.00.json": {
+        "sha256": "860614e5a8f91123e514b946fccb99927c6d05d38b362adab3bf047ed52681ed",
+        "bytes": 3857267
+      },
+      "run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E7_L1.00.json": {
+        "sha256": "383a5f60576782297db46c53e56ca78447ac067c128d682bbeda8deed9fb1367",
+        "bytes": 3857394
+      },
+      "run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E7_L1.20.json": {
+        "sha256": "72d3c5b9d6e33a42d9b9ba5f36c933863a9a540155121d157b2b249d1821f63f",
+        "bytes": 3858506
+      },
+      "run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E2_L1.20.json": {
+        "sha256": "fbae69d4a3e6c0a8d22e8cb3459e947e1f3c701dcc00cc352b862a3c28530a2a",
+        "bytes": 3859841
+      },
+      "run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E2_L1.00.json": {
+        "sha256": "373dd745a20d0abfbce58dfc89f956a744b92dd66439301c6cb56a4a24856e28",
+        "bytes": 3857374
+      }
+    },
+    "attempt": "20261004T144349Z_cb8bc8e5f7",
+    "execution_lock": {
+      "schema": "d2w_launcher_lock_v1",
+      "commit": "f3aec79358452a293ccced14efd4f7e3ad240477",
+      "inventory_sha256": "49976b3e24e27ee614c8e31bb2b292554cf550b95a189c96e9cd190fc92df6f2",
+      "script_sha256": "dcd64283d87ef0e0b14a68fc0e8a889743db4f66ae6ee0bd0881652bf4ead8e6",
+      "inventory_script_sha256": "dcd64283d87ef0e0b14a68fc0e8a889743db4f66ae6ee0bd0881652bf4ead8e6",
+      "ledger_file_sha256": "07574dfa58dcabdf42955b8cc90cd7adf8fa581ae8075587e540c68f07263555",
+      "asset_file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+      "pins_sha256": "de1794b592c16c9327055af4a926d001106589124c7d5fe3647247c2b3a0a78b",
+      "engine": "0.104.0",
+      "d2_run_roots": {
+        "E2": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2",
+        "E7": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2",
+        "E8": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2"
+      },
+      "stage_local": true,
+      "stage_root": "/content/stage",
+      "mt": "/content/d2w_scratch",
+      "phaseb": "/content/d2w_scratch/engine/phaseB",
+      "phasec": "/content/d2w_scratch/phaseC",
+      "script": "/content/d2w_scratch/engine/phaseB/d/d2w_cases.py",
+      "out": "/content/d2w_cases",
+      "locked_utc": "2026-10-04T14:43:49Z"
+    },
+    "lock_file": {
+      "sha256": "9f01508a898f11440e146633e4b95395db4b8471f5a7d184a2e9bec9c0c2f720",
+      "bytes": 1219
+    },
+    "run_record_file": {
+      "sha256": "5438e14918aa60f9d88121743112b3eec7b2c3a0391877c82e323b92980fbf6d",
+      "bytes": 16757
+    },
+    "context_record_file": {
+      "sha256": "58406d1b432611823fe8b3ac47b66d8c28186b007095c74d00bf6815dea603ed",
+      "bytes": 8707
+    },
+    "context_sha256": "50ec5a54d593d9bc53ce3661292d7dd3cb385369511a3444fda62226e77acb9c",
+    "cases": {
+      "E2/L1.00": {
+        "file": "d2w_case_E2_L1.00.json",
+        "file_identity": {
+          "sha256": "373dd745a20d0abfbce58dfc89f956a744b92dd66439301c6cb56a4a24856e28",
+          "bytes": 3857374
+        },
+        "manifest_sha256": "12ae8b72cdb4d85300e31a5e2f78c0c7b52c12d87c50d7e075c7d3eecbca159b",
+        "result_sha256": "78a866b51877f80ab8d86c0f432cc2fd1fd0e150c95879e4328ba636d5ee67d2",
+        "decision": {
+          "trigger": false,
+          "validation_state": "valid",
+          "validation_reason": null,
+          "B_final": 400,
+          "observed_hash": "1f1f502d2d62ba9a70ea185c2c3e35d8b0a2af5137b6367eb9ac0c2b65430809",
+          "distance_kind": "exact_pot_w2",
+          "scope": "replay of stop/validation/trigger from stored pairwise values, blocks, subsets and bounds; live bank identity == execution snapshot; distance execution not re-run",
+          "checksum": "649ef29ec30d6dde43088e6af4cf18b73733d340c42fbec126d3ff1b7f121e54"
+        },
+        "inputs": {
+          "family": "E2",
+          "size_id": "L1.00",
+          "config_ids": [
+            20101,
+            20102,
+            20103
+          ],
+          "groups": [
+            50101,
+            50102,
+            50103
+          ],
+          "units": {
+            "cfg20101_w2": {
+              "manifest_sha256": "12dc676420ff847ac863481670d39952f4d37d98181e9de534592364f78bd61e",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 20101,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "1d5f38db56c086b73e5d70e9f617a5c31ff331e5f59f82e9720084ee24239248",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 20101,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "f468315b67e8a6b112b062dd60c5f64af694f6ef5334bb22972c87e01c64c7fa",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "56577ffc88b85bc6dfeab1b9310adaf4017023029faed43577dba0ea26602fa9"
+            },
+            "cfg20102_w2": {
+              "manifest_sha256": "8936db066b4e588e90e92d7c9d33e45fd26ec563ebf4199f98937b0e232faabe",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 20102,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "8d21d2f75343f8f1e4f1f1ebcbd3e1cd9ee213a60229070679c12be437d52998",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 20102,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "4691c6144828be9f632e48899d19d5401ab848d4c733849299946eb3d34c1aea",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "2b3c3bdc79040dea7f040de9d318f0410f08576d79b35ff692594836a6ad58ae"
+            },
+            "cfg20103_w2": {
+              "manifest_sha256": "797469cac9cc9012e9004f00a35d27df7a24988a4152a458e2448a4f7fe89e2c",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 20103,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "bdce8c69f49650c97fcf22550d27263ca1682ec713284165d4369f49cd3b8592",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 20103,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "1fe43a95884a28057756d7a8893ad6cf1871255ef533c243d77dc2db9083a2d2",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "0e6bbb5e1380b8f69a0256f4e79c93af1bc7ff78553f3369036aba2e21d5a370"
+            }
+          },
+          "whitening": {
+            "mu_sha256": "d5e79b035f67c913f17f49c634f502795d17191c45a2daa509bf9227840459e1",
+            "W_sha256": "cb1e12d87db29ea3cac23c7b7348e82aa23d85027c5f3d88066b5ae9c8b4ffba",
+            "identity": {
+              "asset_sha256": "8348d5f4733ae5a37e39f4aa88109626e5caab312b55bd108be7ec9e5daff3ba",
+              "file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+              "pools_npz_file_sha256": "451f8bc5446c03956ba5598b326532584805488326b0623b009c5e7dc530c987",
+              "pools_npz_bytes": 42573325
+            }
+          },
+          "formal": true
+        },
+        "constants": {
+          "m": 100,
+          "n_subs": [
+            2000,
+            5000
+          ],
+          "seed_ids": [
+            0,
+            1,
+            2
+          ],
+          "B_levels": [
+            200,
+            400,
+            600,
+            800,
+            1000
+          ],
+          "first_comparison": [
+            200,
+            400
+          ],
+          "rel_tol": 0.05,
+          "seed_spread_max": 0.25,
+          "quantile_method": "higher"
+        }
+      },
+      "E2/L1.20": {
+        "file": "d2w_case_E2_L1.20.json",
+        "file_identity": {
+          "sha256": "fbae69d4a3e6c0a8d22e8cb3459e947e1f3c701dcc00cc352b862a3c28530a2a",
+          "bytes": 3859841
+        },
+        "manifest_sha256": "fe72cb9b0a105acd190d1e7e2b3b5950335d6c87419fae5ffbee7947e0c8bcbd",
+        "result_sha256": "b03edae90fd17cf2559d5bd5d7cf8b685d9940e6f203533bb6d1c9f7e02345ee",
+        "decision": {
+          "trigger": "unknown",
+          "validation_state": "w2-unresolved",
+          "validation_reason": "mixed above/below indicators at B_final",
+          "B_final": 800,
+          "observed_hash": "bedf37dd9ad32f98a6da4d47f281a9ce7ea5e463e74d36fcacfe4d29320a059c",
+          "distance_kind": "exact_pot_w2",
+          "scope": "replay of stop/validation/trigger from stored pairwise values, blocks, subsets and bounds; live bank identity == execution snapshot; distance execution not re-run",
+          "checksum": "c40cf3843e59b235635af37ffc6c16d32abe1136e2941ec18567133aff4fdef2"
+        },
+        "inputs": {
+          "family": "E2",
+          "size_id": "L1.20",
+          "config_ids": [
+            20201,
+            20202,
+            20203
+          ],
+          "groups": [
+            50201,
+            50202,
+            50203
+          ],
+          "units": {
+            "cfg20201_w2": {
+              "manifest_sha256": "e5f14e7d5bd614774b4f1aa604cff1ef29f285ddf9e44c39064127a0580f8ce1",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 20201,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "54e94e4eb436a30ad3b41cddac62ad1234ce13edde71af82c98335bf57a4d749",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 20201,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "6a09d95070441e44b9ba3d5a5a8d110382d0ef88bfee981f9382aff5d7813c6c",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "749bf4e544b117ccc13b237928a2eedb8caac4c9e24f97b3dc58776401802290"
+            },
+            "cfg20202_w2": {
+              "manifest_sha256": "a88cb7c9e7db5aa5222b79f3ea02fa00b3fc4ff91a91ac337ebc2205ea729dde",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 20202,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "bcd02d2e4e2adc85f765eb408c7f7ef1c7ebe717e9fd17b3c5df42eaf4176866",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 20202,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "6096e50473002744602e9c50019c1fd60307f60a866a05b527a91e876ec15763",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "52d93e9b1f948ca81c5c121c4a960ca1b731886afa9717539c87d98f50efec48"
+            },
+            "cfg20203_w2": {
+              "manifest_sha256": "e8b2104bd8b82691722f998259318ea3749474958e756f39e1330a772456b796",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 20203,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "580630305cffab2a3397938d91bd186215633f5334ada005877c9b4890338281",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 20203,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "899234bc43d4004fa18880056014931dfd5e347ad202ac75118afb69298fdd43",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "e444e76b3e8ed29a9c58ec7d0be98314b1afabffda47bc28969296f87d06e515"
+            }
+          },
+          "whitening": {
+            "mu_sha256": "d5e79b035f67c913f17f49c634f502795d17191c45a2daa509bf9227840459e1",
+            "W_sha256": "cb1e12d87db29ea3cac23c7b7348e82aa23d85027c5f3d88066b5ae9c8b4ffba",
+            "identity": {
+              "asset_sha256": "8348d5f4733ae5a37e39f4aa88109626e5caab312b55bd108be7ec9e5daff3ba",
+              "file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+              "pools_npz_file_sha256": "451f8bc5446c03956ba5598b326532584805488326b0623b009c5e7dc530c987",
+              "pools_npz_bytes": 42573325
+            }
+          },
+          "formal": true
+        },
+        "constants": {
+          "m": 100,
+          "n_subs": [
+            2000,
+            5000
+          ],
+          "seed_ids": [
+            0,
+            1,
+            2
+          ],
+          "B_levels": [
+            200,
+            400,
+            600,
+            800,
+            1000
+          ],
+          "first_comparison": [
+            200,
+            400
+          ],
+          "rel_tol": 0.05,
+          "seed_spread_max": 0.25,
+          "quantile_method": "higher"
+        }
+      },
+      "E2/L1.50": {
+        "file": "d2w_case_E2_L1.50.json",
+        "file_identity": {
+          "sha256": "9a4ca36b32bcb508751203c75f93e192e931408ab5d54364bc13e29b61961087",
+          "bytes": 3857414
+        },
+        "manifest_sha256": "a6f93d886de53e43c514ab812c633a5df5c44bbc65c5ef3c7ee567153fa68a8b",
+        "result_sha256": "578cf562c4fc306b0c3a102c841d480d6e6f4250f7a3ba07d5d129dd139229a0",
+        "decision": {
+          "trigger": false,
+          "validation_state": "valid",
+          "validation_reason": null,
+          "B_final": 400,
+          "observed_hash": "bb7e073f26e0655656d1a74348226cbd4edc329e52c3cb2ebd218a9f1fd7417b",
+          "distance_kind": "exact_pot_w2",
+          "scope": "replay of stop/validation/trigger from stored pairwise values, blocks, subsets and bounds; live bank identity == execution snapshot; distance execution not re-run",
+          "checksum": "84bb702dc16e6ad8258d36c0b6a75f9877a612ce731287619f0f75827cbcfced"
+        },
+        "inputs": {
+          "family": "E2",
+          "size_id": "L1.50",
+          "config_ids": [
+            20301,
+            20302,
+            20303
+          ],
+          "groups": [
+            50301,
+            50302,
+            50303
+          ],
+          "units": {
+            "cfg20301_w2": {
+              "manifest_sha256": "fe525f4b288ef0cdc6a5a82032f9cd8863ee517611f070c1feefd5c4b8f0904b",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 20301,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "9bd3b373e7a3b1944a5a6348020f3445cf609f3c46a6549446e41cb670cef9df",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 20301,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "c6eb608c031d4ca1481d6a1a12da6ae0a223e68d8f7d50d99ae4694b4c8e7f5d",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "ed0707b69e524bd2903438c5b6460838b79d740b89c9e7fd077e73c5b3af81a5"
+            },
+            "cfg20302_w2": {
+              "manifest_sha256": "c7e3fe64da4c6430b5670f7ced79f04f487f7ab5f027f10e82c0254f8be26d97",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 20302,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "d9b3c6f45618f30f04368237561c8344c039aa6d960d8cfe91de42a706779af6",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 20302,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "0498afa33692ae830fa3747ec05dc243927173b124aae0e0540511ce3c4d6181",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "067a455db91e2fdb6cf0e8fbfabd167a760c3d33c9bb474ce8b056c77f7ef10c"
+            },
+            "cfg20303_w2": {
+              "manifest_sha256": "4341e30912268474071b587ea0befb1cb615f8a2a7d73ff882691980c3ab669f",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 20303,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "6eb67ed65f8b46ebe8f943b5035d2188d26470bc3150a64741533c7d7467932d",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 20303,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "9a7a803fb898cb7faba3563de981eef2f101d32b3cf762d91c74b42311cddf76",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "d01e990f3d65949c266c495bd85c263af1975096cff8ac7c8049bbbe4730e575"
+            }
+          },
+          "whitening": {
+            "mu_sha256": "d5e79b035f67c913f17f49c634f502795d17191c45a2daa509bf9227840459e1",
+            "W_sha256": "cb1e12d87db29ea3cac23c7b7348e82aa23d85027c5f3d88066b5ae9c8b4ffba",
+            "identity": {
+              "asset_sha256": "8348d5f4733ae5a37e39f4aa88109626e5caab312b55bd108be7ec9e5daff3ba",
+              "file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+              "pools_npz_file_sha256": "451f8bc5446c03956ba5598b326532584805488326b0623b009c5e7dc530c987",
+              "pools_npz_bytes": 42573325
+            }
+          },
+          "formal": true
+        },
+        "constants": {
+          "m": 100,
+          "n_subs": [
+            2000,
+            5000
+          ],
+          "seed_ids": [
+            0,
+            1,
+            2
+          ],
+          "B_levels": [
+            200,
+            400,
+            600,
+            800,
+            1000
+          ],
+          "first_comparison": [
+            200,
+            400
+          ],
+          "rel_tol": 0.05,
+          "seed_spread_max": 0.25,
+          "quantile_method": "higher"
+        }
+      },
+      "E7/L1.00": {
+        "file": "d2w_case_E7_L1.00.json",
+        "file_identity": {
+          "sha256": "383a5f60576782297db46c53e56ca78447ac067c128d682bbeda8deed9fb1367",
+          "bytes": 3857394
+        },
+        "manifest_sha256": "b5db1f77b6397c876c32d7847dd85783774aff06116c580d90a76dcc9476c940",
+        "result_sha256": "d12a92d1461a45fc89007208855584f553f16ebc60538ba4e17d678871754e3e",
+        "decision": {
+          "trigger": false,
+          "validation_state": "valid",
+          "validation_reason": null,
+          "B_final": 400,
+          "observed_hash": "66ff2fe996740764bc4f29aa0806abf6a2185a12ed955703fba681d279741a93",
+          "distance_kind": "exact_pot_w2",
+          "scope": "replay of stop/validation/trigger from stored pairwise values, blocks, subsets and bounds; live bank identity == execution snapshot; distance execution not re-run",
+          "checksum": "cee968d2949ce8d344979f009a2366344c752d0be0cdc747652ff7b46caf795b"
+        },
+        "inputs": {
+          "family": "E7",
+          "size_id": "L1.00",
+          "config_ids": [
+            30101,
+            30102,
+            30103
+          ],
+          "groups": [
+            60101,
+            60102,
+            60103
+          ],
+          "units": {
+            "cfg30101_w2": {
+              "manifest_sha256": "45355acc91b4920ec66b4bc342f56a67c33f32c9740662f4a6e622bb41742f54",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 30101,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "f3213f91a0af618f828926ed367f9f30f0ed7b5e1eb9bffc7e74efbe737f605e",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 30101,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "c34882982fa7464bde24ab3a424b78b9f8536609306e7188347c6ba6e103c476",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "e022697ea0585eaef29128ad434dc96623dc7134efac31fc646cec043593b11e"
+            },
+            "cfg30102_w2": {
+              "manifest_sha256": "8d0f621f32845bb675c0303abb59005dbcd2217f26ba762757d9bf22f9304e09",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 30102,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "fb28fdfa2cbb8030ea8eb20894fbcd17994f34745a5f950f295c4f05260e645f",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 30102,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "41909c098ddd7ee02fd074190268d264fd0fe52d48bcaf5115ce0320a7eb14db",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "da7dc618e9215c52c503621037fc145b2d63b653eb99de51e66d13b759006b34"
+            },
+            "cfg30103_w2": {
+              "manifest_sha256": "b8a50103654a5e910bb4c2498609f6258f575f8c49c6edbbb14585b9bbca1568",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 30103,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "3feb71c8b45bd37110d79fb6b9287fbaa2656981412a6266a4d2b4fc37d8769c",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 30103,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "c1fc506e73b3b0b4f07c6349f596e53aa8fe34987ace264e6f00cc6771dea6db",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "54690300b60ab1cf014025630ec58513a4130467a9ec7e0c1e86b909615e0aa9"
+            }
+          },
+          "whitening": {
+            "mu_sha256": "d5e79b035f67c913f17f49c634f502795d17191c45a2daa509bf9227840459e1",
+            "W_sha256": "cb1e12d87db29ea3cac23c7b7348e82aa23d85027c5f3d88066b5ae9c8b4ffba",
+            "identity": {
+              "asset_sha256": "8348d5f4733ae5a37e39f4aa88109626e5caab312b55bd108be7ec9e5daff3ba",
+              "file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+              "pools_npz_file_sha256": "451f8bc5446c03956ba5598b326532584805488326b0623b009c5e7dc530c987",
+              "pools_npz_bytes": 42573325
+            }
+          },
+          "formal": true
+        },
+        "constants": {
+          "m": 100,
+          "n_subs": [
+            2000,
+            5000
+          ],
+          "seed_ids": [
+            0,
+            1,
+            2
+          ],
+          "B_levels": [
+            200,
+            400,
+            600,
+            800,
+            1000
+          ],
+          "first_comparison": [
+            200,
+            400
+          ],
+          "rel_tol": 0.05,
+          "seed_spread_max": 0.25,
+          "quantile_method": "higher"
+        }
+      },
+      "E7/L1.20": {
+        "file": "d2w_case_E7_L1.20.json",
+        "file_identity": {
+          "sha256": "72d3c5b9d6e33a42d9b9ba5f36c933863a9a540155121d157b2b249d1821f63f",
+          "bytes": 3858506
+        },
+        "manifest_sha256": "47540dd18fb026819300ff2ddf75d89101d924e878dec3fabf47bc1205e1a2d4",
+        "result_sha256": "3e0e5aa12096eafcdc20298edae9fc1e45cc633f106da032ff9981516859a5ce",
+        "decision": {
+          "trigger": "unknown",
+          "validation_state": "w2-unresolved",
+          "validation_reason": "mixed above/below indicators at B_final",
+          "B_final": 600,
+          "observed_hash": "a42e48477e642e2cfb011019501a5cdcfa5b5ac69ee5145bf948d1b325a22b9a",
+          "distance_kind": "exact_pot_w2",
+          "scope": "replay of stop/validation/trigger from stored pairwise values, blocks, subsets and bounds; live bank identity == execution snapshot; distance execution not re-run",
+          "checksum": "c3b49bca02acad65059e86348ce400d4fdf3875f946b86532fe4d035a91adc8f"
+        },
+        "inputs": {
+          "family": "E7",
+          "size_id": "L1.20",
+          "config_ids": [
+            30201,
+            30202,
+            30203
+          ],
+          "groups": [
+            60201,
+            60202,
+            60203
+          ],
+          "units": {
+            "cfg30201_w2": {
+              "manifest_sha256": "b6d07d448fc53c17a2f66ef6ccb3c0f1f4b6dc71f72ccf0a82d568370fb87d08",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 30201,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "42c1ce1d12f94600eb5a9b29cc3168419112fbdd39cb4008b82d939fa7e90bf9",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 30201,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "5528713b170cc6e422442062eece48638094324ef2aba8cf22f9bfc35a59f7ea",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "e8162633d2c25b9ad93019b6c0eba991fa7e1f98d7120c5163c6b1e5761d8f0c"
+            },
+            "cfg30202_w2": {
+              "manifest_sha256": "8d36778acc8e997ee7f826be5b708b3e8850d4ae958e63c80679f89b98e94e2b",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 30202,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "626d516fc55d92b0457bf43a58eefe2e319972e06652f7e809cef214ffd3604b",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 30202,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "24fafdbeb448f4b49756e57215edd31ccc917559fac4492dcba82ad705915aa0",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "4ec78a3ffa5ffe4e83667d2407eed0cd88e704d2843a3aac5a45dd5b0eef831e"
+            },
+            "cfg30203_w2": {
+              "manifest_sha256": "e5eda9e0ee91f46700b42cf9afda19229eacf0cbe77081a74f2c6acb6ac44481",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 30203,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "c7f20ed7d4f8f072cdadbfc3f63ce82a66cf38cd06d9f4acb0713fd678003b53",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 30203,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "8a19006e478f8e65a54e811ff6ae1529b234d2d0e597ad0b5d50a94bdda433c6",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "b5c6a9506985ac1520ed8a388537bd4a8eaaf04b6f541d7989a57ffb346902cb"
+            }
+          },
+          "whitening": {
+            "mu_sha256": "d5e79b035f67c913f17f49c634f502795d17191c45a2daa509bf9227840459e1",
+            "W_sha256": "cb1e12d87db29ea3cac23c7b7348e82aa23d85027c5f3d88066b5ae9c8b4ffba",
+            "identity": {
+              "asset_sha256": "8348d5f4733ae5a37e39f4aa88109626e5caab312b55bd108be7ec9e5daff3ba",
+              "file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+              "pools_npz_file_sha256": "451f8bc5446c03956ba5598b326532584805488326b0623b009c5e7dc530c987",
+              "pools_npz_bytes": 42573325
+            }
+          },
+          "formal": true
+        },
+        "constants": {
+          "m": 100,
+          "n_subs": [
+            2000,
+            5000
+          ],
+          "seed_ids": [
+            0,
+            1,
+            2
+          ],
+          "B_levels": [
+            200,
+            400,
+            600,
+            800,
+            1000
+          ],
+          "first_comparison": [
+            200,
+            400
+          ],
+          "rel_tol": 0.05,
+          "seed_spread_max": 0.25,
+          "quantile_method": "higher"
+        }
+      },
+      "E7/L1.50": {
+        "file": "d2w_case_E7_L1.50.json",
+        "file_identity": {
+          "sha256": "c94fc2f0ddb56ccec853763fd3cd06fdf3aa185bfe27e793c5231844fc065e2f",
+          "bytes": 3857346
+        },
+        "manifest_sha256": "01288193855f67b64e429fbd5ac1fb4d09977e2add4459e1f471f95d9c20b740",
+        "result_sha256": "dc993776657ec49090c3bcce2d454783b706434e2092b3b9e1c2c68de8308456",
+        "decision": {
+          "trigger": "unknown",
+          "validation_state": "w2-unresolved",
+          "validation_reason": "mixed above/below indicators at B_final",
+          "B_final": 400,
+          "observed_hash": "c93d9aa865f2b342c631f089ce780bcbc4318e71439365d4af65b62f9d89c135",
+          "distance_kind": "exact_pot_w2",
+          "scope": "replay of stop/validation/trigger from stored pairwise values, blocks, subsets and bounds; live bank identity == execution snapshot; distance execution not re-run",
+          "checksum": "6a462bcdf2897a5ca29c11af158d2be29f5c43037ced2fab163c328b06424317"
+        },
+        "inputs": {
+          "family": "E7",
+          "size_id": "L1.50",
+          "config_ids": [
+            30301,
+            30302,
+            30303
+          ],
+          "groups": [
+            60301,
+            60302,
+            60303
+          ],
+          "units": {
+            "cfg30301_w2": {
+              "manifest_sha256": "aa99b475b94a491afe48bbab7015bec3c3069ad8a690650dd5955bbfe2071494",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 30301,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "edf2e94e53880e4045ded11752adedf60f230a7c6759b6ae28032d48c64bb9d5",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 30301,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "95a5fc542626731a135a6766de34f550d88408936af1a66073484c5f5a48df7a",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "a7ed902264023414f229428e1a7686f1c3ac38ad1d9518d0861550505aa5c8d3"
+            },
+            "cfg30302_w2": {
+              "manifest_sha256": "f37c3d3ae2f17ee4337d1cf0d63d1e56757ded7bb0090c0ffdcb5b5521d9b1e6",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 30302,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "859efc861e0ca238eea8ed1c7a2a06e160cd10bad93824f372d86868f3f1c5f1",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 30302,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "425f824f9100f870b0404076cf55ce5c97f93faad56ae4b5920a114c706858a4",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "2aef68ebad21f666870fbee7b9b7e83eabe42a47498743a0eac7e3963091f21b"
+            },
+            "cfg30303_w2": {
+              "manifest_sha256": "741b9c7364f5521c3b620a0d9145f9051909ecb17a2efd1f5a41f0f89a185bd6",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 30303,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "a783d0871b322372777ee027f834a4d313d5ecd394c224d1137c74f781d18683",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 30303,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "d67d1c3c96c7635cd844e34977beb8576057147ac18004d1823df61a910121b8",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "02914c6cf9e5d63f5871cc1056b2b36878d3d2c4f723335075ad4c921027354c"
+            }
+          },
+          "whitening": {
+            "mu_sha256": "d5e79b035f67c913f17f49c634f502795d17191c45a2daa509bf9227840459e1",
+            "W_sha256": "cb1e12d87db29ea3cac23c7b7348e82aa23d85027c5f3d88066b5ae9c8b4ffba",
+            "identity": {
+              "asset_sha256": "8348d5f4733ae5a37e39f4aa88109626e5caab312b55bd108be7ec9e5daff3ba",
+              "file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+              "pools_npz_file_sha256": "451f8bc5446c03956ba5598b326532584805488326b0623b009c5e7dc530c987",
+              "pools_npz_bytes": 42573325
+            }
+          },
+          "formal": true
+        },
+        "constants": {
+          "m": 100,
+          "n_subs": [
+            2000,
+            5000
+          ],
+          "seed_ids": [
+            0,
+            1,
+            2
+          ],
+          "B_levels": [
+            200,
+            400,
+            600,
+            800,
+            1000
+          ],
+          "first_comparison": [
+            200,
+            400
+          ],
+          "rel_tol": 0.05,
+          "seed_spread_max": 0.25,
+          "quantile_method": "higher"
+        }
+      },
+      "E8/L1.00": {
+        "file": "d2w_case_E8_L1.00.json",
+        "file_identity": {
+          "sha256": "860614e5a8f91123e514b946fccb99927c6d05d38b362adab3bf047ed52681ed",
+          "bytes": 3857267
+        },
+        "manifest_sha256": "462f30c6e05302fe2be5466d9bb9707f25079aa820779db56b2ff3f41d7a8008",
+        "result_sha256": "c661961a61f0b45aefd8e716b7ad0378fcc2d6b443b12fb532e896a134e959fc",
+        "decision": {
+          "trigger": "unknown",
+          "validation_state": "w2-unresolved",
+          "validation_reason": "mixed above/below indicators at B_final",
+          "B_final": 400,
+          "observed_hash": "ec472fe00ca18ab88a5feb851acc781574be16a63d8071c21434b2f56cdc7cc2",
+          "distance_kind": "exact_pot_w2",
+          "scope": "replay of stop/validation/trigger from stored pairwise values, blocks, subsets and bounds; live bank identity == execution snapshot; distance execution not re-run",
+          "checksum": "81fae5e19c7950f4f41eadb5ef00691352396c0f184a3a4b1d14035e5bd1a8b4"
+        },
+        "inputs": {
+          "family": "E8",
+          "size_id": "L1.00",
+          "config_ids": [
+            40101,
+            40102,
+            40103
+          ],
+          "groups": [
+            70101,
+            70102,
+            70103
+          ],
+          "units": {
+            "cfg40101_w2": {
+              "manifest_sha256": "0ec362ab7736d9428d1b45143a7fad2bef76d99428216023209bec9e30855352",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 40101,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "536af1d49b321dceca95627b534b3c8e63b47c6a0e8af4da338dfe68d31e3703",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 40101,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "03a07605f563de8b4098c93036ad2182f6fad5a05a657b754dd45a83ea9d39ed",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "c92e98e1bb8cfaf492f7b63ade03b341744ae2701dc72a0643b65350577370ae"
+            },
+            "cfg40102_w2": {
+              "manifest_sha256": "ee60d8bbfb7a957bc9be3cc90ce8513d766a96eb30fa91c8241f9259ee699d60",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 40102,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "569de6d5cc4e25bfe88a02c72233c15e479a95700deb1e4f50552166d1304246",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 40102,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "1643ed5eeb18a64efb3744e8811e69c063a181a5ffdc9154670c6ddb1fdb144b",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "4d0452e64bac0ab6475fedfcf5b53366f22708b6e91034d60b5f48479ff29325"
+            },
+            "cfg40103_w2": {
+              "manifest_sha256": "1ca0556a89209ed5f0a52dc119b3feb98ecd070261f3fd917a4dfe20d7872e38",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 40103,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "aa4d630fef779d5239d2f6832d642b820cba8eac981c7a91c96db659cc07deef",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 40103,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "e2e88bc79d4023d62afb4f2de60dce8aadc66f13918cc5b85884378058667df3",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "0644dcaede1c554efabbf861a79e312daddb872cf028caa8b5f1cadf8e65fe15"
+            }
+          },
+          "whitening": {
+            "mu_sha256": "d5e79b035f67c913f17f49c634f502795d17191c45a2daa509bf9227840459e1",
+            "W_sha256": "cb1e12d87db29ea3cac23c7b7348e82aa23d85027c5f3d88066b5ae9c8b4ffba",
+            "identity": {
+              "asset_sha256": "8348d5f4733ae5a37e39f4aa88109626e5caab312b55bd108be7ec9e5daff3ba",
+              "file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+              "pools_npz_file_sha256": "451f8bc5446c03956ba5598b326532584805488326b0623b009c5e7dc530c987",
+              "pools_npz_bytes": 42573325
+            }
+          },
+          "formal": true
+        },
+        "constants": {
+          "m": 100,
+          "n_subs": [
+            2000,
+            5000
+          ],
+          "seed_ids": [
+            0,
+            1,
+            2
+          ],
+          "B_levels": [
+            200,
+            400,
+            600,
+            800,
+            1000
+          ],
+          "first_comparison": [
+            200,
+            400
+          ],
+          "rel_tol": 0.05,
+          "seed_spread_max": 0.25,
+          "quantile_method": "higher"
+        }
+      },
+      "E8/L1.20": {
+        "file": "d2w_case_E8_L1.20.json",
+        "file_identity": {
+          "sha256": "0351be84ae5c17475c060b88ff7332de0dbd4d8912fb2dcefecf8e838e8e7062",
+          "bytes": 3857353
+        },
+        "manifest_sha256": "a093ab905a70443f85c05b37b48129761facd8871633e317687cf58acd534d70",
+        "result_sha256": "b3086d225660ebd33831098effe38e6223e9a02301ef8fa959860c4934a42723",
+        "decision": {
+          "trigger": false,
+          "validation_state": "valid",
+          "validation_reason": null,
+          "B_final": 400,
+          "observed_hash": "19845fb5871a4c89d6a345d49df834ce2a7cdafe4c5d3ff2e88f2ff05ac1d274",
+          "distance_kind": "exact_pot_w2",
+          "scope": "replay of stop/validation/trigger from stored pairwise values, blocks, subsets and bounds; live bank identity == execution snapshot; distance execution not re-run",
+          "checksum": "107ac44c7268a2189ae51eb59348c3eb287ecd4e238c67838793d403c06b4fc6"
+        },
+        "inputs": {
+          "family": "E8",
+          "size_id": "L1.20",
+          "config_ids": [
+            40201,
+            40202,
+            40203
+          ],
+          "groups": [
+            70201,
+            70202,
+            70203
+          ],
+          "units": {
+            "cfg40201_w2": {
+              "manifest_sha256": "ba92f5e45874d164667d7be552ac43bcda6453a27760c79cd9baa3526f4e0112",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 40201,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "4838a960c533f5f154f095eed76b0f046a8698ad929ed57f7cb7f9146f17818e",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 40201,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "e978a962dc29b36b5d7122c63f142bf0c4f74c44e8b2e34838995d958b9ad7e2",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "ba19097da2b686d1f8d73ba938dca964d8bd3a80186614147739f6b0d6d1eb96"
+            },
+            "cfg40202_w2": {
+              "manifest_sha256": "80c344b899d08c55a95e76fda9422786d3e10ff70733b4ca2404468b82345814",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 40202,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "3c449984a37f19e0b11c7dfb883a195ee78bd54a5b4b54a17cccb60468988512",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 40202,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "78ad20a97b8cadb3f5cd75cab4de4404cbc714f7d56679cd3fe2c2c5ac2137cd",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "c7984d5904671e21fada58b33db159189a13bda176e8199a8fdc416f741b6e4b"
+            },
+            "cfg40203_w2": {
+              "manifest_sha256": "9ff9d276416b5498f715a7626ea7472e4255b5e7563f8d9409f6d14c7bd44df8",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 40203,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "7bcd28ccbcb2424ef63902d700243e22246f3e41409c4988d3f6effcb32918bf",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 40203,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "34c65324e08f31edaf399fad90ba42c1cee386e01a96092bb7b90d8178fa4b8f",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "3f05c3c026f5c1a233a203ec251d31111a550d1e678651dce7d072971d7383d6"
+            }
+          },
+          "whitening": {
+            "mu_sha256": "d5e79b035f67c913f17f49c634f502795d17191c45a2daa509bf9227840459e1",
+            "W_sha256": "cb1e12d87db29ea3cac23c7b7348e82aa23d85027c5f3d88066b5ae9c8b4ffba",
+            "identity": {
+              "asset_sha256": "8348d5f4733ae5a37e39f4aa88109626e5caab312b55bd108be7ec9e5daff3ba",
+              "file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+              "pools_npz_file_sha256": "451f8bc5446c03956ba5598b326532584805488326b0623b009c5e7dc530c987",
+              "pools_npz_bytes": 42573325
+            }
+          },
+          "formal": true
+        },
+        "constants": {
+          "m": 100,
+          "n_subs": [
+            2000,
+            5000
+          ],
+          "seed_ids": [
+            0,
+            1,
+            2
+          ],
+          "B_levels": [
+            200,
+            400,
+            600,
+            800,
+            1000
+          ],
+          "first_comparison": [
+            200,
+            400
+          ],
+          "rel_tol": 0.05,
+          "seed_spread_max": 0.25,
+          "quantile_method": "higher"
+        }
+      },
+      "E8/L1.50": {
+        "file": "d2w_case_E8_L1.50.json",
+        "file_identity": {
+          "sha256": "4a5590bc25b70c9a8c9827da94c15f48fd1a417c4a591d30b3f04d6239f693ca",
+          "bytes": 3857449
+        },
+        "manifest_sha256": "d65714dec4f43acc121b0befa665de9993c11a39410514b51c50bc55f451d1e2",
+        "result_sha256": "7789e79a1c77c5bb3f8a328d8f780e38fb1594a8da882509e7739841e6131fd6",
+        "decision": {
+          "trigger": false,
+          "validation_state": "valid",
+          "validation_reason": null,
+          "B_final": 400,
+          "observed_hash": "0c84750c67fc4b7eb61a987fb6d59dddedc8b0acd33fe7bb05496daa2448d4f8",
+          "distance_kind": "exact_pot_w2",
+          "scope": "replay of stop/validation/trigger from stored pairwise values, blocks, subsets and bounds; live bank identity == execution snapshot; distance execution not re-run",
+          "checksum": "076fe81b45822becfc0f53d4282660ebece403951404b54a30e9a769d4b954e9"
+        },
+        "inputs": {
+          "family": "E8",
+          "size_id": "L1.50",
+          "config_ids": [
+            40301,
+            40302,
+            40303
+          ],
+          "groups": [
+            70301,
+            70302,
+            70303
+          ],
+          "units": {
+            "cfg40301_w2": {
+              "manifest_sha256": "604e2e43d09f2fbf17608d04dce0b4af6da23dbb88cfa110771c4cecdfe2fa7b",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 40301,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "495bc81ec82d55d3368b894150d469e9d1ebba5d96f34c3049b29fb28b734ccd",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 40301,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "3cbaacfb2072a750c83aaf8029d48770310678de598b4731fa99b4902193d6c9",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "e1c7c654e755aeea0dc3625d08d8e513a831b05f4aa8c98891565cf3383f1756"
+            },
+            "cfg40302_w2": {
+              "manifest_sha256": "cabc35f41f3ae4d95dd01ee92392bb11b7cf2ba905f4b338a055c81f6539ff12",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 40302,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "f91985fa2efb9fe368ab41d18dcc37188bd89a603e946841487e883e79044c3d",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 40302,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "24cf228d5cd6f4dbd4970136688714a8b4d35d8567c16ed28936a5b5fe112f1f",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "48466d1165a88863224fc3ad86d8ae98f1f00af8f03cbb15700a021bd9b84154"
+            },
+            "cfg40303_w2": {
+              "manifest_sha256": "45fb084adff8031d27d4190356164ac696828e7b7fa8606286b3311b41eb549b",
+              "n_clusters": 2000,
+              "bank_identity_f64": {
+                "position_id": 40303,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "b3cca106f7ddea1b14625adfb62d6cf764e4c01b809dcbc76d747a19a70ce1c3",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "bank_identity_f32": {
+                "position_id": 40303,
+                "K": 2000,
+                "m": 100,
+                "rows": 200000,
+                "Tw_sha256": "a0fa090a732379c5f8c97172310ebd3d95cf96c296d370d3f1c149e2f38a4d52",
+                "cid_sha256": "66e6ff441457a50c1a32e2c0914e11f5d7edfb8043fa8098a96657fc57b98a94",
+                "labels_sha256": "edd6c0024ff499a09e180e0cf8d1acdee66f285b5544a28346b6e74c5ffa0710"
+              },
+              "root_matched_sha256": "c2cc5f9a4c59fb1c5c6fa160d829737651ae782df907516085ab0fbec1dac37a"
+            }
+          },
+          "whitening": {
+            "mu_sha256": "d5e79b035f67c913f17f49c634f502795d17191c45a2daa509bf9227840459e1",
+            "W_sha256": "cb1e12d87db29ea3cac23c7b7348e82aa23d85027c5f3d88066b5ae9c8b4ffba",
+            "identity": {
+              "asset_sha256": "8348d5f4733ae5a37e39f4aa88109626e5caab312b55bd108be7ec9e5daff3ba",
+              "file_sha256": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+              "pools_npz_file_sha256": "451f8bc5446c03956ba5598b326532584805488326b0623b009c5e7dc530c987",
+              "pools_npz_bytes": 42573325
+            }
+          },
+          "formal": true
+        },
+        "constants": {
+          "m": 100,
+          "n_subs": [
+            2000,
+            5000
+          ],
+          "seed_ids": [
+            0,
+            1,
+            2
+          ],
+          "B_levels": [
+            200,
+            400,
+            600,
+            800,
+            1000
+          ],
+          "first_comparison": [
+            200,
+            400
+          ],
+          "rel_tol": 0.05,
+          "seed_spread_max": 0.25,
+          "quantile_method": "higher"
+        }
+      }
+    }
+  },
+  "scientific_results": {
+    "valid_false": [
+      "E2/L1.00",
+      "E2/L1.50",
+      "E7/L1.00",
+      "E8/L1.20",
+      "E8/L1.50"
+    ],
+    "w2_unresolved_unknown": [
+      "E2/L1.20",
+      "E7/L1.20",
+      "E7/L1.50",
+      "E8/L1.00"
+    ],
+    "true_cases": [],
+    "technical_failures_in_run": 0,
+    "all_B_stop_states": "stopped",
+    "unknown_reason": "mixed above/below indicators at B_final",
+    "case_arithmetic": {
+      "E2/L1.00": {
+        "B_final": 400,
+        "trigger": false,
+        "state": "valid",
+        "reason": null,
+        "q99": {
+          "2000": 0.22288092509567436,
+          "5000": 0.15594948666270456
+        },
+        "indicators": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "seed_spread": 0.1725388217740773,
+        "minimum_selection_margin": 0.008674378453338188,
+        "stop_trace_length": 2
+      },
+      "E2/L1.20": {
+        "B_final": 800,
+        "trigger": "unknown",
+        "state": "w2-unresolved",
+        "reason": "mixed above/below indicators at B_final",
+        "q99": {
+          "2000": 0.22987074821074277,
+          "5000": 0.15419431056642718
+        },
+        "indicators": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "seed_spread": 0.22999640229662455,
+        "minimum_selection_margin": -0.0013310059423293028,
+        "stop_trace_length": 4
+      },
+      "E2/L1.50": {
+        "B_final": 400,
+        "trigger": false,
+        "state": "valid",
+        "reason": null,
+        "q99": {
+          "2000": 0.22288092509567436,
+          "5000": 0.15594948666270456
+        },
+        "indicators": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "seed_spread": 0.14508049263650613,
+        "minimum_selection_margin": 0.01748451205088758,
+        "stop_trace_length": 2
+      },
+      "E7/L1.00": {
+        "B_final": 400,
+        "trigger": false,
+        "state": "valid",
+        "reason": null,
+        "q99": {
+          "2000": 0.22288092509567436,
+          "5000": 0.15594948666270456
+        },
+        "indicators": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "seed_spread": 0.13426304345688211,
+        "minimum_selection_margin": 0.002549142082894256,
+        "stop_trace_length": 2
+      },
+      "E7/L1.20": {
+        "B_final": 600,
+        "trigger": "unknown",
+        "state": "w2-unresolved",
+        "reason": "mixed above/below indicators at B_final",
+        "q99": {
+          "2000": 0.2329460744636862,
+          "5000": 0.15325768187329825
+        },
+        "indicators": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "seed_spread": 0.3816615388765392,
+        "minimum_selection_margin": -0.0011250873920196302,
+        "stop_trace_length": 3
+      },
+      "E7/L1.50": {
+        "B_final": 400,
+        "trigger": "unknown",
+        "state": "w2-unresolved",
+        "reason": "mixed above/below indicators at B_final",
+        "q99": {
+          "2000": 0.22288092509567436,
+          "5000": 0.15594948666270456
+        },
+        "indicators": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "seed_spread": 0.36824021737747903,
+        "minimum_selection_margin": 0.002122700157953105,
+        "stop_trace_length": 2
+      },
+      "E8/L1.00": {
+        "B_final": 400,
+        "trigger": "unknown",
+        "state": "w2-unresolved",
+        "reason": "mixed above/below indicators at B_final",
+        "q99": {
+          "2000": 0.22288092509567436,
+          "5000": 0.15594948666270456
+        },
+        "indicators": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "seed_spread": 0.21128280817611467,
+        "minimum_selection_margin": -0.0010313179774303848,
+        "stop_trace_length": 2
+      },
+      "E8/L1.20": {
+        "B_final": 400,
+        "trigger": false,
+        "state": "valid",
+        "reason": null,
+        "q99": {
+          "2000": 0.22288092509567436,
+          "5000": 0.15594948666270456
+        },
+        "indicators": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "seed_spread": 0.1553232257435555,
+        "minimum_selection_margin": 0.009903006548208143,
+        "stop_trace_length": 2
+      },
+      "E8/L1.50": {
+        "B_final": 400,
+        "trigger": false,
+        "state": "valid",
+        "reason": null,
+        "q99": {
+          "2000": 0.22288092509567436,
+          "5000": 0.15594948666270456
+        },
+        "indicators": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "seed_spread": 0.22595538911397672,
+        "minimum_selection_margin": 0.004455225731824974,
+        "stop_trace_length": 2
+      }
+    },
+    "no_rerun_required_for_unresolved": true
+  },
+  "executed_notebooks": {
+    "d2w": {
+      "file": "MirrorTopology_Step1_D2W_cases_v0_1_executed_f3aec7935845.ipynb",
+      "sha256": "3d8a7ff7519e971b8981ff73256c2d975c8a7bc8ab11b7cc876c98a55807e89c",
+      "bytes": 38708,
+      "execution_commit": "f3aec79358452a293ccced14efd4f7e3ad240477",
+      "engine": "0.104.0",
+      "attempt": "20261004T144349Z_cb8bc8e5f7",
+      "only_editable_lock_values_differ": true,
+      "other_cell_source_exact": true,
+      "recorded_outputs_match": true
+    },
+    "pseudo": {
+      "file": "MirrorTopology_Step1_D4_pseudo_v0_1_executed_12980202ee11.ipynb",
+      "sha256": "fb7a0d663694eac623a169006d9f0ac21c8a382213655ad357d9fbf938add973",
+      "bytes": 29797,
+      "execution_commit": "12980202ee111a26c0a608e7e5bba6caed5302ae",
+      "engine": "0.103.0",
+      "attempt": "20261004T102334Z_6e681d78a0",
+      "only_editable_lock_values_differ": true,
+      "other_cell_source_exact": true,
+      "recorded_outputs_match": true
+    }
+  },
+  "pseudo_acceptance_supplement": {
+    "previous_acceptance": {
+      "file": "D4C0_pseudo_12980202_acceptance.json",
+      "sha256": "08efa1d19b29303425125aed71f96f0f27765c03234b36164f98ba4631cbee5b",
+      "unchanged": true
+    },
+    "prior_acceptance_maintained": true,
+    "new_executed_notebook_verified": true,
+    "notebook": {
+      "file": "MirrorTopology_Step1_D4_pseudo_v0_1_executed_12980202ee11.ipynb",
+      "sha256": "fb7a0d663694eac623a169006d9f0ac21c8a382213655ad357d9fbf938add973",
+      "bytes": 29797,
+      "execution_commit": "12980202ee111a26c0a608e7e5bba6caed5302ae",
+      "engine": "0.103.0",
+      "attempt": "20261004T102334Z_6e681d78a0",
+      "only_editable_lock_values_differ": true,
+      "other_cell_source_exact": true,
+      "recorded_outputs_match": true
+    },
+    "prior_NPZ_revalidated": true,
+    "regeneration_performed": false,
+    "regeneration_required": false
+  },
+  "previous_failure": {
+    "accepted_as_failure_record": true,
+    "scientific_result_accepted": false,
+    "attempt": "20261004T102439Z_9bac8f8730",
+    "execution_commit": "12980202ee111a26c0a608e7e5bba6caed5302ae",
+    "archive_sha256": "09f9ab0e8ade6c5f0b8cb53c7198bf20e9973618a8146c9647e9b57b9b98b037",
+    "files": {
+      "d2w_final_record.json": "d211179ab285577744fdcff8f39ee620105a8b2e910be472de96f1272ea2118f",
+      "d2w_lock.json": "9b57d303e6f2c88a976651ba980f03197b2acee961847462c17487cae215033b",
+      "d2w_stderr_20261004T102439Z_9bac8f8730.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "d2w_stdout_20261004T102439Z_9bac8f8730.txt": "6a5bf2afddae160795a1fbf8794e29839b1404726d5e1c50d567e2c293b85f79",
+      "run_20261004T102439Z_9bac8f8730/d2w_run_record.json": "e28a3423eddf45bbcadf818c32f2f3402f01f04fb62fe153fd1147a278670722",
+      "run_20261004T102439Z_9bac8f8730/d2w_stdout.log": "3b42c2f32ba0b559f20dc76f273c440a1673360420614ac8d6a3aef38abe7a13"
+    },
+    "stage": "inputs",
+    "cause": "Old formal path compared absent registry.run_id with the nonempty ledger run_id.",
+    "script_array_intake_reached": false,
+    "exact_OT_executed": false,
+    "staging_bytes_already_copied": 303031554,
+    "source_patch_result_independent": true,
+    "prior_audit_missed_registry_schema_mismatch": true,
+    "files_rechecked_unchanged_this_audit": true
+  },
+  "independent_checks": {
+    "source_checker_passed": true,
+    "source_checker_sha_entries": 2143,
+    "record_source_notebook_checks": 633,
+    "formal_restore_require_formal": true,
+    "expected_context_sha256": "50ec5a54d593d9bc53ce3661292d7dd3cb385369511a3444fda62226e77acb9c",
+    "entire_context_document_equal": true,
+    "saved_numeric_checks": 393,
+    "observed_maxima_checked": 54,
+    "observed_subset_vectors_regenerated": 162,
+    "shared_null_block_sets_regenerated": 2000,
+    "shared_null_pairwise_maxima_checked": 2000,
+    "nine_stop_validation_trigger_recomputed_independently": true,
+    "mutation_tests": 18,
+    "all_mutations_rejected": true,
+    "production_OT_recomputed": false,
+    "independent_unmodified_pytest_passed": 21,
+    "pytest_skipped": 0,
+    "pytest_failures_errors": 0,
+    "audit_python": "3.13.5",
+    "audit_numpy": "2.3.5"
+  },
+  "resource_record": {
+    "timings": {
+      "preflight": 11.378,
+      "intake": 56.102,
+      "evaluation_seconds": 731.0,
+      "evaluation": 787.112,
+      "restore": 838.175,
+      "final": 838.176
+    },
+    "seconds_script": 838.1755182743073,
+    "seconds_total": 874.132,
+    "rss_mb": {
+      "preflight": 1147.6,
+      "intake": 1437.9,
+      "evaluation": 1489.9,
+      "restore": 1615.9,
+      "final": 1615.9
+    },
+    "peak_rss_mb": {
+      "preflight": 1148.2,
+      "intake": 1437.6,
+      "evaluation": 2310.6,
+      "restore": 2310.6,
+      "final": 2310.6
+    },
+    "ram": {
+      "total_bytes": 13605822464,
+      "available_bytes": 11862900736
+    },
+    "staging": {
+      "root": "/content/stage",
+      "units": {
+        "E2": 9,
+        "E7": 9,
+        "E8": 9
+      },
+      "input_bytes": 303031554,
+      "disk_free_bytes_before": 219956256768,
+      "seconds": 32.9,
+      "disk_free_bytes_after": 219344990208
+    }
+  },
+  "preservation": {
+    "source": {
+      "files": 2576,
+      "bytes_unchanged": true,
+      "archive_sha256": "df5eb95915a6b794c453eb74dbf30203b2e1fa116e1393ed533932e0c6f688a7"
+    },
+    "outer": {
+      "files": 5,
+      "bytes_unchanged": true,
+      "archive_sha256": "a153d8300bf9d1f126e065f6717e6fb017c0cdec68620451a142e04af29e2af6"
+    },
+    "run": {
+      "files": 16,
+      "bytes_unchanged": true,
+      "archive_sha256": "13e222e57d624473eba4fda045d400b34bf9a3fda6623fe74eacb1325a53a72b"
+    },
+    "d4_pseudo_12980202ee11": {
+      "files": 7,
+      "bytes_unchanged": true,
+      "archive_sha256": "57c0df458eb013c0450b57d880fdf837dcdb1f8f902a6b8b6350e1fa2d43b826"
+    },
+    "d2w_cases_12980202ee11": {
+      "files": 6,
+      "bytes_unchanged": true,
+      "archive_sha256": "09f9ab0e8ade6c5f0b8cb53c7198bf20e9973618a8146c9647e9b57b9b98b037"
+    }
+  },
+  "registration_conditions": [
+    "Register the exact successful inner ZIP, its 16 members, both executed notebooks and this acceptance. Preserve complete file bytes, not only the W2 context payload.",
+    "Retain the earlier pseudo acceptance 08efa1d19b29303425125aed71f96f0f27765c03234b36164f98ba4631cbee5b unchanged. The newly supplied pseudo notebook is supplementary evidence, not a replacement acceptance or a reason to regenerate columns.",
+    "Bind each run to its own historical execution lock: pseudo at 12980202ee111a26c0a608e7e5bba6caed5302ae / 0.103.0, successful W2 at f3aec79358452a293ccced14efd4f7e3ad240477 / 0.104.0. Do not rewrite source versions, timestamps, paths or old pins to the new registration version.",
+    "Retain failed W2 attempt 20261004T102439Z_9bac8f8730 and its original archive separately as failure history; never use it as successful W2 evidence.",
+    "Build deterministic ledger/receipt from accepted original bytes and bind acceptance, full-file identities, source locks, canonical case set, context SHA, unit manifests, covariance/shared-null/whitening identities, and pseudo column identity to registration constants and pins.",
+    "Implement actual load_registered_w2_context and load_registered_pseudo_columns bodies, not only fill REGISTRATION constants. Require all relevant pins including acceptance pins, rejecting missing/null/mismatch before returning an accepted view.",
+    "Authenticate full case/run/context/lock document bytes before replay. Obtain expected_context_sha256 from authenticated pins; do not use an editable record as its own trust anchor. Require the canonical nine case keys and preserve all 9 exact decisions.",
+    "For pseudo, authenticate the exact original NPZ plus dtype, count, m, ordered paired rows, UID and column/paired SHAs. Do not replace it by cross-environment regeneration or a tolerance-based equivalent.",
+    "Add normal roundtrip and negative tests for file alteration, rehash/reseal contradiction, missing/duplicate/mixed case, scientific unknown promotion, different asset, insufficient/formal-test bank, wrong execution/attempt, missing/null/wrong pins, failed attempt substitution and pseudo row/column changes.",
+    "Preserve W2 unknown as W2 branch uncertainty, not technical failure or false. D4 must combine it with per-pseudo event-ratio and registered 12-position completion before producing eligible truth; do not unconditionally mark or discard pseudo rows based on W2 state alone.",
+    "Present the registration/API implementation packet for review. This acceptance does not authorize formal global calibration, target release, labels, noise, partial/combiner acceptance or ENGINE_VALID."
+  ],
+  "limitations": [
+    "No independent read of all 27 production W2 NPZ bank units or new hash of their physical arrays; the result packet contains records and execution-time identities, not those bank arrays.",
+    "No independent exact POT solve, whitened-bank reconstruction, or f32 selection-bound measurement. The unmodified formal replay and independent arithmetic recompute decisions from accepted stored distances/subsets/bounds and registered shared null.",
+    "Recorded HEAD/clean/source/environment and executed notebook source/outputs were compared with approved source/locks. This is not a direct observation of the historical Colab runtime or an independent remote Git tree comparison.",
+    "Audit runtime Python 3.13.5 / NumPy 2.3.5 differs from registered Colab. No runtime substitution was made in the submitted records.",
+    "Only the 21 W2-context regression tests were rerun in this audit; the full source suite of 1772 tests was not rerun. Source checker validates metadata, not scientific correctness.",
+    "Full-byte authenticity of auxiliary case inputs/constants is a registration responsibility in addition to context replay. Replay success alone is not full-document authentication.",
+    "Resource values describe this reported run, not a guarantee for future hardware or calibration workloads."
+  ],
+  "nonblocking_clarifications": [
+    "The four unresolved cases met the B-prefix stopping rule; the later seed/subsample indicator-agreement validation is unresolved. Do not describe these as B_max exhaustion or execution failure.",
+    "W2 trigger False is not a topology-unsupported label; W2 unknown is not automatically the final per-pseudo support truth. Use the already registered branch/eligible-truth rules.",
+    "Report notebooks by their content/lock and hash. The D2W executed notebook was renamed from an author filename containing the older commit; bytes are unchanged and the content matches f3aec793."
+  ],
+  "artifacts": {
+    "audit": "ChatGPT_audit_D2W_run_f3aec793.md",
+    "acceptance": "D4C0_D2W_f3aec793_acceptance.json",
+    "evidence": "D2W_run_f3aec793_audit_evidence.zip"
+  }
+}

@@ -1,0 +1,293 @@
+{
+  "schema": "step1_D4C0_pseudo_run_acceptance_v1",
+  "date_JST": "2026-10-04",
+  "decision": "PASS_WITH_EXPLICIT_SCOPE__PSEUDO_ORIGINAL_COLUMNS_ACCEPTED_FOR_REGISTRATION",
+  "formal_pseudo_generation_accepted": true,
+  "requires_pseudo_regeneration": false,
+  "registered_loader_accepted": false,
+  "formal_calibration_GO": false,
+  "subject": {
+    "result_packet": {
+      "path": "/mnt/data/D4C0_runs_12980202_audit_packet.zip",
+      "sha256": "e9e759a31590a8727af755a50cf2943b9323313e7c62dbadac950bbfd4a97f5b",
+      "bytes": 57964,
+      "files": 4,
+      "top": [
+        "d4_pseudo_12980202ee11.zip",
+        "d2w_cases_12980202ee11.zip",
+        "d4c0_pseudo_sandbox_crosscheck.json",
+        "Step1_PhaseD_D4C0_runs_report.md"
+      ]
+    },
+    "execution_commit": "12980202ee111a26c0a608e7e5bba6caed5302ae",
+    "engine": "0.103.0",
+    "attempt": "20261004T102334Z_6e681d78a0",
+    "archive_sha256": "57c0df458eb013c0450b57d880fdf837dcdb1f8f902a6b8b6350e1fa2d43b826",
+    "archive_bytes": 50138,
+    "files": {
+      "d4_pseudo_final_record.json": "3ff48294bff600dab41168b04a6e61396918bffd90f3d1e0e166090b389f16ea",
+      "d4_pseudo_lock.json": "4b31d9efa65d8cbde62ebd1a081eaf9a71b9426cd70595bab940e5f3ba7a4773",
+      "d4_pseudo_stderr_20261004T102334Z_6e681d78a0.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "d4_pseudo_stdout_20261004T102334Z_6e681d78a0.txt": "f65e5d245adcf1d6bf7833c12e6b8f20cfef904f9bb0126e6c77eb9ff7843aeb",
+      "run_20261004T102334Z_6e681d78a0/d4_pseudo_columns.npz": "c62a965b3b649870977d95ba247bf84a9580131109fc8572971e06b98da490f2",
+      "run_20261004T102334Z_6e681d78a0/d4_pseudo_record.json": "ad4fda8d3d25f684ed5ee1993b12d95e647fd741263c1b669903b0507abfe2d1",
+      "run_20261004T102334Z_6e681d78a0/d4_pseudo_stdout.log": "ad9031a67290593690594a619e665593a878f959426c1bbc1a771865c8c0b3eb"
+    },
+    "execution_lock": {
+      "schema": "d4_pseudo_launcher_lock_v1",
+      "commit": "12980202ee111a26c0a608e7e5bba6caed5302ae",
+      "inventory_sha256": "f04e739d79bb950ff906c341d504c2d30cb8f6c3ad40ad5d3f9f11ff10446429",
+      "script_sha256": "a6e0772ae62c1a41d0592031276547592830418b47e50ae156aaf180f381d267",
+      "inventory_script_sha256": "a6e0772ae62c1a41d0592031276547592830418b47e50ae156aaf180f381d267",
+      "table_file_sha256": "31fc50c310be59ba82ad9236408174fe3be8db291adf1cfcb96bbc961374d44c",
+      "table_sha256": "88f5659e1cc373b051f2786d151e474af3bd689e1a21474d0d4da3f6579d3c31",
+      "pins_sha256": "a3d90b81745bd877922d750d270167478b28614bd593a29f6cf8382c5119d8c7",
+      "engine": "0.103.0",
+      "mt": "/content/d4_pseudo_scratch",
+      "phaseb": "/content/d4_pseudo_scratch/engine/phaseB",
+      "phasec": "/content/d4_pseudo_scratch/phaseC",
+      "script": "/content/d4_pseudo_scratch/engine/phaseB/d/d4_pseudo.py",
+      "out": "/content/d4_pseudo",
+      "locked_utc": "2026-10-04T10:23:34Z"
+    },
+    "columns": {
+      "n": 2000,
+      "m": 1,
+      "T1_sha256": "6e2669b529440d94a3808061788e3c0100b374075f319127914d4f7725af091d",
+      "T2_sha256": "1a5588fd8dc3efb6cca7beaf446a3a88ffb9d3ff0b2835a2cf07751f4c3ee3d3",
+      "AX_sha256": "60d61625987b85fac70befb1ad7a0f89c829b37e115cbccff6613c478616ddc7",
+      "PL_sha256": "85a035007b2f831c9d4d84a8a9ad70264d5a9300f54d59d23b1f2a03ede343c3",
+      "cid_sha256": "55f385cf2332d9056aaed6f496e7bebd2df52c6a9547ce2144b309432d4b0290",
+      "uids_sha256": "cb90d89c16d8d06acc52c7aa5b043eae36c489d23d08037a3652e3ff56bf11ea",
+      "dtype": {
+        "T1": "float64",
+        "T2": "float64",
+        "AX": "int32",
+        "PL": "int32",
+        "cid": "int64"
+      },
+      "paired_sha256": "c9f75cdb86c90b0c73409a3e7a015faaef1e5903788358082dde3c21d66a1d15",
+      "first_uid": [
+        1,
+        400,
+        5001,
+        0,
+        0
+      ],
+      "last_uid": [
+        1,
+        400,
+        5001,
+        0,
+        1999
+      ]
+    },
+    "npz": {
+      "file": "d4_pseudo_columns.npz",
+      "sha256": "c62a965b3b649870977d95ba247bf84a9580131109fc8572971e06b98da490f2",
+      "bytes": 145444
+    },
+    "root_sha256": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c"
+  },
+  "independent_checks": {
+    "run_checks_total": 191,
+    "actual_npz_read": true,
+    "accepted_source_byte_comparison": true,
+    "exact_column_identity_recomputed": true,
+    "uid_order_recomputed": true,
+    "pseudo_tamper_refusals": 13,
+    "root_matches_registered_D2_reference": {
+      "path": "registered_assets/d2/E2/d2/ref_E2_b0/COMPLETE.json",
+      "fields": [
+        "/root_sha256/ref_matched"
+      ],
+      "root_sha256": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c"
+    },
+    "executed_notebook_provided": false,
+    "remote_tree_verified": false,
+    "physical_kernel_regenerated": false
+  },
+  "author_cross_environment": {
+    "reproduced_by_auditor": false,
+    "summary": {
+      "schema": "d4c0_pseudo_sandbox_crosscheck_v1",
+      "note": "Sandbox (NOT the registered environment; env gate False here) regeneration of the 2000 pseudo columns from the same frozen kernel / table / root, compared with the Colab formal columns. Integer AX / PL, cid and UIDs identical; T1 / T2 agree to the cross-environment floating-point level documented in regression_logs/legacy_cross_environment_summary.json. The Colab columns (registered environment) are the formal ones.",
+      "colab": {
+        "attempt_id": "20261004T102334Z_6e681d78a0",
+        "file": {
+          "file": "d4_pseudo_columns.npz",
+          "sha256": "c62a965b3b649870977d95ba247bf84a9580131109fc8572971e06b98da490f2",
+          "bytes": 145444
+        },
+        "identity": {
+          "n": 2000,
+          "m": 1,
+          "T1_sha256": "6e2669b529440d94a3808061788e3c0100b374075f319127914d4f7725af091d",
+          "T2_sha256": "1a5588fd8dc3efb6cca7beaf446a3a88ffb9d3ff0b2835a2cf07751f4c3ee3d3",
+          "AX_sha256": "60d61625987b85fac70befb1ad7a0f89c829b37e115cbccff6613c478616ddc7",
+          "PL_sha256": "85a035007b2f831c9d4d84a8a9ad70264d5a9300f54d59d23b1f2a03ede343c3",
+          "cid_sha256": "55f385cf2332d9056aaed6f496e7bebd2df52c6a9547ce2144b309432d4b0290",
+          "uids_sha256": "cb90d89c16d8d06acc52c7aa5b043eae36c489d23d08037a3652e3ff56bf11ea",
+          "dtype": {
+            "T1": "float64",
+            "T2": "float64",
+            "AX": "int32",
+            "PL": "int32",
+            "cid": "int64"
+          },
+          "paired_sha256": "c9f75cdb86c90b0c73409a3e7a015faaef1e5903788358082dde3c21d66a1d15",
+          "first_uid": [
+            1,
+            400,
+            5001,
+            0,
+            0
+          ],
+          "last_uid": [
+            1,
+            400,
+            5001,
+            0,
+            1999
+          ]
+        },
+        "env": {
+          "python": "3.13.15",
+          "numpy": "2.1.3",
+          "scipy": "1.16.3",
+          "healpy": "1.20.0",
+          "camb": "2.0.4",
+          "pot": "0.9.7.post1"
+        }
+      },
+      "sandbox": {
+        "python": "3.11.15",
+        "numpy": "2.4.4",
+        "engine": "0.104.0",
+        "root_sha256": "390dbfaca62d4d891b69b6a54906cd4d5f6724a0b6a170e1ef3bd69f15ef7c4c",
+        "rng_keys": {
+          "rotation": [
+            20260912,
+            1,
+            400,
+            5001,
+            0,
+            1
+          ],
+          "gaussian": [
+            20260912,
+            1,
+            400,
+            5001,
+            0,
+            0
+          ]
+        },
+        "identity": {
+          "n": 2000,
+          "m": 1,
+          "T1_sha256": "401ac0ed82bd7df63bd1d5c3bc859251a3f26db0be12aac5690effbddb7b1615",
+          "T2_sha256": "2974b3503a26f4a82c3190b1e2ebb2d4e571df543c56709cd9b0e1c4eb99c816",
+          "AX_sha256": "60d61625987b85fac70befb1ad7a0f89c829b37e115cbccff6613c478616ddc7",
+          "PL_sha256": "85a035007b2f831c9d4d84a8a9ad70264d5a9300f54d59d23b1f2a03ede343c3",
+          "cid_sha256": "55f385cf2332d9056aaed6f496e7bebd2df52c6a9547ce2144b309432d4b0290",
+          "uids_sha256": "cb90d89c16d8d06acc52c7aa5b043eae36c489d23d08037a3652e3ff56bf11ea",
+          "dtype": {
+            "T1": "float64",
+            "T2": "float64",
+            "AX": "int32",
+            "PL": "int32",
+            "cid": "int64"
+          },
+          "paired_sha256": "fee0bd5fd8d4065754749b85897583721d7eb67760c16105267da996656c3bfc",
+          "first_uid": [
+            1,
+            400,
+            5001,
+            0,
+            0
+          ],
+          "last_uid": [
+            1,
+            400,
+            5001,
+            0,
+            1999
+          ]
+        }
+      },
+      "comparison": {
+        "T1": {
+          "identical": false,
+          "n_differing": 1739,
+          "max_abs": 4.547473508864641e-13,
+          "max_rel": 2.096365193179848e-15,
+          "max_ulp": 18
+        },
+        "T2": {
+          "identical": false,
+          "n_differing": 1654,
+          "max_abs": 1.3642420526593924e-12,
+          "max_rel": 1.3318057928938597e-15,
+          "max_ulp": 10
+        },
+        "AX": {
+          "identical": true,
+          "n_differing": 0,
+          "max_abs": 0.0,
+          "max_rel": 0.0,
+          "max_ulp": 0
+        },
+        "PL": {
+          "identical": true,
+          "n_differing": 0,
+          "max_abs": 0.0,
+          "max_rel": 0.0,
+          "max_ulp": 0
+        },
+        "cid": {
+          "identical": true,
+          "n_differing": 0,
+          "max_abs": 0.0,
+          "max_rel": 0.0,
+          "max_ulp": 0
+        }
+      },
+      "uids_identical": true,
+      "root_sha256_identical": true,
+      "rng_keys_identical": true,
+      "colab_file_reverified_in_sandbox": true,
+      "legacy_cross_environment_reference": {
+        "raw_AX_agreement": 1.0,
+        "PL_agreement": 1.0,
+        "max_rel_T1": 2.6915884591028103e-15,
+        "max_rel_T2": 1.8999174654486903e-15,
+        "all_finite": true
+      }
+    },
+    "disposition": "Reviewed as author-reported comparison only. Exact Colab NPZ is authoritative; no tolerance-based substitution."
+  },
+  "registration_conditions": [
+    "Preserve the seven pseudo-run files, inner ZIP and original run/source/lock/environment as executed at 0.103.0. Do not replace the formal NPZ with sandbox-generated values.",
+    "Register the exact NPZ file and all column/paired identities, ordered UID, pseudo table, source lock, final/run records, logs, this acceptance and their full-byte SHA through receipt and pins.",
+    "Implement the actual registered loader and negative tests; REGISTRATION constants alone do not activate current stubs.",
+    "Keep the failed W2 attempt immutable and separate from the retry; preserve its source version, cause, stage and archive identity.",
+    "W2 and pseudo may have different historical execution commits. Validate each against its own accepted execution lock; do not rewrite historical locks to a common newer version.",
+    "Retain and provide executed notebooks at registration where available; they were not included in this results packet. No pseudo regeneration is required to supply documentation.",
+    "Do not use these acceptances as a GO for formal global calibration, target evaluation, labels, noise or ENGINE_VALID."
+  ],
+  "limitations": [
+    "Executed notebooks not present in submitted result packet; cannot compare executed cells/outputs with approved notebook.",
+    "Recorded HEAD/environment are verified against the approved source/lock, not directly observed in remote runtime.",
+    "No independent frozen-kernel regeneration; author cross-environment comparison is reviewed but not reproduced.",
+    "No full formal W2 bank or exact OT computation.",
+    "No independent numerical regeneration of principal square root or frozen physical kernel; the pseudo root identity was independently matched to the accepted D2 reference manifest.",
+    "The new full-main formal-branch test was skipped for missing external assets; exact old/new input blocks and real resolver were tested independently instead.",
+    "Metadata resolution is not acceptance of bank arrays; actual W2 array intake and exact POT remain for the retry."
+  ],
+  "artifacts": {
+    "audit": "ChatGPT_audit_D4C0_runs_12980202_and_v3_0.104.0.md",
+    "decision": "D4C0_v3_0.104.0_audit_decision.json",
+    "evidence": "D4C0_runs_12980202_v3_audit_evidence.zip"
+  }
+}

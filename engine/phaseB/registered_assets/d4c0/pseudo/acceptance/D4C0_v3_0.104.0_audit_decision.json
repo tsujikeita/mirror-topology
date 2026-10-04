@@ -1,0 +1,163 @@
+{
+  "schema": "step1_D4C0_v3_0104_postrun_and_retry_audit_v1",
+  "date_JST": "2026-10-04",
+  "decision": "PASS_WITH_EXPLICIT_SCOPE__PSEUDO_ACCEPTED__D2W_INPUT_FIX_ACCEPTED__D2W_RETRY_GO",
+  "subject": {
+    "author_supplied_commit": "f3aec79358452a293ccced14efd4f7e3ad240477",
+    "engine": "0.104.0",
+    "archive_sha256": "df5eb95915a6b794c453eb74dbf30203b2e1fa116e1393ed533932e0c6f688a7",
+    "archive_bytes": 16814344,
+    "source_files": 2576,
+    "inventory_sha256": "49976b3e24e27ee614c8e31bb2b292554cf550b95a189c96e9cd190fc92df6f2",
+    "important_files": {
+      "B2_completion_inventory.json": "49976b3e24e27ee614c8e31bb2b292554cf550b95a189c96e9cd190fc92df6f2",
+      "d/d2w_cases.py": "dcd64283d87ef0e0b14a68fc0e8a889743db4f66ae6ee0bd0881652bf4ead8e6",
+      "d/MirrorTopology_Step1_D2W_cases_v0.1.ipynb": "5a5260cf5d3cf3a4810185604c2d7877b079ce4245a5ad0db364b13e825a7506",
+      "d/d3_pins.json": "de1794b592c16c9327055af4a926d001106589124c7d5fe3647247c2b3a0a78b",
+      "registered_assets/d2/d2_generation_ledger.json": "07574dfa58dcabdf42955b8cc90cd7adf8fa581ae8075587e540c68f07263555",
+      "registered_assets/b3_2_shared_null_asset.json": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4",
+      "step1_engine/w2_cases.py": "d8e6e8daf27cd787abc29e0745c328f6a618a0374371294340373118850f7698",
+      "step1_engine/d4_pseudo.py": "d3336b3b5fada45ba8be0672186f8b20c4763206388c21c25e1f836d3c25a46e",
+      "d/d4_pseudo.py": "a6e0772ae62c1a41d0592031276547592830418b47e50ae156aaf180f381d267",
+      "d/d4_pseudo_table.json": "31fc50c310be59ba82ad9236408174fe3be8db291adf1cfcb96bbc961374d44c"
+    },
+    "remote_tree_independently_compared": false
+  },
+  "pseudo": {
+    "accepted": true,
+    "acceptance_file": "D4C0_pseudo_12980202_acceptance.json",
+    "acceptance_sha256": "08efa1d19b29303425125aed71f96f0f27765c03234b36164f98ba4631cbee5b",
+    "historical_execution_commit": "12980202ee111a26c0a608e7e5bba6caed5302ae",
+    "historical_engine": "0.103.0",
+    "npz_sha256": "c62a965b3b649870977d95ba247bf84a9580131109fc8572971e06b98da490f2",
+    "paired_sha256": "c9f75cdb86c90b0c73409a3e7a015faaef1e5903788358082dde3c21d66a1d15",
+    "regenerate": false
+  },
+  "D2W_failure": {
+    "accepted_as_failure_record": true,
+    "scientific_result_accepted": false,
+    "attempt": "20261004T102439Z_9bac8f8730",
+    "execution_commit": "12980202ee111a26c0a608e7e5bba6caed5302ae",
+    "archive_sha256": "09f9ab0e8ade6c5f0b8cb53c7198bf20e9973618a8146c9647e9b57b9b98b037",
+    "files": {
+      "d2w_final_record.json": "d211179ab285577744fdcff8f39ee620105a8b2e910be472de96f1272ea2118f",
+      "d2w_lock.json": "9b57d303e6f2c88a976651ba980f03197b2acee961847462c17487cae215033b",
+      "d2w_stderr_20261004T102439Z_9bac8f8730.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "d2w_stdout_20261004T102439Z_9bac8f8730.txt": "6a5bf2afddae160795a1fbf8794e29839b1404726d5e1c50d567e2c293b85f79",
+      "run_20261004T102439Z_9bac8f8730/d2w_run_record.json": "e28a3423eddf45bbcadf818c32f2f3402f01f04fb62fe153fd1147a278670722",
+      "run_20261004T102439Z_9bac8f8730/d2w_stdout.log": "3b42c2f32ba0b559f20dc76f273c440a1673360420614ac8d6a3aef38abe7a13"
+    },
+    "stage": "inputs",
+    "cause": "Old formal path compared absent registry.run_id with the nonempty ledger run_id.",
+    "script_array_intake_reached": false,
+    "exact_OT_executed": false,
+    "staging_bytes_already_copied": 303031554,
+    "source_patch_result_independent": true,
+    "prior_audit_missed_registry_schema_mismatch": true
+  },
+  "D2W_fix": {
+    "implementation_accepted": true,
+    "new_mandatory_patch": false,
+    "scope": "Only formal D2 input resolution and its call/log path; numerical modules and launchers unchanged.",
+    "canonical_registry_bytes_bind_to_ledger": true,
+    "manifest_and_registered_path_checks_retained": true,
+    "strong_array_intake_not_bypassed": true,
+    "independent_resolution_checks": 19
+  },
+  "execution_GO": {
+    "D4C0a_D2W_retry": true,
+    "D4C0b_new_pseudo_generation_needed": false,
+    "commit": "f3aec79358452a293ccced14efd4f7e3ad240477",
+    "inventory_sha256": "49976b3e24e27ee614c8e31bb2b292554cf550b95a189c96e9cd190fc92df6f2",
+    "notebook": "d/MirrorTopology_Step1_D2W_cases_v0.1.ipynb",
+    "notebook_content_version": "v0.2",
+    "D2_RUN_ROOTS": {
+      "E2": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2",
+      "E7": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2",
+      "E8": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2"
+    },
+    "STAGE_LOCAL": true,
+    "scope": "One run; E2/E7/E8 x L1.00/L1.20/L1.50; nine cases; registered constants and all gates unchanged.",
+    "failure_preservation": "Keep failed original archive and records unchanged; use a new attempt, preferably a fresh OUT after preserving the prior archive.",
+    "resource_guarantee": false
+  },
+  "tests": {
+    "source_checker_entries": 2143,
+    "python_compiled": 207,
+    "notebook_cells_compiled": 8,
+    "author_junit_files": 18,
+    "author_cases": 1772,
+    "author_failure_error_skip": 0,
+    "collect_multiset_equal_after_checkout_path_normalization": true,
+    "parameter_paths_normalized": 2,
+    "independent_unmodified_pytest_passed": 113,
+    "independent_unmodified_pytest_skipped": 7,
+    "independent_failure_error": 0,
+    "all_1772_independently_executed": false,
+    "run_record_checks": 191,
+    "resolver_boundary_checks": 19,
+    "pseudo_tamper_refusals": 13,
+    "fresh_repeat": "Fresh directory reproduces the same checks. Initial one-call wrapper reached the tool timeout; remaining checks resumed in separate commands. Counts not doubled."
+  },
+  "preservation": {
+    "current": {
+      "files": 2576,
+      "byte_unchanged": true,
+      "removed_audit_generated_pyc": 0,
+      "archive_sha256": "df5eb95915a6b794c453eb74dbf30203b2e1fa116e1393ed533932e0c6f688a7"
+    },
+    "previous": {
+      "files": 2556,
+      "byte_unchanged": true,
+      "removed_audit_generated_pyc": 18,
+      "archive_sha256": "55cc4d5e90245bfd09de4d71aaba057e360261da134234e940d8db1557f99395"
+    },
+    "outer": {
+      "files": 4,
+      "byte_unchanged": true,
+      "archive_sha256": "e9e759a31590a8727af755a50cf2943b9323313e7c62dbadac950bbfd4a97f5b"
+    },
+    "pseudo": {
+      "files": 7,
+      "byte_unchanged": true,
+      "archive_sha256": "57c0df458eb013c0450b57d880fdf837dcdb1f8f902a6b8b6350e1fa2d43b826"
+    },
+    "w2": {
+      "files": 6,
+      "byte_unchanged": true,
+      "archive_sha256": "09f9ab0e8ade6c5f0b8cb53c7198bf20e9973618a8146c9647e9b57b9b98b037"
+    }
+  },
+  "registration_conditions": [
+    "Preserve the seven pseudo-run files, inner ZIP and original run/source/lock/environment as executed at 0.103.0. Do not replace the formal NPZ with sandbox-generated values.",
+    "Register the exact NPZ file and all column/paired identities, ordered UID, pseudo table, source lock, final/run records, logs, this acceptance and their full-byte SHA through receipt and pins.",
+    "Implement the actual registered loader and negative tests; REGISTRATION constants alone do not activate current stubs.",
+    "Keep the failed W2 attempt immutable and separate from the retry; preserve its source version, cause, stage and archive identity.",
+    "W2 and pseudo may have different historical execution commits. Validate each against its own accepted execution lock; do not rewrite historical locks to a common newer version.",
+    "Retain and provide executed notebooks at registration where available; they were not included in this results packet. No pseudo regeneration is required to supply documentation.",
+    "Do not use these acceptances as a GO for formal global calibration, target evaluation, labels, noise or ENGINE_VALID."
+  ],
+  "not_approved": [
+    "W2 numerical results / formal context acceptance before retry",
+    "Registered loader implementation or original-registration completion",
+    "Formal calibration, partial/combiner implementation, usable, target evaluation, labels, noise, ENGINE_VALID",
+    "Remote Git tree equivalence or resource/time sufficiency"
+  ],
+  "limitations": [
+    "Executed notebooks not present in submitted result packet; cannot compare executed cells/outputs with approved notebook.",
+    "Recorded HEAD/environment are verified against the approved source/lock, not directly observed in remote runtime.",
+    "No independent frozen-kernel regeneration; author cross-environment comparison is reviewed but not reproduced.",
+    "No full formal W2 bank or exact OT computation.",
+    "No independent numerical regeneration of principal square root or frozen physical kernel; the pseudo root identity was independently matched to the accepted D2 reference manifest.",
+    "The new full-main formal-branch test was skipped for missing external assets; exact old/new input blocks and real resolver were tested independently instead.",
+    "Metadata resolution is not acceptance of bank arrays; actual W2 array intake and exact POT remain for the retry."
+  ],
+  "nonblocking": [
+    "Current report section 1 still describes registry family/formal/run_id comparison; replace run_id-field wording with byte-hash and ledger-registered-path binding. No report-only resubmission needed."
+  ],
+  "artifacts": {
+    "audit": "ChatGPT_audit_D4C0_runs_12980202_and_v3_0.104.0.md",
+    "pseudo_acceptance": "D4C0_pseudo_12980202_acceptance.json",
+    "evidence": "D4C0_runs_12980202_v3_audit_evidence.zip"
+  }
+}

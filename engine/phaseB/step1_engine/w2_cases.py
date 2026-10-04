@@ -24,7 +24,7 @@ from . import serialization as ser
 
 CASE_SCHEMA = "d2w_case_record_v1"; CONTEXT_SCHEMA = "d2w_context_record_v1"
 FAMILIES = ("E2", "E7", "E8"); SIZES = ("L1.00", "L1.20", "L1.50")
-D2W_REGISTRATION = None        # filled after the accepted formal run (commit / inventory / script / notebook / acceptance decision SHAs / context SHA); None => registered load refused
+D2W_REGISTRATION = None        # bound at the end of the module to the d4c0_registry constants (accepted formal run f3aec793); None would refuse the registered load
 
 
 def _sha(b: bytes) -> str: return hashlib.sha256(b).hexdigest()
@@ -133,7 +133,17 @@ def restore_w2_context(case_records: List[dict], asset: SharedNullAsset, expecte
 
 
 def load_registered_w2_context(phaseb_root: str, ctx):
-    """Formal registered load (after the accepted D4C-0a run): bound to D2W_REGISTRATION constants (execution lock, acceptance SHA, context SHA) and to the d3 pins; refused while
-    the run is not registered."""
-    if D2W_REGISTRATION is None: raise InputContractError("D-2W W2 context is not registered yet (D4C-0a formal run / acceptance pending)")
-    raise InputContractError("registered D-2W load is defined only with the registration constants (unreachable until D2W_REGISTRATION is filled)")
+    """Formal registered load (D4C-0 registration tranche): the body lives in d4c0_registry.load_registered_w2_context — pins (acceptance / context / ledger / receipt) and the
+    registered original bytes are authenticated, then the typed context is restored with expected_context_sha256 taken from the authenticated pins and every decision compared
+    with the registered constants. D2W_REGISTRATION mirrors the registration constants; a None value (pre-registration) is refused."""
+    if D2W_REGISTRATION is None: raise InputContractError("D-2W W2 context is not registered yet")
+    from .d4c0_registry import load_registered_w2_context as _load
+    return _load(phaseb_root, ctx)
+
+
+def _registration_constants():
+    from .d4c0_registry import D2W
+    return dict(attempt=D2W["attempt"], commit=D2W["execution_lock"]["commit"], engine_version=D2W["execution_lock"]["engine_version"], context_sha256=D2W["context_sha256"], acceptance_sha256=D2W["acceptance"]["sha256"], archive_sha256=D2W["archive"]["sha256"], executed_notebook_sha256=D2W["executed_notebook"]["sha256"])
+
+
+D2W_REGISTRATION = _registration_constants()
