@@ -12,9 +12,14 @@ context from the published record (array-free replay) and requires equality (G_r
 to another asset, a duplicate / mixed case, a non-formal record under require_formal, and a formal-size claim on a small bank; a technical (non-finite) value in the stored
 evidence is refused, never promoted; the scientific outcome (w2-unresolved / unknown) is preserved as such; RegisteredBankIdentity carries the identity exactly and is
 immutable; the script refuses OUT inside an input / symlink OUT (rc 2, nothing written), unresolved inputs (G_d2_inputs_resolved False) and the formal path on a non-formal
-bank; the registered loader refuses while D2W_REGISTRATION is None. Notebooks: 5 cells, parseable, D-3c v0.3 structure (anchor / ONE verifier twice / initial record /
-superseded record / content-verified evidence), and the attempt cell exercised on a fake source with a test-double child (ok / pass_false / rc1 / commit_changed /
-script_changed_during_staging / anchor_symlink / evidence_tampered / result_attempt_mismatch)."""
+bank; the registered loader refuses while D2W_REGISTRATION is None. Notebooks (v0.2; R-D4C0-A/B): 5 cells, parseable, D-3c v0.3 structure (anchor / ONE verifier twice /
+initial record / superseded record / content-verified evidence); the PREFLIGHT output policy (_safe_output_anchor) runs BEFORE the first mkdir / lock publication and refuses a
+symlink present before the preflight starts, an OUT inside an input / the source / Phase C / the stage root, and an existing directory holding foreign entries — with every member
+and byte of the destination unchanged; the attempt cell exercised on a fake source with a test-double child requires the exact schema / complete stage / empty failures / the
+TRUSTED REQUIRED inventory (13 / 10 names; notebook constant == the AST-extracted REQUIRED of the lock-bound script) with all gates `is True` and required_all_true, the
+CANONICAL nine W2 cases (E1 or eight cases refused), content-verified AND semantically bound evidence files (re-hashed tampering refused), binding to this attempt / lock /
+source; the thirteen contradictory success records of the audit (false / missing / empty gates, exception stage, non-empty failures, wrong schema, wrong case set) are refused,
+and a scientifically unresolved W2 outcome is not a failure."""
 import os, sys, json, shutil, subprocess, hashlib, copy, io, contextlib, re
 import numpy as np, pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
@@ -299,36 +304,104 @@ def test_notebooks_structure(nb_path, script, lock_name, fin_name, pass_key, rec
     c1, c2, c3, c4 = (''.join(nb['cells'][i]['source']) for i in (1, 2, 3, 4))
     for c in (c1, c2, c3, c4): ast.parse(c)
     assert 'REPO_COMMIT' in c1 and 'EXPECTED_INVENTORY_SHA256' in c1 and ('--selftest' not in c1 + c2 + c3) and "v.get('selftest') is False" in c3
-    assert f"d/{script}" in c2 and '# LOCK-BUILD' in c2 and f"'{lock_name}'" in c2.replace('/', "'") or f"/{lock_name}" in c2
+    assert f"d/{script}" in c2 and '# LOCK-BUILD' in c2 and f"/{lock_name}" in c2
+    # R-D4C0-B: the output policy precedes the first mkdir / publication in the preflight; the attempt re-uses the SAME function
+    assert c2.index('# OUTPUT-ANCHOR') < c2.index('def _safe_output_anchor') < c2.index('os.makedirs(OUT') < c2.index('# LOCK-BUILD') < c2.index('_publish(LOCK_PATH') and c2.count('os.makedirs') == 1 and 'OUT=_safe_output_anchor(OUT, _protected_roots())' in c2
+    assert '_safe_output_anchor(ANCHOR' in c3 and "'/content/drive'" in c2 and "'/content/drive'" in c3
     assert "ANCHOR=lock['out']" in c3 and c3.count("_verify_locked_state('precheck')") == 1 and c3.count("_verify_locked_state('prelaunch')") == 1 and 'superseded_final_record_before_' in c3 and fin_name in c3 and pass_key in c3 and rec_key in c3 and "'--attempt-id',ATTEMPT,'--launcher-lock-sha256',LOCK_SHA256" in c3
-    assert "'--profile','production_official'" in c3 and 'evidence_ok' in c3 and ('sha(fp)==' in c3) and 'rev-parse' in c3 and 'status' in c3
-    if script == 'd2w_cases.py': assert "D2_RUN_ROOTS" in c1 and 'd2_generation_ledger.json' in c2 and 'b3_2_shared_null_asset.json' in c2 and "'--d2-root'" in c3 and 'cfg\\d+_w2' in c3 and 'len(cases)!=9' in c3
-    else: assert 'd4_pseudo_table.json' in c2 and "d4_pseudo_table_sha256" in c2 and "idn.get('n')==2000" in c3 and 'd4_pseudo_columns.npz' in c3 and 'STAGE' not in c1
+    assert "'--profile','production_official'" in c3 and 'evidence_ok' in c3 and 'gates_ok' in c3 and ('sha(fp)==' in c3) and 'rev-parse' in c3 and 'status' in c3
+    # R-D4C0-A: trusted REQUIRED inventory == the script's REQUIRED tuple (constant in the notebook AND AST extraction at run time)
+    req = [list(ast.literal_eval(st.value)) for st in ast.parse(open(os.path.join(P, 'd', script)).read()).body if isinstance(st, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'REQUIRED' for t in st.targets)][0]
+    m = re.search(r"REQUIRED_EXPECTED=(\[[^\]]*\])", c3); assert m and ast.literal_eval(m.group(1)) == req and len(req) == (13 if script == 'd2w_cases.py' else 10) and "_ast.literal_eval" in c3
+    assert "v.get('stage')=='complete'" in c3 and "v.get('failures')==[]" in c3 and "v.get('required_all_true') is not True" in c3 and "is True for k in REQUIRED_EXPECTED" in c3
+    if script == 'd2w_cases.py': assert "D2_RUN_ROOTS" in c1 and 'd2_generation_ledger.json' in c2 and 'b3_2_shared_null_asset.json' in c2 and "'--d2-root'" in c3 and 'cfg\\d+_w2' in c3 and "CANON=[f'{f}/{sz}' for f in ('E2','E7','E8') for sz in ('L1.00','L1.20','L1.50')]" in c3 and 'd2w_case_record_v1' in c3 and 'd2w_context_record_v1' in c3
+    else: assert 'd4_pseudo_table.json' in c2 and "d4_pseudo_table_sha256" in c2 and "idn.get('n')==2000" in c3 and 'd4_pseudo_columns.npz' in c3 and 'STAGE' not in c1 and '[1,400,5001,0,1999]' in c3
 
 
-NB_CASES = ['ok', 'staged_ok', 'retry_after_old_success', 'pass_false', 'rc1', 'missing_record', 'commit_changed', 'script_changed', 'root_changed', 'lock_file_changed', 'script_changed_during_staging', 'anchor_symlink', 'evidence_tampered', 'evidence_missing', 'fewer_cases', 'result_attempt_mismatch', 'result_source_mismatch', 'launch_failure', 'disk_insufficient']
+def _ast_required(script): 
+    import ast
+    return [list(ast.literal_eval(st.value)) for st in ast.parse(open(os.path.join(P, 'd', script)).read()).body if isinstance(st, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'REQUIRED' for t in st.targets)][0]
+
+
+def _tree_state(root):
+    out = {}
+    for d, _, fs in os.walk(root):
+        for f in fs: p = os.path.join(d, f); out[os.path.relpath(p, root)] = sha(p)
+    return out
+
+
+NB_CASES = ['ok', 'staged_ok', 'retry_after_old_success', 'unresolved_ok', 'pass_false', 'rc1', 'missing_record', 'commit_changed', 'script_changed', 'root_changed', 'lock_file_changed', 'script_changed_during_staging', 'anchor_symlink', 'anchor_foreign_file', 'evidence_tampered', 'evidence_missing', 'fewer_cases', 'wrong_case_set', 'rehashed_case_evidence', 'rehashed_context_evidence', 'case_summary_mismatch', 'result_attempt_mismatch', 'result_source_mismatch', 'launch_failure', 'disk_insufficient',
+            'false_required_gate', 'missing_required_gate', 'empty_gates', 'extra_gate', 'required_inventory_mismatch', 'required_all_true_false', 'exception_stage', 'nonempty_failures', 'wrong_schema', 'selftest_true', 'script_required_changed']
 NO_LAUNCH = {'commit_changed', 'script_changed', 'root_changed', 'lock_file_changed', 'script_changed_during_staging', 'disk_insufficient'}
 STAGED = {'staged_ok', 'script_changed_during_staging', 'disk_insufficient'}
+GATE_CASES = {'false_required_gate', 'missing_required_gate', 'empty_gates', 'extra_gate', 'required_inventory_mismatch', 'required_all_true_false', 'script_required_changed'}
+SHAPE_CASES = {'exception_stage', 'nonempty_failures', 'wrong_schema', 'selftest_true', 'missing_record'}
+EVIDENCE_CASES = {'evidence_tampered', 'evidence_missing', 'fewer_cases', 'wrong_case_set', 'rehashed_case_evidence', 'rehashed_context_evidence', 'case_summary_mismatch'}
 
 
 def _fake_source_d2w(root):
     pb = root / 'engine' / 'phaseB'; (pb / 'd').mkdir(parents=True); (pb / 'registered_assets' / 'd2').mkdir(parents=True); (root / 'phaseC').mkdir()
-    (pb / 'd' / 'd2w_cases.py').write_text('# TEST_ONLY script stand-in\n'); (pb / 'd' / 'd3_pins.json').write_text(json.dumps(dict(schema='d3_pins_v1')))
+    shutil.copy(D2W, pb / 'd' / 'd2w_cases.py'); (pb / 'd' / 'd3_pins.json').write_text(json.dumps(dict(schema='d3_pins_v1')))
     (pb / 'registered_assets' / 'd2' / 'd2_generation_ledger.json').write_text(json.dumps(dict(families={}))); (pb / 'registered_assets' / 'b3_2_shared_null_asset.json').write_text('{}')
     inv = dict(engine_version='0.0.0-TEST', d_sha256={'d/d2w_cases.py': sha(pb / 'd' / 'd2w_cases.py'), 'd/d3_pins.json': sha(pb / 'd' / 'd3_pins.json')}, registered_assets_sha256={'registered_assets/d2/d2_generation_ledger.json': sha(pb / 'registered_assets' / 'd2' / 'd2_generation_ledger.json'), 'registered_assets/b3_2_shared_null_asset.json': sha(pb / 'registered_assets' / 'b3_2_shared_null_asset.json')})
     (pb / 'B2_completion_inventory.json').write_text(json.dumps(inv)); return str(root), str(pb)
 
 
-@pytest.mark.parametrize('case', NB_CASES)
-def test_d2w_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path, case):
-    nb = json.load(open(NB_D2W)); c2 = ''.join(nb['cells'][2]['source']); c3 = ''.join(nb['cells'][3]['source']); lock_src = c2[c2.index('# LOCK-BUILD'):]
-    commit = 'a' * 40; mt, pb = _fake_source_d2w(tmp_path / 'scratch'); out = tmp_path / 'out'; out.mkdir(); roots = {}
+def _ns_d2w(tmp_path, commit, mt, pb, out, roots, staged):
+    return dict(sys=sys, os=os, json=json, hashlib=hashlib, shutil=shutil, time=__import__('time'), re=re, sha=sha, REPO_COMMIT=commit, D2_RUN_ROOTS=dict(roots), STAGE_LOCAL=staged, STAGE_ROOT=str(tmp_path / 'stage'), MT=mt, PHASEB=pb, PHASEC=f'{mt}/phaseC', SCRIPT=f'{pb}/d/d2w_cases.py', INV=f'{pb}/B2_completion_inventory.json',
+                LEDGER=f'{pb}/registered_assets/d2/d2_generation_ledger.json', ASSET=f'{pb}/registered_assets/b3_2_shared_null_asset.json', PINS=f'{pb}/d/d3_pins.json', OUT=str(out), RAM_INFO=dict(total_bytes=1), inv=json.load(open(f'{pb}/B2_completion_inventory.json')))
+
+
+def _lock_src(nb_path):
+    nb = json.load(open(nb_path)); c2 = ''.join(nb['cells'][2]['source']); return c2[c2.index('# OUTPUT-ANCHOR'):], ''.join(nb['cells'][3]['source'])
+
+
+def _make_roots(tmp_path):
+    roots = {}
     for f in ('E2', 'E7', 'E8'):
         d = tmp_path / f'in_{f}'; (d / 'cfg20101_w2').mkdir(parents=True); (d / 'cfg20101_b0').mkdir(); (d / 'd2_bank_registry.json').write_text('{}'); (d / 'cfg20101_w2' / 'blob.npz').write_bytes(b'\0' * 1000); (d / 'cfg20101_b0' / 'big.npz').write_bytes(b'\0' * 5000); roots[f] = str(d)
-    staged = case in STAGED
-    ns = dict(sys=sys, os=os, json=json, hashlib=hashlib, shutil=shutil, time=__import__('time'), re=re, sha=sha, REPO_COMMIT=commit, D2_RUN_ROOTS=dict(roots), STAGE_LOCAL=staged, STAGE_ROOT=str(tmp_path / 'stage'), MT=mt, PHASEB=pb, PHASEC=f'{mt}/phaseC', SCRIPT=f'{pb}/d/d2w_cases.py', INV=f'{pb}/B2_completion_inventory.json',
-              LEDGER=f'{pb}/registered_assets/d2/d2_generation_ledger.json', ASSET=f'{pb}/registered_assets/b3_2_shared_null_asset.json', PINS=f'{pb}/d/d3_pins.json', OUT=str(out), RAM_INFO=dict(total_bytes=1))
-    ns['inv'] = json.load(open(ns['INV']))
+    return roots
+
+
+PRE_CASES = ['symlink_before_preflight', 'out_inside_input', 'out_inside_source', 'out_inside_phasec', 'out_inside_stage', 'out_is_file', 'out_with_foreign_file', 'out_with_symlink_entry', 'out_new_ok', 'out_empty_ok', 'out_owned_ok']
+
+
+@pytest.mark.parametrize('kind,case', [('w2', c) for c in PRE_CASES] + [('pseudo', c) for c in PRE_CASES if c not in ('out_inside_stage', 'out_inside_input')])
+def test_preflight_output_policy_refuses_before_any_write(tmp_path, kind, case):
+    """R-D4C0-B: the preflight validates OUT BEFORE the first mkdir / lock publication; on refusal no member of the destination (or of the symlink target) changes and no lock exists."""
+    commit = 'a' * 40
+    if kind == 'w2': mt, pb = _fake_source_d2w(tmp_path / 'scratch'); roots = _make_roots(tmp_path); lock_src, _ = _lock_src(NB_D2W); lock_name = 'd2w_lock.json'
+    else: mt, pb = _fake_source_pse(tmp_path / 'scratch'); roots = {}; lock_src, _ = _lock_src(NB_PSE); lock_name = 'd4_pseudo_lock.json'
+    out = tmp_path / 'out'; target = None
+    if case == 'symlink_before_preflight': target = tmp_path / 'in_E2' if kind == 'w2' else tmp_path / 'protected'; target.mkdir(exist_ok=True); (target / 'sentinel.npz').write_bytes(b'S' * 100); os.symlink(target, out)
+    if case == 'out_inside_input': out = tmp_path / 'in_E2' / 'x_out'
+    if case == 'out_inside_source': out = os.path.join(pb, 'd', 'x_out')
+    if case == 'out_inside_phasec': out = os.path.join(mt, 'phaseC', 'x_out')
+    if case == 'out_inside_stage': out = tmp_path / 'stage' / 'x_out'
+    if case == 'out_is_file': out.write_text('not a directory')
+    if case == 'out_with_foreign_file': out.mkdir(); (out / 'foreign.npz').write_bytes(b'F')
+    if case == 'out_with_symlink_entry': out.mkdir(); os.symlink(tmp_path, out / 'run_20260101T000000Z_0123456789')
+    if case == 'out_empty_ok': out.mkdir()
+    if case == 'out_owned_ok': out.mkdir(); (out / lock_name).write_text('{}'); (out / ('d2w_final_record.json' if kind == 'w2' else 'd4_pseudo_final_record.json')).write_text('{}'); (out / 'run_20260101T000000Z_0123456789').mkdir(); (out / 'superseded_final_record_before_20260101T000000Z_0123456789.json').write_text('{}')
+    ns = _ns_d2w(tmp_path, commit, mt, pb, str(out), roots, False) if kind == 'w2' else _ns_pse(tmp_path, commit, mt, pb, str(out))
+    protected_before = {q: _tree_state(q) for q in [mt, *roots.values(), *( [str(target)] if target else [])]}; out_before = _tree_state(str(out)) if os.path.isdir(out) and not os.path.islink(out) else None
+    with contextlib.redirect_stdout(io.StringIO()):
+        if case.endswith('_ok'):
+            exec(compile(lock_src, 'nb_cell2_anchor', 'exec'), ns); assert os.path.isfile(ns['LOCK_PATH']) and ns['OUT'] == os.path.abspath(str(out)) and sha(ns['LOCK_PATH']) == ns['LOCK_SHA256']; return
+        with pytest.raises(RuntimeError, match='unsafe output'): exec(compile(lock_src, 'nb_cell2_anchor', 'exec'), ns)
+    assert 'LOCK_PATH' not in ns and 'lock' not in ns
+    assert {q: _tree_state(q) for q in protected_before} == protected_before                              # nothing written into the inputs / source / symlink target
+    if out_before is not None: assert _tree_state(str(out)) == out_before
+    if case in ('out_inside_source', 'out_inside_phasec', 'out_inside_input', 'out_inside_stage'): assert not os.path.exists(out)
+    if case == 'out_is_file': assert out.read_text() == 'not a directory'
+    if case == 'symlink_before_preflight': assert 'sentinel.npz' in os.listdir(target) and not any(n.endswith('lock.json') for n in os.listdir(target)) and os.path.islink(out)
+
+
+@pytest.mark.parametrize('case', NB_CASES)
+def test_d2w_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path, case):
+    lock_src, c3 = _lock_src(NB_D2W); commit = 'a' * 40; mt, pb = _fake_source_d2w(tmp_path / 'scratch'); out = tmp_path / 'out'; out.mkdir(); roots = _make_roots(tmp_path); staged = case in STAGED
+    if case == 'script_required_changed': s = open(f'{pb}/d/d2w_cases.py').read(); open(f'{pb}/d/d2w_cases.py', 'w').write(s.replace('"G_records_restored", ', '')); inv = json.load(open(f'{pb}/B2_completion_inventory.json')); inv['d_sha256']['d/d2w_cases.py'] = sha(f'{pb}/d/d2w_cases.py'); open(f'{pb}/B2_completion_inventory.json', 'w').write(json.dumps(inv))
+    ns = _ns_d2w(tmp_path, commit, mt, pb, out, roots, staged); REQ = _ast_required('d2w_cases.py'); assert len(REQ) == 13
     with contextlib.redirect_stdout(io.StringIO()): exec(compile(lock_src, 'nb_cell2_lock', 'exec'), ns)
     lock = ns['lock']; lock_sha = ns['LOCK_SHA256']; assert sha(ns['LOCK_PATH']) == lock_sha and lock['stage_local'] is staged and lock['schema'] == 'd2w_launcher_lock_v1'
     old = dict(schema='TEST_ONLY_old', d2w_pass=True, stage='complete', attempt_id='OLD_ATTEMPT')
@@ -337,6 +410,7 @@ def test_d2w_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path, cas
     if case == 'script_changed': open(ns['SCRIPT'], 'a').write('# changed after the lock\n')
     if case == 'lock_file_changed': open(ns['LOCK_PATH'], 'a').write('\n')
     if case == 'anchor_symlink': link_target = tmp_path / 'anchor_target'; shutil.move(str(out), str(link_target)); os.symlink(link_target, out)
+    if case == 'anchor_foreign_file': (out / 'foreign.bin').write_bytes(b'F')
     git = dict(head=('b' * 40 if case == 'commit_changed' else commit), dirty='')
     n_copies = [0]
     def copytree_then_mutate(src, dst, **kw):
@@ -351,58 +425,85 @@ def test_d2w_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path, cas
         run_dir = args[args.index('--out') + 1]; att = args[args.index('--attempt-id') + 1]; lk = args[args.index('--launcher-lock-sha256') + 1]; os.makedirs(os.path.join(run_dir, 'cases'))
         keys = [f'{f}/{s}' for f in ('E2', 'E7', 'E8') for s in ('L1.00', 'L1.20', 'L1.50')]
         if case == 'fewer_cases': keys = keys[:8]
-        pe = {}; cases = {}
+        if case == 'wrong_case_set': keys[-1] = 'E1/L1.50'
+        pe = {}; cases = {}; crs = {}
         for k in keys:
-            fn = f"d2w_case_{k.replace('/', '_')}.json"; data = json.dumps(dict(schema='TEST_ONLY_case', key=k)).encode(); open(os.path.join(run_dir, 'cases', fn), 'wb').write(data); pe[fn] = dict(sha256=hashlib.sha256(data).hexdigest(), bytes=len(data)); cases[k] = dict(trigger='unknown', validation_state='w2-unresolved', B_final=400, manifest_sha256='m' * 64, result_sha256='r' * 64)
-        data = json.dumps(dict(schema='TEST_ONLY_context')).encode(); open(os.path.join(run_dir, 'd2w_context_record.json'), 'wb').write(data); pe['d2w_context_record.json'] = dict(sha256=hashlib.sha256(data).hexdigest(), bytes=len(data))
+            fam, sz = k.split('/'); msha = hashlib.sha256(f'm{k}'.encode()).hexdigest(); rsha = hashlib.sha256(f'r{k}'.encode()).hexdigest(); outcome = dict(trigger=('unknown' if (case == 'unresolved_ok' or k != 'E2/L1.00') else False), validation_state=('w2-unresolved' if (case == 'unresolved_ok' or k != 'E2/L1.00') else 'w2-validated'), B_final=400)
+            doc = dict(schema='d2w_case_record_v1', key=k, family=fam, size_id=sz, asset_sha256='s' * 64, manifest={'TEST_ONLY': True}, manifest_sha256=msha, result={'TEST_ONLY': True}, result_sha256=rsha, decision=dict(outcome, checksum='k' * 64), inputs=dict(formal=True), constants={})
+            if case == 'rehashed_case_evidence' and k == 'E7/L1.20': doc['manifest_sha256'] = 'f' * 64                          # file re-written and re-hashed consistently with the published SHA, but no longer bound to the run summary
+            fn = f"d2w_case_{k.replace('/', '_')}.json"; data = json.dumps(doc).encode(); open(os.path.join(run_dir, 'cases', fn), 'wb').write(data); pe[fn] = dict(sha256=hashlib.sha256(data).hexdigest(), bytes=len(data))
+            cases[k] = dict(outcome, manifest_sha256=msha, result_sha256=rsha); crs[k] = dict(manifest_sha256=msha, result_sha256=rsha, decision_checksum='k' * 64, **outcome)
+        if case == 'case_summary_mismatch': cases['E8/L1.50']['B_final'] = 1000
+        ctx = dict(schema='d2w_context_record_v1', asset_sha256='s' * 64, context_sha256='c' * 64, scope='TEST', summary={}, case_records=(crs if case != 'rehashed_context_evidence' else {k: v for k, v in crs.items() if k != 'E2/L1.20'}), shared_null={}, n_cases=(9 if case != 'rehashed_context_evidence' else 8))
+        data = json.dumps(ctx).encode(); open(os.path.join(run_dir, 'd2w_context_record.json'), 'wb').write(data); pe['d2w_context_record.json'] = dict(sha256=hashlib.sha256(data).hexdigest(), bytes=len(data))
         if case == 'evidence_tampered': open(os.path.join(run_dir, 'cases', 'd2w_case_E7_L1.20.json'), 'ab').write(b' ')
         if case == 'evidence_missing': os.remove(os.path.join(run_dir, 'd2w_context_record.json'))
-        rec = dict(schema='d2w_run_record_v1', stage='complete', failures=[], selftest=False, profile='production_official', attempt=dict(attempt_id=('OTHER' if case == 'result_attempt_mismatch' else att), launcher_lock_sha256=lk), source=dict(script_sha256=('0' * 64 if case == 'result_source_mismatch' else lock['script_sha256']), inventory_sha256=lock['inventory_sha256'], pins_sha256=lock['pins_sha256'], engine_version=lock['engine']),
-                   gates={'G_x': True}, stages_rss_mb=dict(final=1.0), stages_peak_rss_mb=dict(final=1.0), seconds=1.5, context=dict(context_sha256='c' * 64, asset_sha256='s' * 64, cases=cases), published_evidence=pe, D2W_PASS=(case != 'pass_false'))
+        gates = {k: True for k in REQ}
+        if case == 'false_required_gate': gates['G_env_lock'] = False
+        if case == 'missing_required_gate': gates.pop('G_env_lock')
+        if case == 'empty_gates': gates = {}
+        if case == 'extra_gate': gates['G_extra'] = True
+        rec = dict(schema=('TEST_ONLY wrong schema' if case == 'wrong_schema' else 'd2w_run_record_v1'), stage=('exception' if case == 'exception_stage' else 'complete'), failures=(['TEST_ONLY recorded failure'] if case in ('exception_stage', 'nonempty_failures') else []), selftest=(case == 'selftest_true'), profile='production_official',
+                   attempt=dict(attempt_id=('OTHER' if case == 'result_attempt_mismatch' else att), launcher_lock_sha256=lk), source=dict(script_sha256=('0' * 64 if case == 'result_source_mismatch' else lock['script_sha256']), inventory_sha256=lock['inventory_sha256'], pins_sha256=lock['pins_sha256'], engine_version=lock['engine']),
+                   gates=gates, required_inventory=(REQ[:-1] if case == 'required_inventory_mismatch' else ([] if case == 'empty_gates' else list(REQ))), required_all_true=(case not in ('false_required_gate', 'required_all_true_false', 'empty_gates')), stages_rss_mb=dict(final=1.0), stages_peak_rss_mb=dict(final=1.0), seconds=1.5, context=dict(context_sha256='c' * 64, asset_sha256='s' * 64, cases=cases), published_evidence=pe, D2W_PASS=(case != 'pass_false'))
         if case != 'missing_record': open(os.path.join(run_dir, 'd2w_run_record.json'), 'w').write(json.dumps(rec))
         class R: returncode = 1 if case == 'rc1' else 0; stdout = 'TEST'; stderr = ''
         return R()
     ns['subprocess'] = type('SP', (), dict(check_output=staticmethod(check_output), run=staticmethod(run)))
     ns['shutil'] = type('SH', (), dict(copytree=staticmethod(copytree_then_mutate), copy2=staticmethod(shutil.copy2), rmtree=staticmethod(shutil.rmtree), disk_usage=staticmethod(lambda p: type('DU', (), dict(free=(0 if case == 'disk_insufficient' else 10**12)))())))
     buf = io.StringIO()
-    if case == 'anchor_symlink':
+    if case in ('anchor_symlink', 'anchor_foreign_file'):
         with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()), pytest.raises(RuntimeError): exec(compile(c3, 'nb_cell3', 'exec'), ns)
-        assert not os.path.exists(link_target / 'd2w_final_record.json') and sorted(os.listdir(link_target)) == ['d2w_lock.json'] and calls == []; return
+        if case == 'anchor_symlink': assert sorted(os.listdir(link_target)) == ['d2w_lock.json'] and calls == []
+        else: assert sorted(os.listdir(out)) == ['d2w_lock.json', 'foreign.bin'] and calls == []
+        return
     with contextlib.redirect_stdout(buf): exec(compile(c3, 'nb_cell3', 'exec'), ns)
-    fin = json.load(open(out / 'd2w_final_record.json')); assert fin['schema'] == 'd2w_launcher_final_record_v1' and fin['lock_sha256'] == lock_sha and fin['attempt_id'] == ns['ATTEMPT'] and fin['output_anchor'] == str(out)
+    fin = json.load(open(out / 'd2w_final_record.json')); assert fin['schema'] == 'd2w_launcher_final_record_v2' and fin['lock_sha256'] == lock_sha and fin['attempt_id'] == ns['ATTEMPT'] and fin['output_anchor'] == str(out)
     if case in NO_LAUNCH: assert calls == [] and fin['d2w_pass'] is False and fin['failures'] and fin['exception']; return
     if case == 'launch_failure': assert fin['d2w_pass'] is False and fin['stage'] == 'launch'; return
     assert len(calls) == 1 and calls[0][1] == ns['SCRIPT'] and '--selftest-small' not in calls[0] and calls[0][calls[0].index('--attempt-id') + 1] == ns['ATTEMPT'] and sorted(x.split('=')[0] for x in calls[0] if '=' in x and x.split('=')[0] in ('E2', 'E7', 'E8')) == ['E2', 'E7', 'E8']
     if staged: assert all(x.split('=', 1)[1].startswith(str(tmp_path / 'stage')) for x in calls[0] if x.startswith(('E2=', 'E7=', 'E8='))) and fin['staging']['units'] == dict(E2=1, E7=1, E8=1) and fin['staging']['input_bytes'] == 3 * (1000 + 2) and not os.path.exists(tmp_path / 'stage' / 'd2_E2' / 'cfg20101_b0')
     else: assert all(x.split('=', 1)[1] == roots[x[:2]] for x in calls[0] if x.startswith(('E2=', 'E7=', 'E8=')))
-    if case in ('ok', 'staged_ok', 'retry_after_old_success'):
-        assert fin['d2w_pass'] is True and fin['failures'] == [] and fin['D2W_PASS'] is True and fin['bindings_ok'] is True and fin['evidence_ok'] is True and fin['launcher_fallback'] is False and len(fin['case_outcomes']) == 9 and set(fin['bindings']) == {'live_source_precheck', 'live_source_prelaunch'}
+    if case in ('ok', 'staged_ok', 'retry_after_old_success', 'unresolved_ok'):
+        assert fin['d2w_pass'] is True and fin['failures'] == [] and fin['D2W_PASS'] is True and fin['gates_ok'] is True and fin['bindings_ok'] is True and fin['evidence_ok'] is True and fin['launcher_fallback'] is False and len(fin['case_outcomes']) == 9 and set(fin['bindings']) == {'live_source_precheck', 'live_source_prelaunch'}
+        if case == 'unresolved_ok': assert all(c['validation_state'] == 'w2-unresolved' and c['trigger'] == 'unknown' for c in fin['case_outcomes'].values())      # scientific unresolved is NOT a technical failure
         if case == 'retry_after_old_success': assert json.load(open(fin['superseded_previous_record'])) == old and fin['attempt_id'] != 'OLD_ATTEMPT'
         return
-    assert fin['d2w_pass'] is False
+    assert fin['d2w_pass'] is False, case
     if case == 'pass_false': assert fin['D2W_PASS'] is False and fin['failures'] == []
-    if case == 'rc1': assert fin['exit_code'] == 1 and fin['D2W_PASS'] is True
-    if case == 'missing_record': assert fin['launcher_fallback'] is True and fin['bindings_ok'] is None
-    if case in ('evidence_tampered', 'evidence_missing', 'fewer_cases'): assert fin['evidence_ok'] is False and fin['bindings_ok'] is True
-    if case in ('result_attempt_mismatch', 'result_source_mismatch'): assert fin['bindings_ok'] is False and fin['evidence_ok'] is True
+    if case == 'rc1': assert fin['exit_code'] == 1 and fin['D2W_PASS'] is True and fin['gates_ok'] is True
+    if case == 'missing_record': assert fin['launcher_fallback'] is True and fin['bindings_ok'] is None and fin['gates_ok'] is None
+    if case in SHAPE_CASES - {'missing_record'}: assert fin['launcher_fallback'] is True and any('field invalid' in f for f in fin['failures'])
+    if case in GATE_CASES: assert fin['gates_ok'] is False and fin['launcher_fallback'] is False and fin['bindings_ok'] is True and fin['evidence_ok'] is True
+    if case in EVIDENCE_CASES: assert fin['evidence_ok'] is False and fin['bindings_ok'] is True and fin['gates_ok'] is True and fin['launcher_fallback'] is False
+    if case in ('result_attempt_mismatch', 'result_source_mismatch'): assert fin['bindings_ok'] is False and fin['evidence_ok'] is True and fin['gates_ok'] is True
 
 
-PSE_CASES = ['ok', 'retry_after_old_success', 'pass_false', 'rc1', 'missing_record', 'commit_changed', 'table_changed', 'lock_file_changed', 'anchor_symlink', 'columns_tampered', 'columns_small_n', 'result_attempt_mismatch', 'table_sha_mismatch', 'launch_failure']
+PSE_CASES = ['ok', 'retry_after_old_success', 'pass_false', 'rc1', 'missing_record', 'commit_changed', 'table_changed', 'lock_file_changed', 'anchor_symlink', 'anchor_foreign_file', 'columns_tampered', 'columns_small_n', 'generation_small_n', 'uid_endpoints', 'result_attempt_mismatch', 'table_sha_mismatch', 'table_n_mismatch', 'launch_failure',
+             'false_required_gate', 'missing_required_gate', 'empty_gates', 'extra_gate', 'required_inventory_mismatch', 'required_all_true_false', 'exception_stage', 'nonempty_failures', 'wrong_schema', 'selftest_true', 'script_required_changed']
+PSE_GATE = {'false_required_gate', 'missing_required_gate', 'empty_gates', 'extra_gate', 'required_inventory_mismatch', 'required_all_true_false', 'script_required_changed'}
+PSE_SHAPE = {'exception_stage', 'nonempty_failures', 'wrong_schema', 'selftest_true'}
+PSE_EVID = {'columns_tampered', 'columns_small_n', 'generation_small_n', 'uid_endpoints'}
+PSE_BIND = {'result_attempt_mismatch', 'table_sha_mismatch', 'table_n_mismatch'}
 
 
 def _fake_source_pse(root):
     pb = root / 'engine' / 'phaseB'; (pb / 'd').mkdir(parents=True); (root / 'phaseC').mkdir()
-    (pb / 'd' / 'd4_pseudo.py').write_text('# TEST_ONLY script stand-in\n'); (pb / 'd' / 'd3_pins.json').write_text(json.dumps(dict(schema='d3_pins_v1', d4_pseudo_table_sha256='t' * 64))); (pb / 'd' / 'd4_pseudo_table.json').write_text(json.dumps(dict(table_sha256='t' * 64, n_pseudo=2000, m=1)))
+    shutil.copy(PSE, pb / 'd' / 'd4_pseudo.py'); (pb / 'd' / 'd3_pins.json').write_text(json.dumps(dict(schema='d3_pins_v1', d4_pseudo_table_sha256='t' * 64))); (pb / 'd' / 'd4_pseudo_table.json').write_text(json.dumps(dict(table_sha256='t' * 64, n_pseudo=2000, m=1)))
     inv = dict(engine_version='0.0.0-TEST', d_sha256={'d/d4_pseudo.py': sha(pb / 'd' / 'd4_pseudo.py'), 'd/d3_pins.json': sha(pb / 'd' / 'd3_pins.json'), 'd/d4_pseudo_table.json': sha(pb / 'd' / 'd4_pseudo_table.json')})
     (pb / 'B2_completion_inventory.json').write_text(json.dumps(inv)); return str(root), str(pb)
 
 
+def _ns_pse(tmp_path, commit, mt, pb, out):
+    return dict(sys=sys, os=os, json=json, hashlib=hashlib, shutil=shutil, time=__import__('time'), re=re, sha=sha, REPO_COMMIT=commit, MT=mt, PHASEB=pb, PHASEC=f'{mt}/phaseC', SCRIPT=f'{pb}/d/d4_pseudo.py', INV=f'{pb}/B2_completion_inventory.json', TABLE=f'{pb}/d/d4_pseudo_table.json', PINS=f'{pb}/d/d3_pins.json', OUT=str(out), RAM_INFO=dict(total_bytes=1),
+                inv=json.load(open(f'{pb}/B2_completion_inventory.json')), table=json.load(open(f'{pb}/d/d4_pseudo_table.json')))
+
+
 @pytest.mark.parametrize('case', PSE_CASES)
 def test_pseudo_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path, case):
-    nb = json.load(open(NB_PSE)); c2 = ''.join(nb['cells'][2]['source']); c3 = ''.join(nb['cells'][3]['source']); lock_src = c2[c2.index('# LOCK-BUILD'):]
-    commit = 'a' * 40; mt, pb = _fake_source_pse(tmp_path / 'scratch'); out = tmp_path / 'out'; out.mkdir()
-    ns = dict(sys=sys, os=os, json=json, hashlib=hashlib, shutil=shutil, time=__import__('time'), re=re, sha=sha, REPO_COMMIT=commit, MT=mt, PHASEB=pb, PHASEC=f'{mt}/phaseC', SCRIPT=f'{pb}/d/d4_pseudo.py', INV=f'{pb}/B2_completion_inventory.json', TABLE=f'{pb}/d/d4_pseudo_table.json', PINS=f'{pb}/d/d3_pins.json', OUT=str(out), RAM_INFO=dict(total_bytes=1))
-    ns['inv'] = json.load(open(ns['INV'])); ns['table'] = json.load(open(ns['TABLE']))
+    lock_src, c3 = _lock_src(NB_PSE); commit = 'a' * 40; mt, pb = _fake_source_pse(tmp_path / 'scratch'); out = tmp_path / 'out'; out.mkdir()
+    if case == 'script_required_changed': s = open(f'{pb}/d/d4_pseudo.py').read(); open(f'{pb}/d/d4_pseudo.py', 'w').write(s.replace('"G_columns_verified", ', '')); inv = json.load(open(f'{pb}/B2_completion_inventory.json')); inv['d_sha256']['d/d4_pseudo.py'] = sha(f'{pb}/d/d4_pseudo.py'); open(f'{pb}/B2_completion_inventory.json', 'w').write(json.dumps(inv))
+    ns = _ns_pse(tmp_path, commit, mt, pb, out); REQ = _ast_required('d4_pseudo.py'); assert len(REQ) == 10
     with contextlib.redirect_stdout(io.StringIO()): exec(compile(lock_src, 'nb_cell2_lock', 'exec'), ns)
     lock = ns['lock']; lock_sha = ns['LOCK_SHA256']; assert sha(ns['LOCK_PATH']) == lock_sha and lock['schema'] == 'd4_pseudo_launcher_lock_v1' and lock['table_sha256'] == 't' * 64
     old = dict(schema='TEST_ONLY_old', pseudo_pass=True, stage='complete', attempt_id='OLD_ATTEMPT')
@@ -410,6 +511,7 @@ def test_pseudo_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path, 
     if case == 'table_changed': open(ns['TABLE'], 'a').write('\n')
     if case == 'lock_file_changed': open(ns['LOCK_PATH'], 'a').write('\n')
     if case == 'anchor_symlink': link_target = tmp_path / 'anchor_target'; shutil.move(str(out), str(link_target)); os.symlink(link_target, out)
+    if case == 'anchor_foreign_file': (out / 'foreign.bin').write_bytes(b'F')
     git = dict(head=('b' * 40 if case == 'commit_changed' else commit), dirty=''); calls = []
     def check_output(args, **kw): return (git['head'] if 'rev-parse' in args else git['dirty']) + '\n'
     def run(args, **kw):
@@ -418,29 +520,40 @@ def test_pseudo_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path, 
         run_dir = args[args.index('--out') + 1]; att = args[args.index('--attempt-id') + 1]; lk = args[args.index('--launcher-lock-sha256') + 1]; os.makedirs(run_dir)
         data = b'TEST_ONLY_NPZ'; open(os.path.join(run_dir, 'd4_pseudo_columns.npz'), 'wb').write(data); fe = dict(file='d4_pseudo_columns.npz', sha256=hashlib.sha256(data).hexdigest(), bytes=len(data))
         if case == 'columns_tampered': open(os.path.join(run_dir, 'd4_pseudo_columns.npz'), 'ab').write(b' ')
-        idn = dict(n=(50 if case == 'columns_small_n' else 2000), m=1, paired_sha256='p' * 64)
-        rec = dict(schema='d4_pseudo_record_v1', stage='complete', failures=[], selftest=False, profile='production_official', attempt=dict(attempt_id=('OTHER' if case == 'result_attempt_mismatch' else att), launcher_lock_sha256=lk), source=dict(script_sha256=lock['script_sha256'], inventory_sha256=lock['inventory_sha256'], pins_sha256=lock['pins_sha256'], engine_version=lock['engine']),
-                   gates={'G_x': True}, stages_rss_mb=dict(final=1.0), stages_peak_rss_mb=dict(final=1.0), seconds=1.5, pseudo_table=dict(table_sha256=('u' * 64 if case == 'table_sha_mismatch' else 't' * 64)), columns=dict(identity=idn, file=fe), PSEUDO_PASS=(case != 'pass_false'))
+        idn = dict(n=(50 if case == 'columns_small_n' else 2000), m=1, paired_sha256='p' * 64, first_uid=[1, 400, 5001, 0, 0], last_uid=([1, 400, 5001, 0, 49] if case == 'uid_endpoints' else [1, 400, 5001, 0, 1999]))
+        gates = {k: True for k in REQ}
+        if case == 'false_required_gate': gates['G_env_lock'] = False
+        if case == 'missing_required_gate': gates.pop('G_env_lock')
+        if case == 'empty_gates': gates = {}
+        if case == 'extra_gate': gates['G_extra'] = True
+        rec = dict(schema=('TEST_ONLY wrong schema' if case == 'wrong_schema' else 'd4_pseudo_record_v1'), stage=('exception' if case == 'exception_stage' else 'complete'), failures=(['TEST_ONLY recorded failure'] if case in ('exception_stage', 'nonempty_failures') else []), selftest=(case == 'selftest_true'), profile='production_official',
+                   attempt=dict(attempt_id=('OTHER' if case == 'result_attempt_mismatch' else att), launcher_lock_sha256=lk), source=dict(script_sha256=lock['script_sha256'], inventory_sha256=lock['inventory_sha256'], pins_sha256=lock['pins_sha256'], engine_version=lock['engine']),
+                   gates=gates, required_inventory=(REQ[:-1] if case == 'required_inventory_mismatch' else ([] if case == 'empty_gates' else list(REQ))), required_all_true=(case not in ('false_required_gate', 'required_all_true_false', 'empty_gates')), stages_rss_mb=dict(final=1.0), stages_peak_rss_mb=dict(final=1.0), seconds=1.5,
+                   pseudo_table=dict(table_sha256=('u' * 64 if case == 'table_sha_mismatch' else 't' * 64), n_pseudo=(1999 if case == 'table_n_mismatch' else 2000), m=1), generation=dict(n=(50 if case == 'generation_small_n' else 2000), m=1), columns=dict(identity=idn, file=fe), PSEUDO_PASS=(case != 'pass_false'))
         if case != 'missing_record': open(os.path.join(run_dir, 'd4_pseudo_record.json'), 'w').write(json.dumps(rec))
         class R: returncode = 1 if case == 'rc1' else 0; stdout = 'TEST'; stderr = ''
         return R()
     ns['subprocess'] = type('SP', (), dict(check_output=staticmethod(check_output), run=staticmethod(run)))
     buf = io.StringIO()
-    if case == 'anchor_symlink':
+    if case in ('anchor_symlink', 'anchor_foreign_file'):
         with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()), pytest.raises(RuntimeError): exec(compile(c3, 'nb_cell3', 'exec'), ns)
-        assert sorted(os.listdir(link_target)) == ['d4_pseudo_lock.json'] and calls == []; return
+        if case == 'anchor_symlink': assert sorted(os.listdir(link_target)) == ['d4_pseudo_lock.json'] and calls == []
+        else: assert sorted(os.listdir(out)) == ['d4_pseudo_lock.json', 'foreign.bin'] and calls == []
+        return
     with contextlib.redirect_stdout(buf): exec(compile(c3, 'nb_cell3', 'exec'), ns)
-    fin = json.load(open(out / 'd4_pseudo_final_record.json')); assert fin['schema'] == 'd4_pseudo_launcher_final_record_v1' and fin['lock_sha256'] == lock_sha and fin['attempt_id'] == ns['ATTEMPT']
+    fin = json.load(open(out / 'd4_pseudo_final_record.json')); assert fin['schema'] == 'd4_pseudo_launcher_final_record_v2' and fin['lock_sha256'] == lock_sha and fin['attempt_id'] == ns['ATTEMPT']
     if case in ('commit_changed', 'table_changed', 'lock_file_changed'): assert calls == [] and fin['pseudo_pass'] is False and fin['exception']; return
     if case == 'launch_failure': assert fin['pseudo_pass'] is False and fin['stage'] == 'launch'; return
     assert len(calls) == 1 and '--selftest-n' not in calls[0] and calls[0][calls[0].index('--attempt-id') + 1] == ns['ATTEMPT'] and set(fin['bindings']) == {'live_source_precheck', 'live_source_prelaunch'}
     if case in ('ok', 'retry_after_old_success'):
-        assert fin['pseudo_pass'] is True and fin['failures'] == [] and fin['bindings_ok'] is True and fin['evidence_ok'] is True and fin['columns_identity']['n'] == 2000
+        assert fin['pseudo_pass'] is True and fin['failures'] == [] and fin['gates_ok'] is True and fin['bindings_ok'] is True and fin['evidence_ok'] is True and fin['columns_identity']['n'] == 2000
         if case == 'retry_after_old_success': assert json.load(open(fin['superseded_previous_record'])) == old
         return
-    assert fin['pseudo_pass'] is False
+    assert fin['pseudo_pass'] is False, case
     if case == 'pass_false': assert fin['PSEUDO_PASS'] is False and fin['failures'] == []
-    if case == 'rc1': assert fin['exit_code'] == 1
-    if case == 'missing_record': assert fin['launcher_fallback'] is True
-    if case in ('columns_tampered', 'columns_small_n'): assert fin['evidence_ok'] is False and fin['bindings_ok'] is True
-    if case in ('result_attempt_mismatch', 'table_sha_mismatch'): assert fin['bindings_ok'] is False
+    if case == 'rc1': assert fin['exit_code'] == 1 and fin['gates_ok'] is True
+    if case == 'missing_record': assert fin['launcher_fallback'] is True and fin['gates_ok'] is None
+    if case in PSE_SHAPE: assert fin['launcher_fallback'] is True
+    if case in PSE_GATE: assert fin['gates_ok'] is False and fin['launcher_fallback'] is False and fin['bindings_ok'] is True and fin['evidence_ok'] is True
+    if case in PSE_EVID: assert fin['evidence_ok'] is False and fin['bindings_ok'] is True and fin['gates_ok'] is True
+    if case in PSE_BIND: assert fin['bindings_ok'] is False and fin['gates_ok'] is True
