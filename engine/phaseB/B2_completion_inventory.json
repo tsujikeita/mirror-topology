@@ -1,12 +1,12 @@
 {
- "engine_version": "0.101.0",
+ "engine_version": "0.102.0",
  "modules": {
-  "__init__.py": "e93f2191c54e884acb289ba2be9c162bf01da380a05f230eb9108f6d8c32dd86",
+  "__init__.py": "0bd63b808cc21896fa5d217f6f0b5f69cb7963ab62dba87214e302230407ee10",
   "archive.py": "354e75e3f89e3477c4b1bd05e7423ddd735431984bb27301cf3d60162cedeee6",
   "bootstrap_plan.py": "6941a7ac19fddfd9d3ca465632e3c68f18809d55e8e82cefa0a206fac2dcd3f7",
   "calibration.py": "1cc25d502021025191f3181b454b999555998884964f3c3dfe915bc9e0db18ea",
   "calibration_first.py": "e024c44de07597866124bba558a0634b3832d6a6fbd9a7b44de207e463a572a1",
-  "checkpoint.py": "0299ac33a8f9cfdea85d4e6e768144adb209b9837a78f5e20ddacc362f72a8ed",
+  "checkpoint.py": "27ec98b85c416879c59a857145efe591706c5b985e561679d2b65d5f34723f1c",
   "ci.py": "6703257bcd9337a0b07eb440f9096c46a7cc8d51ac7e1c4056f2f7b043a8f597",
   "ckpt_persist.py": "438eeaa162d4cf276e537941350da64b02c46f2e76eb7462309405652153d428",
   "controls.py": "8e330c7fdd68533cb9c2668983f171d3b1ed48dd4755eefcdee1c95e358de848",
@@ -19,6 +19,7 @@
   "d3_stage.py": "01b231285e4045dd899d3e357e641fd694b212563d9ed1b680fa5c7db0902d01",
   "d3b_ledger.py": "db510c9519e6cad32e61a2746518ebe703b91ce32cb9ebf08812f6c53113f40c",
   "d3c_ledger.py": "68d2b2845254e86bd2af8d008417ccc2deca5dfb9bfbcbf8f1b8f4687a28243d",
+  "d4_pseudo.py": "d3336b3b5fada45ba8be0672186f8b20c4763206388c21c25e1f836d3c25a46e",
   "decision.py": "9bd01a136ea6b4a3a51db0fe20e3552058a91b8558d7b041d0ec37aefd786f88",
   "density.py": "c1273a0723b3c9501d6625f689367c1e4463f6289dbeb1e150774197dc796735",
   "errors.py": "8dcb6c4c165b6e094ce5f5696e236452a7a51d9ca7b840f5e36b704443f2011e",
@@ -36,7 +37,7 @@
   "performance.py": "c56665ffdeca9df815f0d0792099658152379b8d2d1d43a5a2ab9a0ea27ec79a",
   "plan_io.py": "c3bc4b720812e6cd2433853246460483656ec6e2195c3d3fd9555c5fd1a1a849",
   "position_state.py": "42e3cdb38f3ca22209ff6c6a5b3b46e526d5617737bd1d45124fcbf5847a0130",
-  "positions.py": "8f640eb7d620c2d0bd3eb0fe31ded2e453cc47c839de435644854afc8e499432",
+  "positions.py": "b1f073ff1fe99f02f407c1f16778c6744881772d7b1f20fc0059ee1d5d4e266a",
   "precision.py": "481be9ad5f3b3e7cbda97e1ba5225e9608f5ce8040dfaf0469e8d105765f879a",
   "production.py": "5fae15fc252fea532e36daec7e09ada7ecade6f6c090a5d84a89a89e8060d993",
   "quantity.py": "f817dc9ddca575bdcc35287cae7d2da87baf5c1e4368b784b0dbe7963914a3d1",
@@ -50,6 +51,7 @@
   "twelve_assets.py": "550781567142579fc8cb6a4a690afa7b3831fdcc7b51745b39f365a71eb6cc8e",
   "twelve_eval.py": "721ec152e4ed9b1b5612fb75afdafd45d2f7963a69ed343a35b44472391b1f49",
   "types.py": "e45f60319fad4449b4148d10edc497e336f72d936b5a107154707ab73c856fe4",
+  "w2_cases.py": "d8e6e8daf27cd787abc29e0745c328f6a618a0374371294340373118850f7698",
   "w2_context.py": "6e51282a30a9665e82125ed4899f2d3386351d4e096181625d2d6c35c98b5a2d",
   "w2_manifest.py": "41116d3f483b238d1ebc33f189697232bb2cb6552853397b061b6de186697528",
   "w2_shared.py": "150fdb9f1244a474af03118db24f7641470632e7020d655a998b78f7d3065900",
@@ -171,9 +173,10 @@
   "test_d3c_tranche2.py": 3,
   "test_d4_calibration_first.py": 2,
   "test_d4_intake.py": 5,
-  "test_d4_run_reader.py": 8
+  "test_d4_run_reader.py": 8,
+  "test_d4c0.py": 13
  },
- "total_test_functions": 990,
+ "total_test_functions": 1003,
  "tests_sha256": {
   "test_audit_b2_tranche10_chatgpt.py": "304ee655483cc9780e9bf778fb2aa659b6eb6ab017c69b01481db6f56efe2603",
   "test_audit_b2_tranche11_chatgpt.py": "d1aaa931fab2572a9ac8f007bde23bc426f4071f0e1054356ead14061f4f5c4a",
@@ -289,7 +292,8 @@
   "test_d3c_tranche2.py": "27c21e109361fc8e95269dfce7bbc58e58bb997ebd95efb6217374807db33fcb",
   "test_d4_calibration_first.py": "36acfbdc12263adad1cd49727f1d70c65a06f224de12cfe371dae578386d5656",
   "test_d4_intake.py": "38fb82bbe28f11efb480326e5cf182fda63ee56766b2bb1161d338f7a4bb9104",
-  "test_d4_run_reader.py": "1075375688d89b0fe2dcd6c3625032db89ec1eeca3fd5b1aa8f03b08bc90893e"
+  "test_d4_run_reader.py": "1075375688d89b0fe2dcd6c3625032db89ec1eeca3fd5b1aa8f03b08bc90893e",
+  "test_d4c0.py": "e4620669fa3d15257782415ffc73d17f5daa284c908f1e855146e843c8bb6669"
  },
  "fixtures_sha256": {
   "audit_fixture30.py": "ef2217297a9b89b7a7ebb146f26564c5f48fc7ac62240dfc90e9aa2be0477930",
@@ -343,7 +347,7 @@
   "Step1_rules_v1.0_draft4.1.md": "5f02c970eb39f9b3e7f7b17b48eb2d3daa16434517cf4442bac339f5ab719615",
   "rules_tables_v1.json": "522751be134aa3ff4fdf33c6be0d7397fb7bd3c89a6c67e26a67bd32dceeb0b4",
   "Step1_PhaseB_engine_spec_v0.2_addendum.md": "ed9b02858df08b3d2acec990b61ab0626f1a9c05cb88f267051bcc33f39ba21d",
-  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "a9acc24e0e118dc718ba29e5a6d8f382397d28c44bae049c9d82301080a33799",
+  "Step1_PhaseB_engine_spec_v0.3_addendum.md": "ceddc0116283e39b23c15d32365ac3b364463c26ab900884ec3bbf799932f356",
   "Step1_PhaseB_B3_3_receipts_and_deadlines.md": "407bbca8b872e88415921dcf7f244b8ff7a72a4e9c7308478f59641c6cdd42ae",
   "Step1_PhaseD_design_v0.3.md": "6be8ae30f5da27c22e711379f23de1b8a74f094238d7a06334f70b64acef2d75",
   "Step1_PhaseD_D4_design_v0.1.md": "5c329210b13e12213597cc9198e6d9f09e628655979709613d5ffb7ca78da290",
@@ -360,12 +364,15 @@
   "Step1_PhaseD_D3b_tranche3_report.md": "345c4ac15086c344bbd03f39d247a15a9ae93afaaff3d8859d4f75f2f0b64a33",
   "Step1_PhaseD_D3c_design_v0.1.md": "1c000e55ddc35a337d82eebf6a736e32538e229701bea018b6c6d1030db76196",
   "Step1_PhaseD_D3c_tranche1_report.md": "3331a65361baf69a98d8026143a9112fdf712a07c9ace1b2db7568e79cb83f7f",
-  "Step1_PhaseD_D3c_tranche2_report.md": "724306e11d635f9e55e745b4c6eb4af01b7aedf1254295632911ff736069c06f"
+  "Step1_PhaseD_D3c_tranche2_report.md": "df38052753e04d5e1fe2db96f9b0b5c980f1db56a1b388ecc94626098da2aba5",
+  "Step1_PhaseD_D4_calibration_design_v0.1.md": "51088b5802b594d941364d4cab76771001e32bd6ace0ae94eabd0b83905a15ab",
+  "Step1_PhaseD_D4_calibration_design_v0.2.md": "f808ab2bc9b5418e09661354fab3a519d99ba9cbac21f53e1ca69e68416c8d30",
+  "Step1_PhaseD_D4C0_report.md": "60c34e31ea33e90c52c46a83130b1f0b44edc75b33b288f25d00602def794e20"
  },
  "counts": {
-  "modules": 54,
-  "test_files": 115,
-  "test_functions": 990,
+  "modules": 56,
+  "test_files": 116,
+  "test_functions": 1003,
   "test_b_files": 28,
   "test_audit_files": 66
  },
@@ -374,12 +381,12 @@
   "b3/MirrorTopology_Step1_B3_1_control_v0.1.ipynb": "b665793fd12e745d765c510dc42c5c345fe80c0801d88b536bb4ccdf615d832d",
   "b3/MirrorTopology_Step1_B3_2A_assets_v0.2.ipynb": "b3400aca97a6bc5f6355324135e3a5b9e0a2094ccf1956716a8364a1c0f9b4bc",
   "b3/MirrorTopology_Step1_B3_2B_shared_null_v0.5.ipynb": "3fdeddb940694e777b2473742428df8fff68ff4192cbdf1bc78ee4949cc69135",
-  "b3/b3_0_pins.json": "ff8b8e87f443b21859147c6e409644b7913b5899e340379850584f4b0e21a2bb",
+  "b3/b3_0_pins.json": "13a8ad163816162b378604f726791bbe2867b2b51f84cd9026c5be9fc647eda1",
   "b3/b3_0_smoke.py": "9c2d125f93487a55bb74c020d7803843054b550ec36163012dac6ffc9e485dae",
   "b3/b3_1_control.py": "d62a77502ad6efdc8bb65df8b8bcb44d66a390c884eaf0a0ad885dd3f9db4eeb",
-  "b3/b3_1_pins.json": "ac846a003afe0cf429544b8af00acc2c3772d22d4f80fd0591d850a7d9954374",
+  "b3/b3_1_pins.json": "383d3e43ebe825a7f68e0917a3caa87509a1d6ef1e44d96f3583c669d56e3727",
   "b3/b3_2_assets.py": "ed500397091966d2ff3dfeac8226c7bbd2688dae1b5a68a2440ce09b0a7fb1c6",
-  "b3/b3_2_pins.json": "4694b369fca20a34dbd7e1b30fd42b7c15f745b334e64d3b1f919b69a6453696",
+  "b3/b3_2_pins.json": "c62191e01784bda052abf6fe67dfa69e2ca0550750e3eb3be88282ce12ea9fc0",
   "b3/b3_2_shared_null.py": "fc1c3d81cb4e1d22edd246a78cbd801a6a16024dca57ed1b0bc35ae9d47c09c6"
  },
  "registered_assets_sha256": {
@@ -2246,6 +2253,7 @@
  },
  "d_sha256": {
   "d/MirrorTopology_Step1_D1_covgen_v0.3.ipynb": "5ad2213d68160ef30db154add21b233e5d22978d0d5ef2a636044e0f55055d6f",
+  "d/MirrorTopology_Step1_D2W_cases_v0.1.ipynb": "42d613b306778cdceb9330bc6dd6ad87e0666be260f9d9275dcbdce764f25656",
   "d/MirrorTopology_Step1_D2_bankgen_v0.1.ipynb": "38428511b9b54d6e74a8441a2807299983440bd5cc6870984b17d5b804489acf",
   "d/MirrorTopology_Step1_D2_verify_v0.1.ipynb": "2346a1a7a465c35516fcfa8b98d543c9a6a22f6c241becb59758c7878b75430c",
   "d/MirrorTopology_Step1_D2_verify_v0.2.ipynb": "338c6f9bf30f1252f8135cfb6f623794b815bc28e3f84de79098d1b22f449616",
@@ -2254,13 +2262,15 @@
   "d/MirrorTopology_Step1_D3b_bankgen_v0.1.ipynb": "8455ba94fbceff21628a2b0625e0accc1a2f719282543cb36028ca9876af45dd",
   "d/MirrorTopology_Step1_D3b_verify_v0.1.ipynb": "5a556682d2dff84abfdcb21314cb4d43f8271386b384c0dcf96cdf6df831a7ca",
   "d/MirrorTopology_Step1_D3c_profile_v0.1.ipynb": "4ad3ba0ac86ff20508aa4bd32784449f5824c5fff2c19712f7c6eb464d7ff54a",
+  "d/MirrorTopology_Step1_D4_pseudo_v0.1.ipynb": "d12f8baff1df3c0cbd9cae148780586d8f9e7df977cf4d3564f43e6f3a0dbaf7",
   "d/d1_covgen.py": "ec0dce90ec05e97a26ca43c5396195b9b1f796afdb5f2784d3459c91ec3b3400",
-  "d/d1_pins.json": "36d8c4913e69c72bce8b126455633993d736c698f5ec1b719110794e3473b9a5",
+  "d/d1_pins.json": "5779f73d5b15c3168b3b0171c22bc3217b4137f3b29764a2f6d95a29f8fc8ff4",
   "d/d2_bank_spec.json": "c5650166b7ae49a53c849184c2bb0cb44435c38c79d8ec0f2c3fbcbe93bd7415",
   "d/d2_bankgen.py": "6ef809146402c81b086b3b21b2172cf61f56d85e794a7c988aab014b08aff3b8",
   "d/d2_crn_table.json": "99b68d8e78b741c918d4375c60cd64472c148316855bdeac19766faecf503f61",
-  "d/d2_pins.json": "2dd97906d4c9abef6545c6e5e7c168a70a6c10bf8f1ade6e876c30399ace4234",
+  "d/d2_pins.json": "6bcb5d2c4300c8fc250334611eeaecd96082adc2a5fa2aadb6cb524a4e3f293c",
   "d/d2_verify_banks.py": "d3a348c6e18af3e26f6349e1e3bfb657c2f458cb2ca697496d925652a9e66228",
+  "d/d2w_cases.py": "6e379a30d4622423edf13da31b4b884cadf21bf227c9745ef116a44b117f0ef7",
   "d/d3_bank_spec.json": "852d86b613c3c230aa790411b9e49045fe4af690da425c8ca030eed22c77a679",
   "d/d3_bankgen.py": "655939737a30ff9d64531ea8ab19c31c5b0b7bd93c56ff5b1690c171399b70cd",
   "d/d3_config_map.json": "6e3699d9a4315177a605734ee55911c0e7f07a171e1c77ceefee8cb567f6a36f",
@@ -2268,8 +2278,10 @@
   "d/d3_d2_reuse_binding_schema.json": "588a9dda3713b53e1280b46ed00fa315448f536ba27294645e1bce7774514ce1",
   "d/d3_pc1_case_table.json": "c86853e4dbd0a47ffaac8136d798385a58297f1405be2d0cbc6d4158ce392f1c",
   "d/d3_pc1_contract.json": "a132da70391f48f190b40781a6d49cffe45593d54dde5194e487ceda20733db4",
-  "d/d3_pins.json": "5dab12e2d7ec55e0242300f67a91ffb0a7b57ae6c8eae92ba4f968eb0640b1a0",
+  "d/d3_pins.json": "3eeb747c04951c73fa20ed2f3fc0dcc59c196e8642cb0a32a23e760e6b0bd94e",
   "d/d3b_verify_banks.py": "c7335284d8dafb561e65e4fc868b19d9679ea525854e9e028ea5532b277f1dfa",
-  "d/d3c_profile.py": "9f243b08a5aa8ba0cc3ded42343fb8d99717dc4bd50ebf26a7cc9a519221638d"
+  "d/d3c_profile.py": "9f243b08a5aa8ba0cc3ded42343fb8d99717dc4bd50ebf26a7cc9a519221638d",
+  "d/d4_pseudo.py": "a6e0772ae62c1a41d0592031276547592830418b47e50ae156aaf180f381d267",
+  "d/d4_pseudo_table.json": "31fc50c310be59ba82ad9236408174fe3be8db291adf1cfcb96bbc961374d44c"
  }
 }

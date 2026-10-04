@@ -1,0 +1,24 @@
+{
+ "schema": "d4_pseudo_table_v1",
+ "master_seed": 20260912,
+ "wave_id": 1,
+ "purpose": "pseudo",
+ "purpose_id": 400,
+ "group": 5001,
+ "batch_id": 0,
+ "n_pseudo": 2000,
+ "m": 1,
+ "K": 2000,
+ "selections": [
+  "float64"
+ ],
+ "role": "pseudo_iso",
+ "root": "principal root of the fixed PR3 isotropic covariance (LegacyKernel.psqrt(C_ISO)) == the D-2 ref_matched root",
+ "chunk_clusters": 2000,
+ "rng_key": "(MASTER_SEED, wave_id, purpose_id, crn_group_id, batch_id, stream_id); streams rotation=1 / gaussian=0 (registry.STREAM)",
+ "cluster_uid": "(wave_id, purpose_id, crn_group_id, batch_id, rotation_index); pseudo index p == rotation_index (m = 1)",
+ "key_non_overlap": "purpose_id 400 is used by no other registered scope (evaluation 200, fitting 300, w2_independent 600, w2_crn 700, calibration 100, w2_isotropic 800); group 5001 lies outside every D-2 CRN table group",
+ "order": "paired (T1_p, T2_p) in generation order; one shared ordered pair per pseudo for ALL families; no per-column sorting; no row removal",
+ "scope": "rules \u00a79.2: isotropic pseudo observations, independent stream, m = 1, fixed n_pseudo",
+ "table_sha256": "88f5659e1cc373b051f2786d151e474af3bd689e1a21474d0d4da3f6579d3c31"
+}

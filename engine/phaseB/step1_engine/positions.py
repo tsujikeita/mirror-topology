@@ -75,9 +75,39 @@ class PositionBank:
     def K(self): return self._K
 
 
-def bank_identity(b: PositionBank) -> dict:
-    """Identity of a position/iso bank as used at distance execution: sizes, whitened rows SHA, contiguous cid SHA, original label map SHA."""
+class RegisteredBankIdentity:
+    """Identity-only stand-in for a PositionBank whose arrays are NOT present (D-2W registered records): carries the stored execution-time bank identity exactly (position_id, K,
+    m, rows, Tw / cid / labels SHAs). It can be used wherever only bank_identity() / position_id / K / m are consulted (manifest replay of stored evidence); it can never be used
+    for a distance execution (no arrays)."""
+    __slots__ = ("_d",)
+    _KEYS = ("position_id", "K", "m", "rows", "Tw_sha256", "cid_sha256", "labels_sha256")
+
+    def __init__(self, identity: dict):
+        if not isinstance(identity, dict) or set(identity) != set(self._KEYS): raise InputContractError("registered bank identity: exact schema required")
+        for k in ("position_id", "K", "m", "rows"):
+            v = identity[k]
+            if isinstance(v, bool) or not isinstance(v, (int, np.integer)) or v < 0 or (k != "position_id" and v < 1): raise InputContractError(f"registered bank identity: {k} must be a non-bool integer")
+        if int(identity["rows"]) != int(identity["K"]) * int(identity["m"]): raise InputContractError("registered bank identity: rows != K*m")
+        for k in ("Tw_sha256", "cid_sha256", "labels_sha256"):
+            v = identity[k]
+            if not isinstance(v, str) or len(v) != 64 or any(c not in "0123456789abcdef" for c in v): raise InputContractError(f"registered bank identity: {k} must be 64-hex")
+        object.__setattr__(self, "_d", {k: (int(identity[k]) if k in ("position_id", "K", "m", "rows") else str(identity[k])) for k in self._KEYS})
+
+    def __setattr__(self, n, v): raise AttributeError("RegisteredBankIdentity is immutable")
+    @property
+    def position_id(self): return self._d["position_id"]
+    @property
+    def K(self): return self._d["K"]
+    @property
+    def m(self): return self._d["m"]
+    def identity(self) -> dict: return dict(self._d)
+
+
+def bank_identity(b) -> dict:
+    """Identity of a position/iso bank as used at distance execution: sizes, whitened rows SHA, contiguous cid SHA, original label map SHA. A RegisteredBankIdentity returns its stored identity."""
     import hashlib
+    if isinstance(b, RegisteredBankIdentity): return b.identity()
+    if not isinstance(b, PositionBank): raise InputContractError("bank_identity requires a PositionBank or a RegisteredBankIdentity")
     return dict(position_id=int(b.position_id), K=int(b.K), m=int(b.m), rows=int(len(b.Tw)), Tw_sha256=hashlib.sha256(np.ascontiguousarray(b.Tw.astype(np.float64)).tobytes()).hexdigest(),
                 cid_sha256=hashlib.sha256(np.ascontiguousarray(b.cid.astype(np.int64)).tobytes()).hexdigest(), labels_sha256=hashlib.sha256(str(b.cluster_labels).encode()).hexdigest())
 
