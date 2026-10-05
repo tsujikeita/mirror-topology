@@ -3,7 +3,11 @@
 Contracts: a record is resolved only through a validated ArchiveRef whose (kind, sha, path, identity) equals its index entry, whose path is the canonical location under the root,
 and whose bytes hash to the SHA; index metadata (byte length, path, identity) is checked on every get and in verify_all (duplicates rejected); putting the same bytes under a
 conflicting identity is rejected (same identity is idempotent). resolve_transition_archive validates the transition, the reference, the identity chain and the technical-status
-correspondence between the archived source and the transition."""
+correspondence between the archived source and the transition.
+Index access (D4C-1; engine 0.106.0): the parsed index is cached in memory and re-read whenever the index file's stat identity (inode, size, mtime_ns, ctime_ns) changes, so a
+get/put no longer re-parses the whole index; lookups use a (kind, sha) map. `deferred_index=True` keeps the index in memory and writes it on flush() / context exit / every
+`flush_every` puts (record files are still written immediately); the on-disk index bytes are identical to the immediate mode for the same put sequence (tested). A record file
+present on disk without an index entry (interrupted deferred run) is simply re-indexed by the next identical put. import_bytes() copies an entry byte-exactly (archive merge)."""
 from __future__ import annotations
 from dataclasses import dataclass, asdict
 import hashlib, os
@@ -38,9 +42,28 @@ def _entry_valid(e: dict):
 
 
 class Archive:
-    def __init__(self, root: str):
+    def __init__(self, root: str, deferred_index: bool = False, flush_every: int = 0):
         self.root = os.path.realpath(root); os.makedirs(self.root, exist_ok=True); self.index_path = os.path.join(self.root, "index.json")
+        self._cache = None; self._deferred = bool(deferred_index); self._pending = 0
+        if isinstance(flush_every, bool) or not isinstance(flush_every, int) or flush_every < 0: raise InputContractError("flush_every must be a non-negative integer")
+        self._flush_every = int(flush_every)
         if not os.path.exists(self.index_path): self._write_index([])
+
+    def __enter__(self): return self
+    def __exit__(self, *exc):
+        if exc[0] is None: self.flush()
+        return False
+
+    @property
+    def pending(self) -> int: return self._pending
+
+    def _stat_key(self):
+        st = os.stat(self._resolved_path("index.json")); return (st.st_ino, st.st_size, st.st_mtime_ns, st.st_ctime_ns)
+
+    def flush(self):
+        """Deferred mode: write the in-memory index to disk (identical bytes to the immediate mode); no-op when nothing is pending."""
+        if self._pending: self._write_index(self._cache[1])
+        return self
 
     def _resolved_path(self, relative_path):
         """Enforce archive confinement after resolving ordinary symbolic links.
@@ -68,21 +91,36 @@ class Archive:
         tmp = self._resolved_path("index.json.tmp")
         with open(tmp, "w", encoding="utf-8") as fh: fh.write(ser.dumps(dict(kind="ArchiveIndex", engine_version=__version__, entries=entries))); fh.flush(); os.fsync(fh.fileno())
         os.replace(tmp, self.index_path)
+        self._cache = (self._stat_key(), entries, {(e["kind"], e["sha256"]): e for e in entries}); self._pending = 0
 
-    def _entries(self):
+    def _parse_index(self):
         idx = ser.loads(open(self._resolved_path("index.json"), encoding="utf-8").read())
         if idx.get("kind") != "ArchiveIndex" or not isinstance(idx.get("entries"), list): raise InputContractError("archive index malformed")
-        keys = set()
+        keys = {}
         for e in idx["entries"]:
             _entry_valid(e); k = (e["kind"], e["sha256"])
             if k in keys: raise InputContractError("archive index contains duplicate entries")
-            keys.add(k)
-        return idx["entries"]
+            keys[k] = e
+        return idx["entries"], keys
 
-    def _find(self, kind, sha):
-        for e in self._entries():
-            if e["kind"] == kind and e["sha256"] == sha: return e
-        return None
+    def _load(self):
+        """Validated index entries + (kind, sha) map; parsed from disk whenever the file's stat identity differs from the cached one. Pending deferred entries are never
+        discarded: an external change of the index file while entries are pending is a conflict."""
+        key = self._stat_key()
+        if self._cache is not None and self._cache[0] == key: return self._cache
+        if self._pending: raise InputContractError("archive index changed on disk while deferred entries are pending")
+        entries, keys = self._parse_index(); self._cache = (key, entries, keys); return self._cache
+
+    def _entries(self): return list(self._load()[1])
+
+    def _find(self, kind, sha): return self._load()[2].get((kind, sha))
+
+    def _append_entry(self, entry: dict):
+        key, entries, keys = self._load(); entries.append(entry); keys[(entry["kind"], entry["sha256"])] = entry
+        if self._deferred:
+            self._pending += 1
+            if self._flush_every and self._pending >= self._flush_every: self._write_index(entries)
+        else: self._write_index(entries)
 
     def put(self, kind: str, record: dict, identity: dict) -> ArchiveRef:
         if kind not in KINDS: raise InputContractError(f"unknown archive kind {kind!r}")
@@ -101,7 +139,33 @@ class Archive:
             tmp = self._resolved_path(rel + ".tmp")
             with open(tmp, "wb") as fh: fh.write(body); fh.flush(); os.fsync(fh.fileno())
             os.replace(tmp, path)
-        entries = self._entries(); entries.append(dict(kind=kind, sha256=sha, path=rel, identity=ident, bytes=len(body), engine_version=__version__)); self._write_index(entries); return ref
+        self._append_entry(dict(kind=kind, sha256=sha, path=rel, identity=ident, bytes=len(body), engine_version=__version__)); return ref
+
+    def import_bytes(self, kind: str, sha256: str, identity: dict, body: bytes, engine_version: str) -> ArchiveRef:
+        """Byte-exact import of an entry from another archive (merge): the bytes must hash to the given SHA, decode as strict JSON and reproduce the canonical serialisation;
+        the entry keeps the SOURCE engine version; the same (kind, sha) under a different identity is a conflict, the same identity is idempotent."""
+        if kind not in KINDS: raise InputContractError(f"unknown archive kind {kind!r}")
+        if not isinstance(body, (bytes, bytearray)) or hashlib.sha256(body).hexdigest() != sha256: raise InputContractError("imported bytes do not hash to the given SHA")
+        if ser.dumps(ser.loads(body.decode("utf-8"))).encode("utf-8") != bytes(body): raise InputContractError("imported bytes are not a canonical archive record")
+        if not isinstance(engine_version, str) or not engine_version: raise InputContractError("imported entry requires its source engine version")
+        ident = ser.from_jsonable(ser.to_jsonable(identity)); rel = f"{kind}/{sha256}.json"; ref = ArchiveRef(kind, sha256, rel, ident); ref.validate()
+        existing = self._find(kind, sha256)
+        if existing is not None:
+            if existing["identity"] != ident: raise InputContractError("archive conflict: the same bytes are already indexed under a different identity (aliases are not supported)")
+            if existing["bytes"] != len(body) or existing["path"] != rel or existing["engine_version"] != engine_version: raise InputContractError("archive index entry inconsistent with the imported record")
+            self._verified_body(ref, existing); return ref
+        path = self._resolved_path(rel); os.makedirs(os.path.dirname(path), exist_ok=True)
+        if os.path.exists(path) and not os.path.isfile(path): raise InputContractError("archive destination is not a regular file")
+        if os.path.exists(path) and open(path, "rb").read() != bytes(body): raise InputContractError("archive collision: existing file differs from the record bytes")
+        if not os.path.exists(path):
+            tmp = self._resolved_path(rel + ".tmp")
+            with open(tmp, "wb") as fh: fh.write(bytes(body)); fh.flush(); os.fsync(fh.fileno())
+            os.replace(tmp, path)
+        self._append_entry(dict(kind=kind, sha256=sha256, path=rel, identity=ident, bytes=len(body), engine_version=engine_version)); return ref
+
+    def entry_bytes(self, entry: dict) -> bytes:
+        """Verified bytes of an index entry (merge source side)."""
+        _entry_valid(entry); return self._verified_body(ArchiveRef(entry["kind"], entry["sha256"], entry["path"], entry["identity"]), entry)
 
     def get(self, ref: ArchiveRef) -> dict:
         if not isinstance(ref, ArchiveRef): raise InputContractError("an ArchiveRef is required")
@@ -117,6 +181,17 @@ class Archive:
             ref = ArchiveRef(e["kind"], e["sha256"], e["path"], e["identity"])
             self._verified_body(ref, e)
         return dict(entries=len(entries), ok=True)
+
+
+def merge_archives(dst: Archive, src: Archive) -> dict:
+    """Copy every entry of src into dst byte-exactly (verified on both sides; identity conflicts rejected; identical entries idempotent). Returns counts."""
+    if not isinstance(dst, Archive) or not isinstance(src, Archive): raise InputContractError("Archive instances required")
+    if os.path.realpath(dst.root) == os.path.realpath(src.root): raise InputContractError("merge source and destination are the same archive")
+    added = skipped = 0
+    for e in src._entries():
+        body = src.entry_bytes(e); before = dst._find(e["kind"], e["sha256"]) is not None
+        dst.import_bytes(e["kind"], e["sha256"], e["identity"], body, e["engine_version"]); added += 0 if before else 1; skipped += 1 if before else 0
+    dst.flush(); return dict(added=added, already_present=skipped, source_entries=added + skipped)
 
 
 def archive_three_position_result(archive: Archive, result: dict, family: str, size_id: str) -> ArchiveRef:

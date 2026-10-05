@@ -1,0 +1,831 @@
+{
+  "schema": "step1_D4C0_registration_0105_audit_v1",
+  "date_JST": "2026-10-05",
+  "decision": "PASS_WITH_EXPLICIT_SCOPE",
+  "registration_API_implementation": "ACCEPTED",
+  "new_mandatory_patch": false,
+  "subject": {
+    "engine": "0.105.0",
+    "author_supplied_commit": "86015f0f6b77bf6c0111b4faf20a5b3dc402c300",
+    "remote_Git_tree_independently_compared": false,
+    "archive": {
+      "name": "phaseB_D4C0_reg_0.105.0.zip",
+      "bytes": 28369767,
+      "sha256": "6b1e367d45d2977bd904dc7fbc634dd9fb32fbbda88adc68ddb43bc1fa5ff937"
+    },
+    "inventory_sha256": "8f0ee2552d45bcf53cd0df1ba837fde47914154a6137633c232a67df986c0d3d",
+    "registry_module_sha256": "246680a664159d801ec15f10680862e48bd1615c02abed02c2193f64d0ae24a9",
+    "source_files": 2642
+  },
+  "accepted_scope": [
+    "Exact registration of accepted pseudo and W2 originals, plus separately retained failed W2 attempt",
+    "Deterministic ledger and receipt re-derivation and registered pin binding",
+    "Actual registered W2 loader: authenticated original case bytes -> formal stored-evidence replay -> accepted nine-decision context",
+    "Actual registered pseudo loader: exact original NPZ and constant column identity, with paired generation order and no tolerance substitute",
+    "Wrapper dispatch, consumer boundaries, original/reference separation and failure refusals"
+  ],
+  "GO": {
+    "D4C1_drafting_implementation_and_tests": true,
+    "D4C1_implementation_accepted": false,
+    "D4C1_formal_calibration_execution": false,
+    "PhaseE_target_evaluation": false
+  },
+  "reruns_required": {
+    "pseudo_generation": false,
+    "D2W_execution": false,
+    "D2_bank_generation": false,
+    "D3c_profiles": false,
+    "prior_bank_array_verification": false
+  },
+  "prior_acceptances": {
+    "pseudo": {
+      "file": "D4C0_pseudo_12980202_acceptance.json",
+      "sha256": "08efa1d19b29303425125aed71f96f0f27765c03234b36164f98ba4631cbee5b",
+      "preserved": true,
+      "attempt": "20261004T102334Z_6e681d78a0",
+      "execution_commit": "12980202ee111a26c0a608e7e5bba6caed5302ae",
+      "execution_engine": "0.103.0"
+    },
+    "d2w": {
+      "file": "D4C0_D2W_f3aec793_acceptance.json",
+      "sha256": "c9506e0b17f7ef17c3d1168e0acabdbba0195748060ca531b8c22305dbbd922a",
+      "preserved": true,
+      "attempt": "20261004T144349Z_cb8bc8e5f7",
+      "execution_commit": "f3aec79358452a293ccced14efd4f7e3ad240477",
+      "execution_engine": "0.104.0"
+    },
+    "failed_attempt": {
+      "attempt": "20261004T102439Z_9bac8f8730",
+      "preserved": true,
+      "success": false,
+      "usable_as_success": false
+    }
+  },
+  "registration_pins": {
+    "d4c0_ledger_sha256": "8c0d39f98401718e8e63128b8802e614fc99701a5564b0b1ab75489422241452",
+    "d4c0_outer_receipt_sha256": "d6926b94dcb1bede33019bb222b094575a1d15b17e7dfc912056512e25a29056",
+    "d2w_acceptance_sha256": "c9506e0b17f7ef17c3d1168e0acabdbba0195748060ca531b8c22305dbbd922a",
+    "pseudo_acceptance_sha256": "08efa1d19b29303425125aed71f96f0f27765c03234b36164f98ba4631cbee5b",
+    "d2w_context_sha256": "50ec5a54d593d9bc53ce3661292d7dd3cb385369511a3444fda62226e77acb9c",
+    "pseudo_paired_sha256": "c9f75cdb86c90b0c73409a3e7a015faaef1e5903788358082dde3c21d66a1d15",
+    "pseudo_npz_sha256": "c62a965b3b649870977d95ba247bf84a9580131109fc8572971e06b98da490f2"
+  },
+  "registered_files": {
+    "registered_assets/d4c0/d2w/acceptance/ChatGPT_audit_D2W_run_f3aec793.md": {
+      "bytes": 14890,
+      "sha256": "bc522141fd2b80a7a280dffd472a6d783516d5824b4e443781e22837e7cdf9db"
+    },
+    "registered_assets/d4c0/d2w/acceptance/D4C0_D2W_f3aec793_acceptance.json": {
+      "bytes": 78367,
+      "sha256": "c9506e0b17f7ef17c3d1168e0acabdbba0195748060ca531b8c22305dbbd922a"
+    },
+    "registered_assets/d4c0/d2w/archives/d2w_cases_12980202ee11_FAILED.zip": {
+      "bytes": 5985,
+      "sha256": "09f9ab0e8ade6c5f0b8cb53c7198bf20e9973618a8146c9647e9b57b9b98b037"
+    },
+    "registered_assets/d4c0/d2w/archives/d2w_cases_f3aec7935845.zip": {
+      "bytes": 5646698,
+      "sha256": "13e222e57d624473eba4fda045d400b34bf9a3fda6623fe74eacb1325a53a72b"
+    },
+    "registered_assets/d4c0/d2w/failed_attempts/20261004T102439Z_9bac8f8730/d2w_final_record.json": {
+      "bytes": 6578,
+      "sha256": "d211179ab285577744fdcff8f39ee620105a8b2e910be472de96f1272ea2118f"
+    },
+    "registered_assets/d4c0/d2w/failed_attempts/20261004T102439Z_9bac8f8730/d2w_lock.json": {
+      "bytes": 1219,
+      "sha256": "9b57d303e6f2c88a976651ba980f03197b2acee961847462c17487cae215033b"
+    },
+    "registered_assets/d4c0/d2w/failed_attempts/20261004T102439Z_9bac8f8730/d2w_stderr_20261004T102439Z_9bac8f8730.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "registered_assets/d4c0/d2w/failed_attempts/20261004T102439Z_9bac8f8730/d2w_stdout_20261004T102439Z_9bac8f8730.txt": {
+      "bytes": 429,
+      "sha256": "6a5bf2afddae160795a1fbf8794e29839b1404726d5e1c50d567e2c293b85f79"
+    },
+    "registered_assets/d4c0/d2w/failed_attempts/20261004T102439Z_9bac8f8730/run_20261004T102439Z_9bac8f8730/d2w_run_record.json": {
+      "bytes": 5828,
+      "sha256": "e28a3423eddf45bbcadf818c32f2f3402f01f04fb62fe153fd1147a278670722"
+    },
+    "registered_assets/d4c0/d2w/failed_attempts/20261004T102439Z_9bac8f8730/run_20261004T102439Z_9bac8f8730/d2w_stdout.log": {
+      "bytes": 377,
+      "sha256": "3b42c2f32ba0b559f20dc76f273c440a1673360420614ac8d6a3aef38abe7a13"
+    },
+    "registered_assets/d4c0/d2w/notebooks/MirrorTopology_Step1_D2W_cases_v0_1_executed_f3aec7935845.ipynb": {
+      "bytes": 38708,
+      "sha256": "3d8a7ff7519e971b8981ff73256c2d975c8a7bc8ab11b7cc876c98a55807e89c"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/d2w_final_record.json": {
+      "bytes": 6184,
+      "sha256": "c29fc6c6be7e6ee614e67e93743b35d60f37a8a94c532671fb8d0eb37b6de01a"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/d2w_lock.json": {
+      "bytes": 1219,
+      "sha256": "9f01508a898f11440e146633e4b95395db4b8471f5a7d184a2e9bec9c0c2f720"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/d2w_stderr_20261004T144349Z_cb8bc8e5f7.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/d2w_stdout_20261004T144349Z_cb8bc8e5f7.txt": {
+      "bytes": 1212,
+      "sha256": "c452d944fb5b01c576c834202671b9ec1d200d6d01f27de4e4490107456ce9c8"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E2_L1.00.json": {
+      "bytes": 3857374,
+      "sha256": "373dd745a20d0abfbce58dfc89f956a744b92dd66439301c6cb56a4a24856e28"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E2_L1.20.json": {
+      "bytes": 3859841,
+      "sha256": "fbae69d4a3e6c0a8d22e8cb3459e947e1f3c701dcc00cc352b862a3c28530a2a"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E2_L1.50.json": {
+      "bytes": 3857414,
+      "sha256": "9a4ca36b32bcb508751203c75f93e192e931408ab5d54364bc13e29b61961087"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E7_L1.00.json": {
+      "bytes": 3857394,
+      "sha256": "383a5f60576782297db46c53e56ca78447ac067c128d682bbeda8deed9fb1367"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E7_L1.20.json": {
+      "bytes": 3858506,
+      "sha256": "72d3c5b9d6e33a42d9b9ba5f36c933863a9a540155121d157b2b249d1821f63f"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E7_L1.50.json": {
+      "bytes": 3857346,
+      "sha256": "c94fc2f0ddb56ccec853763fd3cd06fdf3aa185bfe27e793c5231844fc065e2f"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E8_L1.00.json": {
+      "bytes": 3857267,
+      "sha256": "860614e5a8f91123e514b946fccb99927c6d05d38b362adab3bf047ed52681ed"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E8_L1.20.json": {
+      "bytes": 3857353,
+      "sha256": "0351be84ae5c17475c060b88ff7332de0dbd4d8912fb2dcefecf8e838e8e7062"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E8_L1.50.json": {
+      "bytes": 3857449,
+      "sha256": "4a5590bc25b70c9a8c9827da94c15f48fd1a417c4a591d30b3f04d6239f693ca"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/d2w_context_record.json": {
+      "bytes": 8707,
+      "sha256": "58406d1b432611823fe8b3ac47b66d8c28186b007095c74d00bf6815dea603ed"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/d2w_run_record.json": {
+      "bytes": 16757,
+      "sha256": "5438e14918aa60f9d88121743112b3eec7b2c3a0391877c82e323b92980fbf6d"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/d2w_stdout.log": {
+      "bytes": 1161,
+      "sha256": "d229b0c47f4f6adc554015d262e224814ce97c7f3988b4e4b5e8a6b525405e93"
+    },
+    "registered_assets/d4c0/d4c0_ledger.json": {
+      "bytes": 18291,
+      "sha256": "f018f77b4bc89c2d400b2eda57dd29d819f4896e7d8dd0a7510feda2d09548a2"
+    },
+    "registered_assets/d4c0/d4c0_outer_receipt.json": {
+      "bytes": 9520,
+      "sha256": "f86939e6a7aa95c752b17c0edccd709769b40c601671a2af09c85036304bae58"
+    },
+    "registered_assets/d4c0/d4c0_outer_receipt.md": {
+      "bytes": 4956,
+      "sha256": "83aaa7d0abf99aaff8f3abc0972d41a0bac540de3896d2ad9648320c7343938b"
+    },
+    "registered_assets/d4c0/pseudo/acceptance/ChatGPT_audit_D4C0_runs_12980202_and_v3_0.104.0.md": {
+      "bytes": 13483,
+      "sha256": "21abf2d5dd4e20ba1b660b89ac856a03938cf8cfefc3fdec57474bd98ffd692a"
+    },
+    "registered_assets/d4c0/pseudo/acceptance/D4C0_pseudo_12980202_acceptance.json": {
+      "bytes": 12330,
+      "sha256": "08efa1d19b29303425125aed71f96f0f27765c03234b36164f98ba4631cbee5b"
+    },
+    "registered_assets/d4c0/pseudo/acceptance/D4C0_v3_0.104.0_audit_decision.json": {
+      "bytes": 9489,
+      "sha256": "c54673b5b265cf03029ceb0504ec9d35d92f7e662a314b7a04264a49fcf4cb80"
+    },
+    "registered_assets/d4c0/pseudo/archives/d4_pseudo_12980202ee11.zip": {
+      "bytes": 50138,
+      "sha256": "57c0df458eb013c0450b57d880fdf837dcdb1f8f902a6b8b6350e1fa2d43b826"
+    },
+    "registered_assets/d4c0/pseudo/notebooks/MirrorTopology_Step1_D4_pseudo_v0_1_executed_12980202ee11.ipynb": {
+      "bytes": 29797,
+      "sha256": "fb7a0d663694eac623a169006d9f0ac21c8a382213655ad357d9fbf938add973"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/d4_pseudo_final_record.json": {
+      "bytes": 5151,
+      "sha256": "3ff48294bff600dab41168b04a6e61396918bffd90f3d1e0e166090b389f16ea"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/d4_pseudo_lock.json": {
+      "bytes": 929,
+      "sha256": "4b31d9efa65d8cbde62ebd1a081eaf9a71b9426cd70595bab940e5f3ba7a4773"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/d4_pseudo_stderr_20261004T102334Z_6e681d78a0.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/d4_pseudo_stdout_20261004T102334Z_6e681d78a0.txt": {
+      "bytes": 349,
+      "sha256": "f65e5d245adcf1d6bf7833c12e6b8f20cfef904f9bb0126e6c77eb9ff7843aeb"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/run_20261004T102334Z_6e681d78a0/d4_pseudo_columns.npz": {
+      "bytes": 145444,
+      "sha256": "c62a965b3b649870977d95ba247bf84a9580131109fc8572971e06b98da490f2"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/run_20261004T102334Z_6e681d78a0/d4_pseudo_record.json": {
+      "bytes": 6277,
+      "sha256": "ad4fda8d3d25f684ed5ee1993b12d95e647fd741263c1b669903b0507abfe2d1"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/run_20261004T102334Z_6e681d78a0/d4_pseudo_stdout.log": {
+      "bytes": 292,
+      "sha256": "ad9031a67290593690594a619e665593a878f959426c1bbc1a771865c8c0b3eb"
+    }
+  },
+  "original_files_directly_compared": {
+    "registered_assets/d4c0/d2w/acceptance/ChatGPT_audit_D2W_run_f3aec793.md": {
+      "bytes": 14890,
+      "sha256": "bc522141fd2b80a7a280dffd472a6d783516d5824b4e443781e22837e7cdf9db"
+    },
+    "registered_assets/d4c0/d2w/acceptance/D4C0_D2W_f3aec793_acceptance.json": {
+      "bytes": 78367,
+      "sha256": "c9506e0b17f7ef17c3d1168e0acabdbba0195748060ca531b8c22305dbbd922a"
+    },
+    "registered_assets/d4c0/d2w/archives/d2w_cases_12980202ee11_FAILED.zip": {
+      "bytes": 5985,
+      "sha256": "09f9ab0e8ade6c5f0b8cb53c7198bf20e9973618a8146c9647e9b57b9b98b037"
+    },
+    "registered_assets/d4c0/d2w/archives/d2w_cases_f3aec7935845.zip": {
+      "bytes": 5646698,
+      "sha256": "13e222e57d624473eba4fda045d400b34bf9a3fda6623fe74eacb1325a53a72b"
+    },
+    "registered_assets/d4c0/d2w/failed_attempts/20261004T102439Z_9bac8f8730/d2w_final_record.json": {
+      "bytes": 6578,
+      "sha256": "d211179ab285577744fdcff8f39ee620105a8b2e910be472de96f1272ea2118f"
+    },
+    "registered_assets/d4c0/d2w/failed_attempts/20261004T102439Z_9bac8f8730/d2w_lock.json": {
+      "bytes": 1219,
+      "sha256": "9b57d303e6f2c88a976651ba980f03197b2acee961847462c17487cae215033b"
+    },
+    "registered_assets/d4c0/d2w/failed_attempts/20261004T102439Z_9bac8f8730/d2w_stderr_20261004T102439Z_9bac8f8730.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "registered_assets/d4c0/d2w/failed_attempts/20261004T102439Z_9bac8f8730/d2w_stdout_20261004T102439Z_9bac8f8730.txt": {
+      "bytes": 429,
+      "sha256": "6a5bf2afddae160795a1fbf8794e29839b1404726d5e1c50d567e2c293b85f79"
+    },
+    "registered_assets/d4c0/d2w/failed_attempts/20261004T102439Z_9bac8f8730/run_20261004T102439Z_9bac8f8730/d2w_run_record.json": {
+      "bytes": 5828,
+      "sha256": "e28a3423eddf45bbcadf818c32f2f3402f01f04fb62fe153fd1147a278670722"
+    },
+    "registered_assets/d4c0/d2w/failed_attempts/20261004T102439Z_9bac8f8730/run_20261004T102439Z_9bac8f8730/d2w_stdout.log": {
+      "bytes": 377,
+      "sha256": "3b42c2f32ba0b559f20dc76f273c440a1673360420614ac8d6a3aef38abe7a13"
+    },
+    "registered_assets/d4c0/d2w/notebooks/MirrorTopology_Step1_D2W_cases_v0_1_executed_f3aec7935845.ipynb": {
+      "bytes": 38708,
+      "sha256": "3d8a7ff7519e971b8981ff73256c2d975c8a7bc8ab11b7cc876c98a55807e89c"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/d2w_final_record.json": {
+      "bytes": 6184,
+      "sha256": "c29fc6c6be7e6ee614e67e93743b35d60f37a8a94c532671fb8d0eb37b6de01a"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/d2w_lock.json": {
+      "bytes": 1219,
+      "sha256": "9f01508a898f11440e146633e4b95395db4b8471f5a7d184a2e9bec9c0c2f720"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/d2w_stderr_20261004T144349Z_cb8bc8e5f7.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/d2w_stdout_20261004T144349Z_cb8bc8e5f7.txt": {
+      "bytes": 1212,
+      "sha256": "c452d944fb5b01c576c834202671b9ec1d200d6d01f27de4e4490107456ce9c8"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E2_L1.00.json": {
+      "bytes": 3857374,
+      "sha256": "373dd745a20d0abfbce58dfc89f956a744b92dd66439301c6cb56a4a24856e28"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E2_L1.20.json": {
+      "bytes": 3859841,
+      "sha256": "fbae69d4a3e6c0a8d22e8cb3459e947e1f3c701dcc00cc352b862a3c28530a2a"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E2_L1.50.json": {
+      "bytes": 3857414,
+      "sha256": "9a4ca36b32bcb508751203c75f93e192e931408ab5d54364bc13e29b61961087"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E7_L1.00.json": {
+      "bytes": 3857394,
+      "sha256": "383a5f60576782297db46c53e56ca78447ac067c128d682bbeda8deed9fb1367"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E7_L1.20.json": {
+      "bytes": 3858506,
+      "sha256": "72d3c5b9d6e33a42d9b9ba5f36c933863a9a540155121d157b2b249d1821f63f"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E7_L1.50.json": {
+      "bytes": 3857346,
+      "sha256": "c94fc2f0ddb56ccec853763fd3cd06fdf3aa185bfe27e793c5231844fc065e2f"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E8_L1.00.json": {
+      "bytes": 3857267,
+      "sha256": "860614e5a8f91123e514b946fccb99927c6d05d38b362adab3bf047ed52681ed"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E8_L1.20.json": {
+      "bytes": 3857353,
+      "sha256": "0351be84ae5c17475c060b88ff7332de0dbd4d8912fb2dcefecf8e838e8e7062"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/cases/d2w_case_E8_L1.50.json": {
+      "bytes": 3857449,
+      "sha256": "4a5590bc25b70c9a8c9827da94c15f48fd1a417c4a591d30b3f04d6239f693ca"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/d2w_context_record.json": {
+      "bytes": 8707,
+      "sha256": "58406d1b432611823fe8b3ac47b66d8c28186b007095c74d00bf6815dea603ed"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/d2w_run_record.json": {
+      "bytes": 16757,
+      "sha256": "5438e14918aa60f9d88121743112b3eec7b2c3a0391877c82e323b92980fbf6d"
+    },
+    "registered_assets/d4c0/d2w/runs/20261004T144349Z_cb8bc8e5f7/run_20261004T144349Z_cb8bc8e5f7/d2w_stdout.log": {
+      "bytes": 1161,
+      "sha256": "d229b0c47f4f6adc554015d262e224814ce97c7f3988b4e4b5e8a6b525405e93"
+    },
+    "registered_assets/d4c0/pseudo/acceptance/ChatGPT_audit_D4C0_runs_12980202_and_v3_0.104.0.md": {
+      "bytes": 13483,
+      "sha256": "21abf2d5dd4e20ba1b660b89ac856a03938cf8cfefc3fdec57474bd98ffd692a"
+    },
+    "registered_assets/d4c0/pseudo/acceptance/D4C0_pseudo_12980202_acceptance.json": {
+      "bytes": 12330,
+      "sha256": "08efa1d19b29303425125aed71f96f0f27765c03234b36164f98ba4631cbee5b"
+    },
+    "registered_assets/d4c0/pseudo/acceptance/D4C0_v3_0.104.0_audit_decision.json": {
+      "bytes": 9489,
+      "sha256": "c54673b5b265cf03029ceb0504ec9d35d92f7e662a314b7a04264a49fcf4cb80"
+    },
+    "registered_assets/d4c0/pseudo/archives/d4_pseudo_12980202ee11.zip": {
+      "bytes": 50138,
+      "sha256": "57c0df458eb013c0450b57d880fdf837dcdb1f8f902a6b8b6350e1fa2d43b826"
+    },
+    "registered_assets/d4c0/pseudo/notebooks/MirrorTopology_Step1_D4_pseudo_v0_1_executed_12980202ee11.ipynb": {
+      "bytes": 29797,
+      "sha256": "fb7a0d663694eac623a169006d9f0ac21c8a382213655ad357d9fbf938add973"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/d4_pseudo_final_record.json": {
+      "bytes": 5151,
+      "sha256": "3ff48294bff600dab41168b04a6e61396918bffd90f3d1e0e166090b389f16ea"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/d4_pseudo_lock.json": {
+      "bytes": 929,
+      "sha256": "4b31d9efa65d8cbde62ebd1a081eaf9a71b9426cd70595bab940e5f3ba7a4773"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/d4_pseudo_stderr_20261004T102334Z_6e681d78a0.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/d4_pseudo_stdout_20261004T102334Z_6e681d78a0.txt": {
+      "bytes": 349,
+      "sha256": "f65e5d245adcf1d6bf7833c12e6b8f20cfef904f9bb0126e6c77eb9ff7843aeb"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/run_20261004T102334Z_6e681d78a0/d4_pseudo_columns.npz": {
+      "bytes": 145444,
+      "sha256": "c62a965b3b649870977d95ba247bf84a9580131109fc8572971e06b98da490f2"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/run_20261004T102334Z_6e681d78a0/d4_pseudo_record.json": {
+      "bytes": 6277,
+      "sha256": "ad4fda8d3d25f684ed5ee1993b12d95e647fd741263c1b669903b0507abfe2d1"
+    },
+    "registered_assets/d4c0/pseudo/runs/20261004T102334Z_6e681d78a0/run_20261004T102334Z_6e681d78a0/d4_pseudo_stdout.log": {
+      "bytes": 292,
+      "sha256": "ad9031a67290593690594a619e665593a878f959426c1bbc1a771865c8c0b3eb"
+    }
+  },
+  "registration_conditions": [
+    {
+      "condition": 1,
+      "status": "SATISFIED_WITH_STATED_SCOPE",
+      "evidence": "Original W2 ZIP, 16 members, notebooks and acceptance preserved; direct comparison to prior packets."
+    },
+    {
+      "condition": 2,
+      "status": "SATISFIED_WITH_STATED_SCOPE",
+      "evidence": "Prior pseudo NPZ and acceptance preserved; executed notebook remains supplementary historical evidence."
+    },
+    {
+      "condition": 3,
+      "status": "SATISFIED_WITH_STATED_SCOPE",
+      "evidence": "Historical execution locks remain 0.103.0/pseudo and 0.104.0/W2; registration version is not substituted."
+    },
+    {
+      "condition": 4,
+      "status": "SATISFIED_WITH_STATED_SCOPE",
+      "evidence": "Failed attempt ZIP and 6 members preserved separately; substitutions rejected."
+    },
+    {
+      "condition": 5,
+      "status": "SATISFIED_WITH_STATED_SCOPE",
+      "evidence": "Deterministic ledger and receipt re-derived; original constants, metadata, payload and file SHA bindings verified."
+    },
+    {
+      "condition": 6,
+      "status": "SATISFIED_WITH_STATED_SCOPE",
+      "evidence": "Seven pin identities checked by registered consumer chain; wrong/missing/null tests pass; actual loader bodies present."
+    },
+    {
+      "condition": 7,
+      "status": "SATISFIED_WITH_STATED_SCOPE",
+      "evidence": "W2 full original bytes authenticated before formal replay with trusted expected-context pin and exact nine decisions."
+    },
+    {
+      "condition": 8,
+      "status": "SATISFIED_WITH_STATED_SCOPE",
+      "evidence": "Pseudo exact NPZ and constant column identity revalidated, n=2000/m=1, dtypes and paired UID row order preserved."
+    },
+    {
+      "condition": 9,
+      "status": "SATISFIED_WITH_STATED_SCOPE",
+      "evidence": "New 53 unmodified tests pass; additional independent loader and boundary controls pass."
+    },
+    {
+      "condition": 10,
+      "status": "SATISFIED_WITH_STATED_SCOPE",
+      "evidence": "Four W2-branch unknowns preserved, to be combined downstream with event ratio and twelve-position completion."
+    },
+    {
+      "condition": 11,
+      "status": "SATISFIED_WITH_STATED_SCOPE",
+      "evidence": "Acceptance limited to registration APIs; formal calibration and downstream science remain separately gated."
+    }
+  ],
+  "scientific_outcomes": {
+    "context_sha256": "50ec5a54d593d9bc53ce3661292d7dd3cb385369511a3444fda62226e77acb9c",
+    "cases": {
+      "E2/L1.00": {
+        "trigger": false,
+        "state": "valid",
+        "B_final": 400
+      },
+      "E2/L1.20": {
+        "trigger": "unknown",
+        "state": "w2-unresolved",
+        "B_final": 800
+      },
+      "E2/L1.50": {
+        "trigger": false,
+        "state": "valid",
+        "B_final": 400
+      },
+      "E7/L1.00": {
+        "trigger": false,
+        "state": "valid",
+        "B_final": 400
+      },
+      "E7/L1.20": {
+        "trigger": "unknown",
+        "state": "w2-unresolved",
+        "B_final": 600
+      },
+      "E7/L1.50": {
+        "trigger": "unknown",
+        "state": "w2-unresolved",
+        "B_final": 400
+      },
+      "E8/L1.00": {
+        "trigger": "unknown",
+        "state": "w2-unresolved",
+        "B_final": 400
+      },
+      "E8/L1.20": {
+        "trigger": false,
+        "state": "valid",
+        "B_final": 400
+      },
+      "E8/L1.50": {
+        "trigger": false,
+        "state": "valid",
+        "B_final": 400
+      }
+    },
+    "unknown_count": 4,
+    "valid_false_count": 5,
+    "pseudo": {
+      "n": 2000,
+      "m": 1,
+      "npz_bytes": 145444,
+      "npz_sha256": "c62a965b3b649870977d95ba247bf84a9580131109fc8572971e06b98da490f2",
+      "paired_sha256": "c9f75cdb86c90b0c73409a3e7a015faaef1e5903788358082dde3c21d66a1d15",
+      "column_identity": {
+        "n": 2000,
+        "m": 1,
+        "T1_sha256": "6e2669b529440d94a3808061788e3c0100b374075f319127914d4f7725af091d",
+        "T2_sha256": "1a5588fd8dc3efb6cca7beaf446a3a88ffb9d3ff0b2835a2cf07751f4c3ee3d3",
+        "AX_sha256": "60d61625987b85fac70befb1ad7a0f89c829b37e115cbccff6613c478616ddc7",
+        "PL_sha256": "85a035007b2f831c9d4d84a8a9ad70264d5a9300f54d59d23b1f2a03ede343c3",
+        "cid_sha256": "55f385cf2332d9056aaed6f496e7bebd2df52c6a9547ce2144b309432d4b0290",
+        "uids_sha256": "cb90d89c16d8d06acc52c7aa5b043eae36c489d23d08037a3652e3ff56bf11ea",
+        "dtype": {
+          "T1": "float64",
+          "T2": "float64",
+          "AX": "int32",
+          "PL": "int32",
+          "cid": "int64"
+        },
+        "paired_sha256": "c9f75cdb86c90b0c73409a3e7a015faaef1e5903788358082dde3c21d66a1d15",
+        "first_uid": [
+          1,
+          400,
+          5001,
+          0,
+          0
+        ],
+        "last_uid": [
+          1,
+          400,
+          5001,
+          0,
+          1999
+        ]
+      }
+    }
+  },
+  "tests": {
+    "author_JUnit": {
+      "files": 19,
+      "cases": 1825,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "all_cases_independently_executed": false
+    },
+    "collection": {
+      "author_count": 1825,
+      "collected_count": 1825,
+      "multiset_equal_after_normalization": true,
+      "raw_multiset_equal": false,
+      "normalized_author_items": [
+        "tests/test_d4c0.py::test_notebooks_structure[/home/claude/phaseB/d/MirrorTopology_Step1_D2W_cases_v0.1.ipynb-d2w_cases.py-d2w_lock.json-d2w_final_record.json-D2W_PASS-d2w_run_record.json]",
+        "tests/test_d4c0.py::test_notebooks_structure[/home/claude/phaseB/d/MirrorTopology_Step1_D4_pseudo_v0.1.ipynb-d4_pseudo.py-d4_pseudo_lock.json-d4_pseudo_final_record.json-PSEUDO_PASS-d4_pseudo_record.json]"
+      ],
+      "normalized_collected_items": [
+        "tests/test_d4c0.py::test_notebooks_structure[/mnt/data/audit_d4c0reg_0105/work/source/phaseB/d/MirrorTopology_Step1_D2W_cases_v0.1.ipynb-d2w_cases.py-d2w_lock.json-d2w_final_record.json-D2W_PASS-d2w_run_record.json]",
+        "tests/test_d4c0.py::test_notebooks_structure[/mnt/data/audit_d4c0reg_0105/work/source/phaseB/d/MirrorTopology_Step1_D4_pseudo_v0.1.ipynb-d4_pseudo.py-d4_pseudo_lock.json-d4_pseudo_final_record.json-PSEUDO_PASS-d4_pseudo_record.json]"
+      ]
+    },
+    "independent_unmodified_pytest": {
+      "groups": {
+        "submitted_registration": {
+          "cases": 53,
+          "passed": 53,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "skip_details": []
+        },
+        "regressions": {
+          "cases": 120,
+          "passed": 113,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 7,
+          "skip_details": [
+            {
+              "name": {
+                "classname": "test_d4c0",
+                "name": "test_pseudo_generation_deterministic_prefix_paired_saved_verified_and_refusals",
+                "time": "0.000"
+              },
+              "reason": {
+                "type": "pytest.skip",
+                "message": "external assets not present"
+              }
+            },
+            {
+              "name": {
+                "classname": "test_d4c0",
+                "name": "test_pseudo_script_selftest_record_bound_and_refusals",
+                "time": "0.000"
+              },
+              "reason": {
+                "type": "pytest.skip",
+                "message": "external assets not present"
+              }
+            },
+            {
+              "name": {
+                "classname": "test_d4c0",
+                "name": "test_d2w_script_selftest_end_to_end_records_restore_and_outcome_preserved",
+                "time": "0.000"
+              },
+              "reason": {
+                "type": "pytest.skip",
+                "message": "external assets not present"
+              }
+            },
+            {
+              "name": {
+                "classname": "test_d4c0",
+                "name": "test_d2w_restore_refusals",
+                "time": "0.000"
+              },
+              "reason": {
+                "type": "pytest.skip",
+                "message": "external assets not present"
+              }
+            },
+            {
+              "name": {
+                "classname": "test_d4c0",
+                "name": "test_d2w_script_refusals",
+                "time": "0.000"
+              },
+              "reason": {
+                "type": "pytest.skip",
+                "message": "external assets not present"
+              }
+            },
+            {
+              "name": {
+                "classname": "test_d4c0",
+                "name": "test_d2w_assemble_binds_registered_units_and_roots",
+                "time": "0.000"
+              },
+              "reason": {
+                "type": "pytest.skip",
+                "message": "external assets not present"
+              }
+            },
+            {
+              "name": {
+                "classname": "test_d4c0",
+                "name": "test_d2w_formal_branch_resolves_then_refuses_missing_arrays",
+                "time": "0.000"
+              },
+              "reason": {
+                "type": "pytest.skip",
+                "message": "external assets not present"
+              }
+            }
+          ]
+        },
+        "w2context": {
+          "cases": 21,
+          "passed": 21,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "skip_details": []
+        }
+      },
+      "passed": 187,
+      "skipped": 7,
+      "failures": 0,
+      "errors": 0
+    },
+    "independent_probe_assertions": 45,
+    "metadata_assertions": 50,
+    "original_files_compared": 39,
+    "inventory_sha_entries": 2189,
+    "python_compile": 209,
+    "notebook_cells_compile": 8
+  },
+  "preservation": {
+    "source_files": 2642,
+    "source_unmodified": true,
+    "previous_registered_assets": 1860,
+    "previous_registered_assets_unchanged": true,
+    "new_registered_originals": 39,
+    "new_registered_derived_files": 3,
+    "new_registered_total_files": 42,
+    "original_archive_unchanged": true
+  },
+  "fresh_reproduction": {
+    "completed": true,
+    "commands": [
+      {
+        "tag": "metadata",
+        "command": [
+          "/opt/pyvenv/bin/python",
+          "/mnt/data/audit_d4c0reg_0105/code/check_metadata.py"
+        ],
+        "returncode": 0
+      },
+      {
+        "tag": "packet_check",
+        "command": [
+          "/opt/pyvenv/bin/python",
+          "/mnt/data/audit_d4c0reg_0105/fresh/work/source/phaseB/verify_b2_packet.py",
+          "/mnt/data/audit_d4c0reg_0105/fresh/work/source/phaseB",
+          "--output",
+          "/mnt/data/audit_d4c0reg_0105/fresh/results/packet_check.json"
+        ],
+        "returncode": 0
+      },
+      {
+        "tag": "collect",
+        "command": [
+          "/opt/pyvenv/bin/python",
+          "/mnt/data/audit_d4c0reg_0105/code/collect_suite.py"
+        ],
+        "returncode": 0
+      },
+      {
+        "tag": "submitted_registration",
+        "command": [
+          "/opt/pyvenv/bin/python",
+          "-m",
+          "pytest",
+          "tests/test_d4c0_registration.py",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "--junitxml=/mnt/data/audit_d4c0reg_0105/fresh/logs/submitted_registration.xml"
+        ],
+        "returncode": 0
+      },
+      {
+        "tag": "regressions",
+        "command": [
+          "/opt/pyvenv/bin/python",
+          "-m",
+          "pytest",
+          "tests/test_d4c0.py",
+          "tests/test_audit_d2_tranche2_v3_context_chatgpt.py",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "--junitxml=/mnt/data/audit_d4c0reg_0105/fresh/logs/regressions.xml"
+        ],
+        "returncode": 0
+      },
+      {
+        "tag": "w2context",
+        "command": [
+          "/opt/pyvenv/bin/python",
+          "-m",
+          "pytest",
+          "tests/test_audit_b2_tranche26_chatgpt.py",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "--junitxml=/mnt/data/audit_d4c0reg_0105/fresh/logs/w2context.xml"
+        ],
+        "returncode": 0
+      },
+      {
+        "tag": "probes",
+        "command": [
+          "/opt/pyvenv/bin/python",
+          "/mnt/data/audit_d4c0reg_0105/code/probe_registration.py"
+        ],
+        "returncode": 0
+      },
+      {
+        "tag": "summary",
+        "command": [
+          "/opt/pyvenv/bin/python",
+          "/mnt/data/audit_d4c0reg_0105/code/summarize_checks.py"
+        ],
+        "returncode": 0
+      }
+    ],
+    "source_unmodified": true,
+    "passed": 187,
+    "skipped": 7,
+    "probe_assertions": 45,
+    "counted_twice": false
+  },
+  "nonblocking_notes": [
+    {
+      "id": "N-D4C0REG-ORIGINAL-FILE-COUNT",
+      "note": "Report says 40 original files; exact compared originals are 39 and derived files 3 (total 42). No required original missing; correct next document update; no resubmission needed."
+    },
+    {
+      "id": "SCOPE-PIN-LAYERS",
+      "note": "An otherwise valid but wrong 64-character receipt pin may pass ledger-only load; receipt load and both consumers reject. Do not describe all seven values as checked within ledger-only load."
+    },
+    {
+      "id": "SCOPE-RETURNED-OBJECTS",
+      "note": "Returned columns/views are detached from source files, not permanently immutable. Downstream actual-input identity and order checks remain required; no new blocking patch."
+    }
+  ],
+  "not_approved": [
+    "Formal global calibration or D4C1 partial/combiner implementation",
+    "Calibration usable, Phase E target/labels, noise or ENGINE_VALID",
+    "Independent full-array re-read of the production W2 banks or exact-OT/selection-bound recomputation",
+    "Frozen physical-kernel pseudo regeneration or equivalence across all environments",
+    "Live Colab environment reproduction or remote Git tree verification",
+    "Permanent immutability of returned arrays or atomic snapshot of the entire tree"
+  ],
+  "audit_environment": {
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "pytest": "9.0.2",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "registered_colab_environment_reproduced": false
+  },
+  "artifacts": {
+    "audit": "ChatGPT_audit_D4C0_registration_0.105.0.md",
+    "audit_sha256": "d70fb09cfbe8ae43e24b8783545d529d3388ff28d8bb742105ae055483d7bafd",
+    "decision": "D4C0_registration_0.105.0_audit_decision.json",
+    "evidence": "D4C0_registration_0.105.0_audit_evidence.zip"
+  }
+}

@@ -38,6 +38,23 @@ def _case_positions(fr: FamilyResult, fm: FamilyInput, pmap: Dict[int, int]) -> 
     return {pmap[e]: dict(P=per[e]["P_model"], hits=per[e]["hits_M"], N=per[e]["N"], precision=per[e]["precision"]["state"], stage=per[e]["stage"]) for e in ids}
 
 
+def _w2_position_map(w2: W2Context, key: str, fm: FamilyInput, pmap: Dict[int, int]) -> Dict[int, int]:
+    """The case position map in the W2 manifest's position-id space (D4C-1). The runner's case map sends evaluation ids to observer positions 1..3; a W2 manifest issued on
+    synthetic position banks uses the same ids (identity), while the REGISTERED D-2W manifests identify a position by its CONFIGURATION id (w2_cases: position_id == config id).
+    In that case the map is translated through the view's grid identity (evaluation id -> registered configuration id) and the registered id rule is enforced: the
+    configuration suffix (config_id % 100) must equal the observer position, and the three configuration ids must be exactly the manifest positions. No position is
+    guessed: a view without a grid identity, or a manifest whose positions match neither space, is rejected."""
+    pos_ids = {int(p["position_id"]) for p in w2.manifests[key].positions}
+    if pos_ids == set(int(v) for v in pmap.values()): return dict(pmap)
+    gi = fm.grid_identity
+    if not isinstance(gi, dict) or not isinstance(gi.get("evaluation_to_config"), dict): raise InputContractError(f"case {key}: W2 manifest positions are configuration ids but the view carries no grid identity to bind them")
+    e2c = gi["evaluation_to_config"]
+    try: out = {e: int(e2c[e]) for e in pmap}
+    except KeyError as ex: raise InputContractError(f"case {key}: evaluation id {ex} missing from the grid identity") from ex
+    if set(out.values()) != pos_ids or len(set(out.values())) != 3 or any(out[e] % 100 != int(pmap[e]) for e in pmap): raise InputContractError(f"case {key}: W2 manifest positions {sorted(pos_ids)} do not correspond to the evaluated configurations (registered rule: configuration suffix == observer position)")
+    return out
+
+
 def evaluate_family_full(reg: GridRegistry, man: ConfigurationManifest, family: str, parent: Tuple[FamilyInput, Optional[FamilyInput]], views: Dict[str, Tuple[FamilyInput, Optional[FamilyInput], Dict[int, int]]],
                          w2: Optional[W2Context], expected_context_sha256: Optional[str], t1: float, t2: float, twelve_inputs: Optional[dict] = None, with_diagnostics: bool = True, diagnostic_ref_fn=None, twelve_assets=None) -> FamilyThresholdResult:
     """views: size -> (fm, fn, pmap) for every surviving size; twelve_inputs (optional): dict(size_inputs={size: (fm12, fn12)}, position_ids={size: map}, native_position_ids={size: map}) for the expanded family."""
@@ -49,7 +66,7 @@ def evaluate_family_full(reg: GridRegistry, man: ConfigurationManifest, family: 
     pm_, pn_ = parent; fr = evaluate_family_staged(pm_, pn_, t1, t2); core_tech = fr.decision["technical_status"] == "technical_fail"
     diags = {}
     if with_diagnostics and family != "E1":
-        keys = {f"{family}/{s}": (views[s][0], views[s][1]) for s in sizes}; maps = {f"{family}/{s}": views[s][2] for s in sizes}
+        keys = {f"{family}/{s}": (views[s][0], views[s][1]) for s in sizes}; maps = {f"{family}/{s}": (_w2_position_map(w2, f"{family}/{s}", views[s][0], views[s][2]) if w2 is not None else views[s][2]) for s in sizes}
         diags = evaluate_threshold(keys, t1, t2, staged=True, position_maps=maps, w2_context=w2, expected_context_sha256=expected_context_sha256) if w2 is not None else {k: evaluate_family_staged(v[0], v[1], t1, t2) for k, v in keys.items()}
     elif with_diagnostics: diags = {f"{family}/{s}": evaluate_family_staged(views[s][0], views[s][1], t1, t2) for s in sizes}
     records, trans, mans = {}, {}, {}

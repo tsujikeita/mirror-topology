@@ -19,8 +19,9 @@ from .truth import TECH, UNKNOWN
 from . import __version__
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
+MIXTURE_TOL = 8 * np.finfo(float).eps      # rounding margin of a probability MIXTURE (P @ w); see _verify_Q_side
 MODULES = ("__init__.py", "errors.py", "types.py", "truth.py", "rules_config.py", "serialization.py", "ci.py", "precision.py", "decision.py", "family.py", "bootstrap_plan.py", "calibration.py",
-           "quantity.py", "density.py", "orchestrator.py", "positions.py", "expansion.py", "w2_stop.py", "position_state.py", "registry.py", "observers12.py", "observers12_stream.py", "w2_manifest.py", "stage12.py", "coordinator.py", "twelve_eval.py", "plan_io.py", "grid_registry.py", "grid_manifest.py", "production.py", "official_gate.py", "formal_runner.py", "legacy_kernel.py", "performance.py", "w2_shared.py", "w2_context.py", "integrated_runner.py", "threshold_evaluator.py", "twelve_assets.py", "controls.py", "w2_shared_build.py", "ckpt_persist.py", "calibration_first.py", "run_reader.py", "d2_rng.py", "d2_bank.py", "d3_stage.py", "d3_assets.py", "d3_profile.py", "d3_bank.py", "d3b_ledger.py", "d3c_ledger.py", "w2_cases.py", "d4_pseudo.py", "d4c0_registry.py", "archive.py", "checkpoint.py")
+           "quantity.py", "density.py", "orchestrator.py", "positions.py", "expansion.py", "w2_stop.py", "position_state.py", "registry.py", "observers12.py", "observers12_stream.py", "w2_manifest.py", "stage12.py", "coordinator.py", "twelve_eval.py", "plan_io.py", "grid_registry.py", "grid_manifest.py", "production.py", "official_gate.py", "formal_runner.py", "legacy_kernel.py", "performance.py", "w2_shared.py", "w2_context.py", "integrated_runner.py", "threshold_evaluator.py", "twelve_assets.py", "controls.py", "w2_shared_build.py", "ckpt_persist.py", "calibration_first.py", "run_reader.py", "d2_rng.py", "d2_bank.py", "d3_stage.py", "d3_assets.py", "d3_profile.py", "d3_bank.py", "d3b_ledger.py", "d3c_ledger.py", "w2_cases.py", "d4_pseudo.py", "d4c0_registry.py", "d4c1_partial.py", "archive.py", "checkpoint.py")
 
 
 def module_shas() -> dict:
@@ -154,7 +155,10 @@ def _verify_Q_side(ev: dict, ci0: dict, prec: dict, per_cfg: dict, cis_all: list
         if num.ndim != 1 or num.shape != den.shape or num.size == 0: raise InputContractError(f"{where}: stored seed {s} num/den shape invalid")
         if B is None: B = num.size
         elif num.size != B: raise InputContractError(f"{where}: seed {s} replicate count differs")
-        if not (np.all(np.isfinite(num)) and np.all(np.isfinite(den)) and np.all((num >= 0) & (num <= 1)) and np.all((den >= 0) & (den <= 1))): raise InputContractError(f"{where}: stored seed {s} num/den out of the probability domain")
+        # D4C-1 (engine 0.106.0): the stored seed num/den are the MIXTURES P @ w of per-configuration probabilities (each exactly in [0,1]) with weights summing to 1; in floating
+        # point such a mixture can exceed 1 by a few ulp (observed 1.0000000000000002 on a 36-configuration native 12-position mixture). The domain check on the mixture allows
+        # that rounding margin (MIXTURE_TOL = 8 ulp of 1.0); the per-configuration probabilities below stay exact. Values beyond the margin are still rejected.
+        if not (np.all(np.isfinite(num)) and np.all(np.isfinite(den)) and np.all((num >= -MIXTURE_TOL) & (num <= 1 + MIXTURE_TOL)) and np.all((den >= -MIXTURE_TOL) & (den <= 1 + MIXTURE_TOL))): raise InputContractError(f"{where}: stored seed {s} num/den out of the probability domain")
         c = ci_from_replicates(num, den, mode="Q", seed_id=s); _check_ci_schema(cis_all[s], f"{where} seed {s}", "Q")
         if cis_all[s].get("seed_id") != s: raise InputContractError(f"{where}: stored CI at position {s} carries seed_id {cis_all[s].get('seed_id')}")
         _ci_equal(c, cis_all[s], f"{where} seed {s}"); rec.append(c)
