@@ -65,8 +65,45 @@ def test_archive_merge_byte_exact_idempotent_and_refusals(tmp_path):
     with pytest.raises(InputContractError): merge_archives(e, src)                                                               # a corrupted source record never crosses
 
 
+@pytest.mark.parametrize('deferred', [False, True])
+@pytest.mark.parametrize('via', ['put', 'import_bytes'])
+def test_archive_identity_isolation_edited_ref_rejected(tmp_path, deferred, via):
+    """R-D4C1-A1: the returned ArchiveRef.identity never aliases the trusted cache: an edited ref (top level AND nested) is rejected by get, the original ref still resolves, and a
+    later put / flush writes the ORIGINAL identity to disk."""
+    ar = Archive(str(tmp_path / 'a'), deferred_index=deferred); ident = {'kind': 'original', 'nested': {'n': 1}}
+    if via == 'put': ref = ar.put('transition', {'x': 1}, ident)
+    else:
+        src = Archive(str(tmp_path / 'src')); r0 = src.put('transition', {'x': 1}, ident); body = open(os.path.join(src.root, r0.path), 'rb').read(); ref = ar.import_bytes('transition', r0.sha256, ident, body, '0.0.1')
+    orig = ArchiveRef(ref.kind, ref.sha256, ref.path, {'kind': 'original', 'nested': {'n': 1}})
+    ident['kind'] = 'caller-edited'                                                                               # the caller's own dict is not the cache either
+    ref.identity['kind'] = 'modified'; ref.identity['nested']['n'] = 2
+    with pytest.raises(InputContractError, match='identity differ'): ar.get(ref)
+    assert ar.get(orig) == {'x': 1}
+    ar.put('transition', {'x': 2}, {'kind': 'other'}); ar.flush()
+    on_disk = ser.loads(open(ar.index_path, encoding='utf-8').read())['entries']; assert on_disk[0]['identity'] == {'kind': 'original', 'nested': {'n': 1}} and len(on_disk) == 2
+    ents = ar._entries(); ents[0]['identity']['kind'] = 'x'; assert ar.get(orig) == {'x': 1} and ar.verify_all()['ok']                  # _entries() hands out copies
+    with pytest.raises(InputContractError): ar.get(ref)
+
+
+def test_archive_flush_conflict_detected_before_overwrite(tmp_path):
+    """R-D4C1-A2: with entries pending, an external change of the index (a second Archive object writing a valid entry) is a conflict at flush / normal context exit as well as at
+    get; nothing is overwritten and the external entry stays resolvable."""
+    root = str(tmp_path / 'r'); A = Archive(root, deferred_index=True); ra = A.put('transition', {'a': 1}, {'k': 'A'}); assert A.pending == 1
+    B = Archive(root); rb = B.put('transition', {'b': 1}, {'k': 'B'})
+    with pytest.raises(InputContractError, match='pending'): A.flush()
+    with pytest.raises(InputContractError, match='pending'):
+        with A: pass
+    with pytest.raises(InputContractError, match='pending'): A.get(ra)
+    C = Archive(root); assert C.get(rb) == {'b': 1} and len(C._entries()) == 1
+    with pytest.raises(InputContractError): C.get(ra)                                                              # A's record file exists but is not indexed (re-indexed by an identical put)
+    assert C.put('transition', {'a': 1}, {'k': 'A'}) == ra and C.get(ra) == {'a': 1} and len(C._entries()) == 2
+    # the automatic flush_every path is covered by the same guard: pending entries + external change -> conflict at the next put
+    D = Archive(str(tmp_path / 'd'), deferred_index=True, flush_every=2); D.put('transition', {'d': 1}, {'k': 'D'}); Archive(str(tmp_path / 'd')).put('transition', {'e': 1}, {'k': 'E'})
+    with pytest.raises(InputContractError, match='pending'): D.put('transition', {'d': 2}, {'k': 'D2'})
+
+
 def test_module_registered_and_version():
-    assert 'd4c1_partial.py' in MODULES and __version__ == '0.106.0' and set(module_shas()) == set(MODULES)
+    assert 'd4c1_partial.py' in MODULES and __version__ == '0.107.0' and set(module_shas()) == set(MODULES)
     inv = json.load(open(os.path.join(P, 'B2_completion_inventory.json'))); assert inv['modules'] == module_shas() and inv['engine_version'] == __version__
 
 
@@ -313,3 +350,47 @@ def test_verifier_mixture_rounding_margin(w2only):
     e4 = ser.from_jsonable(ser.to_jsonable(d)); k = next(iter(e4['per_config'])); e4['per_config'][k]['P_model'] = float(np.nextafter(1.0, 2.0))
     with pytest.raises(InputContractError): verify_family_result_dict(e4)                                                                    # per-configuration probabilities: no margin
     assert 0 < MIXTURE_TOL < 1e-14
+
+
+# ------------------------------------------------------------------------------------------------------------------------------------------- plan object stability (R-D4C1-C)
+def test_partial_plan_object_stability(fx, tmp_path, monkeypatch):
+    """The partial requires the SAME plan objects (`is`) on every first-wave view and parent before the gate and after the last pseudo; a content-identical deepcopy swapped in
+    after the evaluator returns (parent fit_plans / plans, a size view's plans, a 12-position view's plans) is rejected although the fingerprints would still agree; an actual
+    bank value change is rejected by the fingerprints; the normal run records the sharing summary."""
+    import copy as _copy, step1_engine.d4c1_partial as dp
+    reg, man, m = fx['m']['reg'], fx['m']['man'], fx['m']; ctx = m['ctx']; a = fx['asset']; e7 = {k: v for k, v in m['cases'].items() if k.startswith('E7/')}; e1 = {k: v for k, v in m['cases'].items() if k.startswith('E1/')}
+    kw = dict(mode='smoke', twelve_assets=a, expected_twelve_assets_sha256=a.sha256)
+    p = calibrate_family_partial(reg, man, 'E1', e1, ctx, ctx.context_sha256, [80.], [400.], Archive(str(tmp_path / 'ok')), 'c' * 64, **kw)
+    assert p.plan_objects['first_wave_shared'] and p.plan_objects['stable_after'] and p.plan_objects['twelve_present'] is False and p.plan_objects['n_objects'] == 8
+    p7 = calibrate_family_partial(reg, man, 'E7', e7, ctx, ctx.context_sha256, [80.], [400.], Archive(str(tmp_path / 'ok7')), 'c' * 64, twelve_inputs=fx['t12'], **kw)
+    assert p7.plan_objects['twelve_shared'] and p7.plan_objects['twelve_present'] and p7.plan_objects['twelve_shares_first_wave'] is False and p7.plan_objects['n_objects'] == 14      # the synthetic 12-position views carry other (shared) plan objects: allowed in smoke, refused in official
+    orig = dp.evaluate_family_full
+    def swapper(what):
+        def w(reg_, man_, fam_, parent, views, *args, **kw_):
+            out = orig(reg_, man_, fam_, parent, views, *args, **kw_)
+            if what == 'parent_fit_plans': parent[0].fit_plans = _copy.deepcopy(parent[0].fit_plans)
+            if what == 'parent_plans': parent[0].plans = _copy.deepcopy(parent[0].plans)
+            if what == 'view_plans': views['L1.20'][1].plans = _copy.deepcopy(views['L1.20'][1].plans)
+            if what == 'twelve_plans': args[4]['size_inputs']['L1.00'][0].plans = _copy.deepcopy(args[4]['size_inputs']['L1.00'][0].plans)      # args: (w2, expected, x, y, twelve_inputs)
+            return out
+        return w
+    for what in ('parent_fit_plans', 'parent_plans', 'view_plans'):
+        cases = {k: (_copy.copy(v[0]), _copy.copy(v[1]), v[2]) for k, v in e1.items()}                                                  # fresh FamilyInput shells sharing the fixed plan dicts
+        monkeypatch.setattr(dp, 'evaluate_family_full', swapper(what)); ar = Archive(str(tmp_path / what))
+        with pytest.raises(InputContractError, match='plan objects were replaced'): calibrate_family_partial(reg, man, 'E1', cases, ctx, ctx.context_sha256, [80.], [400.], ar, 'c' * 64, **kw)
+        assert not any(e['identity'].get('kind') == PARTIAL_KIND for e in ar._entries())                                                   # per-pseudo evidence may exist; no partial record is issued
+    t12 = dict(fx['t12']); t12['size_inputs'] = {s_: (_copy.copy(pair[0]), _copy.copy(pair[1])) for s_, pair in fx['t12']['size_inputs'].items()}
+    monkeypatch.setattr(dp, 'evaluate_family_full', swapper('twelve_plans'))
+    with pytest.raises(InputContractError, match='plan objects were replaced'): calibrate_family_partial(reg, man, 'E7', e7, ctx, ctx.context_sha256, [80.], [400.], Archive(str(tmp_path / 'tw')), 'c' * 64, twelve_inputs=t12, **kw)
+    monkeypatch.setattr(dp, 'evaluate_family_full', orig)
+    # before the gate: views that do not share one plan object pair are refused; a copied bank value is refused by the fingerprints after the run
+    bad = dict(e1); fm, fn, pm = bad['E1/L1.50']; bad['E1/L1.50'] = (_copy.copy(fm), fn, pm); bad['E1/L1.50'][0].plans = _copy.deepcopy(fm.plans)
+    with pytest.raises(InputContractError, match='SAME evaluation / fitting plan objects'): calibrate_family_partial(reg, man, 'E1', bad, ctx, ctx.context_sha256, [80.], [400.], Archive(str(tmp_path / 'ns')), 'c' * 64, **kw)
+    def mutate(reg_, man_, fam_, parent, views, *args, **kw_):
+        out = orig(reg_, man_, fam_, parent, views, *args, **kw_); views['L1.00'][0].configs[0].T1_model[0] += 1.0; return out
+    monkeypatch.setattr(dp, 'evaluate_family_full', mutate)
+    with pytest.raises(InputContractError, match='inputs changed'): calibrate_family_partial(reg, man, 'E1', {k: (_copy.copy(v[0]), _copy.copy(v[1]), v[2]) for k, v in e1.items()}, ctx, ctx.context_sha256, [80.], [400.], Archive(str(tmp_path / 'mut')), 'c' * 64, **kw)
+    monkeypatch.setattr(dp, 'evaluate_family_full', orig); e1['E1/L1.00'][0].configs[0].T1_model[0] -= 1.0                                 # restore the shared fixture array
+    # a partial whose plan-object record was edited is refused by the shape check / combiner
+    d = ser.from_jsonable(ser.to_jsonable(p.as_dict())); d['plan_objects']['stable_after'] = False; d['binding']['partial_sha256'] = _payload_sha(d)
+    with pytest.raises(InputContractError, match='plan-object'): verify_partial_record(d, Archive(str(tmp_path / 'ok')))

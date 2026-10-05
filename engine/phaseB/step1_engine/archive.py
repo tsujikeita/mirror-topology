@@ -7,10 +7,12 @@ correspondence between the archived source and the transition.
 Index access (D4C-1; engine 0.106.0): the parsed index is cached in memory and re-read whenever the index file's stat identity (inode, size, mtime_ns, ctime_ns) changes, so a
 get/put no longer re-parses the whole index; lookups use a (kind, sha) map. `deferred_index=True` keeps the index in memory and writes it on flush() / context exit / every
 `flush_every` puts (record files are still written immediately); the on-disk index bytes are identical to the immediate mode for the same put sequence (tested). A record file
-present on disk without an index entry (interrupted deferred run) is simply re-indexed by the next identical put. import_bytes() copies an entry byte-exactly (archive merge)."""
+present on disk without an index entry (interrupted deferred run) is simply re-indexed by the next identical put. import_bytes() copies an entry byte-exactly (archive merge).
+0.107.0 (audit R-D4C1-A1/A2): the trusted cache owns deep copies of every entry (returned refs and _entries() never alias it; an edited ref is rejected by get and never reaches
+the index), and a pending flush / context exit re-checks the index file's stat identity first (external change while pending -> conflict, nothing overwritten)."""
 from __future__ import annotations
 from dataclasses import dataclass, asdict
-import hashlib, os
+import hashlib, os, copy
 from .errors import InputContractError
 from . import serialization as ser
 from . import __version__
@@ -61,8 +63,12 @@ class Archive:
         st = os.stat(self._resolved_path("index.json")); return (st.st_ino, st.st_size, st.st_mtime_ns, st.st_ctime_ns)
 
     def flush(self):
-        """Deferred mode: write the in-memory index to disk (identical bytes to the immediate mode); no-op when nothing is pending."""
-        if self._pending: self._write_index(self._cache[1])
+        """Deferred mode: write the in-memory index to disk (identical bytes to the immediate mode); no-op when nothing is pending. R-D4C1-A2: before the write the index file on
+        disk must still be the one the cache was built from (stat identity); an external change while entries are pending is a conflict and nothing is overwritten (the same
+        rule as get). Not a race-proof lock: ordinary, non-hostile sequential use."""
+        if self._pending:
+            self._load()                                                                                      # raises on an external change of the index while pending
+            self._write_index(self._cache[1])
         return self
 
     def _resolved_path(self, relative_path):
@@ -111,11 +117,12 @@ class Archive:
         if self._pending: raise InputContractError("archive index changed on disk while deferred entries are pending")
         entries, keys = self._parse_index(); self._cache = (key, entries, keys); return self._cache
 
-    def _entries(self): return list(self._load()[1])
+    def _entries(self): return copy.deepcopy(self._load()[1])                                                # callers never receive the trusted cache objects (R-D4C1-A1)
 
     def _find(self, kind, sha): return self._load()[2].get((kind, sha))
 
     def _append_entry(self, entry: dict):
+        entry = copy.deepcopy(entry)                                                                            # the trusted cache owns its own deep copy (R-D4C1-A1)
         key, entries, keys = self._load(); entries.append(entry); keys[(entry["kind"], entry["sha256"])] = entry
         if self._deferred:
             self._pending += 1
@@ -124,7 +131,7 @@ class Archive:
 
     def put(self, kind: str, record: dict, identity: dict) -> ArchiveRef:
         if kind not in KINDS: raise InputContractError(f"unknown archive kind {kind!r}")
-        body = ser.dumps(record).encode("utf-8"); sha = hashlib.sha256(body).hexdigest(); ident = ser.from_jsonable(ser.to_jsonable(identity)); rel = f"{kind}/{sha}.json"; ref = ArchiveRef(kind, sha, rel, ident); ref.validate()
+        body = ser.dumps(record).encode("utf-8"); sha = hashlib.sha256(body).hexdigest(); ident = ser.from_jsonable(ser.to_jsonable(identity)); rel = f"{kind}/{sha}.json"; ref = ArchiveRef(kind, sha, rel, copy.deepcopy(ident)); ref.validate()
         existing = self._find(kind, sha)
         if existing is not None:
             if existing["identity"] != ident: raise InputContractError("archive conflict: the same bytes are already indexed under a different identity (aliases are not supported)")
@@ -148,7 +155,7 @@ class Archive:
         if not isinstance(body, (bytes, bytearray)) or hashlib.sha256(body).hexdigest() != sha256: raise InputContractError("imported bytes do not hash to the given SHA")
         if ser.dumps(ser.loads(body.decode("utf-8"))).encode("utf-8") != bytes(body): raise InputContractError("imported bytes are not a canonical archive record")
         if not isinstance(engine_version, str) or not engine_version: raise InputContractError("imported entry requires its source engine version")
-        ident = ser.from_jsonable(ser.to_jsonable(identity)); rel = f"{kind}/{sha256}.json"; ref = ArchiveRef(kind, sha256, rel, ident); ref.validate()
+        ident = ser.from_jsonable(ser.to_jsonable(identity)); rel = f"{kind}/{sha256}.json"; ref = ArchiveRef(kind, sha256, rel, copy.deepcopy(ident)); ref.validate()
         existing = self._find(kind, sha256)
         if existing is not None:
             if existing["identity"] != ident: raise InputContractError("archive conflict: the same bytes are already indexed under a different identity (aliases are not supported)")

@@ -61,7 +61,7 @@ def partials(banks, tmp_path_factory):
 
 @need_ext
 def test_partial_script_selftest_end_to_end(partials):
-    C = partials['C']; REQ = _ast_required('REQUIRED_PARTIAL'); assert len(REQ) == 23 and REQ[:11] == _ast_required('REQUIRED_COMMON')
+    C = partials['C']; REQ = _ast_required('REQUIRED_PARTIAL'); assert len(REQ) == 24 and REQ[:11] == _ast_required('REQUIRED_COMMON')
     for f in FAMS:
         m = partials['runs'][f]['rec']; o = partials['runs'][f]['dir']
         assert partials['runs'][f]['rc'] == 1 and m['stage'] == 'complete' and m['failures'] == [] and m['D4C1_PARTIAL_PASS'] is False and m['selftest'] is True and m['formal'] is False and m['probe'] is False and m['mode'] == 'partial' and m['family'] == f, partials['runs'][f]['stdout']
@@ -73,6 +73,7 @@ def test_partial_script_selftest_end_to_end(partials):
         from step1_engine import serialization as ser
         doc = ser.loads(open(fp, encoding='utf-8').read()); assert doc['schema'] == 'family_partial_calibration_v1' and doc['family'] == f and doc['mode'] == 'smoke' and doc['thresholds']['target_commitment'] == C and doc['thresholds']['pseudo']['n'] == 2 and 'calibration' not in doc and doc['campaign']['id'] == 'SELFTEST_CAMPAIGN_01__SELFTEST' and doc['campaign']['formal'] is False and doc['binding']['partial_sha256'] == pr['partial_sha256']
         assert set(m['stages_peak_rss_mb']) >= {'preflight', 'first_wave_intake', 'plans', 'first_wave_views', 'partial', 'verify', 'final'} and m['timings']['seconds_per_pseudo'] > 0
+        assert m['plan_objects']['stable_after'] is True and m['plan_objects']['first_wave_shared'] is True and m['plan_objects']['script_views_same_objects_after'] is True and doc['plan_objects']['stable_after'] is True and (f == 'E2') == (m['plan_objects']['twelve_shares_first_wave'] is True) == (m['plan_objects']['twelve_present'] is True)
         if f == 'E2':
             assert m['attempt'] == dict(attempt_id='TEST_ATTEMPT_1', launcher_lock_sha256='f' * 64) and m['twelve']['gate'] == dict(mode='smoke', passed=True, required_failures=[], environment_source='live_collected') and m['twelve']['d3c_binding'] == dict(family='E2', note='SELF-TEST: no D-3c binding') and len(m['supplies']) == 2 * (9 + 27) and all(f'twelve:E2/{s}' in doc['fingerprints']['at_gate'] for s in SIZES)
             assert m['plan_identity']['source'].startswith('SELF-TEST') and m['plan_identity']['B'] == 20 and m['inputs']['d3b'][SIZES[0]]['selftest'] is True and m['uids']['K0'] == 10 and m['uids']['K1'] == 30
@@ -142,7 +143,7 @@ def _cells(path):
     nb = json.load(open(path)); return [''.join(c['source']) for c in nb['cells']]
 
 
-@pytest.mark.parametrize('nb,req_name,n_req', [(NB_P, 'REQUIRED_PARTIAL', 23), (NB_C, 'REQUIRED_COMBINE', 18)])
+@pytest.mark.parametrize('nb,req_name,n_req', [(NB_P, 'REQUIRED_PARTIAL', 24), (NB_C, 'REQUIRED_COMBINE', 18)])
 def test_notebook_structure_and_trusted_inventory(nb, req_name, n_req):
     md, c0, c1, c2, c3 = _cells(nb); assert md.startswith('# MirrorTopology Step 1 — Phase D4C-1')
     # R-D4C0-B: the output policy runs BEFORE the first mkdir / lock publication; one makedirs; the attempt cell takes the anchor from the LOCK and re-validates it with the same function
@@ -152,6 +153,7 @@ def test_notebook_structure_and_trusted_inventory(nb, req_name, n_req):
     req = _ast_required(req_name); expected = 'REQUIRED_EXPECTED=' + json.dumps(req).replace(' ', '').replace('"', "'"); assert len(req) == n_req and expected in c2 and f"t.id=='{req_name}'" in c2
     # no nonce, no self-test flag, no probe in the formal launch (probe only when PROBE), formal profile; the scientific outcome is not a pass condition
     assert 'nonce' not in c2.lower().replace('the nonce is never entered here', '') and '--selftest' not in c2 and "'--profile','production_official'" in c2 and 'is NOT a condition' in c2
+    assert 'is not a JSON object' in c2 and 'if doc_ok and not isinstance(doc, dict)' in c2 and c2.index('if doc_ok and not isinstance(doc, dict)') < c2.index('if doc_ok and isinstance(doc, dict)')      # R-D4C1-B
     if nb == NB_P:
         assert "TARGET_COMMITMENT = '<64-hex commitment" in c0 and 'PROBE_N = None' in c0 and "'--probe-n'" in c2 and 'not PROBE' in c2 and "'--target-commitment',TARGET_COMMITMENT,'--campaign-id',CAMPAIGN_ID" in c2 and 'cfg\\d+_(b0|b1|fit)' in c2 and "'--d3b-root'" in c2 and 'vm.total>(40e9' in c1 and "d4c1_partial_{lock" in c3
         assert "('pseudo_identity', PROBE or (pp.get('sha256_T1')==idn.get('T1_sha256')" in c2 and "doc.get('w2_context_sha256')==pins['d2w_context_sha256']" in c2 and "('no_aggregation', 'calibration' not in doc" in c2
@@ -209,7 +211,8 @@ def test_partial_preflight_output_policy_refuses_before_any_write(tmp_path, case
     if case == 'out_is_file': assert out.read_text() == 'file'
 
 
-NB_CASES = ['ok', 'staged_ok', 'probe_never_pass', 'retry_after_old_success', 'pass_false', 'rc1', 'missing_record', 'commit_changed', 'script_changed', 'lock_file_changed', 'root_changed', 'script_changed_during_staging', 'anchor_foreign_file', 'evidence_tampered', 'evidence_unbound_family', 'evidence_no_aggregation', 'pseudo_identity_mismatch', 'commitment_mismatch', 'selftest_true', 'false_required_gate', 'required_inventory_mismatch', 'script_required_changed', 'launch_failure', 'disk_insufficient', 'result_attempt_mismatch']
+NB_CASES = ['ok', 'staged_ok', 'probe_never_pass', 'retry_after_old_success', 'pass_false', 'rc1', 'missing_record', 'commit_changed', 'script_changed', 'lock_file_changed', 'root_changed', 'script_changed_during_staging', 'anchor_foreign_file', 'evidence_tampered', 'evidence_unbound_family', 'evidence_no_aggregation', 'evidence_plan_objects_unstable', 'pseudo_identity_mismatch', 'commitment_mismatch', 'selftest_true', 'false_required_gate', 'required_inventory_mismatch', 'script_required_changed', 'launch_failure', 'disk_insufficient', 'result_attempt_mismatch', 'doc_null', 'doc_empty_list', 'doc_list', 'doc_string', 'doc_number', 'doc_empty_dict']
+DOC_CASES = {'doc_null': 'null', 'doc_empty_list': '[]', 'doc_list': '[{"schema": "family_partial_calibration_v1"}]', 'doc_string': '"family_partial_calibration_v1"', 'doc_number': '1', 'doc_empty_dict': '{}'}
 NO_LAUNCH = {'commit_changed', 'script_changed', 'lock_file_changed', 'root_changed', 'script_changed_during_staging', 'disk_insufficient'}
 STAGED = {'staged_ok', 'script_changed_during_staging', 'disk_insufficient'}
 
@@ -217,7 +220,7 @@ STAGED = {'staged_ok', 'script_changed_during_staging', 'disk_insufficient'}
 @pytest.mark.parametrize('case', NB_CASES)
 def test_partial_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path, case):
     lock_src, c2 = _lock_src(NB_P); commit = 'a' * 40; mt, pb, RA = _fake_source(tmp_path / 'scratch'); out = tmp_path / 'out'; out.mkdir(); d2, d3 = _roots(tmp_path); staged = case in STAGED; probe = 3 if case == 'probe_never_pass' else None
-    if case == 'script_required_changed': s = open(f'{pb}/d/d4c1_calibration.py').read(); open(f'{pb}/d/d4c1_calibration.py', 'w').write(s.replace('"G_pseudo_identity_bound", "G_record_saved")', '"G_record_saved")', 1)); inv = json.load(open(f'{pb}/B2_completion_inventory.json')); inv['d_sha256']['d/d4c1_calibration.py'] = sha(f'{pb}/d/d4c1_calibration.py'); open(f'{pb}/B2_completion_inventory.json', 'w').write(json.dumps(inv))
+    if case == 'script_required_changed': s = open(f'{pb}/d/d4c1_calibration.py').read(); assert '"G_pseudo_identity_bound", "G_record_saved")' in s; open(f'{pb}/d/d4c1_calibration.py', 'w').write(s.replace('"G_pseudo_identity_bound", "G_record_saved")', '"G_record_saved")', 1)); inv = json.load(open(f'{pb}/B2_completion_inventory.json')); inv['d_sha256']['d/d4c1_calibration.py'] = sha(f'{pb}/d/d4c1_calibration.py'); open(f'{pb}/B2_completion_inventory.json', 'w').write(json.dumps(inv))
     ns = _ns(tmp_path, commit, mt, pb, RA, out, d2, d3, staged, probe=probe); REQ = _ast_required('REQUIRED_PARTIAL', f'{pb}/d/d4c1_calibration.py')
     with contextlib.redirect_stdout(io.StringIO()): exec(compile(lock_src, 'nb_anchor', 'exec'), ns)
     lock = ns['lock']; lock_sha = ns['LOCK_SHA256']; assert lock['probe_n'] == probe and lock['family'] == 'E2'
@@ -240,9 +243,9 @@ def test_partial_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path,
         tag = ('probe_' if probe else 'partial_') + 'E2'; n_rows = probe or 2000; mode = 'smoke' if probe else 'official'
         fps = {'E2': {}, **{f'E2/{s}': {} for s in SIZES}, **{f'twelve:E2/{s}': {} for s in SIZES}}
         doc = dict(schema='family_partial_calibration_v1', kind='family_partial_calibration', engine_version=lock['engine'], mode=mode, family=('E7' if case == 'evidence_unbound_family' else 'E2'), w2_context_sha256='c' * 64, thresholds=dict(target=None, target_commitment=('b' * 64 if case == 'commitment_mismatch' else lock['target_commitment']), pseudo=dict(n=n_rows, sha256_T1=('x' * 64 if case == 'pseudo_identity_mismatch' else 't' * 64), sha256_T2='u' * 64)),
-                   per_pseudo_status=[dict(family='E2')] * n_rows, fingerprints=dict(at_gate=fps, at_end=fps), gate=dict(mode=mode, passed=True), binding=dict(partial_sha256='s' * 64), campaign=dict(id=lock['campaign_id'] + ('__PROBE' if probe else '')))
+                   per_pseudo_status=[dict(family='E2')] * n_rows, fingerprints=dict(at_gate=fps, at_end=fps), gate=dict(mode=mode, passed=True), binding=dict(partial_sha256='s' * 64), campaign=dict(id=lock['campaign_id'] + ('__PROBE' if probe else '')), plan_objects=dict(first_wave_shared=True, twelve_shared=True, twelve_present=True, twelve_shares_first_wave=(case != 'evidence_plan_objects_unstable'), stable_after=True))
         if case == 'evidence_no_aggregation': doc['calibration'] = {}
-        fn = f'd4c1_{tag}_record.json'; data = json.dumps(doc).encode(); open(os.path.join(run_dir, fn), 'wb').write(data); pe = {fn: dict(sha256=hashlib.sha256(data).hexdigest(), bytes=len(data))}
+        fn = f'd4c1_{tag}_record.json'; data = (DOC_CASES[case].encode() if case in DOC_CASES else json.dumps(doc).encode()); open(os.path.join(run_dir, fn), 'wb').write(data); pe = {fn: dict(sha256=hashlib.sha256(data).hexdigest(), bytes=len(data))}      # R-D4C1-B: correctly re-hashed non-object documents
         if case == 'evidence_tampered': open(os.path.join(run_dir, fn), 'ab').write(b' ')
         gates = {k: True for k in REQ}
         if case == 'false_required_gate': gates['G_partial_verified'] = False
@@ -277,10 +280,14 @@ def test_partial_notebook_attempt_cell_binds_lock_and_records_failures(tmp_path,
     if case == 'selftest_true': assert fin['launcher_fallback'] is True and any('selftest' in f for f in fin['failures'])
     if case in ('false_required_gate', 'required_inventory_mismatch', 'script_required_changed'): assert fin['gates_ok'] is False and fin['launcher_fallback'] is False
     if case == 'result_attempt_mismatch': assert fin['bindings_ok'] is False and any('attempt_id' in f for f in fin['failures'])
-    if case in ('evidence_tampered', 'evidence_unbound_family', 'evidence_no_aggregation', 'pseudo_identity_mismatch', 'commitment_mismatch'): assert fin['evidence_ok'] is False and fin['gates_ok'] is True and fin['bindings_ok'] is True, fin['failures']
+    if case in ('evidence_tampered', 'evidence_unbound_family', 'evidence_no_aggregation', 'evidence_plan_objects_unstable', 'pseudo_identity_mismatch', 'commitment_mismatch') or case in DOC_CASES: assert fin['evidence_ok'] is False and fin['gates_ok'] is True and fin['bindings_ok'] is True and fin['D4C1_PARTIAL_PASS'] is True, fin['failures']
+    if case in DOC_CASES and case != 'doc_empty_dict': assert any('not a JSON object' in f for f in fin['failures']), fin['failures']
 
 
-@pytest.mark.parametrize('case', ['ok', 'provenance_mismatch', 'partial_record_changed_after_lock', 'pass_false'])
+COMBINE_DOC_CASES = {'doc_null': 'null', 'doc_list': '[1]', 'doc_string': '"sealed_calibration"', 'doc_number': '0', 'doc_empty_dict': '{}'}
+
+
+@pytest.mark.parametrize('case', ['ok', 'provenance_mismatch', 'partial_record_changed_after_lock', 'pass_false'] + sorted(COMBINE_DOC_CASES))
 def test_combine_notebook_attempt_cell(tmp_path, case):
     md, c0, c1, c2, c3 = _cells(NB_C); lock_src = c1[c1.index('# OUTPUT-ANCHOR'):]; commit = 'a' * 40; mt, pb, RA = _fake_source(tmp_path / 'scratch'); out = tmp_path / 'out'; out.mkdir(); REQ = _ast_required('REQUIRED_COMBINE')
     dirs = {}; runs = {}
@@ -298,7 +305,7 @@ def test_combine_notebook_attempt_cell(tmp_path, case):
         prov = {f: dict(partial_sha256=(('z' * 64) if (case == 'provenance_mismatch' and f == 'E8') else f * 64)) for f in FAMS}
         doc = dict(mode='official', engine_version=lock['engine'], thresholds=dict(target=None, target_commitment='a' * 64, pseudo=dict(n=2000, sha256_T1='t' * 64, sha256_T2='u' * 64)), per_pseudo_family_status=[{}] * 2000, w2_context_sha256='c' * 64, binding=dict(run_manifest_sha256='m' * 64, run_manifest_ref=dict(identity=dict(kind='sealed_calibration')), combiner=dict(partials=prov, campaign=dict(id='TEST_CAMPAIGN_01'), target_commitment='a' * 64), sealed_dependencies=dict(families=list(FAMS), require_all_families=True)),
                    branch_completeness=dict(all_registered_families=True), calibration={l: dict(summary=dict(n=2000, threshold=(0.05 if l == 'support' else 0.01))) for l in ('support', 'strong')}, final_label_released=False, families={}, cases={})
-        data = json.dumps(doc).encode(); open(os.path.join(run_dir, 'd4c1_sealed_calibration.json'), 'wb').write(data)
+        data = (COMBINE_DOC_CASES[case].encode() if case in COMBINE_DOC_CASES else json.dumps(doc).encode()); open(os.path.join(run_dir, 'd4c1_sealed_calibration.json'), 'wb').write(data)
         rec = dict(schema='d4c1_run_record_v1', mode='combine', stage='complete', failures=[], selftest=False, formal=True, probe=False, profile='production_official', attempt=dict(attempt_id=att, launcher_lock_sha256=lk), source=dict(script_sha256=lock['script_sha256'], inventory_sha256=lock['inventory_sha256'], pins_sha256=lock['pins_sha256'], engine_version=lock['engine']), target_commitment='a' * 64, campaign_id='TEST_CAMPAIGN_01',
                    gates={k: True for k in REQ}, required_inventory=list(REQ), required_all_true=True, seconds=1.0, timings={}, sealed=dict(run_manifest_sha256='m' * 64), partials={f: dict(record_sha256=runs[f]['record_sha256'], D4C1_PARTIAL_PASS=True) for f in FAMS}, pseudo=dict(n=2000, identity=dict(T1_sha256='t' * 64, T2_sha256='u' * 64, paired_sha256='p' * 64)), w2_context=dict(context_sha256='c' * 64), published_evidence={'d4c1_sealed_calibration.json': dict(sha256=hashlib.sha256(data).hexdigest(), bytes=len(data))}, D4C1_COMBINE_PASS=(case != 'pass_false'))
         open(os.path.join(run_dir, 'd4c1_combine_run.json'), 'w').write(json.dumps(rec))
@@ -312,3 +319,4 @@ def test_combine_notebook_attempt_cell(tmp_path, case):
     if case == 'ok': assert fin['combine_pass'] is True and fin['failures'] == [] and fin['evidence_ok'] is True and fin['bindings_ok'] is True
     if case == 'provenance_mismatch': assert fin['combine_pass'] is False and fin['evidence_ok'] is False and any('provenance' in f for f in fin['failures'])
     if case == 'pass_false': assert fin['combine_pass'] is False and fin['D4C1_COMBINE_PASS'] is False and fin['failures'] == []
+    if case in COMBINE_DOC_CASES: assert fin['combine_pass'] is False and fin['evidence_ok'] is False and fin['bindings_ok'] is True and (case == 'doc_empty_dict' or any('not a JSON object' in f for f in fin['failures'])), fin['failures']

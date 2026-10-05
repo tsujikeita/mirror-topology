@@ -62,7 +62,7 @@ class FamilyPartialRecord:
     schema: str; kind: str; engine_version: str; mode: str; family: str; registry_sha256: str; manifest_sha256: str; w2_context_sha256: str; w2_asset_sha256: str
     sizes: list = field(default_factory=list); gate: dict = field(default_factory=dict); fingerprints: Dict[str, dict] = field(default_factory=dict); thresholds: dict = field(default_factory=dict)
     archive_refs: Dict[str, dict] = field(default_factory=dict); per_pseudo_status: list = field(default_factory=list); per_pseudo_diagnostics: list = field(default_factory=list)
-    per_pseudo_manifest_keys: list = field(default_factory=list); w2_context_ref: dict = field(default_factory=dict); campaign: Optional[dict] = None; binding: dict = field(default_factory=dict)
+    per_pseudo_manifest_keys: list = field(default_factory=list); w2_context_ref: dict = field(default_factory=dict); campaign: Optional[dict] = None; plan_objects: dict = field(default_factory=dict); binding: dict = field(default_factory=dict)
     scope: str = ("family partial calibration: ONE family's per-pseudo eligible truths via the common threshold evaluator (parent required quantities -> position branch -> coordinator -> 12-position "
                   "stage when supplied); standalone case-core diagnostics kept apart; NO aggregation (no c/u/n, Wilson, usable or label) — a partial is not a sealed calibration")
     def as_dict(self): return ser.to_jsonable(self.__dict__)
@@ -92,6 +92,28 @@ def _intake_twelve(reg, twelve_assets, expected_twelve_assets_sha256, twelve_ass
     else:
         verify_twelve_assets(twelve_assets, reg, expected_twelve_assets_sha256); pinned = twelve_assets.sha256; mode = dict(mode="regeneration", receipt=None, regeneration="all manifests")
     return twelve_assets.snapshot(reg, pinned), pinned, mode
+
+
+def plan_object_inventory(views: Dict[str, tuple], parents: tuple, twelve_inputs: Optional[dict]) -> Dict[str, tuple]:
+    """id() of the evaluation / fitting plan dictionaries carried by EVERY input object (first-wave size views, assembled parents, 12-position size views; both systems)."""
+    objs = {}
+    for s_, (fm, fn, _) in views.items():
+        objs[f"view:{s_}/matched"] = (id(fm.plans), id(fm.fit_plans))
+        if fn is not None: objs[f"view:{s_}/native"] = (id(fn.plans), id(fn.fit_plans))
+    objs["parent/matched"] = (id(parents[0].plans), id(parents[0].fit_plans))
+    if parents[1] is not None: objs["parent/native"] = (id(parents[1].plans), id(parents[1].fit_plans))
+    for s_, pair in ((twelve_inputs or {}).get("size_inputs") or {}).items():
+        objs[f"twelve:{s_}/matched"] = (id(pair[0].plans), id(pair[0].fit_plans))
+        if pair[1] is not None: objs[f"twelve:{s_}/native"] = (id(pair[1].plans), id(pair[1].fit_plans))
+    return objs
+
+
+def plan_object_summary(objs: Dict[str, tuple]) -> dict:
+    """Sharing summary (R-D4C1-C): every first-wave object (views + parents) must carry the SAME plan dictionaries (`is`), every 12-position view the same pair among
+    themselves; whether the 12-position pair IS the first-wave pair is recorded (required in official mode for a non-E1 family: first-wave and added configurations share
+    the registered family plans)."""
+    fw = {v for k, v in objs.items() if not k.startswith("twelve:")}; tw = {v for k, v in objs.items() if k.startswith("twelve:")}
+    return dict(first_wave_shared=(len(fw) == 1), twelve_shared=(len(tw) <= 1), twelve_present=bool(tw), twelve_shares_first_wave=(bool(tw) and fw == tw), n_objects=len(objs))
 
 
 def calibrate_family_partial(reg: GridRegistry, man: ConfigurationManifest, family: str, cases: Dict[str, tuple], w2_context: W2Context, expected_context_sha256: str, pseudo_T1, pseudo_T2, archive: Archive, target_commitment: str, *,
@@ -137,6 +159,10 @@ def calibrate_family_partial(reg: GridRegistry, man: ConfigurationManifest, fami
             for size, pair in twelve_inputs["size_inputs"].items():
                 d[f"twelve:{family}/{size}"] = dict(matched=input_fingerprint(pair[0]), native=(None if pair[1] is None else input_fingerprint(pair[1])), position_ids=repr(sorted(twelve_inputs["position_ids"][size].items())), native_position_ids=repr(sorted((twelve_inputs.get("native_position_ids") or {}).get(size, {}).items())))
         return d
+    objs0 = plan_object_inventory(views, (pm_, pn_), twelve_inputs); po = plan_object_summary(objs0)
+    if not po["first_wave_shared"]: raise InputContractError(f"family {family}: the first-wave size views and the assembled parents must carry the SAME evaluation / fitting plan objects (family-shared plans)")
+    if not po["twelve_shared"]: raise InputContractError(f"family {family}: the 12-position size views must share one pair of plan objects")
+    if mode == "official" and twelve_inputs is not None and not po["twelve_shares_first_wave"]: raise InputContractError(f"family {family}: official partial requires the 12-position views to carry the first-wave plan objects (registered family plans)")
     fp0 = fps_all(); rec.fingerprints = dict(at_gate=fp0)
     g = require_official(pm_, pn_) if mode == "official" else official_gate(pm_, pn_, "smoke")
     if not g.passed: raise InputContractError(f"family {family}: gate failed: " + "; ".join(g.required_failures[:3]))
@@ -175,6 +201,10 @@ def calibrate_family_partial(reg: GridRegistry, man: ConfigurationManifest, fami
         rec.per_pseudo_manifest_keys.append(added)
     if fps_all() != fp0: raise InputContractError("inputs changed during the pseudo calibration")
     if ps["sha256_T1"] != hashlib.sha256(np.ascontiguousarray(ps["T1"]).tobytes()).hexdigest() or ps["sha256_T2"] != hashlib.sha256(np.ascontiguousarray(ps["T2"]).tobytes()).hexdigest(): raise InputContractError("pseudo thresholds changed during the calibration")
+    objs1 = plan_object_inventory(views, (pm_, pn_), twelve_inputs)
+    if objs1 != objs0: raise InputContractError(f"family {family}: plan objects were replaced during the calibration (content-identical copies are not the registered plan objects): {sorted(k for k in objs0 if objs1.get(k) != objs0[k])}")
+    if plan_object_summary(objs1) != po: raise InputContractError(f"family {family}: plan object sharing changed during the calibration")
+    rec.plan_objects = dict(po, stable_after=True, checked=("first-wave size views (both systems), assembled parents (both systems)" + (", 12-position size views (both systems)" if twelve_inputs is not None else "")), rule="same objects (`is`) before the gate and after the last pseudo; content identity is covered by the fingerprints")
     rec.fingerprints["at_end"] = fps_all()
     rec.archive_refs["registry"] = archive.put("registry", reg.as_dict(), dict(registry_sha256=reg.registry_sha256)).as_dict()
     rec.binding["partial_sha256"] = rec.payload_sha()
@@ -205,6 +235,8 @@ def _check_partial_shape(d: dict):
     pdep = (d.get("binding") or {}).get("partial_dependencies") or {}
     if pdep.get("families") != [fam] or pdep.get("require_all_families") is not False or pdep.get("target_commitment") != thr["target_commitment"]: raise InputContractError("partial dependencies do not describe a one-family partial")
     if d.get("fingerprints", {}).get("at_gate") != d.get("fingerprints", {}).get("at_end"): raise InputContractError("partial fingerprints at_gate != at_end")
+    po = d.get("plan_objects")
+    if not isinstance(po, dict) or po.get("stable_after") is not True or po.get("first_wave_shared") is not True or po.get("twelve_shared") is not True: raise InputContractError("partial plan-object record missing or not stable / shared")
     for k in d["fingerprints"]["at_gate"]:
         if k in ("twelve_manifest_asset", fam): continue
         if canonical_case_key(k.split(":", 1)[1] if k.startswith("twelve:") else k, {})[0] != fam: raise InputContractError(f"partial fingerprint {k!r} is not of family {fam}")
@@ -272,6 +304,7 @@ def combine_family_partials(reg: GridRegistry, man: ConfigurationManifest, parti
         if fam == "E1" and any(k.startswith("twelve:") for k in d["fingerprints"]["at_gate"]): raise InputContractError("E1 partial carries 12-position inputs")
         if fam != "E1" and ci0["mode"] == "official" and not all(f"twelve:{fam}/{s}" in d["fingerprints"]["at_gate"] for s in reg.surviving[fam]): raise InputContractError(f"official partial {fam} lacks the 12-position inputs")
         if ci0["mode"] == "official" and d["gate"].get("mode") != "official": raise InputContractError(f"partial {fam}: gate mode is not official")
+        if ci0["mode"] == "official" and fam != "E1" and d["plan_objects"].get("twelve_shares_first_wave") is not True: raise InputContractError(f"partial {fam}: official partial must carry the first-wave plan objects in the 12-position views")
     n = ci0["thresholds"]["pseudo"]["n"]; ps = ci0["thresholds"]["pseudo"]
     rm = RunManifest(__version__, ci0["mode"], ci0["registry_sha256"], ci0["manifest_sha256"], ci0["w2_context_sha256"], ci0["w2_asset_sha256"], binding=dict(binding_manifest(), twelve_assets_sha256=ci0["twelve_assets_sha256"], twelve_assets_intake=ci0["twelve_assets_intake"]))
     rm.thresholds = ser.from_jsonable(ser.to_jsonable(ci0["thresholds"]))
