@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""D4C-2a contract tests (engine 0.108.0; audit D4C2-probe decision: design / implementation / small tests only — no Colab execution):
+"""D4C-2a contract tests (engine 0.109.0 = D4C-2a v2 after audit R-D4C2A-A/B/C/D; audit D4C2-probe decision: design / implementation / small tests only — no Colab execution):
   profiling: timing wrappers + cProfile around the engine entry points leave the partial record byte-identical (payload SHA); call counts / segments / outside-segment split;
   sub-partials: row-range sub-partials of one family (separate archives) -> merge -> combine_family_subpartials == single-process calibrate_family_partial (content; archive refs;
       manifest-key first-trigger rule across chunks); the combined partial feeds combine_family_partials unchanged (== calibrate_sealed); per-range reader verification with the
@@ -19,7 +19,7 @@ from step1_engine.calibration import wilson_upper
 from step1_engine.calibration_first import calibrate_sealed, load_sealed_record
 from step1_engine.d4c1_partial import (calibrate_family_partial, combine_family_partials, strip_provenance, verify_partial_record, load_partial_record, _payload_sha, PARTIAL_KIND, PARTIAL_SCHEMA, SUBPARTIAL_KIND, SUBPARTIAL_SCHEMA, load_combined_sealed_record)
 from step1_engine.d4c1_subpartial import (calibrate_family_subpartial, combine_family_subpartials, strip_subpartial_provenance, verify_subpartial_record, load_subpartial_record, check_subpartial_shape, plan_row_ranges, gate_identity)
-from step1_engine.infeasibility import (wilson_blocking_count, registered_blocking_counts, envelope_screen_family, check_screen_record, blocking_rows_from_screen, blocking_rows_from_statuses, infeasibility_certificate, check_certificate, exact_hit_rate, SCREEN_SCHEMA, CERT_SCHEMA, CERT_KIND)
+from step1_engine.infeasibility import (wilson_blocking_count, registered_blocking_counts, envelope_screen_family, check_screen_record, bind_screen_record, blocking_rows_from_screen, blocking_rows_from_statuses, evaluated_rows_from_record, infeasibility_certificate, check_certificate, aggregate_rows, exact_hit_rate, SCREEN_SCHEMA, CERT_SCHEMA, CERT_KIND)
 from step1_engine.profiling import Profiler, TARGETS, summarize, PROFILE_SCHEMA
 from step1_engine.positions import VerifiedW2Decision, event_ratio_trigger
 from step1_engine.w2_context import W2Context
@@ -36,7 +36,7 @@ XS, YS = [80., 200., 80., 150.], [400., 1000., 400., 700.]              # E7 rat
 
 def test_modules_registered_and_version():
     for m in ('d4c1_subpartial.py', 'infeasibility.py', 'profiling.py'): assert m in MODULES
-    assert __version__ == '0.108.0' and set(module_shas()) == set(MODULES)
+    assert __version__ == '0.109.0' and set(module_shas()) == set(MODULES)
     inv = json.load(open(os.path.join(P, 'B2_completion_inventory.json'))); assert inv['modules'] == module_shas() and inv['engine_version'] == __version__
 
 
@@ -183,7 +183,7 @@ def test_profiler_leaves_the_record_identical_and_measures_segments(fx, tmp_path
         p1, _ = _partial(fx, str(tmp_path / 'prof'), 'E7', XS[:2], YS[:2])
     rec = prof.report(note='test')
     assert strip_subpartial_provenance(p0.as_dict()) == strip_subpartial_provenance(p1.as_dict()) and p0.binding['partial_sha256'] == p1.binding['partial_sha256']     # instrumentation changes nothing
-    assert rec['schema'] == PROFILE_SCHEMA and rec['instrumentation'] == dict(wrappers=True, cprofile=True, clock='time.perf_counter (wall)', segment_target='threshold_evaluator.evaluate_family_full', note=rec['instrumentation']['note'])
+    assert rec['schema'] == PROFILE_SCHEMA and {k: rec['instrumentation'][k] for k in ('wrappers', 'cprofile', 'clock', 'segment_target')} == dict(wrappers=True, cprofile=True, clock='time.perf_counter (wall)', segment_target='threshold_evaluator.evaluate_family_full') and 'per-row persistence' in rec['instrumentation']['accounting'] and 'per-row' in rec['outside_segments_note']
     assert rec['segments']['count'] == 2 and len(rec['segments']['per_segment']) == 2 and rec['segments']['wall_seconds'] <= rec['wall_seconds_total'] and rec['outside_segments_wall_seconds'] >= 0
     T = rec['targets']
     for k in ('orchestrator._family_Q', 'orchestrator.ConfigBank.hit_tables', 'bootstrap_plan.resample_hits', 'orchestrator.evaluate_family', 'orchestrator._stage_selection', 'positions.position_decision', 'archive.Archive.put', 'formal_runner.input_fingerprint', 'threshold_evaluator.evaluate_family_full'):
@@ -205,6 +205,14 @@ def test_profiler_leaves_the_record_identical_and_measures_segments(fx, tmp_path
     for bad in (dict(cprofile=1), dict(top_n=0), dict(top_n=True)):
         with pytest.raises(InputContractError): Profiler(**bad)
     with pytest.raises(InputContractError): summarize(dict(schema='x'))
+    # N-D4C2A-PROFILER-ENTER-CLEANUP: an alias mismatch during __enter__ (a binding site holding a different object) raises and leaves NO wrapper installed
+    import step1_engine.bootstrap_plan as bp
+    orig_rh = orch.resample_hits; orch.resample_hits = lambda *a, **k: orig_rh(*a, **k)                      # orchestrator's alias no longer IS bootstrap_plan.resample_hits
+    try:
+        bad_prof = Profiler(targets={'orchestrator._family_Q': TARGETS['orchestrator._family_Q'], 'bootstrap_plan.resample_hits': TARGETS['bootstrap_plan.resample_hits']})
+        with pytest.raises(InputContractError, match='different objects'): bad_prof.__enter__()
+        assert not hasattr(orch._family_Q, '__profiler_target__') and not hasattr(bp.resample_hits, '__profiler_target__') and bad_prof._installed == [] and not bad_prof._active
+    finally: orch.resample_hits = orig_rh
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------------- infeasibility
@@ -237,9 +245,11 @@ def test_envelope_screen_matches_the_evaluator_on_synthetic_banks(fx, monkeypatc
         fc = {k: v for k, v in m['cases'].items() if k.startswith(fam + '/')}; dec = {k: ctx.decision_for(k, ctx.context_sha256) for k in fc}
         scr = envelope_screen_family(reg, man, fam, fc, dec, ctx.context_sha256, XS, YS, campaign=dict(id='t'), target_commitment='c' * 64)
         assert scr['schema'] == SCREEN_SCHEMA and scr['w2_applicable'] and scr['w2'][f'L1.20']['trigger'] == UNKNOWN and [x['blocking'] for x in scr['results']] == expect_block and scr['n_blocking'] == sum(expect_block) and scr['rows'] == [0, 1, 2, 3]
-        assert check_screen_record(scr) == dict(ok=True, family=fam, n_rows=4, n_blocking=sum(expect_block), w2_applicable=True)
+        assert check_screen_record(scr) == dict(ok=True, family=fam, n_rows=4, n_blocking=sum(expect_block), w2_applicable=True, complete_coverage=False, formal=False) and scr['complete_coverage'] is False and scr['stages_required'] == ['N0', 'N4']
+        with pytest.raises(InputContractError, match='both prefixes'): check_screen_record(scr, formal=True)                                                                      # single-batch synthetic banks: never a FORMAL proof
+        with pytest.raises(InputContractError): blocking_rows_from_screen(scr, formal=True)
         for x in scr['results']:
-            for s_, v in x['sizes'].items(): assert set(v['positions']) == {'1', '2', '3'} and v['stages_covered'] == ['N0'] and all(r['P'] == r['hits'] / r['N'] for p_ in v['positions'].values() for r in p_['stages'].values())
+            for s_, v in x['sizes'].items(): assert set(v['positions']) == {'1', '2', '3'} and v['stages_covered'] == ['N0'] and v['complete_coverage'] is False and all(p_['bank_stages'] == ['N0'] for p_ in v['positions'].values()) and all(r['P'] == r['hits'] / r['N'] for p_ in v['positions'].values() for r in p_['stages'].values())
         p, ar = _partial(fx, str(tmp_path / f'p_{fam}'), fam, XS, YS)
         for i, st in enumerate(p.per_pseudo_status):
             if expect_block[i]: assert st['eligible_truths'] == dict(support=UNKNOWN, strong=UNKNOWN, unsupported=UNKNOWN) and st['eligibility'] == 'provisional: position-unresolved'
@@ -254,7 +264,18 @@ def test_envelope_screen_matches_the_evaluator_on_synthetic_banks(fx, monkeypatc
         assert set(bs) == {i for i, b in enumerate(expect_block) if b} and all(be[i]['status'] == dict(support='unknown', strong='unknown') for i in bs)
         cert = infeasibility_certificate(4, [bs, be], pseudo_identity=dict(n=4, sha256_T1=scr['pseudo']['sha256_T1'], sha256_T2=scr['pseudo']['sha256_T2']), campaign=dict(id='t'), target_commitment='c' * 64, sources=[dict(kind='screen', sha256=scr['binding']['screen_sha256'])])
         L = cert['levels']['support']; assert L['first_blocking_count'] == wilson_blocking_count(4, 0.05) == 0 and L['proven_blocking_rows'] >= sum(expect_block) and L['usable_true_impossible_by_wilson'] and check_certificate(cert)['ok']
-        assert all(cert['rows'][str(i)]['status']['support'] == 'unknown' for i in bs)                                                                                 # screen + evaluated merge to the stronger-typed status
+        assert all(cert['rows'][str(i)]['families'][fam]['support'] == 'unknown' and cert['rows'][str(i)]['levels']['support'] == dict(aggregate='unknown', blocking=True, technical=False, possibly_technical=False) for i in bs)      # screen + evaluated of the SAME family merge to the stronger-typed status
+        # evaluated admission through the readers: the published record and its archive; a restamped unknown -> True is rejected by the reader re-derivation
+        pid = dict(n=4, sha256_T1=scr['pseudo']['sha256_T1'], sha256_T2=scr['pseudo']['sha256_T2']); regd = dict(shared_null_asset_sha256=p.w2_asset_sha256, w2_context_sha256=p.w2_context_sha256, registry_sha256=reg.registry_sha256, twelve_assets_sha256=p.binding['twelve_assets_sha256'])
+        with pytest.raises(InputContractError, match='registered context'): evaluated_rows_from_record(p.as_dict(), ar, registered=None, pseudo_identity=pid, family=fam)                      # the registered identities are required
+        res = evaluated_rows_from_record(p.as_dict(), ar, registered=regd, pseudo_identity=pid, family=fam); assert res['rows'] == be and res['row_range'] == [0, 4] and res['partial_sha256'] == p.binding['partial_sha256'] and res['verification']['ok']
+        with pytest.raises(InputContractError): evaluated_rows_from_record(_edited(p, lambda d: d['per_pseudo_status'][1]['eligible_truths'].update(support=True)), ar, registered=regd, pseudo_identity=pid)
+        with pytest.raises(InputContractError, match='archived copy'): evaluated_rows_from_record(_edited(p, lambda d: d['per_pseudo_status'][1].update(eligibility='x')), ar, registered=regd, pseudo_identity=pid)
+        with pytest.raises(InputContractError, match='schema'): evaluated_rows_from_record(dict(p.as_dict(), schema='THIS_IS_NOT_A_PARTIAL'), ar, registered=regd, pseudo_identity=pid)
+        with pytest.raises(InputContractError): evaluated_rows_from_record(p.as_dict(), Archive(str(tmp_path / f'empty_{fam}')), registered=regd, pseudo_identity=pid)                          # no archive -> the reference does not resolve
+        with pytest.raises(InputContractError, match='columns'): evaluated_rows_from_record(p.as_dict(), ar, registered=regd, pseudo_identity=dict(pid, sha256_T1='9' * 64))
+        with pytest.raises(InputContractError, match='family'): evaluated_rows_from_record(p.as_dict(), ar, registered=regd, pseudo_identity=pid, family='E8')
+        with pytest.raises(InputContractError): evaluated_rows_from_record(p.as_dict(), ar, registered=dict(regd, w2_context_sha256='8' * 64), pseudo_identity=pid)
     # not applicable: a size with W2 True, or no unknown size; E1 refused; rows / inputs validation
     fc = {k: v for k, v in m['cases'].items() if k.startswith('E2/')}; dec = {k: ctx.decision_for(k, ctx.context_sha256) for k in fc}
     scr = envelope_screen_family(reg, man, 'E2', fc, dict(dec, **{'E2/L1.00': _true()}), ctx.context_sha256, XS, YS, rows=[1, 3]); assert not scr['w2_applicable'] and scr['n_blocking'] == 0 and scr['rows'] == [1, 3] and check_screen_record(scr)['ok']
@@ -262,11 +283,19 @@ def test_envelope_screen_matches_the_evaluator_on_synthetic_banks(fx, monkeypatc
     dec0 = {k: ctx.decision_for(k, ctx.context_sha256) for k in fc}; scr0 = envelope_screen_family(reg, man, 'E2', fc, dec0, ctx.context_sha256, XS, YS); assert not scr0['w2_applicable'] and scr0['n_blocking'] == 0
     with pytest.raises(InputContractError, match='E1'): envelope_screen_family(reg, man, 'E1', {k: v for k, v in m['cases'].items() if k.startswith('E1/')}, {}, ctx.context_sha256, XS, YS)
     with pytest.raises(InputContractError): envelope_screen_family(reg, man, 'E2', fc, dec0, ctx.context_sha256, XS, YS, rows=[3, 1])
+    for bad_rows in ([True, 2], ['1'], [1.0], '01', [0, 0]):
+        with pytest.raises(InputContractError): envelope_screen_family(reg, man, 'E2', fc, dec0, ctx.context_sha256, XS, YS, rows=bad_rows)
+    # binding to the registered identities (registry / manifest, W2 context + decision checksums, columns + exact row thresholds, configuration ids); here with the fixture's N values
+    w2c = {k: dec0[k].checksum for k in fc}; cids = {k.split('/')[1]: sorted(c.evaluation_id for c in v[0].configs) for k, v in fc.items()}; pid0 = dict(n=4, sha256_T1=scr0['pseudo']['sha256_T1'], sha256_T2=scr0['pseudo']['sha256_T2'])
+    bind = lambda d, **kw: bind_screen_record(d, **dict(dict(registry_sha256=reg.registry_sha256, manifest_sha256=man.manifest_sha256, w2_context_sha256=ctx.context_sha256, w2_checksums=w2c, pseudo_identity=pid0, T1=XS, T2=YS, config_ids=cids, family='E2'), **kw))
+    with pytest.raises(InputContractError, match='both prefixes'): bind(scr0)                                                                                                     # N0-only banks: no formal binding at all
+    for kw in (dict(registry_sha256='1' * 64), dict(w2_context_sha256='2' * 64), dict(w2_checksums=dict(w2c, **{'E2/L1.20': '3' * 64})), dict(pseudo_identity=dict(pid0, n=5)), dict(T1=[80., 200., 80., 151.]), dict(config_ids=dict(cids, **{'L1.00': [1, 2, 3]})), dict(family='E7'), dict(campaign_id='other')):
+        with pytest.raises(InputContractError): bind(scr0, **kw)
     with pytest.raises(InputContractError): envelope_screen_family(reg, man, 'E2', fc, dec0, ctx.context_sha256, XS, YS, rows=[0, 4])
     with pytest.raises(InputContractError): envelope_screen_family(reg, man, 'E2', {k: v for k, v in fc.items() if not k.endswith('L1.50')}, dec0, ctx.context_sha256, XS, YS)
     with pytest.raises(InputContractError): envelope_screen_family(reg, man, 'E2', fc, {k: dict(trigger=False) for k in fc}, ctx.context_sha256, XS, YS)
     # tamper detection of a screen record
-    for fn in (lambda d: d['results'][0].update(blocking=True), lambda d: d['results'][0]['sizes']['L1.00']['positions']['1']['stages']['N0'].update(P=0.5), lambda d: d.update(n_blocking=3), lambda d: d['w2']['L1.20'].update(trigger=UNKNOWN)):
+    for fn in (lambda d: d['results'][0].update(blocking=True), lambda d: d['results'][0]['sizes']['L1.00']['positions']['1']['stages']['N0'].update(P=0.5), lambda d: d.update(n_blocking=3), lambda d: d['w2']['L1.20'].update(trigger=UNKNOWN), lambda d: d['results'][0]['sizes']['L1.00']['positions']['1'].update(bank_stages=['N0', 'N4']), lambda d: d.update(complete_coverage=True)):
         d = ser.from_jsonable(ser.to_jsonable(scr0)); fn(d)
         with pytest.raises(InputContractError): check_screen_record(d)
 
@@ -296,23 +325,38 @@ def test_envelope_bound_covers_every_mixed_prefix_choice():
 
 
 def test_certificate_counting_conflicts_and_readers(tmp_path):
-    pid = dict(n=2000, sha256_T1='1' * 64, sha256_T2='2' * 64); scr = lambda rows: {r: dict(kind='screen', family='E2', status=dict(support='unknown_or_technical', strong='unknown_or_technical'), source_sha256='3' * 64) for r in rows}
+    pid = dict(n=2000, sha256_T1='1' * 64, sha256_T2='2' * 64); scr = lambda rows, fam='E2': {r: dict(kind='screen', family=fam, status=dict(support='unknown_or_technical', strong='unknown_or_technical'), source_sha256='3' * 64) for r in rows}
     ev = lambda rows, sup, strg, fam='E7': {r: dict(kind='evaluated', family=fam, status=dict(support=sup, strong=strg), source_sha256='4' * 64) for r in rows}
     c = infeasibility_certificate(2000, [scr(range(0, 80))], pseudo_identity=pid); L = c['levels']
-    assert not L['support']['usable_true_impossible_by_wilson'] and L['strong']['usable_true_impossible_by_wilson'] and L['support']['proven_blocking_rows'] == 80 and L['strong']['first_blocking_count'] == 12 and c['n_rows_proven'] == 80
+    assert not L['support']['usable_true_impossible_by_wilson'] and L['strong']['usable_true_impossible_by_wilson'] and L['support']['proven_blocking_rows'] == 80 and L['support']['possibly_technical_rows'] == 80 and L['strong']['first_blocking_count'] == 12 and c['n_rows_proven'] == 80 and c['thresholds'] == dict(support=0.05, strong=0.01)
     c = infeasibility_certificate(2000, [scr(range(0, 80)), ev([1999], 'True', 'False')], pseudo_identity=pid); assert c['levels']['support']['usable_true_impossible_by_wilson'] and c['levels']['support']['proven_blocking_rows'] == 81 and c['levels']['strong']['proven_blocking_rows'] == 80
-    # the same row from two sources merges to the stronger-typed status; a False at one level does not count at that level; technical rows are counted apart
-    c = infeasibility_certificate(2000, [scr([5]), ev([5], 'unknown', 'unknown'), ev([6], 'False', 'True', 'E1'), ev([7], 'technical_fail', 'technical_fail')], pseudo_identity=pid)
-    assert c['rows']['5']['status'] == dict(support='unknown', strong='unknown') and len(c['rows']['5']['evidence']) == 2 and c['levels']['support']['counts'] == {'True': 0, 'unknown': 1, 'unknown_or_technical': 0, 'technical_fail': 1} and c['levels']['strong']['counts']['True'] == 1 and c['levels']['support']['technical_rows_present']
-    assert check_certificate(c)['ok'] and c['schema'] == CERT_SCHEMA and c['kind'] == CERT_KIND
+    # R-D4C2A-D: different families on the same row COMBINE (any-family rule) and the row counts once; the screen's unknown_or_technical keeps its conditional meaning next to another family's True
+    c = infeasibility_certificate(2000, [scr([5]), ev([5], 'True', 'True')], pseudo_identity=pid); r5 = c['rows']['5']
+    assert r5['families'] == {'E2': dict(support='unknown_or_technical', strong='unknown_or_technical'), 'E7': dict(support='True', strong='True')} and r5['levels']['support'] == dict(aggregate='True', blocking=True, technical=False, possibly_technical=True) and c['levels']['support']['proven_blocking_rows'] == 1 and c['levels']['support']['aggregate_counts']['True'] == 1
+    c = infeasibility_certificate(2000, [ev([5], 'True', 'True', 'E2'), ev([5], 'technical_fail', 'technical_fail', 'E7')], pseudo_identity=pid); r5 = c['rows']['5']
+    assert r5['levels']['support'] == dict(aggregate='technical_fail', blocking=True, technical=True, possibly_technical=False) and c['levels']['support']['technical_rows'] == 1 and c['levels']['support']['proven_blocking_rows'] == 1 and c['levels']['support']['technical_rows_present']
+    c = infeasibility_certificate(2000, [ev([5], 'unknown', 'unknown', 'E2'), ev([5], 'True', 'False', 'E7'), ev([5], 'False', 'False', 'E1')], pseudo_identity=pid); r5 = c['rows']['5']
+    assert r5['levels'] == dict(support=dict(aggregate='True', blocking=True, technical=False, possibly_technical=False), strong=dict(aggregate='unknown', blocking=True, technical=False, possibly_technical=False)) and len(r5['evidence']) == 3 and c['n_rows_proven'] == 1
+    c = infeasibility_certificate(2000, [ev([7], 'technical_fail', 'technical_fail')], pseudo_identity=pid); assert c['levels']['support']['proven_blocking_rows'] == 0 and c['levels']['support']['technical_rows'] == 1       # a technical row is not c + u: counted apart (usable has no value)
+    # the SAME family's proofs of a row must agree (a screen's unknown_or_technical is refined by an evaluated unknown / technical_fail; a True contradicts a screen's unknown-or-technical)
+    c = infeasibility_certificate(2000, [scr([5]), ev([5], 'unknown', 'unknown', 'E2')], pseudo_identity=pid); assert c['rows']['5']['families']['E2'] == dict(support='unknown', strong='unknown') and len(c['rows']['5']['evidence']) == 2
+    c = infeasibility_certificate(2000, [scr([5]), ev([5], 'technical_fail', 'technical_fail', 'E2')], pseudo_identity=pid); assert c['rows']['5']['families']['E2']['support'] == 'technical_fail'
     with pytest.raises(InputContractError, match='conflicting'): infeasibility_certificate(2000, [ev([5], 'True', 'True'), ev([5], 'unknown', 'True')], pseudo_identity=pid)
-    with pytest.raises(InputContractError, match='conflicting'): infeasibility_certificate(2000, [scr([5]), ev([5], 'True', 'unknown')], pseudo_identity=pid)
+    with pytest.raises(InputContractError, match='conflicting'): infeasibility_certificate(2000, [scr([5]), ev([5], 'True', 'unknown', 'E2')], pseudo_identity=pid)
+    with pytest.raises(InputContractError, match='conflicting'): infeasibility_certificate(2000, [ev([5], 'False', 'True', 'E2'), ev([5], 'unknown', 'True', 'E2')], pseudo_identity=pid)
+    # exact registered level -> threshold mapping (a swap is rejected in the constructor and by the checker)
+    for bad_thr in (dict(support=0.01, strong=0.05), dict(support=0.1, strong=0.01), dict(strong=0.01, support=0.05), dict(support=0.05), dict(support=0.05, strong=0.01, other=0.1)):
+        with pytest.raises(InputContractError, match='registered mapping'): infeasibility_certificate(2000, [scr([1])], pseudo_identity=pid, thresholds=bad_thr)
+    assert infeasibility_certificate(2000, [scr([1])], pseudo_identity=pid, thresholds=dict(support=RULES.usable_support, strong=RULES.usable_strong))['thresholds'] == dict(support=0.05, strong=0.01)
     with pytest.raises(InputContractError, match='outside'): infeasibility_certificate(2000, [scr([2000])], pseudo_identity=pid)
     with pytest.raises(InputContractError): infeasibility_certificate(2000, [scr([1])], pseudo_identity=dict(pid, n=1999))
-    with pytest.raises(InputContractError): infeasibility_certificate(2000, [scr([1])], pseudo_identity=pid, thresholds=dict(support=0.1, strong=0.01))
     with pytest.raises(InputContractError): infeasibility_certificate(2000, [{1: dict(kind='guess', family='E2', status=dict(support='True', strong='True'))}], pseudo_identity=pid)
+    with pytest.raises(InputContractError): infeasibility_certificate(2000, [{1: dict(kind='screen', family='E2', status=dict(support='True', strong='True'))}], pseudo_identity=pid)              # a screen proves unknown_or_technical only
+    with pytest.raises(InputContractError): infeasibility_certificate(2000, [{1: dict(kind='evaluated', family='', status=dict(support='True', strong='True'))}], pseudo_identity=pid)
     with pytest.raises(InputContractError): blocking_rows_from_statuses('E7', [dict(family='E7', eligible_truths=dict(support='maybe', strong=False))], 0, '4' * 64)
-    for fn in (lambda d: d['levels']['support'].update(usable_true_impossible_by_wilson=True), lambda d: d['rows'].pop('5'), lambda d: d['rows']['5']['status'].update(support='True')):
+    assert aggregate_rows({3: {'E2': dict(support='False', strong='False')}})[3]['support'] == dict(aggregate='False', blocking=False, technical=False, possibly_technical=False)
+    c = infeasibility_certificate(2000, [scr([5]), ev([5], 'unknown', 'unknown'), ev([6], 'False', 'True', 'E1'), ev([7], 'technical_fail', 'technical_fail')], pseudo_identity=pid); assert check_certificate(c)['ok'] and c['schema'] == CERT_SCHEMA and c['kind'] == CERT_KIND
+    for fn in (lambda d: d['levels']['support'].update(usable_true_impossible_by_wilson=True), lambda d: d['rows'].pop('5'), lambda d: d['rows']['5']['families']['E7'].update(support='True'), lambda d: d['rows']['5']['levels']['support'].update(blocking=False), lambda d: d.update(thresholds=dict(support=0.01, strong=0.05)), lambda d: d['levels']['support'].update(threshold=0.01), lambda d: d['levels']['support'].update(technical_rows=5)):
         d = ser.from_jsonable(ser.to_jsonable(c)); fn(d)
         with pytest.raises(InputContractError): check_certificate(d)
     # archived as a transition record under its own kind, the formal readers reject it

@@ -9,6 +9,9 @@ import pytest
 P = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')); sys.path[:0] = [P, os.path.join(P, 'tests')]
 from test_d4c1_script import banks, partials, _base, _rec, _run, _ast_required, _commit, SCRIPT, MT, PC, need_ext, FAMS, SIZES, sha
 
+
+def _base_cert(C, camp='SELFTEST_CAMPAIGN_01'): return [SCRIPT, '--phaseb', P, '--target-commitment', C, '--campaign-id', camp, '--selftest-small', '--mode', 'certificate']
+
 ROWS = (('0:1', (0, 1)), ('1:2', (1, 2)))
 
 
@@ -76,27 +79,70 @@ def test_instrumented_probe_publishes_profile_and_leaves_the_record(banks, parti
     assert ser.dumps(a) == ser.dumps(b), [k for k in a if ser.dumps(a[k]) != ser.dumps(b[k])]
 
 
+@pytest.fixture(scope='module')
+def screen_run(banks, partials, tmp_path_factory):
+    C = partials['C']; o = str(tmp_path_factory.mktemp('screen') / 'screen'); r = _run(_base(C) + ['--mode', 'screen', '--family', 'E2', '--d2-root', banks['d2']['E2'], '--out', o, '--row-range', '0:2'])
+    return dict(dir=o, r=r, rec=_rec(o, 'screen_E2_r0000_0002'), C=C)
+
+
 @need_ext
-def test_screen_and_certificate_modes(banks, partials, subparts, tmp_path):
+def test_screen_and_certificate_modes(banks, partials, subparts, screen_run, tmp_path):
     from step1_engine import serialization as ser
     from step1_engine.infeasibility import check_screen_record, check_certificate
-    C = partials['C']; REQS = _ast_required('REQUIRED_SCREEN'); REQC = _ast_required('REQUIRED_CERTIFICATE'); assert len(REQS) == 20 and len(REQC) == 14 and 'G_env_lock' not in REQC and REQS[:11] == _ast_required('REQUIRED_COMMON')
-    o = str(tmp_path / 'screen'); r = _run(_base(C) + ['--mode', 'screen', '--family', 'E2', '--d2-root', banks['d2']['E2'], '--out', o, '--row-range', '0:2']); m = _rec(o, 'screen_E2_r0000_0002')
+    import json as _json, shutil
+    C = partials['C']; REQS = _ast_required('REQUIRED_SCREEN'); REQC = _ast_required('REQUIRED_CERTIFICATE'); assert len(REQS) == 20 and len(REQC) == 12 and 'G_env_lock' not in REQC and 'G_phaseC_members' not in REQC and 'G_external_loader_sha' not in REQC and REQS[:11] == _ast_required('REQUIRED_COMMON')
+    o = screen_run['dir']; r = screen_run['r']; m = screen_run['rec']
     assert r.returncode == 1 and m['stage'] == 'complete' and m['failures'] == [] and m['mode'] == 'screen' and m['D4C1_SCREEN_COMPLETE'] is False and m['D4C1_PARTIAL_PASS'] is False and m['required_inventory'] == REQS and all(m['gates'][g] is True for g in REQS if g != 'G_env_lock'), (r.stdout[-800:], m['failures'])
     sc = m['screen']; assert sc['n_rows'] == 2 and sc['rows'] == [0, 2] and set(sc['w2']) == set(SIZES) and sc['stages_covered'] == ['N0', 'N4'] and 'twelve' not in m and m['timings']['seconds_per_row'] > 0
+    assert sorted(m['gates']) == sorted(REQS) and 'G_d3b_units_accepted' not in m['gates'] and m['diagnostic_checks'] == {'G_d3b_units_accepted': True}                                     # R-D4C2A-A: a check outside the mode's trusted inventory is a diagnostic, never an extra gate key
     fn = 'd4c1_screen_E2_r0000_0002_record.json'; doc = ser.loads(open(os.path.join(o, fn), encoding='utf-8').read()); assert check_screen_record(doc)['ok'] and doc['pseudo']['n'] == 2000 and doc['rows'] == [0, 1] and doc['campaign']['screen'] is True and doc['target_commitment'] == C and m['published_evidence'] == {fn: dict(sha256=sha(os.path.join(o, fn)), bytes=os.path.getsize(os.path.join(o, fn)))}
     assert sc['w2_applicable'] == doc['w2_applicable'] == ((not any(v['trigger'] is True for v in doc['w2'].values())) and any(v['trigger'] == 'unknown' for v in doc['w2'].values()))
     # E1 refused; D-3b roots refused for the screen; the registered rows bound
     oo = str(tmp_path / 'e1'); rr = _run(_base(C) + ['--mode', 'screen', '--family', 'E1', '--d2-root', banks['d2']['E1'], '--out', oo]); mm = _rec(oo, 'screen_E1'); assert rr.returncode == 1 and mm['stage'] == 'scope'
     oo = str(tmp_path / 'd3b'); rr = _run(_base(C) + ['--mode', 'screen', '--family', 'E2', '--d2-root', banks['d2']['E2'], '--out', oo] + [x for s in SIZES for x in ('--d3b-root', f'{s}={banks["d3"][s]}')]); mm = _rec(oo, 'screen_E2'); assert mm['stage'] == 'inputs' and mm['gates']['G_inputs_resolved'] is False
-    # certificate over the screen + the evaluated E2 family partial (from sub-partials) + the E1 partial; the self-test columns are the first --selftest-n rows for the evaluated records -> n mismatch refused; screen-only accepted
-    oc = str(tmp_path / 'cert'); rc = _run(_base(C) + ['--mode', 'certificate', '--out', oc, '--screen', o]); mc = _rec(oc, 'certificate')
-    assert rc.returncode == 0 and mc['stage'] == 'complete' and mc['failures'] == [] and mc['D4C1_CERTIFICATE_COMPLETE'] is False and mc['D4C1_PARTIAL_PASS'] is False and mc['required_inventory'] == REQC and all(mc['gates'][g] is True for g in REQC), (rc.stdout[-800:], mc['failures'])      # rc 0: the environment lock is not a certificate gate; COMPLETE stays False in a self-test
+    # certificate (R-D4C2A-B: its OWN preflight: --phaseb only, no --mt / --phasec, no environment gate; here a SELF-TEST certificate over the self-test screen: never COMPLETE)
+    oc = str(tmp_path / 'cert'); rc = _run(_base_cert(C) + ['--out', oc, '--screen', o]); mc = _rec(oc, 'certificate')
+    assert rc.returncode == 0 and mc['stage'] == 'complete' and mc['failures'] == [] and mc['D4C1_CERTIFICATE_COMPLETE'] is False and mc['D4C1_PARTIAL_PASS'] is False and mc['required_inventory'] == REQC and all(mc['gates'][g] is True for g in REQC) and mc['selftest'] is True and mc['formal'] is False, (rc.stdout[-800:], mc['failures'])
+    assert 'G_env_lock' not in mc['gates'] and 'G_phaseC_members' not in mc['gates'] and mc['env_gate']['matches_registered'] is False and 'metadata only' in mc['env_gate']['note'] and mc['source']['mt'] is None and 'SELF-TEST sources only' in mc['source_scope']
     cert = ser.loads(open(os.path.join(oc, 'd4c1_certificate_record.json'), encoding='utf-8').read()); assert check_certificate(cert)['ok'] and cert['n'] == 2000 and mc['certificate']['registered_blocking_counts']['support']['first_blocking_count'] == 81 and mc['certificate']['registered_blocking_counts']['strong']['first_blocking_count'] == 12
-    assert cert['levels']['support']['proven_blocking_rows'] == doc['n_blocking'] == len(cert['rows']) and cert['levels']['support']['usable_true_impossible_by_wilson'] is False and cert['levels']['strong']['usable_true_impossible_by_wilson'] is False and 'NOT a calibration' in mc['certificate']['scope']
-    oe = str(tmp_path / 'cert_ev'); re_ = _run(_base(C) + ['--mode', 'certificate', '--out', oe, '--screen', o, '--evaluated', subparts['combine']['dir']]); me = _rec(oe, 'certificate'); assert me['stage'] == 'inputs' and me['gates']['G_sources_loaded'] is False and any('columns' in x for x in me['failures'])
-    oo = str(tmp_path / 'cert_none'); rr = _run(_base(C) + ['--mode', 'certificate', '--out', oo]); mm = _rec(oo, 'certificate'); assert mm['stage'] == 'inputs'
-    oo = str(tmp_path / 'cert_camp'); rr = _run(_base(C, camp='ANOTHER_CAMPAIGN') + ['--mode', 'certificate', '--out', oo, '--screen', o]); mm = _rec(oo, 'certificate'); assert mm['stage'] == 'inputs'
+    assert cert['levels']['support']['proven_blocking_rows'] == doc['n_blocking'] == len(cert['rows']) and cert['levels']['support']['usable_true_impossible_by_wilson'] is False and cert['levels']['strong']['usable_true_impossible_by_wilson'] is False and 'NOT a calibration' in mc['certificate']['scope'] and mc['sources'][0]['complete_coverage'] is True and mc['sources'][0]['formal'] is False
+    # R-D4C2A-C: sources are authenticated: an evaluated self-test record (columns n = 2) is refused by the reader-bound admission; a screen whose published bytes differ from the run record, a failed run,
+    # a non-object document, a screen with the N4 prefix removed (summaries / checksum re-stamped) and a screen of another campaign are all refused
+    oe = str(tmp_path / 'cert_ev'); re_ = _run(_base_cert(C) + ['--out', oe, '--screen', o, '--evaluated', subparts['combine']['dir']]); me = _rec(oe, 'certificate'); assert me['stage'] == 'inputs' and me['gates']['G_sources_loaded'] is False and any('evaluated source not admitted' in x for x in me['failures'])
+    import copy as _copy
+    def tampered(name, mutate_doc=None, mutate_run=None):
+        d = str(tmp_path / ('src_' + name)); shutil.copytree(o, d); fp = os.path.join(d, fn); rp = os.path.join(d, 'd4c1_screen_E2_r0000_0002_run.json')
+        if mutate_doc is not None:
+            dd = ser.loads(open(fp, encoding='utf-8').read()); mutate_doc(dd); body = {k: v for k, v in dd.items() if k != 'binding'}; dd['binding']['screen_sha256'] = hashlib.sha256(ser.dumps(body).encode()).hexdigest(); open(fp, 'w', encoding='utf-8').write(ser.dumps(dd))
+        if mutate_run is not None:
+            rr_ = _json.load(open(rp)); mutate_run(rr_, fp); open(rp, 'w').write(_json.dumps(rr_))
+        oo = str(tmp_path / ('cert_' + name)); rr2 = _run(_base_cert(C) + ['--out', oo, '--screen', d]); mm = _rec(oo, 'certificate'); assert mm['stage'] == 'inputs' and mm['gates']['G_sources_loaded'] is False and any('screen source not admitted' in x for x in mm['failures']), (name, mm['failures'])
+    def drop_n4(dd):
+        for x in dd['results']:
+            for sz in x['sizes'].values():
+                for p_ in sz['positions'].values(): p_['stages'].pop('N4'); p_['bank_stages'] = ['N0']
+                vals = [r['P'] for p_ in sz['positions'].values() for r in p_['stages'].values()]; sz['min_P'], sz['max_P'] = min(vals), max(vals); sz['ratio_bound'] = max(vals) / min(vals); sz['ok'] = bool(sz['all_positive'] and sz['ratio_bound'] <= 2.0); sz['complete_coverage'] = False; sz['stages_covered'] = ['N0']
+            x['blocking'] = bool(dd['w2_applicable'] and all(sz['ok'] for sz in x['sizes'].values())); x['complete_coverage'] = False
+        dd['n_blocking'] = sum(1 for x in dd['results'] if x['blocking']); dd['complete_coverage'] = False
+    def restamp(rr_, fp):
+        rr_['published_evidence'][fn] = dict(sha256=sha(fp), bytes=os.path.getsize(fp)); dd = ser.loads(open(fp, encoding='utf-8').read())
+        if isinstance(dd, dict): rr_['screen']['screen_sha256'] = dd['binding']['screen_sha256']; rr_['screen']['n_blocking'] = dd['n_blocking']
+    tampered('stale_publication', mutate_doc=lambda dd: dd['results'][0].update(reason='x'))                                                                  # bytes changed, run record not re-stamped
+    tampered('failed_run', mutate_run=lambda rr_, fp: rr_.update(stage='exception', failures=['x']))
+    tampered('gate_false', mutate_run=lambda rr_, fp: rr_['gates'].update(G_screen_computed=False))
+    tampered('non_object_doc', mutate_run=lambda rr_, fp: (open(fp, 'w').write('null'), restamp(rr_, fp)))
+    tampered('missing_N4_restamped', mutate_doc=drop_n4, mutate_run=restamp)                                                                                 # N0-only after the fact: bank_stages / coverage consistent but the self-test binding still requires the recorded bank stages... and a FORMAL certificate requires both prefixes
+    tampered('other_screen_sha', mutate_run=lambda rr_, fp: rr_['screen'].update(screen_sha256='0' * 64))
+    oo = str(tmp_path / 'cert_none'); rr = _run(_base_cert(C) + ['--out', oo]); mm = _rec(oo, 'certificate'); assert mm['stage'] == 'inputs'
+    oo = str(tmp_path / 'cert_camp'); rr = _run(_base_cert(C, camp='ANOTHER_CAMPAIGN') + ['--out', oo, '--screen', o]); mm = _rec(oo, 'certificate'); assert mm['stage'] == 'inputs'
+    # the certificate mode never meets the environment gate (no self-test switch needed for the production route): a FORMAL certificate run in this sandbox proceeds past the preflight to the
+    # source admission, where the self-test screen is refused as a formal source (self-test flags; N != registered N0 / N_max); by contrast the evaluating modes stop at the environment gate here
+    oo = str(tmp_path / 'cert_formal'); rr = _run([SCRIPT, '--phaseb', P, '--target-commitment', C, '--campaign-id', 'SELFTEST_CAMPAIGN_01', '--mode', 'certificate', '--out', oo, '--screen', o]); mm = _rec(oo, 'certificate')
+    assert rr.returncode == 1 and mm['stage'] == 'inputs' and mm['selftest'] is False and mm['formal'] is True and all(mm['gates'][g] is True for g in REQC[:8]) and mm['gates']['G_sources_loaded'] is False and 'formal sources only' in mm['source_scope'] and any('screen source not admitted' in x for x in mm['failures']) and 'G_env_lock' not in mm['gates']
+    oo = str(tmp_path / 'screen_formal'); rr = _run([SCRIPT, '--mt', MT, '--phaseb', P, '--phasec', PC, '--target-commitment', C, '--campaign-id', 'SELFTEST_CAMPAIGN_01', '--mode', 'screen', '--family', 'E2', '--d2-root', banks['d2']['E2'], '--out', oo]); mm = _rec(oo, 'screen_E2'); assert rr.returncode == 1 and mm['stage'] == 'environment' and mm['gates']['G_env_lock'] is False
+    for extra in (['--mt', MT], ['--phasec', PC], ['--selftest-skip-env-lock'], ['--probe-n', '1'], ['--instrument']):
+        oo = str(tmp_path / ('cbad' + str(len(os.listdir(tmp_path))))); rr = _run(_base_cert(C) + ['--out', oo] + extra); assert rr.returncode == 2 and not os.path.lexists(oo), extra
+    oo = str(tmp_path / 'screen_nomt'); rr = _run([SCRIPT, '--phaseb', P, '--target-commitment', C, '--campaign-id', 'SELFTEST_CAMPAIGN_01', '--selftest-small', '--selftest-skip-env-lock', '--mode', 'screen', '--family', 'E2', '--d2-root', banks['d2']['E2'], '--out', oo]); assert rr.returncode == 2
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------------- notebooks (D4C-2a)
@@ -157,3 +203,36 @@ def test_partial_notebook_subpartial_attempt_cell(tmp_path, case):
         if case == 'sub_pass_false': assert fin['failures'] == [] and fin['evidence_ok'] is True
         if case == 'sub_partial_pass_only': assert fin['failures'] == [] and fin['D4C1_PARTIAL_PASS'] is True and fin['D4C1_SUBPARTIAL_PASS'] is False          # a family-partial flag on a sub-partial launch never passes the sub-partial launcher
         if case in ('sub_schema_partial', 'sub_rows_mismatch', 'sub_global_identity_mismatch'): assert fin['evidence_ok'] is False and fin['gates_ok'] is True and fin['bindings_ok'] is True, fin['failures']
+
+
+@need_ext
+@pytest.mark.parametrize('case', ['actual_record_ok', 'extra_gate_key', 'missing_gate_key'])
+def test_screen_notebook_accepts_the_actual_script_record(screen_run, tmp_path, case):
+    """R-D4C2A-A boundary test: the ACTUAL run record and published screen record of a script screen run (self-test banks) are handed to the unmodified screen notebook attempt cell
+    through a mocked child process; only the launcher-bound fields (attempt / lock / source / campaign / formal flags) are set to the launcher's values. The exact gate-set check accepts
+    the script's gate inventory and still rejects an extra / missing key."""
+    md, c0, c1, c2, c3 = _cells(NB_S); lock_src = c1[c1.index('# OUTPUT-ANCHOR'):]; commit = 'a' * 40; mt, pb, RA = _fake_source(tmp_path / 'scratch'); out = tmp_path / 'out'; out.mkdir(); d2, d3 = _roots(tmp_path)
+    real_pins = _json.load(open(os.path.join(P, 'd', 'd3_pins.json'))); from step1_engine import __version__ as ENGINE
+    pins = _json.load(open(f'{pb}/d/d3_pins.json')); pins.update(d2w_context_sha256=real_pins['d2w_context_sha256'], pseudo_paired_sha256=real_pins['pseudo_paired_sha256']); open(f'{pb}/d/d3_pins.json', 'w').write(_json.dumps(pins))
+    inv = _json.load(open(f'{pb}/B2_completion_inventory.json')); inv['engine_version'] = ENGINE; inv['d_sha256']['d/d3_pins.json'] = sha(f'{pb}/d/d3_pins.json'); open(f'{pb}/B2_completion_inventory.json', 'w').write(_json.dumps(inv))
+    ns = _ns(tmp_path, commit, mt, pb, RA, out, d2, {}, False, row_range=(0, 2)); ns['TARGET_COMMITMENT'] = screen_run['C']; ns['CAMPAIGN_ID'] = 'SELFTEST_CAMPAIGN_01__SELFTEST'
+    with contextlib.redirect_stdout(io.StringIO()): exec(compile(lock_src, 'nb_anchor', 'exec'), ns)
+    lock = ns['lock']; assert lock['schema'] == 'd4c1_screen_launcher_lock_v1' and lock['row_range'] == [0, 2]
+    src_dir = screen_run['dir']; calls = []
+    def check_output(args, **kw): return (commit if 'rev-parse' in args else '') + '\n'
+    def run(args, **kw):
+        calls.append(list(args)); run_dir = args[args.index('--out') + 1]; att = args[args.index('--attempt-id') + 1]; lk = args[args.index('--launcher-lock-sha256') + 1]; os.makedirs(run_dir)
+        for f in os.listdir(src_dir): shutil.copy(os.path.join(src_dir, f), os.path.join(run_dir, f))
+        rp = os.path.join(run_dir, 'd4c1_screen_E2_r0000_0002_run.json'); v = _json.load(open(rp))
+        v.update(selftest=False, formal=True, D4C1_SCREEN_COMPLETE=True, required_all_true=True, attempt=dict(attempt_id=att, launcher_lock_sha256=lk), campaign_id=lock['campaign_id'], target_commitment=lock['target_commitment'])
+        v['gates']['G_env_lock'] = True; v['source'].update(script_sha256=lock['script_sha256'], inventory_sha256=lock['inventory_sha256'], pins_sha256=lock['pins_sha256'], engine_version=lock['engine'])
+        if case == 'extra_gate_key': v['gates']['G_d3b_units_accepted'] = True
+        if case == 'missing_gate_key': v['gates'].pop('G_row_range')
+        open(rp, 'w').write(_json.dumps(v))
+        class R: returncode = 0; stdout = 'TEST'; stderr = ''
+        return R()
+    ns['subprocess'] = type('SP', (), dict(check_output=staticmethod(check_output), run=staticmethod(run)))
+    with contextlib.redirect_stdout(io.StringIO()): exec(compile(c2, 'nb_attempt', 'exec'), ns)
+    fin = _json.load(open(out / 'd4c1_screen_final_record.json')); a = calls[0]; assert a[a.index('--mode') + 1] == 'screen' and a[a.index('--row-range') + 1] == '0:2'
+    if case == 'actual_record_ok': assert fin['screen_complete'] is True and fin['failures'] == [] and fin['gates_ok'] is True and fin['bindings_ok'] is True and fin['evidence_ok'] is True and fin['screen_summary']['n_rows'] == 2, fin['failures']
+    else: assert fin['screen_complete'] is False and fin['gates_ok'] is False and fin['bindings_ok'] is True and fin['evidence_ok'] is True and any('gate set differs' in f for f in fin['failures']), fin['failures']

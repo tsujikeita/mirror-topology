@@ -53,10 +53,10 @@ REQUIRED_COMBINE_FAMILY = ("G_pins_loaded", "G_engine_inventory", "G_script_sha"
                            "G_subpartials_loaded", "G_archives_merged", "G_subpartials_verified", "G_rows_tiled", "G_family_combined", "G_partial_published", "G_partial_verified", "G_pseudo_identity_bound", "G_record_saved")
 REQUIRED_SCREEN = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_phaseC_members", "G_env_lock", "G_external_loader_sha", "G_twelve_context", "G_w2_context_registered", "G_pseudo_registered", "G_twelve_asset_registered", "G_commitment_form",
                    "G_inputs_resolved", "G_first_wave_supplies", "G_plans_fixed", "G_first_wave_views", "G_row_range", "G_screen_computed", "G_screen_published", "G_pseudo_identity_bound", "G_record_saved")
-REQUIRED_CERTIFICATE = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_phaseC_members", "G_external_loader_sha", "G_twelve_context", "G_w2_context_registered", "G_pseudo_registered", "G_twelve_asset_registered", "G_commitment_form",
+REQUIRED_CERTIFICATE = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_twelve_context", "G_w2_context_registered", "G_pseudo_registered", "G_twelve_asset_registered", "G_commitment_form",
                         "G_sources_loaded", "G_certificate_computed", "G_certificate_published", "G_record_saved")
 assert REQUIRED_PARTIAL[:len(REQUIRED_COMMON)] == REQUIRED_COMMON == REQUIRED_COMBINE[:len(REQUIRED_COMMON)] == REQUIRED_SUBPARTIAL[:len(REQUIRED_COMMON)] == REQUIRED_COMBINE_FAMILY[:len(REQUIRED_COMMON)] == REQUIRED_SCREEN[:len(REQUIRED_COMMON)]
-assert REQUIRED_SUBPARTIAL == REQUIRED_COMMON + ("G_row_range",) + REQUIRED_PARTIAL[len(REQUIRED_COMMON):] and REQUIRED_CERTIFICATE[:10] == tuple(k for k in REQUIRED_COMMON if k != "G_env_lock")
+assert REQUIRED_SUBPARTIAL == REQUIRED_COMMON + ("G_row_range",) + REQUIRED_PARTIAL[len(REQUIRED_COMMON):] and set(REQUIRED_CERTIFICATE[:8]) < set(REQUIRED_COMMON)
 REQUIRED_SELFTEST = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_selftest_fixture", "G_selftest_partials", "G_selftest_merge", "G_selftest_combined", "G_selftest_single", "G_selftest_equivalence", "G_selftest_refusals", "G_record_saved")
 FAMILIES = ("E1", "E2", "E7", "E8"); TWELVE_FAMILIES = ("E2", "E7", "E8"); SIZES = ("L1.00", "L1.20", "L1.50"); TWELVE_RECEIPT = "B3_2A_7240c06f255c"
 
@@ -134,7 +134,7 @@ def resolve_d2_family_root(d2_root, fam, d2l):
 
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--mt", required=True); ap.add_argument("--phaseb", required=True); ap.add_argument("--phasec", required=True); ap.add_argument("--out", required=True)
+    ap = argparse.ArgumentParser(); ap.add_argument("--mt", default=None, help="CMBtopology root (required except for --mode certificate)"); ap.add_argument("--phaseb", required=True); ap.add_argument("--phasec", default=None, help="Phase C packet root (required except for --mode certificate)"); ap.add_argument("--out", required=True)
     ap.add_argument("--mode", choices=("partial", "combine", "combine-family", "screen", "certificate"), default="partial"); ap.add_argument("--family", default=None)
     ap.add_argument("--row-range", default=None, help="partial: A:B -> a SUB-partial over the global rows [A, B) of the registered pseudo columns (D4C-2a); screen: the rows to screen (default all)")
     ap.add_argument("--subpartial", action="append", default=[], help="combine-family: the published output directory of one sub-partial run of this family (one entry per range)")
@@ -156,6 +156,8 @@ def main():
     if a.instrument and not probe: print("--instrument requires --probe-n (measurement runs are never formal records)", file=sys.stderr); return 2
     if rows is not None and probe: print("--row-range and --probe-n are exclusive", file=sys.stderr); return 2
     subpartial = (a.mode == "partial" and rows is not None)
+    if a.mode != "certificate" and (a.mt is None or a.phasec is None): print("--mt and --phasec are required for every mode except certificate", file=sys.stderr); return 2
+    if a.mode == "certificate" and (a.mt is not None or a.phasec is not None or a.selftest_skip_env_lock or a.probe_n is not None or rows is not None or a.instrument): print("--mode certificate takes --phaseb / --out / --target-commitment / --campaign-id / --screen / --evaluated (and --selftest-small for self-test sources) only", file=sys.stderr); return 2
     if os.path.islink(a.out): print("OUT must not be a symbolic link", file=sys.stderr); return 2
     out = os.path.realpath(a.out); out_exists = os.path.lexists(out)
     if out_exists and (not os.path.isdir(out) or os.listdir(out)): print("OUT must be a fresh (non-existent or empty) real directory", file=sys.stderr); return 2
@@ -168,7 +170,7 @@ def main():
         if "=" not in x: print("--partial must be FAMILY=DIR", file=sys.stderr); return 2
         f, p = x.split("=", 1); partial_dirs[f] = p
     aux_dirs = {f"subpartial_{i}": p for i, p in enumerate(a.subpartial)}; aux_dirs.update({f"screen_{i}": p for i, p in enumerate(a.screen)}); aux_dirs.update({f"evaluated_{i}": p for i, p in enumerate(a.evaluated)})
-    protected = dict(mt=a.mt, phaseb=a.phaseb, phasec=a.phasec, **({"d2_root": a.d2_root} if a.d2_root else {}), **{f"d3b_root_{s}": p for s, p in d3b_roots.items()}, **{f"partial_{f}": p for f, p in partial_dirs.items()}, **aux_dirs)
+    protected = dict(phaseb=a.phaseb, **({"mt": a.mt} if a.mt else {}), **({"phasec": a.phasec} if a.phasec else {}), **({"d2_root": a.d2_root} if a.d2_root else {}), **{f"d3b_root_{s}": p for s, p in d3b_roots.items()}, **{f"partial_{f}": p for f, p in partial_dirs.items()}, **aux_dirs)
     clash = [k for k, p in protected.items() if inside(out, p) or inside(p, out)]
     if clash: print("output must be disjoint from the inputs and the source roots (" + ", ".join(clash) + ")", file=sys.stderr); return 2
     if not out_exists: os.makedirs(out)
@@ -184,6 +186,10 @@ def main():
         try: log.write(m + "\n"); log.flush()
         except ValueError: pass
     def mark(stage): R["stages_rss_mb"][stage] = round(_rss_mb(), 1); R["stages_peak_rss_mb"][stage] = round(_peak_rss_mb(), 1); R["timings"][stage] = round(time.time() - t0, 3)
+    def setg(k, v):                                                                                                  # R-D4C2A-A: a check that is not in THIS mode's trusted REQUIRED inventory is recorded as a diagnostic, never as an extra gate key
+        if k in REQUIRED: G[k] = v
+        else: R.setdefault("diagnostic_checks", {})[k] = v
+    def getg(k): return G.get(k) if k in REQUIRED else R.get("diagnostic_checks", {}).get(k)
     def finish(code, stage="final"):
         R["stage"] = stage; R["gates"] = G; R["required_inventory"] = list(REQUIRED); R["required_all_true"] = all(G.get(k) is True for k in REQUIRED); ok = bool(R["required_all_true"] and a.profile == "production_official" and not selftest and not probe and code == 0)
         R["D4C1_PARTIAL_PASS"] = bool(ok and ((a.mode == "partial" and not subpartial) or (a.mode == "combine-family" and R.get("subpartials_all_pass") is True))); R["D4C1_COMBINE_PASS"] = bool(ok and a.mode == "combine"); R["D4C1_SUBPARTIAL_PASS"] = bool(ok and subpartial)
@@ -199,7 +205,7 @@ def main():
         G["G_pins_loaded"] = bool(pins.get("schema") == "d3_pins_v1" and inv0.get("d_sha256", {}).get("d/d3_pins.json") == R["pins_sha256"])
         from step1_engine import __version__; from step1_engine.checkpoint import module_shas
         G["G_engine_inventory"] = (inv0["modules"] == module_shas() and inv0["engine_version"] == __version__ == pins["engine_version"]); me = os.path.abspath(__file__); G["G_script_sha"] = (inv0.get("d_sha256", {}).get("d/d4c1_calibration.py") == sha(me)); R["engine_version"] = __version__
-        R["source"] = dict(script_sha256=sha(me), inventory_sha256=sha(inv_path), pins_sha256=R["pins_sha256"], engine_version=__version__, phaseb=os.path.realpath(a.phaseb), mt=os.path.realpath(a.mt))
+        R["source"] = dict(script_sha256=sha(me), inventory_sha256=sha(inv_path), pins_sha256=R["pins_sha256"], engine_version=__version__, phaseb=os.path.realpath(a.phaseb), mt=(os.path.realpath(a.mt) if a.mt else None))
         if not (G["G_pins_loaded"] and G["G_engine_inventory"] and G["G_script_sha"]): R["failures"].append("preflight binding failed"); return finish(1, "preflight")
         from step1_engine import serialization as ser
         from step1_engine.archive import Archive, ArchiveRef, merge_archives
@@ -208,6 +214,7 @@ def main():
         from step1_engine.calibration_first import calibrate_sealed, load_sealed_record, commit_target
         from step1_engine.errors import InputContractError
         if a.selftest_fixture: return _selftest(a, out, R, G, note, mark, finish, ser, Archive, merge_archives, calibrate_family_partial, combine_family_partials, verify_partial_record, load_sealed_record, calibrate_sealed, commit_target, strip_provenance, InputContractError)
+        if a.mode == "certificate": return _certificate_entry(a, out, R, G, note, mark, finish, pins, formal, _publish_record, ser)
         # ---- Phase C members, registered environment HARD gate, frozen loader, context
         pc = json.load(open(os.path.join(a.phasec, "PACKET_INVENTORY.json"))); members = {}
         for d, _, fs in os.walk(a.phasec):
@@ -256,7 +263,6 @@ def main():
         mark("preflight")
         if a.mode == "combine": return _combine(a, out, R, G, note, mark, finish, reg, man, registered, campaign, cols, formal, Archive, ArchiveRef, merge_archives, load_partial_record, verify_partial_record, combine_family_partials, load_combined_sealed_record, _publish_record, ser)
         if a.mode == "combine-family": return _combine_family(a, out, R, G, note, mark, finish, reg, man, registered, campaign, cols, formal, Archive, ArchiveRef, merge_archives, load_subpartial_record, verify_subpartial_record, combine_family_subpartials, load_partial_record, verify_partial_record, _publish_record, ser)
-        if a.mode == "certificate": return _certificate(a, out, R, G, note, mark, finish, cols, formal, _publish_record, ser)
         # ================================================================================================================================================ partial
         fam = a.family
         if fam not in FAMILIES: R["failures"].append("family"); return finish(1, "scope")
@@ -272,11 +278,11 @@ def main():
         U = P3c = None
         try:
             if twelve and formal: U = intake_registered_d3b_units(a.phaseb, ctx); P3c = intake_registered_d3c_profiles(a.phaseb, ctx)
-            G["G_d3b_units_accepted"] = bool((not twelve) or (not formal) or (U.verified and U.array_accepted is True and U.receipt_sha256 == pins.get("d3b_outer_receipt_sha256") and P3c.verified))
+            setg("G_d3b_units_accepted", bool((not twelve) or (not formal) or (U.verified and U.array_accepted is True and U.receipt_sha256 == pins.get("d3b_outer_receipt_sha256") and P3c.verified)))
             if twelve and formal: R["d3b"] = dict(ledger_sha256=U.ledger_sha256, receipt_sha256=U.receipt_sha256); R["d3c"] = dict(ledger_sha256=P3c.ledger_sha256, receipt_sha256=P3c.receipt_sha256)
             elif twelve: R["d3b"] = dict(note="SELF-TEST: synthetic D-3b banks (no registered unit / D-3c binding)")
-        except Exception as ex_: G["G_d3b_units_accepted"] = False; R["d3b_error"] = repr(ex_)
-        if not G["G_d3b_units_accepted"]: R["failures"].append("registered D-3b units / D-3c profiles not accepted"); return finish(1, "trusted_inputs")
+        except Exception as ex_: setg("G_d3b_units_accepted", False); R["d3b_error"] = repr(ex_)
+        if not getg("G_d3b_units_accepted"): R["failures"].append("registered D-3b units / D-3c profiles not accepted"); return finish(1, "trusted_inputs")
         spec2 = load_registered_bank_spec_v2(ctx) if twelve else None; d2s = ctx.d2_spec; d2l = ctx.d2_ledger; B_sel, Bk_sel = (RULES.B, REG_B_KDE) if formal else (a.selftest_B, a.selftest_B_KDE)
         if formal: ok_in, d2info, reasons = resolve_d2_family_root(a.d2_root, fam, d2l)
         else:
@@ -545,35 +551,105 @@ def _screen(a, out, R, G, note, mark, finish, reg, man, fam, cases, w2ctx, cols,
     return finish(0 if all(G[kk] is True for kk in REQUIRED_SCREEN) else 1, "complete")
 
 
-def _certificate(a, out, R, G, note, mark, finish, cols, formal, publish_record, ser):
-    """D4C-2a: the fixed-denominator infeasibility certificate over verified screen records (+ evaluated statuses of published partial / sub-partial records)."""
-    from step1_engine.infeasibility import check_screen_record, blocking_rows_from_screen, blocking_rows_from_statuses, infeasibility_certificate, check_certificate, registered_blocking_counts
+def _certificate_entry(a, out, R, G, note, mark, finish, pins, formal, publish_record, ser):
+    """R-D4C2A-B: the certificate's OWN preflight. The certificate is algebra over authenticated evidence: it binds the fixed source (pins / inventory / script: already checked), the
+    registered grid, the registered D4C-0 W2 context and pseudo columns and the registered twelve asset (their identities and replay-verified decisions authenticate the screen /
+    evaluated records), and the commitment form. It does NOT need the CMBtopology root, the Phase C packet, the frozen loader or the registered Colab environment (the environment is
+    RECORDED as consumer metadata, never a gate): the registered environment HARD gate stays on every evaluating mode (partial / screen)."""
+    from step1_engine.official_gate import current_env
+    from step1_engine.d3_profile import twelve_context
+    from step1_engine.d4c0_registry import load_registered_w2_context, load_registered_pseudo_columns
+    from step1_engine.twelve_assets import intake_registered_twelve_assets
+    from step1_engine.grid_registry import load_registry
+    from step1_engine.grid_manifest import build_configuration_manifest
     from step1_engine.rules_config import RULES
-    idn = cols["identity"]; n = cols["n"]; maps = []; sources = []; ok = bool(a.screen or a.evaluated)
+    env = current_env()
+    try:
+        import camb as _camb; env["camb"] = _camb.__version__
+    except Exception: env["camb"] = None
+    R["env"] = env; R["env_gate"] = dict(note="certificate: the consumer environment is recorded as metadata only (pure algebra over authenticated evidence); the registered environment HARD gate applies to the evaluating modes", expected=pins["environment"], matches_registered=bool(all(env.get(k) == pins["environment"][k] for k in ("python", "numpy", "scipy", "healpy", "pot", "camb"))))
+    ctx = twelve_context(a.phaseb); ident = ctx.identities; G["G_twelve_context"] = bool(ctx.verified and ident["config_map_sha256"] == pins["config_map_sha256"] and ident["covariance_receipt_sha256"] == pins["covariance_receipt_sha256"]); R["context_identities"] = dict(ident)
+    reg = load_registry(os.path.join(a.phaseb, "tests/assets/a7_circle_geometry.csv"), os.path.join(a.phaseb, "tests/assets/a6_observer_design_points.json")); man = build_configuration_manifest(reg)
+    try:
+        w2ctx, w2view = load_registered_w2_context(a.phaseb, ctx); G["G_w2_context_registered"] = bool(w2ctx.context_sha256 == pins["d2w_context_sha256"] == w2view["context_sha256"] and sorted(w2ctx.decisions) == sorted(f"{f}/{s}" for f in TWELVE_FAMILIES for s in SIZES))
+        R["w2_context"] = dict(context_sha256=w2ctx.context_sha256, asset_sha256=w2ctx.asset_sha256, attempt=w2view["attempt"], cases=w2view["cases"], ledger_sha256=w2view["ledger_sha256"], receipt_sha256=w2view["receipt_sha256"], acceptance_sha256=w2view["acceptance_sha256"])
+    except Exception as ex_: G["G_w2_context_registered"] = False; R["w2_context_error"] = repr(ex_)
+    try:
+        cols = load_registered_pseudo_columns(a.phaseb, ctx); idn = cols["identity"]
+        G["G_pseudo_registered"] = bool(cols["n"] == RULES.n_pseudo and idn["paired_sha256"] == pins["pseudo_paired_sha256"] and idn["T1_sha256"] == hashlib.sha256(np.ascontiguousarray(np.asarray(cols["T1"], np.float64)).tobytes()).hexdigest() and idn["T2_sha256"] == hashlib.sha256(np.ascontiguousarray(np.asarray(cols["T2"], np.float64)).tobytes()).hexdigest())
+        R["pseudo"] = dict(n=cols["n"], identity=idn, attempt=cols["view"]["attempt"], ledger_sha256=cols["view"]["ledger_sha256"], receipt_sha256=cols["view"]["receipt_sha256"], acceptance_sha256=cols["view"]["acceptance_sha256"], order=cols["view"]["order"])
+    except Exception as ex_: G["G_pseudo_registered"] = False; R["pseudo_error"] = repr(ex_)
+    try:
+        tasset = intake_registered_twelve_assets(os.path.join(a.phaseb, "registered_assets", "b3_2_twelve_assets.json"), reg, TWELVE_RECEIPT); G["G_twelve_asset_registered"] = bool(tasset.sha256 == ident["twelve_assets_sha256"]); R["twelve_asset"] = dict(receipt=TWELVE_RECEIPT, sha256=tasset.sha256)
+    except Exception as ex_: G["G_twelve_asset_registered"] = False; R["twelve_asset_error"] = repr(ex_)
+    G["G_commitment_form"] = bool(_hex64(a.target_commitment) and isinstance(a.campaign_id, str) and len(a.campaign_id) >= 8)
+    if not all(G[k] for k in REQUIRED_CERTIFICATE[:8]): R["failures"].append("trusted-input binding failed"); return finish(1, "trusted_inputs")
+    registered = dict(shared_null_asset_sha256=w2ctx.asset_sha256, w2_context_sha256=w2ctx.context_sha256, registry_sha256=reg.registry_sha256, twelve_assets_sha256=tasset.sha256)
+    mark("preflight")
+    return _certificate(a, out, R, G, note, mark, finish, reg, man, w2ctx, ctx, cols, registered, formal, publish_record, ser)
+
+
+def _certificate(a, out, R, G, note, mark, finish, reg, man, w2ctx, ctx, cols, registered, formal, publish_record, ser):
+    """R-D4C2A-C: every source is AUTHENTICATED before its rows are admitted: the run record (schema / complete / no failure / the trusted REQUIRED inventory of its mode all True incl.
+    the environment gate / formal flags / attempt / campaign / commitment / the SAME source binding as this run), its published evidence (file bytes == recorded SHA / bytes), and the
+    record itself through the registered identities: a screen through check_screen_record(formal) + bind_screen_record (registry / manifest, W2 context SHA and the replay-verified
+    decision checksums, column identity and exact row thresholds, registered configuration ids), an evaluated partial / sub-partial through its archive + the existing readers
+    (load_* payload / archived-copy equality, verify_* with the registered identities and the current source binding). Self-test sources are admitted only in a self-test
+    certificate (never COMPLETE)."""
+    from step1_engine.infeasibility import (check_screen_record, bind_screen_record, blocking_rows_from_screen, evaluated_rows_from_record, infeasibility_certificate, check_certificate, registered_blocking_counts)
+    from step1_engine.archive import Archive
+    from step1_engine.rules_config import RULES
+    idn = cols["identity"]; n = cols["n"]; pid = dict(n=n, sha256_T1=idn["T1_sha256"], sha256_T2=idn["T2_sha256"]); maps = []; sources = []; ok = bool(a.screen or a.evaluated)
+    me_src = R["source"]; d2s = ctx.d2_spec
+    def run_ok(run, mode_names, flag_keys):
+        req = run.get("required_inventory") or []; g = run.get("gates") or {}
+        base = (run.get("schema") == "d4c1_run_record_v1" and run.get("mode") in mode_names and run.get("stage") == "complete" and run.get("failures") == [] and isinstance(req, list) and sorted(g) == sorted(req) and all(g.get(k) is True for k in req if formal or k != "G_env_lock")
+                and isinstance(run.get("attempt"), dict) and run.get("campaign_id") == a.campaign_id and run.get("target_commitment") == a.target_commitment and not run.get("probe")
+                and (run.get("source") or {}).get("inventory_sha256") == me_src["inventory_sha256"] and (run.get("source") or {}).get("script_sha256") == me_src["script_sha256"] and (run.get("source") or {}).get("engine_version") == me_src["engine_version"])
+        if formal: return base and run.get("required_all_true") is True and run.get("selftest") is False and run.get("formal") is True and "G_env_lock" in req and any(run.get(k) is True for k in flag_keys)
+        return base and run.get("selftest") is True and run.get("formal") is False                                 # self-test sources: the sandbox environment gate is False by construction; admitted only into a self-test certificate
+    def evidence_ok(d, run, fn):
+        e = (run.get("published_evidence") or {}).get(fn); fp = os.path.join(d, fn)
+        return isinstance(e, dict) and os.path.isfile(fp) and not os.path.islink(fp) and set(run["published_evidence"]) == {fn} and e.get("sha256") == sha(fp) and e.get("bytes") == os.path.getsize(fp)
+    w2_checksums = {k: w2ctx.decision_for(k, w2ctx.context_sha256).checksum for k in w2ctx.decisions}
+    config_ids = {}
+    for c in d2s["configurations"].values(): config_ids.setdefault(c["family"], {}).setdefault(c["size_id"], []).append(c["config_id"])
     for d in [os.path.realpath(p) for p in a.screen]:
         fs = [f for f in sorted(os.listdir(d)) if f.startswith("d4c1_screen_") and f.endswith("_record.json")] if os.path.isdir(d) else []; rr = [f for f in sorted(os.listdir(d)) if f.startswith("d4c1_screen_") and f.endswith("_run.json")] if os.path.isdir(d) else []
-        if len(fs) != 1 or len(rr) != 1: R["failures"].append(f"{d}: exactly one screen record / run record required"); ok = False; continue
-        scr = ser.loads(open(os.path.join(d, fs[0]), encoding="utf-8").read()); run = json.load(open(os.path.join(d, rr[0])))
-        try: chk = check_screen_record(scr)
-        except Exception as ex_: R["failures"].append(f"{d}: screen record not verified: {ex_!r}"); ok = False; continue
-        good = (run.get("D4C1_SCREEN_COMPLETE") is True) if formal else (run.get("stage") == "complete" and run.get("failures") == [] and run.get("mode") == "screen")
-        if not good or scr["pseudo"]["n"] != n or (formal and (scr["pseudo"]["sha256_T1"] != idn["T1_sha256"] or scr["pseudo"]["sha256_T2"] != idn["T2_sha256"])) or scr.get("target_commitment") != a.target_commitment or run.get("campaign_id") != a.campaign_id: R["failures"].append(f"{d}: screen run / columns / commitment / campaign do not match"); ok = False; continue
-        maps.append(blocking_rows_from_screen(scr)); sources.append(dict(kind="screen", dir=d, file=fs[0], sha256=sha(os.path.join(d, fs[0])), screen_sha256=scr["binding"]["screen_sha256"], family=scr["family"], rows=[scr["rows"][0], scr["rows"][-1] + 1] if scr["rows"] else None, n_blocking=chk["n_blocking"]))
+        if len(fs) != 1 or len(rr) != 1 or fs[0][:-len("_record.json")] != rr[0][:-len("_run.json")]: R["failures"].append(f"{d}: exactly one screen record / run record pair required"); ok = False; continue
+        try:
+            run = json.load(open(os.path.join(d, rr[0])))
+            if not run_ok(run, ("screen",), ("D4C1_SCREEN_COMPLETE",)) or not evidence_ok(d, run, fs[0]): raise RuntimeError("screen run record not a complete, trusted-inventory, source-bound run with content-verified published evidence")
+            scr = ser.loads(open(os.path.join(d, fs[0]), encoding="utf-8").read())
+            if not isinstance(scr, dict): raise RuntimeError("published screen document is not a JSON object")
+            fam = scr.get("family"); sc = run.get("screen") or {}
+            if run.get("family") != fam or fam not in TWELVE_FAMILIES: raise RuntimeError("screen family")
+            if formal: b = bind_screen_record(scr, registry_sha256=reg.registry_sha256, manifest_sha256=man.manifest_sha256, w2_context_sha256=w2ctx.context_sha256, w2_checksums=w2_checksums, pseudo_identity=pid, T1=cols["T1"], T2=cols["T2"], config_ids={s_: sorted(v) for s_, v in config_ids[fam].items()}, family=fam, campaign_id=a.campaign_id, target_commitment=a.target_commitment)
+            else:
+                b = check_screen_record(scr, formal=False)
+                if scr["w2_context_sha256"] != w2ctx.context_sha256 or any(v.get("checksum") != w2_checksums.get(f"{fam}/{s_}") for s_, v in scr["w2"].items()) or scr["pseudo"] != pid or scr.get("target_commitment") != a.target_commitment or scr["registry_sha256"] != reg.registry_sha256 or not b["complete_coverage"]: raise RuntimeError("self-test screen not bound to the registered context / columns / grid, or without complete N0 / N4 coverage")
+            if sc.get("screen_sha256") != scr["binding"]["screen_sha256"] or sc.get("n_blocking") != scr["n_blocking"] or sc.get("n_rows") != scr["n_rows"]: raise RuntimeError("run record screen summary differs from the published screen record")
+            maps.append(blocking_rows_from_screen(scr, formal=formal)); sources.append(dict(kind="screen", dir=d, file=fs[0], sha256=sha(os.path.join(d, fs[0])), run_sha256=sha(os.path.join(d, rr[0])), attempt=run.get("attempt"), screen_sha256=scr["binding"]["screen_sha256"], family=fam, rows=[scr["rows"][0], scr["rows"][-1] + 1] if scr["rows"] else None, n_blocking=b["n_blocking"], complete_coverage=b["complete_coverage"], formal=bool(formal)))
+        except Exception as ex_: R["failures"].append(f"{d}: screen source not admitted: {ex_!r}"); ok = False
     for d in [os.path.realpath(p) for p in a.evaluated]:
         fs = [f for f in sorted(os.listdir(d)) if (f.startswith("d4c1_partial_") or f.startswith("d4c1_subpartial_")) and f.endswith("_record.json")] if os.path.isdir(d) else []; rr = [f for f in sorted(os.listdir(d)) if (f.startswith("d4c1_partial_") or f.startswith("d4c1_subpartial_")) and f.endswith("_run.json")] if os.path.isdir(d) else []
-        if len(fs) != 1 or len(rr) != 1: R["failures"].append(f"{d}: exactly one partial / sub-partial record / run record required"); ok = False; continue
-        rec = ser.loads(open(os.path.join(d, fs[0]), encoding="utf-8").read()); run = json.load(open(os.path.join(d, rr[0]))); ps = rec.get("thresholds", {}).get("pseudo", {})
-        good = ((run.get("D4C1_PARTIAL_PASS") is True or run.get("D4C1_SUBPARTIAL_PASS") is True) and not run.get("selftest")) if formal else (run.get("stage") == "complete" and run.get("failures") == [])
-        if not good or run.get("probe") or ps.get("n") != n or (formal and (ps.get("sha256_T1") != idn["T1_sha256"] or ps.get("sha256_T2") != idn["T2_sha256"])) or rec["thresholds"].get("target_commitment") != a.target_commitment or run.get("campaign_id") != a.campaign_id: R["failures"].append(f"{d}: evaluated run / columns / commitment / campaign do not match"); ok = False; continue
-        start = (rec.get("rows") or {}).get("start", 0)
-        maps.append(blocking_rows_from_statuses(rec["family"], rec["per_pseudo_status"], int(start), rec["binding"]["partial_sha256"])); sources.append(dict(kind="evaluated", dir=d, file=fs[0], sha256=sha(os.path.join(d, fs[0])), partial_sha256=rec["binding"]["partial_sha256"], family=rec["family"], rows=[start, start + len(rec["per_pseudo_status"])]))
-    G["G_sources_loaded"] = bool(ok and maps); R["sources"] = sources
-    if not G["G_sources_loaded"]: R["failures"].append("no verified sources"); return finish(1, "inputs")
-    cert = infeasibility_certificate(n, maps, pseudo_identity=dict(n=n, sha256_T1=idn["T1_sha256"], sha256_T2=idn["T2_sha256"]), campaign=dict(id=a.campaign_id + ("" if formal else "__SELFTEST"), formal=bool(formal)), target_commitment=a.target_commitment, sources=sources); mark("certificate")
-    chk = check_certificate(cert); G["G_certificate_computed"] = bool(chk["ok"] and cert["n"] == n and (n == RULES.n_pseudo if formal else True))
+        if len(fs) != 1 or len(rr) != 1 or fs[0][:-len("_record.json")] != rr[0][:-len("_run.json")] or not os.path.isdir(os.path.join(d, "archive")): R["failures"].append(f"{d}: exactly one partial / sub-partial record / run record pair and an archive required"); ok = False; continue
+        try:
+            run = json.load(open(os.path.join(d, rr[0])))
+            if not run_ok(run, ("partial", "combine-family"), ("D4C1_PARTIAL_PASS", "D4C1_SUBPARTIAL_PASS")) or not evidence_ok(d, run, fs[0]): raise RuntimeError("evaluated run record not a complete, trusted-inventory, source-bound run with content-verified published evidence")
+            rec = ser.loads(open(os.path.join(d, fs[0]), encoding="utf-8").read())
+            if not isinstance(rec, dict): raise RuntimeError("published record is not a JSON object")
+            res = evaluated_rows_from_record(rec, Archive(os.path.join(d, "archive")), registered=registered, pseudo_identity=pid, family=run.get("family"))
+            if rec["thresholds"].get("target_commitment") != a.target_commitment or (rec.get("campaign") or {}).get("id") != a.campaign_id + ("" if formal else "__SELFTEST"): raise RuntimeError("evaluated record commitment / campaign differ")
+            maps.append(res["rows"]); sources.append(dict(kind="evaluated", dir=d, file=fs[0], sha256=sha(os.path.join(d, fs[0])), run_sha256=sha(os.path.join(d, rr[0])), attempt=run.get("attempt"), partial_sha256=res["partial_sha256"], family=res["family"], rows=res["row_range"], verification=res["verification"], formal=bool(formal)))
+        except Exception as ex_: R["failures"].append(f"{d}: evaluated source not admitted: {ex_!r}"); ok = False
+    G["G_sources_loaded"] = bool(ok and maps); R["sources"] = sources; R["source_scope"] = ("formal sources only (COMPLETE / PASS runs of this source binding, formal screens with full N0/N4 coverage)" if formal else "SELF-TEST sources only (never a COMPLETE certificate)")
+    if not G["G_sources_loaded"]: R["failures"].append("no admitted sources"); return finish(1, "inputs")
+    cert = infeasibility_certificate(n, maps, pseudo_identity=pid, campaign=dict(id=a.campaign_id + ("" if formal else "__SELFTEST"), formal=bool(formal)), target_commitment=a.target_commitment, sources=sources); mark("certificate")
+    chk = check_certificate(cert); G["G_certificate_computed"] = bool(chk["ok"] and cert["n"] == n == RULES.n_pseudo)
     R["certificate"] = dict(n=n, registered_blocking_counts=registered_blocking_counts(n), levels={lvl: {k: v for k, v in cert["levels"][lvl].items() if k != "statement"} for lvl in ("support", "strong")}, n_rows_proven=cert["n_rows_proven"], certificate_sha256=cert["binding"]["certificate_sha256"],
-                            scope="algebraic fixed-denominator statement over proven rows; NOT a calibration, NOT usable == False, no claim on unevaluated rows")
-    note("  certificate:", json.dumps({lvl: dict(proven=cert["levels"][lvl]["proven_blocking_rows"], first_blocking=cert["levels"][lvl]["first_blocking_count"], impossible=cert["levels"][lvl]["usable_true_impossible_by_wilson"]) for lvl in ("support", "strong")}))
+                            scope="algebraic fixed-denominator statement over AUTHENTICATED proven rows; NOT a calibration, NOT usable == False, no claim on unevaluated rows")
+    note("  certificate:", json.dumps({lvl: dict(proven=cert["levels"][lvl]["proven_blocking_rows"], technical=cert["levels"][lvl]["technical_rows"], first_blocking=cert["levels"][lvl]["first_blocking_count"], impossible=cert["levels"][lvl]["usable_true_impossible_by_wilson"]) for lvl in ("support", "strong")}))
     pub = publish_record(os.path.join(out, "d4c1_certificate_record.json"), cert); R["published_evidence"] = {"d4c1_certificate_record.json": pub}
     back = ser.loads(open(os.path.join(out, "d4c1_certificate_record.json"), encoding="utf-8").read()); G["G_certificate_published"] = bool(check_certificate(back)["ok"] and back["binding"]["certificate_sha256"] == cert["binding"]["certificate_sha256"])
     G["G_record_saved"] = True

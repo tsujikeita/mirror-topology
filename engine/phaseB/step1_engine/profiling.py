@@ -7,8 +7,8 @@ Profiler is a context manager that installs TIMING WRAPPERS around a fixed inven
 them up, and restores the originals on exit. A wrapper calls the original with the same arguments and returns its result unchanged: no argument, return value, exception, random
 state or file is touched, so the calibration record produced under the profiler is byte-identical to the uninstrumented one (tests assert the payload SHA equality). The wrappers
 measure wall time (time.perf_counter) per target: cumulative (inclusive) seconds, self seconds (inclusive minus the inclusive time of nested wrapped targets), call count; plus
-a per-segment breakdown where a segment is one call of threshold_evaluator.evaluate_family_full (one pseudo threshold pair = one segment), so fixed costs (everything outside
-the segments: parent assembly, fingerprints, gate, archive puts between evaluations, publication) are separated from the per-row calls. cProfile (optional) runs underneath and
+a per-segment breakdown where a segment is one call of threshold_evaluator.evaluate_family_full (one pseudo threshold pair = one segment), so the per-row evaluation calls are separated from everything outside the segments (fixed costs: parent assembly, fingerprints, gate, publication — AND the per-row archive puts that
+follow each evaluation; the two are not separated by this record). cProfile (optional) runs underneath and
 reports the top functions by cumulative / internal time with their call counts. The report (schema d4c1_profile_record_v1) carries the instrumentation flags so that a measured
 wall time is never read as the production speed; it holds no scientific quantity and is not an input of any calibration record.
 Scope: measurement only — no cache, no reuse, no change of any numerical path. A target that is not importable (older source) is skipped and listed under 'missing'."""
@@ -85,23 +85,27 @@ class Profiler:
 
     def __enter__(self):
         if self._active or self.t_exit is not None: raise InputContractError("Profiler is single-use and not re-entrant")
-        for name, sites in self.targets.items():
-            resolved = []
-            for mod_name, attr in sites:
-                try: mod = importlib.import_module("." + mod_name, __package__)
-                except ImportError: continue
-                if "." in attr:
-                    cls_name, meth = attr.split(".", 1); holder = getattr(mod, cls_name, None)
-                    if holder is None or not hasattr(holder, meth): continue
-                    resolved.append((holder, meth, holder.__dict__.get(meth, getattr(holder, meth))))
-                else:
-                    if not hasattr(mod, attr): continue
-                    resolved.append((mod, attr, getattr(mod, attr)))
-            if not resolved: self.missing.append(name); continue
-            fn = resolved[0][2]; wrapper = self._wrap(name, fn)
-            for holder, attr, orig in resolved:
-                if orig is not fn and getattr(orig, "__profiler_target__", None) != name: raise InputContractError(f"profiler target {name}: binding sites hold different objects ({attr})")
-                setattr(holder, attr, wrapper); self._installed.append((holder, attr, orig))
+        try:
+            for name, sites in self.targets.items():
+                resolved = []
+                for mod_name, attr in sites:
+                    try: mod = importlib.import_module("." + mod_name, __package__)
+                    except ImportError: continue
+                    if "." in attr:
+                        cls_name, meth = attr.split(".", 1); holder = getattr(mod, cls_name, None)
+                        if holder is None or not hasattr(holder, meth): continue
+                        resolved.append((holder, meth, holder.__dict__.get(meth, getattr(holder, meth))))
+                    else:
+                        if not hasattr(mod, attr): continue
+                        resolved.append((mod, attr, getattr(mod, attr)))
+                if not resolved: self.missing.append(name); continue
+                fn = resolved[0][2]; wrapper = self._wrap(name, fn)
+                for holder, attr, orig in resolved:
+                    if orig is not fn and getattr(orig, "__profiler_target__", None) != name: raise InputContractError(f"profiler target {name}: binding sites hold different objects ({attr})")
+                    setattr(holder, attr, wrapper); self._installed.append((holder, attr, orig))
+        except BaseException:
+            for holder, attr, orig in reversed(self._installed): setattr(holder, attr, orig)                     # N-D4C2A-PROFILER-ENTER-CLEANUP: an entry failure leaves no wrapper installed
+            self._installed = []; self.t_exit = time.perf_counter(); raise
         if self.cprofile: self._prof = cProfile.Profile(); self._prof.enable()
         self.t_enter = time.perf_counter(); self._active = True; return self
 
@@ -126,9 +130,10 @@ class Profiler:
             for (file, line, func), (cc, nc, tt, ct, callers) in st.stats.items(): rows.append(dict(function=func, file=file, line=line, ncalls=nc, primitive_calls=cc, tottime=tt, cumtime=ct))
             cp = dict(by_cumtime=sorted(rows, key=lambda r: -r["cumtime"])[:self.top_n], by_tottime=sorted(rows, key=lambda r: -r["tottime"])[:self.top_n], n_functions=len(rows))
         return dict(schema=PROFILE_SCHEMA, engine_version=__version__, instrumentation=dict(wrappers=True, cprofile=self.cprofile, clock="time.perf_counter (wall)", segment_target=SEGMENT_TARGET,
-                    note="timing wrappers and cProfile add overhead; a measured wall time is NOT the production speed (compare with the uninstrumented probe); no numerical path is changed"),
+                    note="timing wrappers and cProfile add overhead; a measured wall time is NOT the production speed (compare with the uninstrumented probe); no numerical path is changed",
+                    accounting="outside_segments = everything outside the evaluate_family_full calls: fixed costs (parent assembly, fingerprints, gate, publication) AND per-row persistence (the archive puts after each evaluation), which are NOT separated here; inclusive target times overlap (nested targets) and must not be summed to a total"),
                     python=platform.python_version(), wall_seconds_total=total, segments=dict(count=len(segs), wall_seconds=seg_wall, per_segment=[dict(index=s["index"], wall_seconds=s["wall_seconds"], targets=s["targets"]) for s in segs],
-                    mean_wall_seconds=(seg_wall / len(segs) if segs else None)), outside_segments_wall_seconds=total - seg_wall, targets=targets, missing_targets=list(self.missing), cprofile=cp, note=note)
+                    mean_wall_seconds=(seg_wall / len(segs) if segs else None)), outside_segments_wall_seconds=total - seg_wall, outside_segments_note="fixed costs + per-row persistence (archive.Archive.put outside the segments is per-row)", targets=targets, missing_targets=list(self.missing), cprofile=cp, note=note)
 
 
 def summarize(rec: dict) -> List[str]:
