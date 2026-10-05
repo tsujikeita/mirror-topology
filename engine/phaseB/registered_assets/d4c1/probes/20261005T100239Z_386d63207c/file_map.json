@@ -1,0 +1,48 @@
+{
+ "schema": "d4c1_probe_evidence_file_map_v1",
+ "attempt_id": "20261005T100239Z_386d63207c",
+ "commit": "231d37b89271793c8cd1b93c3282d2b851f83d3e",
+ "engine": "0.107.0",
+ "family": "E2",
+ "probe_n": 3,
+ "campaign_id": "D4C2_9efa1b8d82fe",
+ "target_commitment": "9efa1b8d82fec2e23ac685d24dbaece7932e29955c94fc5a2955ba793c70b326",
+ "scope": "PROBE EVIDENCE (timing / resource measurement on the first 3 registered pseudo rows; D4C1_PARTIAL_PASS False by design). NOT a formal input, NOT a calibration acceptance, NOT a usable seal. The nonce is not stored anywhere.",
+ "files": {
+  "d4c1_partial_E2_231d37b89271.zip": {
+   "sha256": "538f5e07f3c4fae84803d17783ff09a03fef5270cd04b600376e2af891644766",
+   "bytes": 515915,
+   "role": "probe evidence zip (lock, attempt final record, run_<attempt>: run record, probe record, archive 17 entries, stdout; stderr) — byte-preserved"
+  },
+  "MirrorTopology_Step1_D4C1_partial_v0_1_executed_231d37b89271.ipynb": {
+   "sha256": "72af76c8b161b09eae3815ede13da9416ab5c71a16781e3784fc5c70b4707cd8",
+   "bytes": 45257,
+   "role": "executed launcher notebook (v0.2 content) — byte-preserved"
+  },
+  "D4C2_probe_resource_report.md": {
+   "sha256": "9e9ad98f0bf555bdd2b30a1c0035421830506abbc5e6e97eb697e7cb15d309ba",
+   "bytes": 9699,
+   "role": "resource report as submitted to the audit (v1; contains the transcription errors corrected in v2) — byte-preserved"
+  },
+  "D4C2_probe_resource_report_v2.md": {
+   "sha256": "d5d5eadb4ee05cbd33f1250e4e84a00672457f748faa7f1334eb69481442fc8c",
+   "bytes": 12799,
+   "role": "resource report v2 (audit corrections applied)"
+  },
+  "ChatGPT_audit_D4C2_probe_231d37b8.md": {
+   "sha256": "3c39edf2c82d5a31681396e78109fef1b43410168e0fc5c1e208f47427e756a6",
+   "bytes": 17298,
+   "role": "audit report (ChatGPT, 2026-10-05)"
+  },
+  "D4C2_probe_231d37b8_audit_decision.json": {
+   "sha256": "29d8013532a462e30852a48f15b11c4d604781fa3343094a1dc71fd399f35c49",
+   "bytes": 11477,
+   "role": "audit decision JSON (PROBE_EVIDENCE_ACCEPTED_WITH_SCOPE__FORMAL_CALIBRATION_DEFERRED)"
+  },
+  "D4C2_probe_231d37b8_audit_evidence.zip": {
+   "sha256": "44d7298aeb12407c28434fbfb69ad6a8e3c011d0bda730456e86af4e1a599ca7",
+   "bytes": 572657,
+   "role": "audit evidence zip (audit scripts, logs, results, input originals)"
+  }
+ }
+}

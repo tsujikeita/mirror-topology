@@ -1,0 +1,307 @@
+{
+  "schema": "D4C2_E2_N3_probe_review_v1",
+  "date_JST": "2026-10-05",
+  "decision": "PROBE_EVIDENCE_ACCEPTED_WITH_SCOPE__FORMAL_CALIBRATION_DEFERRED",
+  "subject": {
+    "commit": "231d37b89271793c8cd1b93c3282d2b851f83d3e",
+    "engine": "0.107.0",
+    "attempt": "20261005T100239Z_386d63207c",
+    "inputs": {
+      "d4c1_partial_E2_231d37b89271.zip": {
+        "bytes": 515915,
+        "sha256": "538f5e07f3c4fae84803d17783ff09a03fef5270cd04b600376e2af891644766"
+      },
+      "MirrorTopology_Step1_D4C1_partial_v0_1_executed_231d37b89271.ipynb": {
+        "bytes": 45257,
+        "sha256": "72af76c8b161b09eae3815ede13da9416ab5c71a16781e3784fc5c70b4707cd8"
+      },
+      "D4C2_probe_resource_report.md": {
+        "bytes": 9699,
+        "sha256": "9e9ad98f0bf555bdd2b30a1c0035421830506abbc5e6e97eb697e7cb15d309ba"
+      },
+      "phaseB_D4C1_v2_0.107.0.zip": {
+        "bytes": 28517256,
+        "sha256": "5ce358e12b9d4f756e561912066d9c284792038bc57ed90c4b879410c3795775"
+      },
+      "D4C1_v2_0.107.0_audit_decision.json": {
+        "bytes": 11073,
+        "sha256": "603450a5144d1fa14759c0a9645e66eb5e3be7a2c808447def60b18bad865ffd"
+      }
+    }
+  },
+  "GO": {
+    "probe_evidence_acceptance": true,
+    "profiling_instrumentation_drafting_and_small_tests": true,
+    "deterministic_pseudo_range_resume_design_and_small_tests": true,
+    "unchanged_rule_feasibility_certificate_design_and_synthetic_tests": true,
+    "new_profiling_or_screen_Colab_execution": false,
+    "formal_four_family_partial_execution": false,
+    "formal_combiner_execution": false,
+    "formal_calibration_or_usable_acceptance": false,
+    "W2_tail_extension_or_regeneration": false,
+    "E1_only_as_original_global_scope": false,
+    "PhaseE_or_actual_target": false
+  },
+  "prior_acceptances_preserved": true,
+  "requires_bank_or_pseudo_or_D2W_regeneration": false,
+  "findings": [
+    {
+      "id": "D4C2-PROBE-COMPLETE",
+      "classification": "accepted_probe_only",
+      "details": "24 REQUIRED true, exit0, formal PASS false by design; actual archive reader and original paired prefix verified."
+    },
+    {
+      "id": "D4C2-RESOURCE-EXTRAPOLATION",
+      "classification": "resource_planning",
+      "details": "174h is naive 3-row mean extrapolation including fixed partial costs; N4/KDE CI/12-position costs unmeasured; neither lower nor upper bound."
+    },
+    {
+      "id": "D4C2-UNKNOWN-NOT-PERMANENT",
+      "classification": "interpretation_correction",
+      "details": "Registered W2 unknown does not preclude ratio-triggered all-size 12-position completion. Three observed unknowns do not prove u~2000 or formally usable=False."
+    },
+    {
+      "id": "D4C2-BMAX-NOT-CAUSE",
+      "classification": "amendment_caution",
+      "details": "All nine W2 cases stopped before Bmax; four unknowns are mixed indicators. Preserved-prefix tail extension leaves first stopping point unchanged; verified with synthetic tail and extended horizon."
+    },
+    {
+      "id": "D4C2-FEASIBILITY-CERTIFICATE",
+      "classification": "new_design_proposal_not_implemented",
+      "details": "Fixed n=2000 impossibility certificate may avoid all expensive evaluations. No complete c/u/rate/technical-success claims and no formal seal. Sufficient count-envelope screen must cover all positions and both N0/Nmax choices."
+    },
+    {
+      "id": "D4C2-REPORT-QUANTITIES",
+      "classification": "report_correction",
+      "details": "Recorded matched Q values are 1.01200856638,1.00910252542,0.999980948525; third bandwidth sensitivity false. Original bytes and eligible unknowns preserved."
+    }
+  ],
+  "wilson_failure_certificate_thresholds": [
+    {
+      "threshold": 0.05,
+      "first_blocking_count": 81,
+      "previous_upper": 0.04950693664126962,
+      "blocking_upper": 0.050056823219945756,
+      "three_rows_best_completion_upper": 0.004401032589829253
+    },
+    {
+      "threshold": 0.01,
+      "first_blocking_count": 12,
+      "previous_upper": 0.009822062795201926,
+      "blocking_upper": 0.010458448381508351,
+      "three_rows_best_completion_upper": 0.004401032589829253
+    }
+  ],
+  "scientific_outcomes": {
+    "E2_probe_rows": [
+      {
+        "index": 0,
+        "threshold": [
+          184.44830863995733,
+          570.5380033417513
+        ],
+        "Q_matched": 1.0120085663800016,
+        "logD": -0.03133162894140007,
+        "logD_CI": null,
+        "bandwidth_sensitivity_pass": true,
+        "precision": {
+          "state": "pass",
+          "rel_halfwidth": 0.0010406167403652828,
+          "width_cv_logQ": 0.022291643324921593,
+          "positive_clusters_model": 10000,
+          "positive_clusters_ref": 10000,
+          "reasons": []
+        },
+        "core_truths": {
+          "support": false,
+          "strong": false,
+          "unsupported": false
+        },
+        "eligible_truths": {
+          "support": "unknown",
+          "strong": "unknown",
+          "unsupported": "unknown"
+        },
+        "per_config_probability": {
+          "20101": 0.434288,
+          "20102": 0.434912,
+          "20103": 0.434551,
+          "20201": 0.426951,
+          "20202": 0.427046,
+          "20203": 0.426966,
+          "20301": 0.424368,
+          "20302": 0.424402,
+          "20303": 0.424406
+        }
+      },
+      {
+        "index": 1,
+        "threshold": [
+          180.3266829122338,
+          616.3273246948814
+        ],
+        "Q_matched": 1.0091025254182917,
+        "logD": -0.027138603247285786,
+        "logD_CI": null,
+        "bandwidth_sensitivity_pass": true,
+        "precision": {
+          "state": "pass",
+          "rel_halfwidth": 0.0009483806671959942,
+          "width_cv_logQ": 0.017520662956838722,
+          "positive_clusters_model": 10000,
+          "positive_clusters_ref": 10000,
+          "reasons": []
+        },
+        "core_truths": {
+          "support": false,
+          "strong": false,
+          "unsupported": false
+        },
+        "eligible_truths": {
+          "support": "unknown",
+          "strong": "unknown",
+          "unsupported": "unknown"
+        },
+        "per_config_probability": {
+          "20101": 0.487762,
+          "20102": 0.487716,
+          "20103": 0.487855,
+          "20201": 0.481274,
+          "20202": 0.48138,
+          "20203": 0.481448,
+          "20301": 0.478876,
+          "20302": 0.478953,
+          "20303": 0.478992
+        }
+      },
+      {
+        "index": 2,
+        "threshold": [
+          176.5814867363503,
+          1108.3319662045828
+        ],
+        "Q_matched": 0.9999809485249505,
+        "logD": -9.683230512180785e-05,
+        "logD_CI": null,
+        "bandwidth_sensitivity_pass": false,
+        "precision": {
+          "state": "pass",
+          "rel_halfwidth": 0.00048632894054919973,
+          "width_cv_logQ": 0.010561409612524992,
+          "positive_clusters_model": 10000,
+          "positive_clusters_ref": 10000,
+          "reasons": []
+        },
+        "core_truths": {
+          "support": false,
+          "strong": false,
+          "unsupported": false
+        },
+        "eligible_truths": {
+          "support": "unknown",
+          "strong": "unknown",
+          "unsupported": "unknown"
+        },
+        "per_config_probability": {
+          "20101": 0.763548,
+          "20102": 0.763442,
+          "20103": 0.76357,
+          "20201": 0.764295,
+          "20202": 0.764288,
+          "20203": 0.764296,
+          "20301": 0.764322,
+          "20302": 0.764106,
+          "20303": 0.76411
+        }
+      }
+    ],
+    "remaining_1997_E2_rows_evaluated": false,
+    "E7_E8_probe_rows_evaluated": false,
+    "actual_production_screen_executed": false,
+    "formal_global_usable_determined": false
+  },
+  "independent_verification": {
+    "record_checks": 173,
+    "all_record_checks_pass": true,
+    "source_inventory_sha_entries": 2198,
+    "archive": {
+      "entries": 17,
+      "by_kind": {
+        "family_result": 3,
+        "three_position_result": 9,
+        "transition": 4,
+        "registry": 1
+      },
+      "entry_bytes": 2595293,
+      "index_bytes": 5650,
+      "total_bytes": 2600943
+    },
+    "reader": {
+      "ok": true,
+      "family": "E2",
+      "n_pseudo": 3,
+      "partial_sha256": "057ae75355fd7a716aba9d52d5a520275c9c6fd3b57162a4e7d389e327223878",
+      "context_scope": "registered context verified",
+      "registered_context_ok": true
+    },
+    "reader_mutations_rejected": 6,
+    "actual_position_record_replays": 9,
+    "tail_invariance_controls": 9,
+    "synthetic_truth_combinations": 128,
+    "synthetic_mixed_prefix_combinations": 512,
+    "pytest_suite_rerun": false,
+    "fresh_reproduction": {
+      "commands": [
+        {
+          "script": "audit_records.py",
+          "returncode": 0
+        },
+        {
+          "script": "verify_reader.py",
+          "returncode": 0
+        },
+        {
+          "script": "scientific_controls.py",
+          "returncode": 0
+        }
+      ],
+      "input_source_and_probe_unchanged": true
+    }
+  },
+  "implementation_conditions": [
+    "Preserve registered bank/pseudo order/UID/plans/W2/thresholds and all previous original execution locks.",
+    "Profile original registered prefix1-3, separate fixed costs and per-row calls; no target evaluation or label release.",
+    "No approximate cache or removed diagnostics/guards without explicit audited equivalence and scope decision.",
+    "Sub-partials use global row ids, exact ranges and registered whole/slice identities; missing/duplicate/overlap/conflicts fail closed.",
+    "Feasibility screening is a separate schema, not an official partial/sealed calibration; n remains2000 in algebraic completion bound.",
+    "Sufficient screen uses exact counts and the envelope across every position and N0/Nmax, including mixed choices; zero-hit and technical paths retained.",
+    "Do not replace core False for provisional eligible unknown; do not drop non-E1 families in an original global claim.",
+    "Any scientific amendment discloses already observed W2/probe results, freezes old/new semantics and independent confirmation policy, applies same rule to pseudo and future target.",
+    "New instrumented or screen execution needs a pinned implementation packet and execution-boundary audit; present decision grants design/tests only.",
+    "Archive probe evidence separately from accepted formal calibration products."
+  ],
+  "limitations": [
+    "No production bank array intake or fingerprint recomputation",
+    "No new bootstrap plan or physical kernel/pseudo generation",
+    "No exact POT/f32 bound recomputation",
+    "No registered Colab environment or past runtime independently observed",
+    "No remote Git tree comparison",
+    "No real target or formal2000x4 calibration executed",
+    "12-position completion in counterexample is a synthetic local-contract fixture, not a physical Result",
+    "W2 extended horizon is test-only process state with synthetic tail, not a production asset",
+    "No measured hot-function timing; no claimed acceleration factor",
+    "Feasibility screen not run on production bank; cannot assert12 or81 blocking rows exist"
+  ],
+  "preservation": {
+    "source_files": 2677,
+    "source_unchanged": true,
+    "run_files": 25,
+    "run_unchanged": true,
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41"
+  },
+  "artifacts": {
+    "report": "ChatGPT_audit_D4C2_probe_231d37b8.md",
+    "evidence": "D4C2_probe_231d37b8_audit_evidence.zip"
+  }
+}

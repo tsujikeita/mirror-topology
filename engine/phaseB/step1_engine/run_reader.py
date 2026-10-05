@@ -50,7 +50,7 @@ def _payload_sha(d: dict) -> str:
 def _get(archive, ref): return ser.from_jsonable(archive.get(ArchiveRef(**ref)))
 
 
-def verify_run_references(rm: dict, archive: Archive, registered: Optional[dict] = None, current_source_binding: bool = False) -> dict:
+def verify_run_references(rm: dict, archive: Archive, registered: Optional[dict] = None, current_source_binding: bool = False, pseudo_index_offset: int = 0) -> dict:
     d = ser.from_jsonable(rm); b = d.get("binding") or {}
     d_clean = dict(d); d_clean.pop("_sha256", None); d_clean.pop("_ref", None)
     if _payload_sha(d_clean) != b.get("run_manifest_sha256"): raise InputContractError("run manifest payload SHA differs from its binding")
@@ -272,15 +272,17 @@ def verify_run_references(rm: dict, archive: Archive, registered: Optional[dict]
     if ps.get("n") is not None and (len(T1) != ps["n"] or len(T2) != ps["n"] or hashlib.sha256(np.ascontiguousarray(np.asarray(T1, float)).tobytes()).hexdigest() != ps.get("sha256_T1") or hashlib.sha256(np.ascontiguousarray(np.asarray(T2, float)).tobytes()).hexdigest() != ps.get("sha256_T2")): raise InputContractError("pseudo threshold columns differ from their recorded SHA / length")
     decl_fams = set(sd.get("families") or []) if sd else (set(fams) if fams else None)
     if decl_fams is None and statuses: decl_fams = set(statuses[0])
+    if not isinstance(pseudo_index_offset, int) or isinstance(pseudo_index_offset, bool) or pseudo_index_offset < 0: raise InputContractError("pseudo_index_offset must be a non-negative int")
     for i, st in enumerate(statuses):
+        gi = i + pseudo_index_offset                                                                                    # global pseudo row (D4C-2a sub-partial views: the archived records carry the GLOBAL row index)
         if set(st) != decl_fams: raise InputContractError(f"pseudo[{i}]: family set differs from the declared run families")
         for fam, s in st.items():
             if s.get("family") != fam or fam not in greg.surviving: raise InputContractError(f"pseudo[{i}] {fam}: family field / registry membership")
             if s.get("parent_ref") is None or s.get("plan_ref") is None: raise InputContractError(f"pseudo[{i}] {fam}: parent / plan references missing (pseudo evidence not archived)")
             prec_ = _get(archive, s["parent_ref"]); verify_family_result_dict(prec_)
-            if prec_.get("family") != fam or prec_.get("evidence", {}).get("pseudo_index") != i or (T1 and prec_.get("evidence", {}).get("threshold") != [float(T1[i]), float(T2[i])]) or prec_.get("truths") != s.get("core_truths"): raise InputContractError(f"pseudo[{i}] {fam}: parent record identity / threshold / core truths")
+            if prec_.get("family") != fam or prec_.get("evidence", {}).get("pseudo_index") != gi or (T1 and prec_.get("evidence", {}).get("threshold") != [float(T1[i]), float(T2[i])]) or prec_.get("truths") != s.get("core_truths"): raise InputContractError(f"pseudo[{i}] {fam}: parent record identity / threshold / core truths")
             plrec = _get(archive, s["plan_ref"])
-            if plrec.get("kind") != "pseudo_family_plan" or plrec.get("family") != fam or plrec.get("pseudo_index") != i or (T1 and plrec.get("threshold") != [float(T1[i]), float(T2[i])]): raise InputContractError(f"pseudo[{i}] {fam}: plan record identity")
+            if plrec.get("kind") != "pseudo_family_plan" or plrec.get("family") != fam or plrec.get("pseudo_index") != gi or (T1 and plrec.get("threshold") != [float(T1[i]), float(T2[i])]): raise InputContractError(f"pseudo[{i}] {fam}: plan record identity")
             case_refs = plrec.get("case_refs")
             if not isinstance(case_refs, dict) or set(case_refs) != set(greg.surviving[fam]):
                 raise InputContractError(f"pseudo[{i}] {fam}: position source reference inventory missing or incomplete")
@@ -293,7 +295,7 @@ def verify_run_references(rm: dict, archive: Archive, registered: Optional[dict]
             r = s.get("twelve_full_result_ref"); tw = s.get("twelve"); trec = None
             if r is not None:
                 trec = _get(archive, r)
-                if r["sha256"] != s.get("twelve_full_result_sha256") or trec.get("evidence", {}).get("pseudo_index") != i or trec.get("family") != fam: raise InputContractError(f"pseudo[{i}] {fam}: full Result reference inconsistent")
+                if r["sha256"] != s.get("twelve_full_result_sha256") or trec.get("evidence", {}).get("pseudo_index") != gi or trec.get("family") != fam: raise InputContractError(f"pseudo[{i}] {fam}: full Result reference inconsistent")
                 if T1 and trec.get("evidence", {}).get("threshold") != [float(T1[i]), float(T2[i])]: raise InputContractError(f"pseudo[{i}] {fam}: full Result threshold differs from the pseudo pair")
             oc = outcome_from_records(fam, prec_, plrec, trec, f"pseudo[{i}] {fam}")
             if bool(s.get("core_technical")) != oc["core_tech"] or s.get("plan_status") != oc["plan"].status or bool(s.get("expand_family")) != (False if oc["core_tech"] else bool(oc["plan"].expand_family)): raise InputContractError(f"pseudo[{i}] {fam}: core technical / plan status / expand differ from the verified records")

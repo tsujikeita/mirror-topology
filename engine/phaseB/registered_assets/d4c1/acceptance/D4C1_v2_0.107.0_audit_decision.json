@@ -1,0 +1,253 @@
+{
+  "schema": "step1_D4C1_v2_0107_audit_v1",
+  "date_JST": "2026-10-05",
+  "decision": "PASS_WITH_EXPLICIT_SCOPE__E2_N3_PROBE_ONLY_GO",
+  "subject": {
+    "engine": "0.107.0",
+    "author_supplied_commit": "231d37b89271793c8cd1b93c3282d2b851f83d3e",
+    "remote_tree_independently_compared": false,
+    "archive": {
+      "filename": "phaseB_D4C1_v2_0.107.0.zip",
+      "bytes": 28517256,
+      "sha256": "5ce358e12b9d4f756e561912066d9c284792038bc57ed90c4b879410c3795775"
+    },
+    "inventory_sha256": "01f70420b40c556f119ae2c3c126c4ed51808bc5271429093d6cb15cc690b413",
+    "key_files_sha256": {
+      "step1_engine/archive.py": "f3b6a0cd4d9beb68e398c50c17dbc7ff77873c7cf837b8aa16ccec3c1f0122ee",
+      "step1_engine/checkpoint.py": "f9e31bdffdfed2dc43d17a5de26b69b03c89899bbe65c117a3447452cbb74447",
+      "step1_engine/threshold_evaluator.py": "16161da00cdf9c1b988ec9ac44dc280e6d52f013c3965d6406d7abc46bea2313",
+      "step1_engine/d4c1_partial.py": "cf852aa355cd6ffb977872b8165ab1e2a82403dbda446243d8d0bdfcaa00d983",
+      "d/MirrorTopology_Step1_D4C1_partial_v0.1.ipynb": "94edf3686a32241fb6d377cb2c17086121c82a47ae80728df3c402030ded2e88",
+      "d/MirrorTopology_Step1_D4C1_combine_v0.1.ipynb": "4456b37cf184e986766fa4a2d206a4719a9137c6c27299b24f53218d03eca2e4",
+      "d/d4c1_calibration.py": "834ab646ae4617e6a87bfcbea8eb112a818254f92786d7da65c2ba93fabef1fa"
+    }
+  },
+  "prior_decision": {
+    "filename": "D4C1_0.106.0_audit_decision.json",
+    "sha256": "1fbe44489ed734c84c4d7b2332391d21aeeecb0e69b8cc429ea8dfe8d3548044",
+    "HOLD_closed": true
+  },
+  "findings": [
+    {
+      "id": "R-D4C1-A1-ARCHIVE-IDENTITY-ISOLATION",
+      "status": "CLOSED",
+      "evidence": "Original four rejection tests pass unchanged; deep caller/returned-ref/entries list metadata is isolated; subsequent disk identity stays original."
+    },
+    {
+      "id": "R-D4C1-A2-ARCHIVE-FLUSH-CONFLICT",
+      "status": "CLOSED",
+      "evidence": "Original flush/context-exit rejection tests pass unchanged. Additional sequential two-writer controls preserve external index; automatic flush boundary and identical-put recovery checked."
+    },
+    {
+      "id": "R-D4C1-B-PUBLISHED-DOCUMENT-TYPE",
+      "status": "CLOSED",
+      "evidence": "Both unchanged notebook cells reject all ten rehashed non-object documents; two valid baseline objects succeed and two empty dicts reject."
+    },
+    {
+      "id": "R-D4C1-C-LIVE-PLAN-OBJECT-STABILITY",
+      "status": "CLOSED",
+      "evidence": "Original normal/deepcopy/value-change probe passes; twelve additional original-evaluator synthetic controls cover both systems, parent/first-wave/twelve views and plans/fit_plans; no family partial issued on replacement."
+    }
+  ],
+  "GO": {
+    "D4C1_implementation_acceptance": true,
+    "D4C2_E2_N3_High_RAM_probe_execution": true,
+    "D4C2_official_four_family_partials_execution": false,
+    "D4C2_official_combiner_execution": false,
+    "formal_global_calibration_acceptance": false,
+    "usable_or_PhaseE_or_labels": false,
+    "D4C3_registration_implementation_acceptance": false
+  },
+  "probe_conditions": {
+    "family": "E2",
+    "n_pseudo": 3,
+    "selection": "first three rows of registered pseudo columns, in original paired order",
+    "mode": "formal intake and twelve official gate, smoke timing/resource evaluation; never formal PASS",
+    "source_and_inventory_fixed": {
+      "REPO_COMMIT": "231d37b89271793c8cd1b93c3282d2b851f83d3e",
+      "EXPECTED_INVENTORY_SHA256": "01f70420b40c556f119ae2c3c126c4ed51808bc5271429093d6cb15cc690b413",
+      "FAMILY": "E2",
+      "PROBE_N": 3,
+      "STAGE_LOCAL": true,
+      "STAGE_ROOT": "/content/stage",
+      "D2_RUN_ROOT": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2",
+      "D3B_RUN_ROOTS": {
+        "L1.00": "/content/drive/MyDrive/MirrorTopology_D3b/E2_L1.00_20260930T010656Z/out/d3b",
+        "L1.20": "/content/drive/MyDrive/MirrorTopology_D3b/E2_L1.20_20260930T054800Z/out/d3b",
+        "L1.50": "/content/drive/MyDrive/MirrorTopology_D3b/E2_L1.50_20260930T080141Z/out/d3b"
+      },
+      "TARGET_COMMITMENT": "AUTHOR_MUST_SUPPLY_EXISTING_64_HEX_COMMITMENT__DO_NOT_INCLUDE_NONCE",
+      "CAMPAIGN_ID": "AUTHOR_MUST_SUPPLY_FIXED_CAMPAIGN_ID_AT_LEAST_8_CHARACTERS",
+      "scope": "E2 first 3 registered pseudo rows, resource probe only; do not switch PROBE_N to None under this GO",
+      "notebook": "d/MirrorTopology_Step1_D4C1_partial_v0.1.ipynb"
+    },
+    "required_run_evidence": [
+      "lock and both precheck/prelaunch observations",
+      "attempt/run/final records, stdout and stderr",
+      "partial probe JSON and full content-addressed archive/index",
+      "executed notebook",
+      "stage timing, current/peak RSS and RAM/disk availability",
+      "12-position branch/eligible status counts, archive record count/bytes, reader verification interval"
+    ],
+    "guards_must_not_be_disabled": true,
+    "no_result_dependent_seed_threshold_or_pseudo_change": true,
+    "formal_GO_separate_after_resource_review": true
+  },
+  "accepted_scope": [
+    "archive cache ownership/conflict corrections and existing persistence/merge regressions",
+    "partial/combiner/reader synthetic smoke equivalence and synthetic target-reader equivalence",
+    "launcher non-object rejection and plan object stability guards",
+    "fixed-source E2 N=3 probe only"
+  ],
+  "requires_new_mandatory_patch": false,
+  "requires_bank_regeneration": false,
+  "requires_D3c_profile_rerun": false,
+  "requires_pseudo_or_D2W_regeneration": false,
+  "previous_accepted_assets_preserved": true,
+  "tests": {
+    "new_submitted": {
+      "cases": 74,
+      "passed": 70,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 4,
+      "skip_details": [
+        {
+          "name": "test_partial_script_selftest_end_to_end",
+          "reason": {
+            "type": "pytest.skip",
+            "message": "external assets not present"
+          }
+        },
+        {
+          "name": "test_combine_script_selftest_and_refusals",
+          "reason": {
+            "type": "pytest.skip",
+            "message": "external assets not present"
+          }
+        },
+        {
+          "name": "test_partial_script_refusals",
+          "reason": {
+            "type": "pytest.skip",
+            "message": "external assets not present"
+          }
+        },
+        {
+          "name": "test_script_selftest_fixture_equivalence",
+          "reason": {
+            "type": "pytest.skip",
+            "message": "external assets not present"
+          }
+        }
+      ]
+    },
+    "previous_archive_registry": {
+      "cases": 28,
+      "passed": 28,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skip_details": []
+    },
+    "independent_prior_archive_contract": {
+      "cases": 6,
+      "passed": 6,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skip_details": []
+    },
+    "unmodified_submitted_pytest_total": {
+      "passed": 98,
+      "skipped": 4,
+      "failed": 0,
+      "errors": 0
+    },
+    "including_independent_contract_pytest": {
+      "passed": 104,
+      "skipped": 4,
+      "failed": 0,
+      "errors": 0
+    },
+    "historical_expected_failures_0106": {
+      "cases": 6,
+      "passed": 0,
+      "failed": 6,
+      "errors": 0,
+      "skipped": 0,
+      "skip_details": []
+    },
+    "author_junit_cases": 1899,
+    "author_junit_files": 25,
+    "author_junit_failures_errors_skips": 0,
+    "collect_cases": 1899,
+    "normalized_multiset_equal": true,
+    "notebook_paths_normalized": 4,
+    "all_1899_independently_executed": false,
+    "launcher_document_scenarios": 14,
+    "prior_plan_scenarios": 4,
+    "additional_archive_controls": 7,
+    "additional_plan_replacement_controls": 12,
+    "fresh_replay_scope": "quick replay only: independent six archive tests, 28 regressions, 14 document controls, four plan controls, six historical expected failures; full 74 selected submitted tests not repeated in fresh work"
+  },
+  "metadata": {
+    "inventory_sha256": "01f70420b40c556f119ae2c3c126c4ed51808bc5271429093d6cb15cc690b413",
+    "sha_entries": 2198,
+    "sha_errors": [],
+    "python_compiled": 213,
+    "new_notebook_cells_compiled": 8,
+    "old_registered_files": 1904,
+    "changed_registered_files": [],
+    "outer_report_matches_inner": true,
+    "key_files": {
+      "step1_engine/archive.py": "f3b6a0cd4d9beb68e398c50c17dbc7ff77873c7cf837b8aa16ccec3c1f0122ee",
+      "step1_engine/checkpoint.py": "f9e31bdffdfed2dc43d17a5de26b69b03c89899bbe65c117a3447452cbb74447",
+      "step1_engine/threshold_evaluator.py": "16161da00cdf9c1b988ec9ac44dc280e6d52f013c3965d6406d7abc46bea2313",
+      "step1_engine/d4c1_partial.py": "cf852aa355cd6ffb977872b8165ab1e2a82403dbda446243d8d0bdfcaa00d983",
+      "d/MirrorTopology_Step1_D4C1_partial_v0.1.ipynb": "94edf3686a32241fb6d377cb2c17086121c82a47ae80728df3c402030ded2e88",
+      "d/MirrorTopology_Step1_D4C1_combine_v0.1.ipynb": "4456b37cf184e986766fa4a2d206a4719a9137c6c27299b24f53218d03eca2e4",
+      "d/d4c1_calibration.py": "834ab646ae4617e6a87bfcbea8eb112a818254f92786d7da65c2ba93fabef1fa"
+    },
+    "prior_acceptance_exact": {
+      "D4C0_registration_0.105.0_audit_decision.json": {
+        "exists": true,
+        "matches": true
+      },
+      "ChatGPT_audit_D4C0_registration_0.105.0.md": {
+        "exists": true,
+        "matches": true
+      }
+    }
+  },
+  "preservation": {
+    "current_files": 2677,
+    "current_unchanged": true,
+    "previous_files": 2677,
+    "previous_unchanged": true,
+    "registered_assets_files": 1904,
+    "registered_assets_unchanged": true,
+    "current_zip_sha256": "5ce358e12b9d4f756e561912066d9c284792038bc57ed90c4b879410c3795775",
+    "previous_zip_sha256": "8009e1c881061ce94855532b455351478135f3d1655f97e97b50c022a19c0d97"
+  },
+  "nonblocking": [
+    {
+      "id": "N-D4C1V2-DOCUMENT-COUNTS",
+      "note": "The v2 table states 24 REQUIRED_PARTIAL gates, but retained body still says 23; retained 56-test and code line-count descriptions are stale (current new files collect 74). Clarify historical versus current text next update; no document-only resubmission required."
+    }
+  ],
+  "limitations": [
+    "No production bank intake or fingerprint recomputation in this audit",
+    "No Colab or registered production environment reproduction; no remote Git tree comparison",
+    "Four submitted script end-to-end tests skipped due to missing external assets",
+    "Notebook probes use TEST-ONLY child/Git fixtures; no production calibration child executed",
+    "Plan probes use actual synthetic FamilyInputs and smoke evaluator; no production 2000-pseudo computation",
+    "Object IDs are compared within a live process, not a cross-process identity proof; serialized summary is not a substitute for input hashes",
+    "Archive checks do not establish adversarial concurrent-write atomicity or locking",
+    "No all-family resource sufficiency, usable, actual target evaluation, PhaseE, noise or ENGINE_VALID approval"
+  ],
+  "artifacts": {
+    "report": "ChatGPT_audit_D4C1_v2_0.107.0.md",
+    "evidence": "D4C1_v2_0.107.0_audit_evidence.zip"
+  }
+}

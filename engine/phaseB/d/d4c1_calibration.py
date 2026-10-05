@@ -17,6 +17,22 @@ MODES
       formal record; probe=True; separate file names).
   --selftest-small   synthetic four-family banks (tests/fixture32; smoke gate; small n): four partials in separate archives -> merge -> combine -> single-process
       calibrate_sealed on the same inputs -> content equality (strip_provenance); refusals; never D4C1_PASS.
+D4C-2a (engine 0.108.0; audit D4C2-probe: design / implementation / small tests GO, Colab execution NOT granted by that decision):
+  --mode partial --row-range A:B   a SUB-partial: the same formal intake / plans / views / 12-position inputs / official gate, then step1_engine.d4c1_subpartial.calibrate_family_subpartial
+      on the GLOBAL rows [A, B) of the registered pseudo columns (schema family_subpartial_calibration_v1; archived per-row records carry the global pseudo_index); publication of
+      the sub-partial record + archive; verify_subpartial_record (run reader with the row offset); pseudo identity re-bound (global column SHAs == registered constants, slice SHAs
+      == the slice consumed). Flag D4C1_SUBPARTIAL_PASS (never D4C1_PARTIAL_PASS). Every sub-partial is a durable unit: a lost runtime loses at most the open range.
+  --mode combine-family --family F --subpartial DIR (xN)   byte-exact merge of the sub-partial archives; every published sub-partial record re-read from its archive and verified;
+      step1_engine.d4c1_subpartial.combine_family_subpartials (ranges tile [0, n) exactly once; common identity; content identical to the single-process family partial apart from
+      binding['subpartials']) -> the family partial record + archive published under the family-partial file names, so --mode combine consumes it unchanged. D4C1_PARTIAL_PASS
+      requires every sub-partial run to carry D4C1_SUBPARTIAL_PASS (formal).
+  --instrument (with --probe-n)   the probe partial runs under step1_engine.profiling.Profiler (timing wrappers + cProfile; the record is unchanged): d4c1_probe_<F>_profile.json.
+  --mode screen --family F [--row-range A:B]   formal first-wave intake / plans / views only (no 12-position inputs), registered W2 decisions -> step1_engine.infeasibility.
+      envelope_screen_family: the sufficient count-envelope screen (exact matched hit rates over the three positions x N0 / N4, max/min <= 2, positivity; W2 unknown in >= 1 size and no
+      W2 True) -> rows whose eligible truth cannot be False (blocking); published as d4c1_screen_<F>[_rA_B]_record.json. Not a calibration; no bootstrap / KDE; E1 refused.
+  --mode certificate --screen DIR (xN) [--evaluated DIR (xN)]   step1_engine.infeasibility.infeasibility_certificate over the verified screen records (+ evaluated per-pseudo statuses of
+      published partial / sub-partial records): proven blocking rows vs the first Wilson blocking count of the fixed n (2000: support 81 / strong 12) -> usable == True impossible
+      (algebraic; no c / u / rate; no statement on the unevaluated rows). Published as d4c1_certificate_record.json; never a PASS flag of a calibration.
 The target is never read here: --target-commitment is the 64-hex commitment (calibration_first.commit_target(t_target, nonce)); the nonce stays private. The partial must not
 be used as a sealed calibration (load_sealed_record rejects it). OUTPUT is a non-existent or EMPTY real directory disjoint from every input / source root (read-only inputs).
 D4C1_PARTIAL_PASS / D4C1_COMBINE_PASS require production_official, no self-test / probe flag, all REQUIRED gates True and rc 0; the scientific outcome is not a PASS condition."""
@@ -31,7 +47,16 @@ REQUIRED_PARTIAL = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_ph
                     "G_d3b_units_accepted", "G_inputs_resolved", "G_first_wave_supplies", "G_plans_fixed", "G_first_wave_views", "G_twelve_inputs", "G_twelve_gate", "G_partial_computed", "G_plan_objects_stable", "G_partial_published", "G_partial_verified", "G_pseudo_identity_bound", "G_record_saved")
 REQUIRED_COMBINE = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_phaseC_members", "G_env_lock", "G_external_loader_sha", "G_twelve_context", "G_w2_context_registered", "G_pseudo_registered", "G_twelve_asset_registered", "G_commitment_form",
                     "G_partials_loaded", "G_archives_merged", "G_partials_verified", "G_combined", "G_sealed_published", "G_sealed_loaded", "G_record_saved")
-assert REQUIRED_PARTIAL[:len(REQUIRED_COMMON)] == REQUIRED_COMMON == REQUIRED_COMBINE[:len(REQUIRED_COMMON)]
+REQUIRED_SUBPARTIAL = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_phaseC_members", "G_env_lock", "G_external_loader_sha", "G_twelve_context", "G_w2_context_registered", "G_pseudo_registered", "G_twelve_asset_registered", "G_commitment_form", "G_row_range",
+                       "G_d3b_units_accepted", "G_inputs_resolved", "G_first_wave_supplies", "G_plans_fixed", "G_first_wave_views", "G_twelve_inputs", "G_twelve_gate", "G_partial_computed", "G_plan_objects_stable", "G_partial_published", "G_partial_verified", "G_pseudo_identity_bound", "G_record_saved")
+REQUIRED_COMBINE_FAMILY = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_phaseC_members", "G_env_lock", "G_external_loader_sha", "G_twelve_context", "G_w2_context_registered", "G_pseudo_registered", "G_twelve_asset_registered", "G_commitment_form",
+                           "G_subpartials_loaded", "G_archives_merged", "G_subpartials_verified", "G_rows_tiled", "G_family_combined", "G_partial_published", "G_partial_verified", "G_pseudo_identity_bound", "G_record_saved")
+REQUIRED_SCREEN = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_phaseC_members", "G_env_lock", "G_external_loader_sha", "G_twelve_context", "G_w2_context_registered", "G_pseudo_registered", "G_twelve_asset_registered", "G_commitment_form",
+                   "G_inputs_resolved", "G_first_wave_supplies", "G_plans_fixed", "G_first_wave_views", "G_row_range", "G_screen_computed", "G_screen_published", "G_pseudo_identity_bound", "G_record_saved")
+REQUIRED_CERTIFICATE = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_phaseC_members", "G_external_loader_sha", "G_twelve_context", "G_w2_context_registered", "G_pseudo_registered", "G_twelve_asset_registered", "G_commitment_form",
+                        "G_sources_loaded", "G_certificate_computed", "G_certificate_published", "G_record_saved")
+assert REQUIRED_PARTIAL[:len(REQUIRED_COMMON)] == REQUIRED_COMMON == REQUIRED_COMBINE[:len(REQUIRED_COMMON)] == REQUIRED_SUBPARTIAL[:len(REQUIRED_COMMON)] == REQUIRED_COMBINE_FAMILY[:len(REQUIRED_COMMON)] == REQUIRED_SCREEN[:len(REQUIRED_COMMON)]
+assert REQUIRED_SUBPARTIAL == REQUIRED_COMMON + ("G_row_range",) + REQUIRED_PARTIAL[len(REQUIRED_COMMON):] and REQUIRED_CERTIFICATE[:10] == tuple(k for k in REQUIRED_COMMON if k != "G_env_lock")
 REQUIRED_SELFTEST = ("G_pins_loaded", "G_engine_inventory", "G_script_sha", "G_selftest_fixture", "G_selftest_partials", "G_selftest_merge", "G_selftest_combined", "G_selftest_single", "G_selftest_equivalence", "G_selftest_refusals", "G_record_saved")
 FAMILIES = ("E1", "E2", "E7", "E8"); TWELVE_FAMILIES = ("E2", "E7", "E8"); SIZES = ("L1.00", "L1.20", "L1.50"); TWELVE_RECEIPT = "B3_2A_7240c06f255c"
 
@@ -110,7 +135,11 @@ def resolve_d2_family_root(d2_root, fam, d2l):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--mt", required=True); ap.add_argument("--phaseb", required=True); ap.add_argument("--phasec", required=True); ap.add_argument("--out", required=True)
-    ap.add_argument("--mode", choices=("partial", "combine"), default="partial"); ap.add_argument("--family", default=None)
+    ap.add_argument("--mode", choices=("partial", "combine", "combine-family", "screen", "certificate"), default="partial"); ap.add_argument("--family", default=None)
+    ap.add_argument("--row-range", default=None, help="partial: A:B -> a SUB-partial over the global rows [A, B) of the registered pseudo columns (D4C-2a); screen: the rows to screen (default all)")
+    ap.add_argument("--subpartial", action="append", default=[], help="combine-family: the published output directory of one sub-partial run of this family (one entry per range)")
+    ap.add_argument("--screen", action="append", default=[], help="certificate: the published output directory of one screen run"); ap.add_argument("--evaluated", action="append", default=[], help="certificate: the published output directory of a partial / sub-partial run (evaluated per-pseudo statuses)")
+    ap.add_argument("--instrument", action="store_true", help="probe only: run the partial under step1_engine.profiling.Profiler (wrappers + cProfile) and publish the profile record")
     ap.add_argument("--d2-root", default=None, help="partial: the accepted D-2 run of this family (its out/d2 directory)"); ap.add_argument("--d3b-root", action="append", default=[], help="partial (non-E1): SIZE=PATH, the accepted D-3b partition run's out/d3b directory of that size (three entries)")
     ap.add_argument("--partial", action="append", default=[], help="combine: FAMILY=DIR, the published output directory of that family's partial run (four entries)")
     ap.add_argument("--target-commitment", default=None, help="64-hex commitment of the observed target (calibration_first.commit_target); the nonce is never given here"); ap.add_argument("--campaign-id", default=None, help="campaign identity shared by the four partials and the combination")
@@ -118,6 +147,15 @@ def main():
     ap.add_argument("--selftest-small", action="store_true", help="connection path on the generators' small synthetic banks (formal=False intakes; smoke gates; first --selftest-n registered pseudo rows); never PASS"); ap.add_argument("--selftest-fixture", action="store_true", help="in-process equivalence self-test on the synthetic four-family fixture (tests/fixture32); never PASS"); ap.add_argument("--selftest-skip-env-lock", action="store_true"); ap.add_argument("--selftest-n", type=int, default=3); ap.add_argument("--selftest-B", type=int, default=20); ap.add_argument("--selftest-B-KDE", type=int, default=25)
     ap.add_argument("--attempt-id", default=None); ap.add_argument("--launcher-lock-sha256", default=None)
     a = ap.parse_args(); t0 = time.time(); selftest = a.selftest_small or a.selftest_skip_env_lock or a.selftest_fixture; formal = not a.selftest_small; probe = a.probe_n is not None
+    rows = None
+    if a.row_range is not None:
+        try:
+            ra, rb = a.row_range.split(":"); rows = (int(ra), int(rb))
+            if not (0 <= rows[0] < rows[1]): raise ValueError
+        except ValueError: print("--row-range must be A:B with 0 <= A < B", file=sys.stderr); return 2
+    if a.instrument and not probe: print("--instrument requires --probe-n (measurement runs are never formal records)", file=sys.stderr); return 2
+    if rows is not None and probe: print("--row-range and --probe-n are exclusive", file=sys.stderr); return 2
+    subpartial = (a.mode == "partial" and rows is not None)
     if os.path.islink(a.out): print("OUT must not be a symbolic link", file=sys.stderr); return 2
     out = os.path.realpath(a.out); out_exists = os.path.lexists(out)
     if out_exists and (not os.path.isdir(out) or os.listdir(out)): print("OUT must be a fresh (non-existent or empty) real directory", file=sys.stderr); return 2
@@ -129,14 +167,17 @@ def main():
     for x in a.partial:
         if "=" not in x: print("--partial must be FAMILY=DIR", file=sys.stderr); return 2
         f, p = x.split("=", 1); partial_dirs[f] = p
-    protected = dict(mt=a.mt, phaseb=a.phaseb, phasec=a.phasec, **({"d2_root": a.d2_root} if a.d2_root else {}), **{f"d3b_root_{s}": p for s, p in d3b_roots.items()}, **{f"partial_{f}": p for f, p in partial_dirs.items()})
+    aux_dirs = {f"subpartial_{i}": p for i, p in enumerate(a.subpartial)}; aux_dirs.update({f"screen_{i}": p for i, p in enumerate(a.screen)}); aux_dirs.update({f"evaluated_{i}": p for i, p in enumerate(a.evaluated)})
+    protected = dict(mt=a.mt, phaseb=a.phaseb, phasec=a.phasec, **({"d2_root": a.d2_root} if a.d2_root else {}), **{f"d3b_root_{s}": p for s, p in d3b_roots.items()}, **{f"partial_{f}": p for f, p in partial_dirs.items()}, **aux_dirs)
     clash = [k for k, p in protected.items() if inside(out, p) or inside(p, out)]
     if clash: print("output must be disjoint from the inputs and the source roots (" + ", ".join(clash) + ")", file=sys.stderr); return 2
     if not out_exists: os.makedirs(out)
-    REQUIRED = REQUIRED_SELFTEST if a.selftest_fixture else (REQUIRED_COMBINE if a.mode == "combine" else REQUIRED_PARTIAL)
-    tag = "selftest" if a.selftest_fixture else (("probe_" if probe else "partial_") + str(a.family) if a.mode == "partial" else "combine")
+    REQUIRED = REQUIRED_SELFTEST if a.selftest_fixture else {"combine": REQUIRED_COMBINE, "combine-family": REQUIRED_COMBINE_FAMILY, "screen": REQUIRED_SCREEN, "certificate": REQUIRED_CERTIFICATE}.get(a.mode, REQUIRED_SUBPARTIAL if subpartial else REQUIRED_PARTIAL)
+    rtag = (f"_r{rows[0]:04d}_{rows[1]:04d}" if rows is not None else "")
+    tag = "selftest" if a.selftest_fixture else {"combine": "combine", "combine-family": f"partial_{a.family}", "screen": f"screen_{a.family}{rtag}", "certificate": "certificate"}.get(a.mode, (("probe_" if probe else ("subpartial_" if subpartial else "partial_")) + str(a.family) + (rtag if subpartial else "")))
     log = open(os.path.join(out, f"d4c1_{tag}_stdout.log"), "w"); G = {k: None for k in REQUIRED}
     R = dict(schema="d4c1_run_record_v1", mode=("selftest" if a.selftest_fixture else a.mode), family=a.family, stage="init", failures=[], notes=[], selftest=bool(selftest), formal=bool(formal), probe=bool(probe), probe_n=a.probe_n, profile=a.profile, out=out, out_preexisting_empty=bool(out_exists),
+             subpartial=bool(subpartial), row_range=(list(rows) if rows is not None else None), instrument=bool(a.instrument),
              protected_roots={k: os.path.realpath(p) for k, p in protected.items()}, attempt=dict(attempt_id=a.attempt_id, launcher_lock_sha256=a.launcher_lock_sha256), campaign_id=a.campaign_id, target_commitment=a.target_commitment, stages_rss_mb={}, stages_peak_rss_mb={}, timings={})
     def note(*s):
         m = " ".join(str(x) for x in s); print(m, flush=True)
@@ -145,11 +186,12 @@ def main():
     def mark(stage): R["stages_rss_mb"][stage] = round(_rss_mb(), 1); R["stages_peak_rss_mb"][stage] = round(_peak_rss_mb(), 1); R["timings"][stage] = round(time.time() - t0, 3)
     def finish(code, stage="final"):
         R["stage"] = stage; R["gates"] = G; R["required_inventory"] = list(REQUIRED); R["required_all_true"] = all(G.get(k) is True for k in REQUIRED); ok = bool(R["required_all_true"] and a.profile == "production_official" and not selftest and not probe and code == 0)
-        R["D4C1_PARTIAL_PASS"] = bool(ok and a.mode == "partial"); R["D4C1_COMBINE_PASS"] = bool(ok and a.mode == "combine"); R["seconds"] = time.time() - t0; mark("final")
+        R["D4C1_PARTIAL_PASS"] = bool(ok and ((a.mode == "partial" and not subpartial) or (a.mode == "combine-family" and R.get("subpartials_all_pass") is True))); R["D4C1_COMBINE_PASS"] = bool(ok and a.mode == "combine"); R["D4C1_SUBPARTIAL_PASS"] = bool(ok and subpartial)
+        R["D4C1_SCREEN_COMPLETE"] = bool(R["required_all_true"] and a.mode == "screen" and code == 0 and not selftest); R["D4C1_CERTIFICATE_COMPLETE"] = bool(R["required_all_true"] and a.mode == "certificate" and code == 0 and not selftest); R["seconds"] = time.time() - t0; mark("final")
         note("run finalization | stage:", stage, "| gates:", json.dumps(G)); log.close()
         try: _publish_json(os.path.join(out, f"d4c1_{tag}_run.json"), R)
         except Exception as write_error: print("run record could not be published/verified; no PASS: " + repr(write_error), file=sys.stderr); return 1
-        print("run record published and verified; D4C1_PARTIAL_PASS =", R["D4C1_PARTIAL_PASS"], "D4C1_COMBINE_PASS =", R["D4C1_COMBINE_PASS"]); return code
+        print("run record published and verified; D4C1_PARTIAL_PASS =", R["D4C1_PARTIAL_PASS"], "D4C1_COMBINE_PASS =", R["D4C1_COMBINE_PASS"], "D4C1_SUBPARTIAL_PASS =", R["D4C1_SUBPARTIAL_PASS"]); return code
     try:
         if a.profile != "production_official": R["failures"].append("profile"); return finish(1)
         sys.path.insert(0, a.phaseb)
@@ -162,6 +204,7 @@ def main():
         from step1_engine import serialization as ser
         from step1_engine.archive import Archive, ArchiveRef, merge_archives
         from step1_engine.d4c1_partial import calibrate_family_partial, combine_family_partials, verify_partial_record, load_partial_record, load_combined_sealed_record, strip_provenance, PARTIAL_KIND
+        from step1_engine.d4c1_subpartial import calibrate_family_subpartial, combine_family_subpartials, verify_subpartial_record, load_subpartial_record
         from step1_engine.calibration_first import calibrate_sealed, load_sealed_record, commit_target
         from step1_engine.errors import InputContractError
         if a.selftest_fixture: return _selftest(a, out, R, G, note, mark, finish, ser, Archive, merge_archives, calibrate_family_partial, combine_family_partials, verify_partial_record, load_sealed_record, calibrate_sealed, commit_target, strip_provenance, InputContractError)
@@ -212,6 +255,8 @@ def main():
         campaign = dict(id=a.campaign_id + ("" if formal else "__SELFTEST"), target_commitment=a.target_commitment, w2_context_sha256=w2ctx.context_sha256, pseudo_paired_sha256=idn["paired_sha256"], n_pseudo=cols["n"], formal=bool(formal), execution_policy="one family per partial run (Colab High-RAM); official gate live per run; combine in the same source binding")
         mark("preflight")
         if a.mode == "combine": return _combine(a, out, R, G, note, mark, finish, reg, man, registered, campaign, cols, formal, Archive, ArchiveRef, merge_archives, load_partial_record, verify_partial_record, combine_family_partials, load_combined_sealed_record, _publish_record, ser)
+        if a.mode == "combine-family": return _combine_family(a, out, R, G, note, mark, finish, reg, man, registered, campaign, cols, formal, Archive, ArchiveRef, merge_archives, load_subpartial_record, verify_subpartial_record, combine_family_subpartials, load_partial_record, verify_partial_record, _publish_record, ser)
+        if a.mode == "certificate": return _certificate(a, out, R, G, note, mark, finish, cols, formal, _publish_record, ser)
         # ================================================================================================================================================ partial
         fam = a.family
         if fam not in FAMILIES: R["failures"].append("family"); return finish(1, "scope")
@@ -239,8 +284,9 @@ def main():
             if ok_in: _, d2reg = _json_snapshot(os.path.join(d2info["root"], "d2_bank_registry.json")); ok_in = d2reg.get("family") == fam
             if not ok_in: reasons.append(f"{fam}: self-test D-2 root does not hold this family's registry")
         R["inputs"] = dict(d2=d2info, d3b={}, resolution_failures=reasons)
-        twelve_inputs_supplied = bool(d3b_roots) or formal
-        if twelve and not twelve_inputs_supplied: R["notes"].append("SELF-TEST without D-3b roots: no 12-position inputs (an expanded pseudo stays provisional / unknown); never allowed in a formal run")
+        twelve_inputs_supplied = (bool(d3b_roots) or formal) and a.mode != "screen"
+        if a.mode == "screen" and d3b_roots: reasons.append("the screen takes no D-3b roots (first-wave views only)"); ok_in = False
+        if twelve and not twelve_inputs_supplied and a.mode != "screen": R["notes"].append("SELF-TEST without D-3b roots: no 12-position inputs (an expanded pseudo stays provisional / unknown); never allowed in a formal run")
         if twelve and twelve_inputs_supplied:
             if set(d3b_roots) != set(SIZES): reasons.append("--d3b-root must give exactly the three sizes"); ok_in = False
             else:
@@ -302,6 +348,7 @@ def main():
         G["G_first_wave_views"] = bool(len(cases) == 3 and all(len(v[0].configs) == npos and len(v[1].configs) == npos and v[0].plans is plans and v[1].plans is plans and v[0].fit_plans is fplans and v[1].fit_plans is fplans for v in cases.values()))
         R["first_wave_fingerprints"] = {k: dict(matched=input_fingerprint(v[0]), native=input_fingerprint(v[1]), position_map=repr(sorted(v[2].items()))) for k, v in cases.items()}; mark("first_wave_views")
         if not G["G_first_wave_views"]: R["failures"].append("first-wave views"); return finish(1, "views")
+        if a.mode == "screen": return _screen(a, out, R, G, note, mark, finish, reg, man, fam, cases, w2ctx, cols, idn, rows, formal, _publish_record, ser)
         # ---- 12-position inputs of a twelve family: D-2 reuse supplies + D-3b added banks; size inputs; assembled family bound to the accepted D-3c fingerprints; live twelve gate
         twelve_inputs = None
         if twelve and twelve_inputs_supplied:
@@ -337,10 +384,24 @@ def main():
             if not (isinstance(a.probe_n, int) and 1 <= a.probe_n < cols["n"]): R["failures"].append("--probe-n must be in 1..n-1"); return finish(1, "probe")
             T1, T2 = T1[:a.probe_n].copy(), T2[:a.probe_n].copy(); campaign = dict(campaign, id=campaign["id"] + "__PROBE", probe=True, n_rows=a.probe_n)
         elif not formal: T1, T2 = T1[:max(1, a.selftest_n)].copy(), T2[:max(1, a.selftest_n)].copy(); campaign = dict(campaign, n_rows=len(T1))
-        archive = Archive(os.path.join(out, "archive"), deferred_index=True, flush_every=2000); tt = time.time()
-        rec = calibrate_family_partial(reg, man, fam, cases, w2ctx, w2ctx.context_sha256, T1, T2, archive, a.target_commitment, mode=mode, campaign=campaign, twelve_inputs=twelve_inputs, twelve_assets=tasset, expected_twelve_assets_sha256=tasset.sha256, twelve_assets_receipt=TWELVE_RECEIPT)
-        R["timings"]["partial_seconds"] = round(time.time() - tt, 1); R["timings"]["seconds_per_pseudo"] = round((time.time() - tt) / max(1, len(T1)), 3); mark("partial")
-        G["G_partial_computed"] = bool(rec.family == fam and rec.mode == mode and len(rec.per_pseudo_status) == len(T1) and rec.fingerprints["at_gate"] == rec.fingerprints["at_end"] and rec.gate.get("passed") is True)
+        archive = Archive(os.path.join(out, "archive"), deferred_index=True, flush_every=2000); tt = time.time(); n_rows = len(T1)
+        if subpartial:
+            if not formal: R["notes"].append("SELF-TEST: the row range addresses the first --selftest-n registered rows (the self-test columns); formal sub-partials address the full registered columns")
+            G["G_row_range"] = bool(rows[1] <= len(T1) and (not formal or len(T1) == cols["n"] == RULES.n_pseudo))
+            if not G["G_row_range"]: R["failures"].append(f"--row-range {rows[0]}:{rows[1]} exceeds the columns ({len(T1)} rows)"); return finish(1, "rows")
+            n_rows = rows[1] - rows[0]                                                                                       # the campaign identity stays IDENTICAL across the sub-partials (the range lives in rows / subpartial_dependencies)
+            rec = calibrate_family_subpartial(reg, man, fam, cases, w2ctx, w2ctx.context_sha256, T1, T2, archive, a.target_commitment, row_range=rows, mode=mode, campaign=campaign, twelve_inputs=twelve_inputs, twelve_assets=tasset, expected_twelve_assets_sha256=tasset.sha256, twelve_assets_receipt=TWELVE_RECEIPT)
+        elif a.instrument:
+            from step1_engine.profiling import Profiler, summarize
+            with Profiler(cprofile=True) as prof:
+                rec = calibrate_family_partial(reg, man, fam, cases, w2ctx, w2ctx.context_sha256, T1, T2, archive, a.target_commitment, mode=mode, campaign=campaign, twelve_inputs=twelve_inputs, twelve_assets=tasset, expected_twelve_assets_sha256=tasset.sha256, twelve_assets_receipt=TWELVE_RECEIPT)
+            prof_rec = prof.report(note=f"probe {fam} n={len(T1)}; instrumented wall time is NOT the production speed")
+            for line in summarize(prof_rec): note("  profile:", line)
+            R["profile_record"] = _publish_json(os.path.join(out, f"d4c1_{tag}_profile.json"), prof_rec); R["profile_summary"] = dict(wall_seconds_total=prof_rec["wall_seconds_total"], segments=prof_rec["segments"]["count"], segment_wall_seconds=prof_rec["segments"]["wall_seconds"], outside_segments_wall_seconds=prof_rec["outside_segments_wall_seconds"], missing_targets=prof_rec["missing_targets"])
+        else:
+            rec = calibrate_family_partial(reg, man, fam, cases, w2ctx, w2ctx.context_sha256, T1, T2, archive, a.target_commitment, mode=mode, campaign=campaign, twelve_inputs=twelve_inputs, twelve_assets=tasset, expected_twelve_assets_sha256=tasset.sha256, twelve_assets_receipt=TWELVE_RECEIPT)
+        R["timings"]["partial_seconds"] = round(time.time() - tt, 1); R["timings"]["seconds_per_pseudo"] = round((time.time() - tt) / max(1, n_rows), 3); mark("partial")
+        G["G_partial_computed"] = bool(rec.family == fam and rec.mode == mode and len(rec.per_pseudo_status) == n_rows and rec.fingerprints["at_gate"] == rec.fingerprints["at_end"] and rec.gate.get("passed") is True and ((rec.rows == dict(start=rows[0], stop=rows[1], n_total=len(T1), n_rows=n_rows, global_sha256_T1=rec.rows["global_sha256_T1"], global_sha256_T2=rec.rows["global_sha256_T2"], slice_sha256_T1=rec.rows["slice_sha256_T1"], slice_sha256_T2=rec.rows["slice_sha256_T2"])) if subpartial else (rec.rows is None)))
         # R-D4C1-C: the live plan OBJECTS are the fixed dictionaries after the calibration as well (first-wave views, both systems; 12-position views, both systems) — the engine records the
         # same-object check before the gate / after the last pseudo (rec.plan_objects); the script re-checks against ITS fixed plan objects at the publication boundary
         same_after = all(v[0].plans is plans and v[1].plans is plans and v[0].fit_plans is fplans and v[1].fit_plans is fplans for v in cases.values()) and (twelve_inputs is None or all(p_.plans is plans and p_.fit_plans is fplans for pair in twelve_inputs["size_inputs"].values() for p_ in pair))
@@ -350,13 +411,16 @@ def main():
                             eligibility_counts={lvl: {str(v): sum(1 for s in rec.per_pseudo_status if str(s["eligible_truths"][lvl]) == str(v)) for v in ("True", "False", "unknown", "technical_fail")} for lvl in ("support", "strong")}, expanded=sum(1 for s in rec.per_pseudo_status if s["expand_family"]), twelve_evaluated=sum(1 for s in rec.per_pseudo_status if s["twelve"] is not None))
         note("  partial:", json.dumps(R["partial"]["eligibility_counts"]), "expanded", R["partial"]["expanded"], "twelve evaluated", R["partial"]["twelve_evaluated"])
         pub = _publish_record(os.path.join(out, f"d4c1_{tag}_record.json"), rec.as_dict()); R["published_evidence"] = {f"d4c1_{tag}_record.json": pub}
-        back = ser.loads(open(os.path.join(out, f"d4c1_{tag}_record.json"), encoding="utf-8").read()); arch_rec = load_partial_record(Archive(os.path.join(out, "archive")), rec.binding["partial_ref"])
+        back = ser.loads(open(os.path.join(out, f"d4c1_{tag}_record.json"), encoding="utf-8").read()); _load = load_subpartial_record if subpartial else load_partial_record; arch_rec = _load(Archive(os.path.join(out, "archive")), rec.binding["partial_ref"])
         G["G_partial_published"] = bool(_strip_self(back, ("partial_file_sha256", "partial_ref")) == _strip_self(arch_rec, ("partial_file_sha256", "partial_ref")) and back["binding"]["partial_sha256"] == rec.binding["partial_sha256"] == arch_rec["binding"]["partial_sha256"])
-        v = verify_partial_record(back, Archive(os.path.join(out, "archive")), registered=registered, current_source_binding=True); G["G_partial_verified"] = bool(v["ok"] and v["registered_context_ok"] and v["family"] == fam); R["partial"]["verification"] = v; mark("verify")
+        v = (verify_subpartial_record if subpartial else verify_partial_record)(back, Archive(os.path.join(out, "archive")), registered=registered, current_source_binding=True); G["G_partial_verified"] = bool(v["ok"] and v["registered_context_ok"] and v["family"] == fam and ((v.get("rows") == list(rows)) if subpartial else True)); R["partial"]["verification"] = v; mark("verify")
         tp = back["thresholds"]["pseudo"]; consumed = dict(sha256_T1=hashlib.sha256(np.ascontiguousarray(T1).tobytes()).hexdigest(), sha256_T2=hashlib.sha256(np.ascontiguousarray(T2).tobytes()).hexdigest())
         bound_consumed = tp["sha256_T1"] == consumed["sha256_T1"] and tp["sha256_T2"] == consumed["sha256_T2"]; bound_registered = tp["sha256_T1"] == idn["T1_sha256"] and tp["sha256_T2"] == idn["T2_sha256"] and tp["n"] == cols["n"]
+        if subpartial:
+            sl = dict(sha256_T1=hashlib.sha256(np.ascontiguousarray(T1[rows[0]:rows[1]]).tobytes()).hexdigest(), sha256_T2=hashlib.sha256(np.ascontiguousarray(T2[rows[0]:rows[1]]).tobytes()).hexdigest())
+            bound_consumed = bound_consumed and tp["slice_sha256_T1"] == sl["sha256_T1"] and tp["slice_sha256_T2"] == sl["sha256_T2"] and tp["rows"] == list(rows) and tp["T1"] == [float(x) for x in T1[rows[0]:rows[1]]] and tp["T2"] == [float(x) for x in T2[rows[0]:rows[1]]]; consumed["slice"] = dict(sl, rows=list(rows))
         G["G_pseudo_identity_bound"] = bool(bound_consumed and (bound_registered or probe or not formal))
-        R["pseudo_identity_bound"] = dict(record=dict(n=tp["n"], sha256_T1=tp["sha256_T1"], sha256_T2=tp["sha256_T2"]), consumed_arrays=consumed, registered=dict(T1_sha256=idn["T1_sha256"], T2_sha256=idn["T2_sha256"], n=cols["n"]), note="the columns actually consumed are re-hashed after the run and bound to the registered constants (not only the loader's success)")
+        R["pseudo_identity_bound"] = dict(record=dict(n=tp["n"], sha256_T1=tp["sha256_T1"], sha256_T2=tp["sha256_T2"], **({"rows": tp["rows"], "slice_sha256_T1": tp["slice_sha256_T1"], "slice_sha256_T2": tp["slice_sha256_T2"]} if subpartial else {})), consumed_arrays=consumed, registered=dict(T1_sha256=idn["T1_sha256"], T2_sha256=idn["T2_sha256"], n=cols["n"]), note="the columns actually consumed are re-hashed after the run and bound to the registered constants (not only the loader's success)")
         G["G_record_saved"] = True
         return finish(0 if all(G[kk] is True for kk in REQUIRED) else 1, "complete")
     except Exception as ex:
@@ -405,6 +469,115 @@ def _combine(a, out, R, G, note, mark, finish, reg, man, registered, campaign, c
     except Exception as ex_: G["G_sealed_loaded"] = False; R["sealed_load_error"] = repr(ex_)
     mark("sealed_loaded"); G["G_record_saved"] = True
     return finish(0 if all(G[kk] is True for kk in (REQUIRED_COMBINE)) else 1, "complete")
+
+
+def _combine_family(a, out, R, G, note, mark, finish, reg, man, registered, campaign, cols, formal, Archive, ArchiveRef, merge_archives, load_subpartial_record, verify_subpartial_record, combine_family_subpartials, load_partial_record, verify_partial_record, publish_record, ser):
+    """D4C-2a: the sub-partial runs of ONE family -> merged archive -> every sub-partial re-read from its archive + verified -> combine_family_subpartials -> the family partial published
+    under the family-partial file names (consumed unchanged by --mode combine)."""
+    fam = a.family
+    if fam not in FAMILIES or not a.subpartial: G["G_subpartials_loaded"] = False; R["failures"].append("--family and at least one --subpartial required"); return finish(1, "inputs")
+    recs = []; runs = []; ok = True; all_pass = True
+    for d in [os.path.realpath(p) for p in a.subpartial]:
+        rp = [f for f in sorted(os.listdir(d)) if f.startswith(f"d4c1_subpartial_{fam}_r") and f.endswith("_record.json")] if os.path.isdir(d) else []
+        rr = [f for f in sorted(os.listdir(d)) if f.startswith(f"d4c1_subpartial_{fam}_r") and f.endswith("_run.json")] if os.path.isdir(d) else []
+        if len(rp) != 1 or len(rr) != 1 or not os.path.isdir(os.path.join(d, "archive")): R["failures"].append(f"{d}: exactly one sub-partial record / run record and an archive are required"); ok = False; continue
+        rec = ser.loads(open(os.path.join(d, rp[0]), encoding="utf-8").read()); run = json.load(open(os.path.join(d, rr[0])))
+        info = dict(dir=d, record=rp[0], record_sha256=sha(os.path.join(d, rp[0])), run_sha256=sha(os.path.join(d, rr[0])), attempt=run.get("attempt"), rows=run.get("row_range"), D4C1_SUBPARTIAL_PASS=run.get("D4C1_SUBPARTIAL_PASS"), probe=run.get("probe"), selftest=run.get("selftest"), source=run.get("source"), campaign_id=run.get("campaign_id"), target_commitment=run.get("target_commitment")); runs.append(info)
+        good = (run.get("D4C1_SUBPARTIAL_PASS") is True and not run.get("selftest")) if formal else (run.get("stage") == "complete" and run.get("failures") == [] and run.get("selftest") is True and run.get("formal") is False and run.get("subpartial") is True and all((run.get("gates") or {}).get(k) is True for k in (run.get("required_inventory") or []) if k != "G_env_lock"))
+        all_pass &= bool(run.get("D4C1_SUBPARTIAL_PASS") is True)
+        if not good or run.get("probe") or rec.get("family") != fam or run.get("family") != fam or rec.get("kind") != "family_subpartial_calibration" or (rec.get("rows") or {}).get("start") != (run.get("row_range") or [None])[0] or (rec.get("rows") or {}).get("stop") != (run.get("row_range") or [None, None])[1]: R["failures"].append(f"{d}: not a {'PASSed formal' if formal else 'complete self-test'} sub-partial run of {fam}"); ok = False
+        if run.get("campaign_id") != a.campaign_id or run.get("target_commitment") != a.target_commitment or rec["thresholds"]["target_commitment"] != a.target_commitment: R["failures"].append(f"{d}: campaign / commitment differ from this combination"); ok = False
+        if run.get("source") and R.get("source") and (run["source"].get("inventory_sha256") != R["source"]["inventory_sha256"] or run["source"].get("script_sha256") != R["source"]["script_sha256"]): R["failures"].append(f"{d}: sub-partial run bound to another source / script"); ok = False
+        recs.append(rec)
+    G["G_subpartials_loaded"] = bool(ok and recs); R["subpartials"] = runs; R["subpartials_all_pass"] = bool(all_pass and formal)
+    if not G["G_subpartials_loaded"]: return finish(1, "inputs")
+    archive = Archive(os.path.join(out, "archive"), deferred_index=True); merged = []
+    for info in runs: merged.append(dict(dir=info["dir"], **merge_archives(archive, Archive(os.path.join(info["dir"], "archive")))))
+    archive.flush(); R["merge"] = merged; G["G_archives_merged"] = bool(all(m["source_entries"] > 0 for m in merged) and archive.verify_all()["ok"]); mark("merge")
+    if not G["G_archives_merged"]: R["failures"].append("archive merge"); return finish(1, "merge")
+    ver = []; ok = True
+    for rec in recs:
+        try:
+            ar_rec = load_subpartial_record(archive, rec["binding"]["partial_ref"])
+            if _strip_self(ar_rec, ("partial_file_sha256", "partial_ref")) != _strip_self(rec, ("partial_file_sha256", "partial_ref")) or ar_rec["binding"]["partial_sha256"] != rec["binding"]["partial_sha256"]: raise RuntimeError("published sub-partial record differs from its archived copy")
+            v = verify_subpartial_record(rec, archive, registered=registered, current_source_binding=True); ver.append(v); ok &= bool(v["ok"] and v["registered_context_ok"] and v["family"] == fam)
+        except Exception as ex_: ver.append(dict(ok=False, rows=(rec.get("rows") or {}).get("start"), error=repr(ex_))); ok = False
+    G["G_subpartials_verified"] = bool(ok); R["subpartials_verification"] = ver; mark("verify_subpartials")
+    if not ok: R["failures"].append("sub-partial verification"); return finish(1, "verify_subpartials")
+    ranges = sorted((r["rows"]["start"], r["rows"]["stop"]) for r in recs); n = recs[0]["thresholds"]["pseudo"]["n"]; tiled = (ranges[0][0] == 0 and ranges[-1][1] == n and all(ranges[i][1] == ranges[i + 1][0] for i in range(len(ranges) - 1)) and len(set(ranges)) == len(ranges))
+    G["G_rows_tiled"] = bool(tiled and (n == cols["n"] if formal else True)); R["rows"] = dict(n=n, ranges=[list(r) for r in ranges])
+    if not G["G_rows_tiled"]: R["failures"].append(f"sub-partial ranges do not tile [0, {n}) exactly once: {ranges}"); return finish(1, "rows")
+    tt = time.time(); rec = combine_family_subpartials(reg, man, recs, archive, registered=registered, verify_references=True); R["timings"]["combine_family_seconds"] = round(time.time() - tt, 1); mark("combine_family")
+    prov = rec.binding["subpartials"]
+    G["G_family_combined"] = bool(rec.family == fam and rec.mode == ("official" if formal else "smoke") and prov["ranges"] == [list(r) for r in ranges] and len(rec.per_pseudo_status) == n and all(p["partial_sha256"] == r["binding"]["partial_sha256"] for p, r in zip(prov["subpartials"], sorted(recs, key=lambda r: r["rows"]["start"]))) and rec.campaign["id"] == campaign["id"] and rec.campaign["target_commitment"] == campaign["target_commitment"])
+    R["partial"] = dict(partial_sha256=rec.binding["partial_sha256"], partial_file_sha256=rec.binding["partial_file_sha256"], partial_ref=rec.binding["partial_ref"], gate_mode=rec.gate.get("mode"), n_pseudo=len(rec.per_pseudo_status), archive_entries=archive.verify_all()["entries"], subpartials=prov["ranges"],
+                        eligibility_counts={lvl: {str(v): sum(1 for s_ in rec.per_pseudo_status if str(s_["eligible_truths"][lvl]) == str(v)) for v in ("True", "False", "unknown", "technical_fail")} for lvl in ("support", "strong")}, expanded=sum(1 for s_ in rec.per_pseudo_status if s_["expand_family"]), twelve_evaluated=sum(1 for s_ in rec.per_pseudo_status if s_["twelve"] is not None))
+    note("  family partial from sub-partials:", json.dumps(R["partial"]["eligibility_counts"]), "expanded", R["partial"]["expanded"], "twelve evaluated", R["partial"]["twelve_evaluated"])
+    pub = publish_record(os.path.join(out, f"d4c1_partial_{fam}_record.json"), rec.as_dict()); R["published_evidence"] = {f"d4c1_partial_{fam}_record.json": pub}
+    back = ser.loads(open(os.path.join(out, f"d4c1_partial_{fam}_record.json"), encoding="utf-8").read()); arch_rec = load_partial_record(Archive(os.path.join(out, "archive")), rec.binding["partial_ref"])
+    G["G_partial_published"] = bool(_strip_self(back, ("partial_file_sha256", "partial_ref")) == _strip_self(arch_rec, ("partial_file_sha256", "partial_ref")) and back["binding"]["partial_sha256"] == rec.binding["partial_sha256"] == arch_rec["binding"]["partial_sha256"])
+    v = verify_partial_record(back, Archive(os.path.join(out, "archive")), registered=registered, current_source_binding=True); G["G_partial_verified"] = bool(v["ok"] and v["registered_context_ok"] and v["family"] == fam and v["n_pseudo"] == n); R["partial"]["verification"] = v; mark("verify")
+    tp = back["thresholds"]["pseudo"]; idn = cols["identity"]
+    G["G_pseudo_identity_bound"] = bool((tp["n"] == cols["n"] and tp["sha256_T1"] == idn["T1_sha256"] and tp["sha256_T2"] == idn["T2_sha256"]) if formal else (tp["T1"] == [float(x) for x in cols["T1"][:tp["n"]]] and tp["T2"] == [float(x) for x in cols["T2"][:tp["n"]]]))
+    R["pseudo_identity_bound"] = dict(record=dict(n=tp["n"], sha256_T1=tp["sha256_T1"], sha256_T2=tp["sha256_T2"]), registered=dict(T1_sha256=idn["T1_sha256"], T2_sha256=idn["T2_sha256"], n=cols["n"]))
+    G["G_record_saved"] = True
+    return finish(0 if all(G[kk] is True for kk in REQUIRED_COMBINE_FAMILY) else 1, "complete")
+
+
+def _screen(a, out, R, G, note, mark, finish, reg, man, fam, cases, w2ctx, cols, idn, rows, formal, publish_record, ser):
+    """D4C-2a: the sufficient count-envelope screen of ONE non-E1 family over the registered pseudo rows (first-wave views only; registered W2 decisions)."""
+    from step1_engine.infeasibility import envelope_screen_family, check_screen_record, blocking_rows_from_screen
+    if fam == "E1": R["failures"].append("E1 is position-branch exempt: no screen"); G["G_row_range"] = False; return finish(1, "scope")
+    T1, T2 = np.asarray(cols["T1"], np.float64), np.asarray(cols["T2"], np.float64); n = len(T1)
+    if rows is not None and rows[1] > n: R["failures"].append("--row-range exceeds the registered columns"); G["G_row_range"] = False; return finish(1, "rows")
+    sel = list(range(*rows)) if rows is not None else (list(range(n)) if formal else list(range(min(n, max(1, a.selftest_n))))); G["G_row_range"] = bool(sel and sel[-1] < n)
+    dec = {k: w2ctx.decision_for(k, w2ctx.context_sha256) for k in cases}; campaign = dict(id=a.campaign_id + ("" if formal else "__SELFTEST"), screen=True, rows=[sel[0], sel[-1] + 1], formal=bool(formal))
+    tt = time.time(); scr = envelope_screen_family(reg, man, fam, cases, dec, w2ctx.context_sha256, T1, T2, rows=sel, campaign=campaign, target_commitment=a.target_commitment); R["timings"]["screen_seconds"] = round(time.time() - tt, 1); R["timings"]["seconds_per_row"] = round((time.time() - tt) / max(1, len(sel)), 4); mark("screen")
+    chk = check_screen_record(scr); G["G_screen_computed"] = bool(chk["ok"] and scr["family"] == fam and scr["rows"] == sel and scr["w2_context_sha256"] == w2ctx.context_sha256)
+    R["screen"] = dict(n_rows=scr["n_rows"], n_blocking=scr["n_blocking"], w2_applicable=scr["w2_applicable"], w2={s_: dict(trigger=v["trigger"], validation_state=v["validation_state"]) for s_, v in scr["w2"].items()}, screen_sha256=scr["binding"]["screen_sha256"], rows=[sel[0], sel[-1] + 1],
+                       ratio_bound_max={s_: max(x["sizes"][s_]["ratio_bound"] or float("inf") for x in scr["results"]) for s_ in scr["sizes"]}, stages_covered=sorted({st for x in scr["results"] for v in x["sizes"].values() for st in v["stages_covered"]}))
+    note("  screen:", json.dumps(dict(n_rows=scr["n_rows"], n_blocking=scr["n_blocking"], w2_applicable=scr["w2_applicable"])))
+    tag = f"screen_{fam}" + (f"_r{rows[0]:04d}_{rows[1]:04d}" if rows is not None else "")
+    pub = publish_record(os.path.join(out, f"d4c1_{tag}_record.json"), scr); R["published_evidence"] = {f"d4c1_{tag}_record.json": pub}
+    back = ser.loads(open(os.path.join(out, f"d4c1_{tag}_record.json"), encoding="utf-8").read()); G["G_screen_published"] = bool(check_screen_record(back)["ok"] and back["binding"]["screen_sha256"] == scr["binding"]["screen_sha256"] and len(blocking_rows_from_screen(back)) == scr["n_blocking"])
+    G["G_pseudo_identity_bound"] = bool(back["pseudo"]["n"] == cols["n"] and back["pseudo"]["sha256_T1"] == idn["T1_sha256"] and back["pseudo"]["sha256_T2"] == idn["T2_sha256"]); R["pseudo_identity_bound"] = dict(record=back["pseudo"], registered=dict(T1_sha256=idn["T1_sha256"], T2_sha256=idn["T2_sha256"], n=cols["n"]))
+    G["G_record_saved"] = True
+    return finish(0 if all(G[kk] is True for kk in REQUIRED_SCREEN) else 1, "complete")
+
+
+def _certificate(a, out, R, G, note, mark, finish, cols, formal, publish_record, ser):
+    """D4C-2a: the fixed-denominator infeasibility certificate over verified screen records (+ evaluated statuses of published partial / sub-partial records)."""
+    from step1_engine.infeasibility import check_screen_record, blocking_rows_from_screen, blocking_rows_from_statuses, infeasibility_certificate, check_certificate, registered_blocking_counts
+    from step1_engine.rules_config import RULES
+    idn = cols["identity"]; n = cols["n"]; maps = []; sources = []; ok = bool(a.screen or a.evaluated)
+    for d in [os.path.realpath(p) for p in a.screen]:
+        fs = [f for f in sorted(os.listdir(d)) if f.startswith("d4c1_screen_") and f.endswith("_record.json")] if os.path.isdir(d) else []; rr = [f for f in sorted(os.listdir(d)) if f.startswith("d4c1_screen_") and f.endswith("_run.json")] if os.path.isdir(d) else []
+        if len(fs) != 1 or len(rr) != 1: R["failures"].append(f"{d}: exactly one screen record / run record required"); ok = False; continue
+        scr = ser.loads(open(os.path.join(d, fs[0]), encoding="utf-8").read()); run = json.load(open(os.path.join(d, rr[0])))
+        try: chk = check_screen_record(scr)
+        except Exception as ex_: R["failures"].append(f"{d}: screen record not verified: {ex_!r}"); ok = False; continue
+        good = (run.get("D4C1_SCREEN_COMPLETE") is True) if formal else (run.get("stage") == "complete" and run.get("failures") == [] and run.get("mode") == "screen")
+        if not good or scr["pseudo"]["n"] != n or (formal and (scr["pseudo"]["sha256_T1"] != idn["T1_sha256"] or scr["pseudo"]["sha256_T2"] != idn["T2_sha256"])) or scr.get("target_commitment") != a.target_commitment or run.get("campaign_id") != a.campaign_id: R["failures"].append(f"{d}: screen run / columns / commitment / campaign do not match"); ok = False; continue
+        maps.append(blocking_rows_from_screen(scr)); sources.append(dict(kind="screen", dir=d, file=fs[0], sha256=sha(os.path.join(d, fs[0])), screen_sha256=scr["binding"]["screen_sha256"], family=scr["family"], rows=[scr["rows"][0], scr["rows"][-1] + 1] if scr["rows"] else None, n_blocking=chk["n_blocking"]))
+    for d in [os.path.realpath(p) for p in a.evaluated]:
+        fs = [f for f in sorted(os.listdir(d)) if (f.startswith("d4c1_partial_") or f.startswith("d4c1_subpartial_")) and f.endswith("_record.json")] if os.path.isdir(d) else []; rr = [f for f in sorted(os.listdir(d)) if (f.startswith("d4c1_partial_") or f.startswith("d4c1_subpartial_")) and f.endswith("_run.json")] if os.path.isdir(d) else []
+        if len(fs) != 1 or len(rr) != 1: R["failures"].append(f"{d}: exactly one partial / sub-partial record / run record required"); ok = False; continue
+        rec = ser.loads(open(os.path.join(d, fs[0]), encoding="utf-8").read()); run = json.load(open(os.path.join(d, rr[0]))); ps = rec.get("thresholds", {}).get("pseudo", {})
+        good = ((run.get("D4C1_PARTIAL_PASS") is True or run.get("D4C1_SUBPARTIAL_PASS") is True) and not run.get("selftest")) if formal else (run.get("stage") == "complete" and run.get("failures") == [])
+        if not good or run.get("probe") or ps.get("n") != n or (formal and (ps.get("sha256_T1") != idn["T1_sha256"] or ps.get("sha256_T2") != idn["T2_sha256"])) or rec["thresholds"].get("target_commitment") != a.target_commitment or run.get("campaign_id") != a.campaign_id: R["failures"].append(f"{d}: evaluated run / columns / commitment / campaign do not match"); ok = False; continue
+        start = (rec.get("rows") or {}).get("start", 0)
+        maps.append(blocking_rows_from_statuses(rec["family"], rec["per_pseudo_status"], int(start), rec["binding"]["partial_sha256"])); sources.append(dict(kind="evaluated", dir=d, file=fs[0], sha256=sha(os.path.join(d, fs[0])), partial_sha256=rec["binding"]["partial_sha256"], family=rec["family"], rows=[start, start + len(rec["per_pseudo_status"])]))
+    G["G_sources_loaded"] = bool(ok and maps); R["sources"] = sources
+    if not G["G_sources_loaded"]: R["failures"].append("no verified sources"); return finish(1, "inputs")
+    cert = infeasibility_certificate(n, maps, pseudo_identity=dict(n=n, sha256_T1=idn["T1_sha256"], sha256_T2=idn["T2_sha256"]), campaign=dict(id=a.campaign_id + ("" if formal else "__SELFTEST"), formal=bool(formal)), target_commitment=a.target_commitment, sources=sources); mark("certificate")
+    chk = check_certificate(cert); G["G_certificate_computed"] = bool(chk["ok"] and cert["n"] == n and (n == RULES.n_pseudo if formal else True))
+    R["certificate"] = dict(n=n, registered_blocking_counts=registered_blocking_counts(n), levels={lvl: {k: v for k, v in cert["levels"][lvl].items() if k != "statement"} for lvl in ("support", "strong")}, n_rows_proven=cert["n_rows_proven"], certificate_sha256=cert["binding"]["certificate_sha256"],
+                            scope="algebraic fixed-denominator statement over proven rows; NOT a calibration, NOT usable == False, no claim on unevaluated rows")
+    note("  certificate:", json.dumps({lvl: dict(proven=cert["levels"][lvl]["proven_blocking_rows"], first_blocking=cert["levels"][lvl]["first_blocking_count"], impossible=cert["levels"][lvl]["usable_true_impossible_by_wilson"]) for lvl in ("support", "strong")}))
+    pub = publish_record(os.path.join(out, "d4c1_certificate_record.json"), cert); R["published_evidence"] = {"d4c1_certificate_record.json": pub}
+    back = ser.loads(open(os.path.join(out, "d4c1_certificate_record.json"), encoding="utf-8").read()); G["G_certificate_published"] = bool(check_certificate(back)["ok"] and back["binding"]["certificate_sha256"] == cert["binding"]["certificate_sha256"])
+    G["G_record_saved"] = True
+    return finish(0 if all(G[kk] is True for kk in REQUIRED_CERTIFICATE) else 1, "complete")
 
 
 def _selftest(a, out, R, G, note, mark, finish, ser, Archive, merge_archives, calibrate_family_partial, combine_family_partials, verify_partial_record, load_sealed_record, calibrate_sealed, commit_target, strip_provenance, InputContractError):

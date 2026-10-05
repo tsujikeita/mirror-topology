@@ -45,6 +45,8 @@ from . import __version__
 
 PARTIAL_SCHEMA = "family_partial_calibration_v1"
 PARTIAL_KIND = "family_partial_calibration"
+SUBPARTIAL_SCHEMA = "family_subpartial_calibration_v1"      # D4C-2a: a pseudo-ROW-RANGE of one family (combined into a family partial by d4c1_subpartial.combine_family_subpartials)
+SUBPARTIAL_KIND = "family_subpartial_calibration"
 SEALED_KIND = "sealed_calibration"
 _COMMON_BINDING = ("engine_version", "rules_document_sha256", "tables_sha256", "modules", "registered_profile")
 
@@ -65,7 +67,11 @@ class FamilyPartialRecord:
     per_pseudo_manifest_keys: list = field(default_factory=list); w2_context_ref: dict = field(default_factory=dict); campaign: Optional[dict] = None; plan_objects: dict = field(default_factory=dict); binding: dict = field(default_factory=dict)
     scope: str = ("family partial calibration: ONE family's per-pseudo eligible truths via the common threshold evaluator (parent required quantities -> position branch -> coordinator -> 12-position "
                   "stage when supplied); standalone case-core diagnostics kept apart; NO aggregation (no c/u/n, Wilson, usable or label) — a partial is not a sealed calibration")
-    def as_dict(self): return ser.to_jsonable(self.__dict__)
+    rows: Optional[dict] = None                                                                                      # sub-partial only (global row range of the registered pseudo columns); absent from a family partial
+    def as_dict(self):
+        d = dict(self.__dict__)
+        if d.get("rows") is None: d.pop("rows", None)
+        return ser.to_jsonable(d)
     def payload_sha(self) -> str: return _payload_sha(self.as_dict())
 
 
@@ -117,9 +123,13 @@ def plan_object_summary(objs: Dict[str, tuple]) -> dict:
 
 
 def calibrate_family_partial(reg: GridRegistry, man: ConfigurationManifest, family: str, cases: Dict[str, tuple], w2_context: W2Context, expected_context_sha256: str, pseudo_T1, pseudo_T2, archive: Archive, target_commitment: str, *,
-                             mode: str = "smoke", campaign: Optional[dict] = None, twelve_inputs: Optional[dict] = None, twelve_assets=None, expected_twelve_assets_sha256: Optional[str] = None, twelve_assets_receipt: Optional[str] = None) -> FamilyPartialRecord:
+                             mode: str = "smoke", campaign: Optional[dict] = None, twelve_inputs: Optional[dict] = None, twelve_assets=None, expected_twelve_assets_sha256: Optional[str] = None, twelve_assets_receipt: Optional[str] = None,
+                             _rows: Optional[Tuple[int, int]] = None) -> FamilyPartialRecord:
     """ONE family's partial calibration (keyword-only options). cases: {f'{family}/{size}': (fm, fn, pmap)} for EXACTLY the surviving sizes of this family. twelve_inputs: the
-    12-position inputs of this family (required in official mode for a non-E1 family; rejected for E1 in every mode). No observed target is accepted."""
+    12-position inputs of this family (required in official mode for a non-E1 family; rejected for E1 in every mode). No observed target is accepted.
+    _rows (D4C-2a; use d4c1_subpartial.calibrate_family_subpartial): evaluate ONLY the global rows [start, stop) of the FULL registered pseudo columns and issue a SUB-partial
+    record (schema family_subpartial_calibration_v1): the same per-row procedure and archived records (global pseudo_index) as the full partial, the global column identity
+    (n / SHA of the whole columns) plus the slice identity; it is not a family partial (no partial_dependencies) and is only consumable by the sub-partial combiner."""
     if not (isinstance(target_commitment, str) and _is_sha(target_commitment)): raise InputContractError("target commitment must be a sha256 hex string")
     if mode not in ("official", "smoke"): raise InputContractError("mode must be 'official' or 'smoke'")
     reg.validate(); man.validate()
@@ -140,14 +150,26 @@ def calibrate_family_partial(reg: GridRegistry, man: ConfigurationManifest, fami
         if family != "E1" and (twelve_assets is None or twelve_assets_receipt is None): raise InputContractError(f"official partial of {family} requires the registered twelve-position asset (receipt-bound intake)")
     if twelve_inputs is not None:
         if not isinstance(twelve_inputs, dict) or set(twelve_inputs.get("size_inputs") or {}) != set(sizes) or set(twelve_inputs.get("position_ids") or {}) != set(sizes): raise InputContractError(f"family {family}: twelve_inputs must cover exactly the surviving sizes {sizes} (size_inputs and position_ids)")
-    ps = _pseudo_snapshot(pseudo_T1, pseudo_T2)
+    ps = _pseudo_snapshot(pseudo_T1, pseudo_T2); rows = None
+    if _rows is not None:
+        if not (isinstance(_rows, (tuple, list)) and len(_rows) == 2 and all(isinstance(v, int) and not isinstance(v, bool) for v in _rows)): raise InputContractError("row range must be (start, stop) ints")
+        a_, b_ = int(_rows[0]), int(_rows[1])
+        if not (0 <= a_ < b_ <= ps["n"]): raise InputContractError(f"row range [{a_}, {b_}) must satisfy 0 <= start < stop <= n ({ps['n']})")
+        sl = _pseudo_snapshot(ps["T1"][a_:b_], ps["T2"][a_:b_])
+        rows = dict(start=a_, stop=b_, n_total=ps["n"], n_rows=b_ - a_, global_sha256_T1=ps["sha256_T1"], global_sha256_T2=ps["sha256_T2"], slice_sha256_T1=sl["sha256_T1"], slice_sha256_T2=sl["sha256_T2"])
+    else: a_, sl = 0, ps
     snap = w2_context.snapshot(); snap.validate(expected_context_sha256)
     twelve_assets, pinned_twelve_sha, twelve_intake_mode = _intake_twelve(reg, twelve_assets, expected_twelve_assets_sha256, twelve_assets_receipt)
     views = {canonical_case_key(k, {})[1]: v for k, v in cases.items()}
     pm_, pn_ = assemble_parent(reg, man, family, {s: (v[0], v[1]) for s, v in views.items()})
-    rec = FamilyPartialRecord(PARTIAL_SCHEMA, PARTIAL_KIND, __version__, mode, family, reg.registry_sha256, man.manifest_sha256, expected_context_sha256, snap.asset_sha256, sizes=list(sizes),
+    rec = FamilyPartialRecord(PARTIAL_SCHEMA if rows is None else SUBPARTIAL_SCHEMA, PARTIAL_KIND if rows is None else SUBPARTIAL_KIND, __version__, mode, family, reg.registry_sha256, man.manifest_sha256, expected_context_sha256, snap.asset_sha256, sizes=list(sizes),
                               binding=dict(binding_manifest(), twelve_assets_sha256=pinned_twelve_sha, twelve_assets_intake=twelve_intake_mode))
-    rec.thresholds = dict(target=None, target_commitment=target_commitment, pseudo=dict(n=ps["n"], shape=ps["shape"], sha256_T1=ps["sha256_T1"], sha256_T2=ps["sha256_T2"], T1=ps["T1"].tolist(), T2=ps["T2"].tolist(), dtype="float64", note="full-precision pseudo threshold columns (float64 -> JSON repr round-trips exactly)"))
+    if rows is None: rec.thresholds = dict(target=None, target_commitment=target_commitment, pseudo=dict(n=ps["n"], shape=ps["shape"], sha256_T1=ps["sha256_T1"], sha256_T2=ps["sha256_T2"], T1=ps["T1"].tolist(), T2=ps["T2"].tolist(), dtype="float64", note="full-precision pseudo threshold columns (float64 -> JSON repr round-trips exactly)"))
+    else:
+        rec.rows = rows; rec.scope = ("family SUB-partial calibration (D4C-2a): the rows [start, stop) of the registered pseudo columns of ONE family, the same per-row procedure and archived records (global pseudo_index) as the family partial; "
+                                      "combined into the family partial by the sub-partial combiner; never aggregated, never a family partial or a sealed calibration")
+        rec.thresholds = dict(target=None, target_commitment=target_commitment, pseudo=dict(n=ps["n"], shape=ps["shape"], sha256_T1=ps["sha256_T1"], sha256_T2=ps["sha256_T2"], rows=[a_, rows["stop"]], n_rows=rows["n_rows"], slice_sha256_T1=sl["sha256_T1"], slice_sha256_T2=sl["sha256_T2"],
+                                                                                           T1=sl["T1"].tolist(), T2=sl["T2"].tolist(), dtype="float64", note="n / sha256_T1 / sha256_T2 identify the FULL registered columns; T1 / T2 are the evaluated slice [rows[0], rows[1]) (float64 -> JSON repr round-trips exactly)"))
     rec.campaign = campaign
     def fps_all():
         d = {}
@@ -168,11 +190,13 @@ def calibrate_family_partial(reg: GridRegistry, man: ConfigurationManifest, fami
     if not g.passed: raise InputContractError(f"family {family}: gate failed: " + "; ".join(g.required_failures[:3]))
     if mode == "official" and g.diagnostics.get("environment_source") != "live_collected": raise InputContractError("official gate must use the live collected environment")
     rec.gate = g.as_dict()
-    rec.binding["partial_dependencies"] = dict(mode=mode, engine_version=__version__, registry_sha256=reg.registry_sha256, manifest_sha256=man.manifest_sha256, w2_context_sha256=expected_context_sha256, w2_asset_sha256=snap.asset_sha256, twelve_assets_sha256=pinned_twelve_sha, twelve_assets_intake=twelve_intake_mode,
-                                               families=[family], sizes={family: sorted(sizes)}, require_all_families=False, pseudo=dict(n=ps["n"], sha256_T1=ps["sha256_T1"], sha256_T2=ps["sha256_T2"]), source_binding=binding_manifest(), fingerprints_at_gate=fp0, family=family, target_commitment=target_commitment, campaign=campaign)
+    deps = dict(mode=mode, engine_version=__version__, registry_sha256=reg.registry_sha256, manifest_sha256=man.manifest_sha256, w2_context_sha256=expected_context_sha256, w2_asset_sha256=snap.asset_sha256, twelve_assets_sha256=pinned_twelve_sha, twelve_assets_intake=twelve_intake_mode,
+                families=[family], sizes={family: sorted(sizes)}, require_all_families=False, pseudo=dict(n=ps["n"], sha256_T1=ps["sha256_T1"], sha256_T2=ps["sha256_T2"]), source_binding=binding_manifest(), fingerprints_at_gate=fp0, family=family, target_commitment=target_commitment, campaign=campaign)
+    if rows is None: rec.binding["partial_dependencies"] = deps
+    else: rec.binding["subpartial_dependencies"] = dict(deps, rows=[a_, rows["stop"]], slice_sha256_T1=sl["sha256_T1"], slice_sha256_T2=sl["sha256_T2"])
     rec.w2_context_ref = dict(asset_sha256=snap.asset_sha256, context_sha256=expected_context_sha256, scope=snap.scope, cases=(sorted(cases) if family != "E1" else []))
     w2 = snap if family != "E1" else None
-    for i, (x, y) in enumerate(zip(ps["T1"], ps["T2"])):
+    for i, (x, y) in enumerate(zip(sl["T1"], sl["T2"]), start=a_):                                                 # i = GLOBAL pseudo row (a sub-partial starts at its range start)
         f = evaluate_family_full(reg, man, family, (pm_, pn_), views, w2, expected_context_sha256, float(x), float(y), twelve_inputs, with_diagnostics=True, twelve_assets=twelve_assets)
         sm = f.summary()
         pd = ser.from_jsonable(ser.to_jsonable(f.parent.as_dict())); pd["family"] = family; pd["evidence"]["threshold"] = [float(x), float(y)]; pd["evidence"]["pseudo_index"] = i; pd["evidence"]["scope"] = "family-mixture core over all surviving sizes (3-position stage; pseudo)"
@@ -201,6 +225,7 @@ def calibrate_family_partial(reg: GridRegistry, man: ConfigurationManifest, fami
         rec.per_pseudo_manifest_keys.append(added)
     if fps_all() != fp0: raise InputContractError("inputs changed during the pseudo calibration")
     if ps["sha256_T1"] != hashlib.sha256(np.ascontiguousarray(ps["T1"]).tobytes()).hexdigest() or ps["sha256_T2"] != hashlib.sha256(np.ascontiguousarray(ps["T2"]).tobytes()).hexdigest(): raise InputContractError("pseudo thresholds changed during the calibration")
+    if rows is not None and (sl["sha256_T1"] != hashlib.sha256(np.ascontiguousarray(sl["T1"]).tobytes()).hexdigest() or sl["sha256_T2"] != hashlib.sha256(np.ascontiguousarray(sl["T2"]).tobytes()).hexdigest()): raise InputContractError("pseudo threshold slice changed during the calibration")
     objs1 = plan_object_inventory(views, (pm_, pn_), twelve_inputs)
     if objs1 != objs0: raise InputContractError(f"family {family}: plan objects were replaced during the calibration (content-identical copies are not the registered plan objects): {sorted(k for k in objs0 if objs1.get(k) != objs0[k])}")
     if plan_object_summary(objs1) != po: raise InputContractError(f"family {family}: plan object sharing changed during the calibration")
@@ -208,7 +233,8 @@ def calibrate_family_partial(reg: GridRegistry, man: ConfigurationManifest, fami
     rec.fingerprints["at_end"] = fps_all()
     rec.archive_refs["registry"] = archive.put("registry", reg.as_dict(), dict(registry_sha256=reg.registry_sha256)).as_dict()
     rec.binding["partial_sha256"] = rec.payload_sha()
-    ref = archive.put("transition", ser.from_jsonable(rec.as_dict()), dict(kind=PARTIAL_KIND, family=family, payload_sha256=rec.binding["partial_sha256"], target_commitment=target_commitment)); rec.binding["partial_file_sha256"] = ref.sha256; rec.binding["partial_ref"] = ref.as_dict()
+    ident = dict(kind=PARTIAL_KIND, family=family, payload_sha256=rec.binding["partial_sha256"], target_commitment=target_commitment) if rows is None else dict(kind=SUBPARTIAL_KIND, family=family, payload_sha256=rec.binding["partial_sha256"], target_commitment=target_commitment, rows=[a_, rows["stop"]])
+    ref = archive.put("transition", ser.from_jsonable(rec.as_dict()), ident); rec.binding["partial_file_sha256"] = ref.sha256; rec.binding["partial_ref"] = ref.as_dict()
     archive.flush()
     return rec
 
