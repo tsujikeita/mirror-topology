@@ -1,9 +1,9 @@
 {
  "schema": "b3_2_pins_v1",
- "engine_version": "0.109.0",
+ "engine_version": "0.110.0",
  "profile": "assets_official",
  "environment": {
-  "python": "3.13.15",
+  "python": "3.13.16",
   "numpy": "2.1.3",
   "scipy": "1.16.3",
   "healpy": "1.20.0",
@@ -12,6 +12,18 @@
   "numpy_openblas_threads": 2,
   "other_pools_max": 2
  },
+ "environment_history": [
+  {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "camb": "2.0.4",
+   "pot": "0.9.7.post1",
+   "registered_until": "2026-10-06 environment amendment v0.1 (Colab default runtime moved to Python 3.13.16)",
+   "amendment": "Step1_PhaseD_environment_amendment_v0.1.md"
+  }
+ ],
  "assets": {
   "a5_bstack": "results/step1_phaseA/A5_freeze/s1_Bstack_l2_4_N16_common_v1.npz",
   "a5_bstack_sha256": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",
@@ -30,7 +42,7 @@
  "target": {
   "T1_obs": 39.67178834527284,
   "T2_obs": 259.3375006282747,
-  "source": "rules draft4.1 \u00a72.1 / Step0 v0.7 unique row",
+  "source": "rules draft4.1 §2.1 / Step0 v0.7 unique row",
   "step0_csv": "results/step0_v0.7/step0_official_v0_7.csv",
   "step0_csv_sha256": "6ed885d10a6455995b342152e71cd14f79c87b84ff6fb9539b3ebd4f61e551cb"
  },
@@ -63,7 +75,7 @@
     "float64",
     "float32"
    ],
-   "role": "whitening (mu, W = L^-1 from the f64 calibration bank; rules \u00a710.1) and A10 official cross-check; NOT the null pool"
+   "role": "whitening (mu, W = L^-1 from the f64 calibration bank; rules §10.1) and A10 official cross-check; NOT the null pool"
   },
   "null_pool": {
    "N": 600000,
@@ -75,7 +87,7 @@
     "float64",
     "float32"
    ],
-   "role": "the registered isotropic null pool (3 x N_W2 rows, 6000 clusters; rules \u00a710.1); f64 primary and paired f32 for the selection bounds; whitened with the calibration mu/W"
+   "role": "the registered isotropic null pool (3 x N_W2 rows, 6000 clusters; rules §10.1); f64 primary and paired f32 for the selection bounds; whitened with the calibration mu/W"
   },
   "whitening": "mu, W = L^-1 from the f64 CALIBRATION bank applied to both null pool paths",
   "distance": "exact_pot_w2 (POT emd2, log=True, result_code==1)",

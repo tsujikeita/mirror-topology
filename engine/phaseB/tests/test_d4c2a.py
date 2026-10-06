@@ -36,7 +36,7 @@ XS, YS = [80., 200., 80., 150.], [400., 1000., 400., 700.]              # E7 rat
 
 def test_modules_registered_and_version():
     for m in ('d4c1_subpartial.py', 'infeasibility.py', 'profiling.py'): assert m in MODULES
-    assert __version__ == '0.109.0' and set(module_shas()) == set(MODULES)
+    assert __version__ == '0.110.0' and set(module_shas()) == set(MODULES)
     inv = json.load(open(os.path.join(P, 'B2_completion_inventory.json'))); assert inv['modules'] == module_shas() and inv['engine_version'] == __version__
 
 
@@ -367,3 +367,27 @@ def test_certificate_counting_conflicts_and_readers(tmp_path):
     from step1_engine.d4c1_partial import _check_partial_shape
     with pytest.raises(InputContractError): _check_partial_shape(ser.from_jsonable(ser.to_jsonable(c)))
     with pytest.raises(InputContractError): check_subpartial_shape(ser.from_jsonable(ser.to_jsonable(c)))
+
+
+# ------------------------------------------------------------------------------------------------------------------------------------------- environment amendment v0.1
+def test_registered_environment_history_and_live_gate():
+    """Step1_PhaseD_environment_amendment_v0.1.md: new executions are gated on EXPECTED_VERS (Python 3.13.16) only; REGISTERED runs recorded under the registered history (3.13.15) stay
+    accepted by the registered loaders; any other environment is rejected; the pins carry the same current environment and history as the engine."""
+    from step1_engine import official_gate as og
+    assert og.EXPECTED_VERS['python'] == '3.13.16' and og.EXPECTED_VERS_HISTORY[0]['python'] == '3.13.15' and all(og.EXPECTED_VERS_HISTORY[0][k] == og.EXPECTED_VERS[k] for k in og.VERSION_KEYS if k != 'python')
+    for f in ('d/d1_pins.json', 'd/d2_pins.json', 'd/d3_pins.json', 'b3/b3_0_pins.json', 'b3/b3_1_pins.json', 'b3/b3_2_pins.json'):
+        pins = json.load(open(os.path.join(P, f))); envs = og.registered_environments(pins)
+        assert pins['environment']['python'] == '3.13.16' and len(pins['environment_history']) == 1 and pins['environment_history'][0]['python'] == '3.13.15' and 'amendment' in pins['environment_history'][0]
+        assert envs == [{k: og.EXPECTED_VERS[k] for k in og.VERSION_KEYS}, {k: og.EXPECTED_VERS_HISTORY[0][k] for k in og.VERSION_KEYS}]
+        old = dict(envs[1]); assert og.recorded_environment_registered(old, pins) and og.recorded_environment_registered(envs[0], pins)
+        assert not og.recorded_environment_registered(dict(old, python='3.13.14'), pins) and not og.recorded_environment_registered(dict(old, numpy='2.1.4'), pins) and not og.recorded_environment_registered({}, pins)
+        bad = ser.from_jsonable(ser.to_jsonable(pins)); bad['environment']['python'] = '3.13.15'
+        with pytest.raises(InputContractError): og.registered_environments(bad)
+        bad = ser.from_jsonable(ser.to_jsonable(pins)); bad['environment_history'][0]['python'] = '3.13.14'
+        with pytest.raises(InputContractError): og.registered_environments(bad)
+    # the LIVE official gate (new executions) rejects the historical 3.13.15 and accepts only 3.13.16 (symbolic: an injected snapshot on the fixture pair is a pure gate test)
+    from test_b2_tranche21 import build_pair
+    reg, man, fm, fn, sm, plans, fplans = build_pair()
+    ok_env = dict(og.EXPECTED_VERS, blas_threads=[dict(api='blas', n=2)])
+    g_now = og.official_gate(fm, fn, 'official', env=ok_env); g_old = og.official_gate(fm, fn, 'official', env=dict(ok_env, python='3.13.15'))
+    assert not any('environment versions' in m for m in g_now.required_failures) and any('environment versions' in m for m in g_old.required_failures) and g_old.diagnostics['version_mismatch'] == {'python': ('3.13.15', '3.13.16')}

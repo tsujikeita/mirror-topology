@@ -22,6 +22,7 @@ import copy, hashlib, json, os, zipfile
 from typing import Dict, Optional, Tuple
 from .errors import InputContractError
 from .d3_profile import TwelveContext, _require_ctx
+from .official_gate import recorded_environment_registered
 
 LEDGER_SCHEMA = "d4c0_registration_ledger_v1"; RECEIPT_SCHEMA = "d4c0_outer_receipt_v1"
 CANON_CASES = tuple(f"{f}/{s}" for f in ("E2", "E7", "E8") for s in ("L1.00", "L1.20", "L1.50"))
@@ -130,8 +131,8 @@ def _check_pseudo(root: str, ctx: TwelveContext) -> dict:
     t = rec.get("pseudo_table") or {}; gen = rec.get("generation") or {}; cols = rec.get("columns") or {}
     if t.get("table_sha256") != L["table_sha256"] or t.get("n_pseudo") != 2000 or t.get("m") != 1 or t.get("group") != 5001 or t.get("purpose_id") != 400 or t.get("rng_keys") != PSEUDO["rng_keys"] or gen.get("n") != 2000 or gen.get("m") != 1 or gen.get("rng_keys") != PSEUDO["rng_keys"] or gen.get("root_sha256") != PSEUDO["root_sha256"]: _fail(K, "pseudo table / generation identity differs from the constants")
     if cols.get("identity") != PSEUDO["columns"] or cols.get("file") != PSEUDO["npz"]: _fail(K, "column / NPZ identity recorded in the script record differs from the constants")
-    env = rec.get("env") or {}; want = ctx._d["pins"]["environment"]
-    if any(env.get(k) != want[k] for k in ("python", "numpy", "scipy", "healpy", "camb", "pot")) or (rec.get("env_gate") or {}).get("versions_ok") is not True or rec["env_gate"].get("pools_ok") is not True: _fail(K, "recorded environment differs from the registered environment")
+    env = rec.get("env") or {}
+    if not recorded_environment_registered(env, ctx._d["pins"]) or (rec.get("env_gate") or {}).get("versions_ok") is not True or rec["env_gate"].get("pools_ok") is not True: _fail(K, "recorded environment differs from the registered environment (current or registered history)")
     # the ORIGINAL NPZ re-verified against the CONSTANT identity (not the editable record) with the registered pseudo table
     table, _ = load_pseudo_table(os.path.join(os.path.abspath(root), "d", "d4_pseudo_table.json"), L["table_sha256"])
     npz = os.path.join(base, f"run_{A}", PSEUDO["npz"]["file"]); c = verify_pseudo_columns(npz, PSEUDO["columns"], table, PSEUDO["npz"])
@@ -160,8 +161,8 @@ def _check_d2w(root: str, ctx: TwelveContext) -> dict:
     g = rec.get("gates") or {}
     if rec.get("schema") != "d2w_run_record_v1" or rec.get("stage") != "complete" or rec.get("failures") != [] or rec.get("selftest") is not False or rec.get("profile") != "production_official" or rec.get("D2W_PASS") is not True or rec.get("required_all_true") is not True or rec.get("required_inventory") != list(D2W_REQUIRED) or sorted(g) != sorted(D2W_REQUIRED) or not all(g.get(k) is True for k in D2W_REQUIRED): _fail(K, "script record is not the accepted success record (REQUIRED gates)")
     if (rec.get("attempt") or {}).get("attempt_id") != A or rec["attempt"].get("launcher_lock_sha256") != L["lock_file_sha256"] or (rec.get("source") or {}).get("script_sha256") != L["script_sha256"] or rec["source"].get("inventory_sha256") != L["inventory_sha256"] or rec["source"].get("pins_sha256") != L["pins_sha256"] or rec["source"].get("engine_version") != L["engine_version"]: _fail(K, "script record not bound to this attempt / lock / source")
-    env = rec.get("env") or {}; want = ctx._d["pins"]["environment"]
-    if any(env.get(k) != want[k] for k in ("python", "numpy", "scipy", "healpy", "camb", "pot")) or (rec.get("env_gate") or {}).get("versions_ok") is not True or rec["env_gate"].get("pools_ok") is not True: _fail(K, "recorded environment differs from the registered environment")
+    env = rec.get("env") or {}
+    if not recorded_environment_registered(env, ctx._d["pins"]) or (rec.get("env_gate") or {}).get("versions_ok") is not True or rec["env_gate"].get("pools_ok") is not True: _fail(K, "recorded environment differs from the registered environment (current or registered history)")
     inp = rec.get("inputs") or {}
     if inp.get("cases") != list(CANON_CASES) or inp.get("resolution_failures") != []: _fail(K, "run record case set / input resolution")
     for f in ("E2", "E7", "E8"):

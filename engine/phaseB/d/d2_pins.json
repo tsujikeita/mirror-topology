@@ -1,9 +1,9 @@
 {
  "schema": "d2_pins_v1",
- "engine_version": "0.109.0",
+ "engine_version": "0.110.0",
  "profile": "production_official",
  "environment": {
-  "python": "3.13.15",
+  "python": "3.13.16",
   "numpy": "2.1.3",
   "scipy": "1.16.3",
   "healpy": "1.20.0",
@@ -11,8 +11,20 @@
   "camb": "2.0.4",
   "numpy_openblas_threads": 2,
   "other_pools_max": 2,
-  "note": "rules \u00a712.1 hard gate (checked live in the generating process); A11-style fingerprint/lock diff recorded as metadata only"
+  "note": "rules §12.1 hard gate (checked live in the generating process); A11-style fingerprint/lock diff recorded as metadata only"
  },
+ "environment_history": [
+  {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "camb": "2.0.4",
+   "pot": "0.9.7.post1",
+   "registered_until": "2026-10-06 environment amendment v0.1 (Colab default runtime moved to Python 3.13.16)",
+   "amendment": "Step1_PhaseD_environment_amendment_v0.1.md"
+  }
+ ],
  "crn_table_sha256": "60d9941ad65e894ae6d0d30707f08a45ac0e0e22ecaf1e33498458d02091dc72",
  "bank_spec_sha256": "84695b9c253cce5a7f2827903e81b077c2233aecea29361c83dffdd98786547b",
  "registry_sha256": "ba48214585c50348a9f43ef82ba33c3b7fcb982ebc89d0ba38985969c48ec851",

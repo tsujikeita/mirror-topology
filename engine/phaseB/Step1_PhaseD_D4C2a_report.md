@@ -1,4 +1,7 @@
-# Step 1 Phase D4C-2a 報告：計測版・pseudo 範囲 sub-partial／再開・固定分母の成功不能証明（engine 0.109.0；v2）
+# Step 1 Phase D4C-2a 報告：計測版・pseudo 範囲 sub-partial／再開・固定分母の成功不能証明（engine 0.110.0；v3 = v2 ＋ 登録環境 amendment）
+
+## v3（2026-10-06）：登録環境 amendment（Python 3.13.15 → 3.13.16）
+計測付き probe の GO（commit `4668b2e5…`）を実行したところ Colab の既定 runtime が Python 3.13.16 に更新されており，launcher の環境 lock が設計どおり停止した（迂回なし）。3.13.15 は Colab で再現できない（代替 runtime は 3.12 系）ため，`Step1_PhaseD_environment_amendment_v0.1.md` のとおり `official_gate.EXPECTED_VERS.python` と pins 6 の `environment.python` だけを 3.13.16 に改訂した（規則・他の版・登録資産・履歴 record は不変；engine 0.110.0）。**受入れ条件の提案**：本 commit で計測付き probe（E2・N＝3）を実行し，partial record の payload SHA が登録 probe（`057ae753…`）と一致すること（不一致なら amendment 不成立として停止）。したがって v3 packet への依頼は，(i) D4C-2a v2 の実装受入れ（HOLD A〜D の解消），(ii) 環境 amendment の受入れ，(iii) 本 commit での計測付き probe の実行 GO（受入れ条件 (i) の byte 同一性検査を含む），(iv) screen → certificate の実行 GO，である。
 
 ## v2（2026-10-06）：監査 `D4C2a_0.108.0_audit_decision.json`（PARTIAL_ACCEPTANCE__INSTRUMENTED_E2_N3_PROBE_ONLY_GO__SCREEN_CERTIFICATE_HOLD）への対応
 | 指摘 | 対応（詳細は設計 v0.2 §G） | 試験 |
@@ -9,7 +12,7 @@
 | R-D4C2A-D family 集約と閾値 | (row, family, level) で整合 → row ごとに any-family 合成（blocking／technical／possibly_technical／aggregate）；閾値は登録 mapping と完全一致 | `test_certificate_counting_conflicts_and_readers`：E2 unknown＋E7 True，E2 True＋E7 TECH，3 family 混合，同 family 矛盾拒否，screen＋同 family evaluated の精緻化，閾値 swap／余剰／欠落／順序違い拒否，checker の再導出（levels・thresholds・technical 件数の改竄拒否） |
 | N-PROFILER-ACCOUNTING／ENTER-CLEANUP／ROW-TYPE／DOCUMENT-SCOPE | record に `accounting`／`outside_segments_note`；entry 失敗の rollback；rows の型検査；本報告の依頼文を訂正 | profiler test（alias 不一致 → 例外・wrapper 残存なし）；rows の bool／str／float／重複 拒否 |
 
-計測付き probe（E2・N＝3・commit `4668b2e5…`）は監査の GO どおり **0.108.0 の bytes で実行**する（本 v2 の commit は probe の GO を引き継がない）。本 packet は screen／certificate の HOLD 解消のための実装・試験であり，screen／certificate の実行 GO と sub-partial の正式実行 GO を改めて求める。
+計測付き probe の 0.108.0 GO は環境 lock（3.13.16）で実行不能になったため，v3 では本 commit での再 GO を求める（上記 v3 節）。本 packet は screen／certificate の HOLD 解消のための実装・試験であり，screen／certificate の実行 GO と sub-partial の正式実行 GO を改めて求める。
 
 
 2026-10-05（Claude）。前提：監査 `D4C2_probe_231d37b8_audit_decision.json`（probe 証拠受入れ；正式 4 family partial／combiner／較正受入れ／W₂ 再生成／E1 単独／Phase E はすべて GO なし；GO は **設計・実装・小規模試験**の 3 項目のみ）。設計は `Step1_PhaseD_D4C2a_design_v0.2.md`（v0.1 は原本保持）。**本 packet は Colab 実行を含まない**；§6 の順で実行 GO を求める（v1 の「実行 GO を求めない」は依頼と不整合だったため撤回）。
@@ -40,7 +43,7 @@
 高速化係数（計測器だけ；hot spot は実測後）；screen の実 bank での blocking 行数（未実行；81／12 行が得られるとは断定しない）；正式 usable の値；12 位置分岐の時間；sub-partial の Colab 上の挙動（notebook は contract test のみ）。
 
 ## 5. 全 suite
-29 chunk（`regression_logs/d4c2a_pytest/j1..j29.xml`・`chunks_stdout.txt`；A：chunk 1〜19，B：chunk 20〜29（26〜29 が D4C-2a）），JUnit の multiset＝`pytest --collect-only` の 1926 node id（欠落・余剰なし），fail／error／skip 0（`test_log.txt`）。sandbox 環境（Python 3.11・numpy 等の版）は登録環境と異なるため，script 試験はすべて `--selftest-skip-env-lock` の self-test であり，PASS flag は出ない（設計どおり）。
+29 chunk（`regression_logs/d4c2a_pytest/j1..j29.xml`・`chunks_stdout.txt`；A：chunk 1〜19，B：chunk 20〜29（26〜29 が D4C-2a）），JUnit の multiset＝`pytest --collect-only` の 1927 node id（欠落・余剰なし），fail／error／skip 0（`test_log.txt`）。sandbox 環境（Python 3.11・numpy 等の版）は登録環境と異なるため，script 試験はすべて `--selftest-skip-env-lock` の self-test であり，PASS flag は出ない（設計どおり）。
 
 ## 6. 実行計画の提案（別途 GO）
 1. 計測 probe（E2・N＝3・`INSTRUMENT=True`・commit 固定）。2. screen（E2／E7／E8・全行）→ certificate（どこでも）。3. 証明成立なら原登録の完走／不能証明での終了／明示 amendment の選択を監査へ；不成立なら sub-partial 計画（Drive `OUT_ROOT`，chunk 250〜500 行）と同等性試験付き高速化 tranche。

@@ -22,7 +22,28 @@ from .grid_manifest import SIZE_CODES
 from .density import check_bank
 from .twelve_eval import _same_evaluation_plan, _same_fit_plan
 
-EXPECTED_VERS = dict(python="3.13.15", numpy="2.1.3", scipy="1.16.3", healpy="1.20.0", camb="2.0.4", pot="0.9.7.post1")
+EXPECTED_VERS = dict(python="3.13.16", numpy="2.1.3", scipy="1.16.3", healpy="1.20.0", camb="2.0.4", pot="0.9.7.post1")
+# Registered-environment HISTORY (Step1_PhaseD_environment_amendment_v0.1.md): the environments under which REGISTERED runs were produced and accepted. A registered run's recorded
+# environment must equal EXPECTED_VERS or one of these; NEW executions are gated on EXPECTED_VERS only (hard gate, strict equality).
+EXPECTED_VERS_HISTORY = (dict(python="3.13.15", numpy="2.1.3", scipy="1.16.3", healpy="1.20.0", camb="2.0.4", pot="0.9.7.post1", registered_until="2026-10-06 environment amendment v0.1 (Colab default runtime moved to Python 3.13.16)"),)
+VERSION_KEYS = ("python", "numpy", "scipy", "healpy", "camb", "pot")
+
+
+def registered_environments(pins: dict = None) -> list:
+    """Every environment a REGISTERED run may carry: the current EXPECTED_VERS (== pins['environment'] when pins are given) plus the history; version keys only."""
+    cur = {k: EXPECTED_VERS[k] for k in VERSION_KEYS}
+    if pins is not None:
+        pe = pins.get("environment") or {}
+        if any(pe.get(k) != cur[k] for k in VERSION_KEYS): raise InputContractError("pins environment differs from the engine's registered environment (EXPECTED_VERS)")
+        hist = pins.get("environment_history")
+        if hist is not None and [{k: h.get(k) for k in VERSION_KEYS} for h in hist] != [{k: h[k] for k in VERSION_KEYS} for h in EXPECTED_VERS_HISTORY]: raise InputContractError("pins environment_history differs from the engine's EXPECTED_VERS_HISTORY")
+    return [cur] + [{k: h[k] for k in VERSION_KEYS} for h in EXPECTED_VERS_HISTORY]
+
+
+def recorded_environment_registered(env: dict, pins: dict = None) -> bool:
+    """True when a recorded run environment (version keys) equals the current registered environment or one in the registered history."""
+    env = env or {}
+    return any(all(env.get(k) == e[k] for k in VERSION_KEYS) for e in registered_environments(pins))
 N_FIT, M_FIT, B_KDE = 200_000, 100, 2000
 
 

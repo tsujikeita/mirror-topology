@@ -1,6 +1,6 @@
 {
  "schema": "b3_1_pins_v1",
- "engine_version": "0.109.0",
+ "engine_version": "0.110.0",
  "profile": "control_official",
  "control_profile": {
   "N": 1000000,
@@ -30,7 +30,7 @@
     "T1": 0.35,
     "T2": 0.35
    },
-   "rule": "rules \u00a79.3 / A10c: the isotropic REFERENCE bank scaled by 0.35 in T1 and T2 (same clusters, paired), both systems; fitting model = scaled reference fitting bank",
+   "rule": "rules §9.3 / A10c: the isotropic REFERENCE bank scaled by 0.35 in T1 and T2 (same clusters, paired), both systems; fitting model = scaled reference fitting bank",
    "expectation": "strong full predicate True with precision pass; conjunct battery (registered decider passes, one-conjunct-removed mutants detected)"
   },
   "positive_mock_diagnostic": {
@@ -53,12 +53,12 @@
  "target": {
   "T1_obs": 39.67178834527284,
   "T2_obs": 259.3375006282747,
-  "source": "rules draft4.1 \u00a72.1 / Step0 v0.7 unique row",
+  "source": "rules draft4.1 §2.1 / Step0 v0.7 unique row",
   "step0_csv": "results/step0_v0.7/step0_official_v0_7.csv",
   "step0_csv_sha256": "6ed885d10a6455995b342152e71cd14f79c87b84ff6fb9539b3ebd4f61e551cb"
  },
  "environment": {
-  "python": "3.13.15",
+  "python": "3.13.16",
   "numpy": "2.1.3",
   "scipy": "1.16.3",
   "healpy": "1.20.0",
@@ -67,6 +67,18 @@
   "numpy_openblas_threads": 2,
   "other_pools_max": 2
  },
+ "environment_history": [
+  {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "scipy": "1.16.3",
+   "healpy": "1.20.0",
+   "camb": "2.0.4",
+   "pot": "0.9.7.post1",
+   "registered_until": "2026-10-06 environment amendment v0.1 (Colab default runtime moved to Python 3.13.16)",
+   "amendment": "Step1_PhaseD_environment_amendment_v0.1.md"
+  }
+ ],
  "assets": {
   "a5_bstack": "results/step1_phaseA/A5_freeze/s1_Bstack_l2_4_N16_common_v1.npz",
   "a5_bstack_sha256": "ec2d3eb501c3e00af85a505d95d7141fddb4ea23ab1da971906a5c21f80eef5f",

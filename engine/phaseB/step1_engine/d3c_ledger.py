@@ -25,7 +25,7 @@ from .errors import InputContractError
 from .d3_profile import TwelveContext, _require_ctx, load_registered_bank_spec_v2, fix_family_plans, verify_plan_identity, _payload_sha as _plan_payload_sha, PLAN_SCHEMA_V2
 from .d3b_ledger import load_registered_d3b_ledger, load_registered_d3b_outer_receipt, _env_identity
 from .rules_config import RULES
-from .official_gate import B_KDE as REG_B_KDE, N_FIT as REG_N_FIT, M_FIT as REG_M_FIT, EXPECTED_VERS
+from .official_gate import B_KDE as REG_B_KDE, N_FIT as REG_N_FIT, M_FIT as REG_M_FIT, EXPECTED_VERS, recorded_environment_registered
 
 LEDGER_SCHEMA = "d3c_profile_ledger_v1"; RECEIPT_SCHEMA = "d3c_outer_receipt_v1"
 EXECUTION_LOCK = dict(commit="7a2b17749e88074834bf5bebe3ebd8ac8af5dd29", engine_version="0.99.0", inventory_sha256="c0b0333b2f4250f1498c04b30090a1449d8135983264052bf602941852e580a9",
@@ -110,7 +110,7 @@ def _check_family(root: str, ctx: TwelveContext, fam: str, d2l: dict, d3bl: dict
     src = rec.get("source") or {}
     if src.get("script_sha256") != EL["script_sha256"] or src.get("inventory_sha256") != EL["inventory_sha256"] or src.get("pins_sha256") != EL["pins_sha256"] or src.get("engine_version") != EL["engine_version"]: _fail(key, "profile record source != execution lock")
     env = rec.get("env") or {}
-    if any(env.get(k) != pins_env[k] for k in ("python", "numpy", "scipy", "healpy", "pot", "camb")) or any(env.get(k) != v for k, v in EXPECTED_VERS.items()) or (rec.get("env_gate") or {}).get("versions_ok") is not True or (rec.get("env_gate") or {}).get("pools_ok") is not True: _fail(key, "registered environment")
+    if not recorded_environment_registered(env, ctx._d["pins"]) or (rec.get("env_gate") or {}).get("versions_ok") is not True or (rec.get("env_gate") or {}).get("pools_ok") is not True: _fail(key, "registered environment")       # current registered environment or the registered history (environment amendment v0.1)
     ident = ctx.identities
     if any(rec.get("context_identities", {}).get(k) != v for k, v in ident.items()): _fail(key, "context identities differ from the verified TwelveContext")
     d3b = rec.get("d3b") or {}
