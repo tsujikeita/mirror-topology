@@ -1,0 +1,420 @@
+{
+  "schema": "step1_D4C2a_v4_0111_audit_v1",
+  "date_JST": "2026-10-06",
+  "decision": "C1_C2_D1_HISTORY_IMPLEMENTATION_ACCEPTED__BRIDGE_COMPARATOR_HOLD__SCREEN_CERTIFICATE_EXECUTION_DEFERRED",
+  "subject": {
+    "file": "phaseB_D4C2a_v4_0.111.0.zip",
+    "bytes": 30684188,
+    "sha256": "56f0f4252c9753e00d43ef00bd33760a9a7215e5d3bc4931cfd57d479bef3aa1",
+    "nfiles": 2744,
+    "top": [
+      "phaseB/B2_completion_inventory.json",
+      "phaseB/B2_inventory_audit_supplement.json",
+      "phaseB/Step1_PhaseB_B1_v0.4_report.md",
+      "phaseB/Step1_PhaseB_B3_0_v0.4_report.md"
+    ],
+    "author_supplied_commit": "59b0e7b8bd01ccde1d3be92745aa8144e36e146c",
+    "engine": "0.111.0",
+    "inventory_sha256": "9bd99e271aaa5d762410cd2e73f7be07f2c35932583baa8b7232df2b92944293",
+    "remote_tree_independently_verified": false,
+    "key_files_sha256": {
+      "d/d4c1_calibration.py": "814557791d7f295fbb981c20806c7374ddf7ae19148380c41c004afef3e597b0",
+      "step1_engine/infeasibility.py": "ca14656dc6765b87df132270e2647cc2649069026cdaf9003164272940d95788",
+      "step1_engine/official_gate.py": "b8694cebe1ce6b0fa6df6b86a2887ef7dd620b0d16ba026162f164a6cb0d6798",
+      "d/d4c2_bridge_compare.py": "e985ec99a6f4dc512948f37d5f578932dc92c820f15465558f9f135eba4739e2"
+    }
+  },
+  "closed_findings": [
+    "R-D4C2A-C1-TRUSTED-RUN-INVENTORY",
+    "R-D4C2A-C2-W2-SUMMARY-BINDING",
+    "R-D4C2A-D1-FALSE-EVIDENCE-RETENTION",
+    "N-D4ENV-HISTORY-PIN-COMPLETENESS"
+  ],
+  "findings": [
+    {
+      "id": "R-D4BRIDGE-A-PRODUCER-PROVENANCE",
+      "status": "OPEN_BLOCKING_BRIDGE_COMPARATOR_ACCEPTANCE",
+      "location": "d/d4c2_bridge_compare.py:92-113; _unpack",
+      "finding": "The new comparator validates the received 24-name list against the received gate dict, not the producer script REQUIRED_PARTIAL. Renaming G_inputs_resolved in both is accepted. Wrong source pins, different attempt id, malformed lock/failure final, and failed/injected twelve gate are also accepted. Lock/final/precheck/prelaunch are not read.",
+      "required_change": "AST-extract the trusted REQUIRED_PARTIAL from the approved PRODUCER tree (0.110.0), compare exact names and strict booleans, bind source pins/top-level metadata to actual trusted files, verify lock/final/attempt/run/publication and precheck/prelaunch including the live twelve gate against the fixed producer GO. Keep per-row/own-reader checks. Do not import the 0.111 reader in place of the producer reader."
+    },
+    {
+      "id": "R-D4BRIDGE-B-TYPED-INDEX-IDENTITY",
+      "status": "OPEN_BLOCKING_BRIDGE_COMPARATOR_ACCEPTANCE",
+      "location": "d/d4c2_bridge_compare.py:132-159",
+      "finding": "The typed-identity claim is not enforced: replacing pseudo_index=0 by JSON false in a family_result index entry leaves all comparisons and own reader successful. Record bytes remain unchanged; Python value equality conflates bool and int.",
+      "required_change": "Compare complete archive identities to the specification using a local, recursive type-strict comparator; require integer non-bool global row ids and exactly matched row/size/identity inventories. Keep original 15 content hashes/bytes unchanged. Implement the helper in the comparator so it works with the 0.110 producer tree."
+    },
+    {
+      "id": "R-D4BRIDGE-C-PROFILE-DOCUMENT",
+      "status": "OPEN_BLOCKING_BRIDGE_COMPARATOR_ACCEPTANCE",
+      "location": "d/d4c2_bridge_compare.py:104-106",
+      "finding": "A rehashed profile declaring missing_targets=[TEST_MISSING_TARGET] and cprofile=False is accepted when the run summary still says missing_targets=[] and segments=3. Actual profile metadata/coverage are not reconciled.",
+      "required_change": "Validate the actual profile document: missing_targets=[], instrumentation flags, the producer TARGETS inventory, count and per_segment coverage/indices, and equality with the run summary and receipt. Use a structurally complete valid profile fixture; SHA consistency alone is not semantic consistency."
+    }
+  ],
+  "GO": {
+    "C1_C2_D1_and_history_guard_implementation_acceptance": true,
+    "environment_amendment_v02_policy_and_comparison_contract_acceptance": true,
+    "whole_packet_implementation_acceptance": false,
+    "bridge_comparison_script_acceptance": false,
+    "environment_numerical_bridge_acceptance": false,
+    "prior_fixed_0110_bridge_probe_GO_preserved": true,
+    "screen_0111_E2_E7_E8_execution": false,
+    "certificate_0111_execution": false,
+    "formal_subpartial_or_global_calibration": false,
+    "usable_or_PhaseE_actual_target": false
+  },
+  "execution_deferral": "The actual fixed-0.110 bridge result is not submitted. Its comparator must not call the entire contract satisfied with invalid producer/profile/identity evidence. Correct only the comparison path, re-read the same raw probe, review the numerical bridge, and re-pin the screen/certificate pipeline together. No new screen-count numerical defect was identified in this review.",
+  "prior_acceptances_preserved": true,
+  "requires_bank_pseudo_W2_D3c_regeneration_or_rerun": false,
+  "requires_fixed_0110_bridge_probe_rerun_due_to_comparator_findings": false,
+  "producer_tree_for_bridge": {
+    "commit": "39082b641d8621989ae69a273f4e88e0c59673ba",
+    "engine": "0.110.0",
+    "inventory_sha256": "7df1fb5948eb2c0c0d379a37afa93c0f1dbc0bba77c01c49d6be60665d9bb1ba",
+    "comparison_spec_sha256": "a9cb9ab9b622cb0d929006eac01a957003a5eeffef990a40de8c6338a0981373",
+    "scope": "prior fixed E2 first3 instrumented bridge only; no automatic transfer to0.111"
+  },
+  "verification": {
+    "pytest": {
+      "pytest_new": {
+        "cases": 36,
+        "passed": 29,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 7,
+        "skips": [
+          {
+            "name": "test_subpartial_runs_and_family_combination",
+            "reason": "external assets not present"
+          },
+          {
+            "name": "test_family_combination_feeds_combine_and_refusals",
+            "reason": "external assets not present"
+          },
+          {
+            "name": "test_instrumented_probe_publishes_profile_and_leaves_the_record",
+            "reason": "external assets not present"
+          },
+          {
+            "name": "test_screen_and_certificate_modes",
+            "reason": "external assets not present"
+          },
+          {
+            "name": "test_screen_notebook_accepts_the_actual_script_record[actual_record_ok]",
+            "reason": "external assets not present"
+          },
+          {
+            "name": "test_screen_notebook_accepts_the_actual_script_record[extra_gate_key]",
+            "reason": "external assets not present"
+          },
+          {
+            "name": "test_screen_notebook_accepts_the_actual_script_record[missing_gate_key]",
+            "reason": "external assets not present"
+          }
+        ]
+      },
+      "pytest_registered": {
+        "cases": 82,
+        "passed": 82,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skips": []
+      },
+      "total": {
+        "cases": 118,
+        "passed": 111,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 7
+      },
+      "explicitly_deselected": "test_consumer_api_rebuild_and_refusals in test_d3c_tranche2.py (full-scale plan rebuild excluded)"
+    },
+    "metadata": {
+      "inventory_sha256": "9bd99e271aaa5d762410cd2e73f7be07f2c35932583baa8b7232df2b92944293",
+      "sha_entries": 2232,
+      "sha_errors": [],
+      "compiled_py": 220,
+      "compiled_nb_cells": 12,
+      "author_junit": {
+        "junit_files": 30,
+        "cases": 1935,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "current_files": 2744,
+      "previous_files": 2728,
+      "changed": [
+        "Step1_PhaseB_engine_spec_v0.3_addendum.md",
+        "B2_completion_inventory.json",
+        "Step1_PhaseD_D4C2a_report.md",
+        "tests/test_d4c2a_script.py",
+        "tests/test_d4c2a.py",
+        "tests/test_d4c1.py",
+        "step1_engine/__init__.py",
+        "step1_engine/infeasibility.py",
+        "step1_engine/official_gate.py",
+        "b3/b3_1_pins.json",
+        "b3/b3_2_pins.json",
+        "b3/b3_0_pins.json",
+        "d/d1_pins.json",
+        "d/d3_pins.json",
+        "d/d4c1_calibration.py",
+        "d/d2_pins.json",
+        "regression_logs/d4c2a_pytest/chunks_stdout.txt",
+        "regression_logs/d4c2a_pytest/j19.xml",
+        "regression_logs/d4c2a_pytest/j11.xml",
+        "regression_logs/d4c2a_pytest/j22.xml",
+        "regression_logs/d4c2a_pytest/j1.xml",
+        "regression_logs/d4c2a_pytest/j7.xml",
+        "regression_logs/d4c2a_pytest/j28.xml",
+        "regression_logs/d4c2a_pytest/j25.xml",
+        "regression_logs/d4c2a_pytest/j4.xml",
+        "regression_logs/d4c2a_pytest/j13.xml",
+        "regression_logs/d4c2a_pytest/j21.xml",
+        "regression_logs/d4c2a_pytest/j26.xml",
+        "regression_logs/d4c2a_pytest/j16.xml",
+        "regression_logs/d4c2a_pytest/j17.xml",
+        "regression_logs/d4c2a_pytest/j27.xml",
+        "regression_logs/d4c2a_pytest/j29.xml",
+        "regression_logs/d4c2a_pytest/j23.xml",
+        "regression_logs/d4c2a_pytest/j24.xml",
+        "regression_logs/d4c2a_pytest/j10.xml",
+        "regression_logs/d4c2a_pytest/j14.xml",
+        "regression_logs/d4c2a_pytest/j20.xml",
+        "regression_logs/d4c2a_pytest/j2.xml",
+        "regression_logs/d4c2a_pytest/j18.xml",
+        "regression_logs/d4c2a_pytest/j9.xml",
+        "regression_logs/d4c2a_pytest/j15.xml",
+        "regression_logs/d4c2a_pytest/j3.xml",
+        "regression_logs/d4c2a_pytest/j8.xml",
+        "regression_logs/d4c2a_pytest/j6.xml",
+        "regression_logs/d4c2a_pytest/j12.xml",
+        "regression_logs/d4c2a_pytest/j5.xml"
+      ],
+      "added": [
+        "Step1_PhaseD_environment_amendment_v0.2.md",
+        "Step1_PhaseD_D4C2a_design_v0.3.md",
+        "tests/test_d4c2_bridge.py",
+        "d/d4c2_bridge_compare.py",
+        "registered_assets/d4c1/acceptance/d4c2a/D4C2a_0.108.0_audit_decision.json",
+        "registered_assets/d4c1/acceptance/d4c2a/D4C2a_0.108.0_audit_evidence.zip",
+        "registered_assets/d4c1/acceptance/d4c2a/D4C2a_v3_0.110.0_audit_decision.json",
+        "registered_assets/d4c1/acceptance/d4c2a/ChatGPT_audit_D4C2a_v3_0.110.0.md",
+        "registered_assets/d4c1/acceptance/d4c2a/ChatGPT_audit_D4C2a_0.108.0.md",
+        "registered_assets/d4c1/acceptance/d4c2a/D4C2a_v3_0.110.0_bridge_comparison_spec.json",
+        "registered_assets/d4c1/acceptance/d4c2a/D4C2a_v2_0.109.0_audit_decision.json",
+        "registered_assets/d4c1/acceptance/d4c2a/file_map.json",
+        "registered_assets/d4c1/acceptance/d4c2a/D4C2a_v3_0.110.0_audit_evidence.zip",
+        "regression_logs/d4c2a_pytest/test_log.txt",
+        "regression_logs/d4c2a_pytest/j30.xml",
+        "regression_logs/d4c2a_pytest/collect.txt"
+      ],
+      "removed": [],
+      "previous_registered_files": 1914,
+      "changed_old_registered": [],
+      "sha_missing": []
+    },
+    "collect": {
+      "collected": 1935,
+      "author_cases": 1935,
+      "multiset_equal": true,
+      "author_only": [],
+      "collect_only": [],
+      "normalized_notebook_ids": 6
+    },
+    "certificate_boundary_cases": 24,
+    "certificate_baseline_accepted": 1,
+    "certificate_mutations_rejected": 23,
+    "exact_producer_function_controls": 68,
+    "history_mutation_calls": 28,
+    "real_synthetic_false_rows": {
+      "scope": "Read actual synthetic partial/archived Result generated by unmodified pytest.\nNo formal bank, no unobserved truth assignment; the conflicting screen is TEST-ONLY.\n",
+      "n_rows": 4,
+      "n_false_rows": 4,
+      "n_blocking_rows": 0,
+      "retained": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "raw_false": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "tests": [
+        {
+          "case": "screen_E2",
+          "accepted": false,
+          "note": "row 0 family E2 support: conflicting proven statuses 'unknown_or_technical' vs 'False'"
+        },
+        {
+          "case": "screen_E7",
+          "accepted": true,
+          "note": 1
+        },
+        {
+          "case": "restamped_truth",
+          "rejected": true,
+          "error": "published record differs from its archived copy"
+        }
+      ]
+    },
+    "bridge_cases": {
+      "scope": "Independent TEST-ONLY 0.110 producer / 0.111 verifier cross-tree bridge contract probes.\nSynthetic new records from accepted baseline; NO new physical/bank/bootstrap execution.\nOriginal spec and original producer modules remain unmodified.\n",
+      "cases": [
+        {
+          "tag": "normal_old_producer",
+          "returncode": 0,
+          "result": "BRIDGE_CONTRACT_SATISFIED",
+          "mismatches": [],
+          "report_present": true,
+          "expected": "accept synthetic contract baseline"
+        },
+        {
+          "tag": "required_gate_renamed",
+          "returncode": 0,
+          "result": "BRIDGE_CONTRACT_SATISFIED",
+          "mismatches": [],
+          "report_present": true,
+          "expected": "reject trusted inventory mismatch"
+        },
+        {
+          "tag": "required_order_reversed",
+          "returncode": 0,
+          "result": "BRIDGE_CONTRACT_SATISFIED",
+          "mismatches": [],
+          "report_present": true,
+          "expected": "reject trusted inventory order"
+        },
+        {
+          "tag": "source_pins_wrong",
+          "returncode": 0,
+          "result": "BRIDGE_CONTRACT_SATISFIED",
+          "mismatches": [],
+          "report_present": true,
+          "expected": "reject wrong source pins"
+        },
+        {
+          "tag": "attempt_does_not_match_directory",
+          "returncode": 0,
+          "result": "BRIDGE_CONTRACT_SATISFIED",
+          "mismatches": [],
+          "report_present": true,
+          "expected": "reject mismatch"
+        },
+        {
+          "tag": "bad_lock_and_failure_final",
+          "returncode": 0,
+          "result": "BRIDGE_CONTRACT_SATISFIED",
+          "mismatches": [],
+          "report_present": true,
+          "expected": "reject lock/final/prelaunch mismatch"
+        },
+        {
+          "tag": "profile_rehashed_missing_targets",
+          "returncode": 0,
+          "result": "BRIDGE_CONTRACT_SATISFIED",
+          "mismatches": [],
+          "report_present": true,
+          "expected": "reject underlying profiler mismatch"
+        },
+        {
+          "tag": "actual_env_gate_false",
+          "returncode": 1,
+          "result": "MISMATCH_OR_REFUSAL__STOP_FOR_ANALYSIS",
+          "mismatches": [
+            "new_run_gates_all_true"
+          ],
+          "report_present": true,
+          "expected": "reject"
+        },
+        {
+          "tag": "malformed_record",
+          "returncode": 1,
+          "result": null,
+          "mismatches": null,
+          "report_present": false,
+          "expected": "reject with report"
+        }
+      ]
+    },
+    "bridge_extra": {
+      "scope": "TEST-ONLY supplemental typed-identity and live-gate omission probes, no new physics.",
+      "cases": [
+        {
+          "case": "typed_index_bool",
+          "returncode": 0,
+          "result": "BRIDGE_CONTRACT_SATISFIED",
+          "mismatches": []
+        },
+        {
+          "case": "twelve_live_gate_failed",
+          "returncode": 0,
+          "result": "BRIDGE_CONTRACT_SATISFIED",
+          "mismatches": []
+        }
+      ]
+    },
+    "fresh_quick": {
+      "scope": "guard and algebra only; not full selected pytest or all bridge cases repeated",
+      "commands": [
+        {
+          "script": "probe_guards.py",
+          "returncode": 0
+        },
+        {
+          "script": "probe_algebra.py",
+          "returncode": 0
+        }
+      ]
+    }
+  },
+  "preservation": {
+    "submitted": {
+      "files": 2744,
+      "changed": [],
+      "added": [],
+      "unchanged": true
+    },
+    "previous": {
+      "files": 2728,
+      "changed": [],
+      "added": [],
+      "unchanged": true
+    },
+    "fresh_quick": {
+      "files": 2744,
+      "unchanged": true
+    }
+  },
+  "nonblocking": [
+    {
+      "id": "N-D4BRIDGE-ERROR-REPORT",
+      "note": "A null partial record causes rc1 with an uncaught AttributeError and no report JSON. Catch ordinary parsing/contract exceptions and publish a failure report where safe; OS/runtime termination is not guaranteed to be recordable."
+    },
+    {
+      "id": "N-D4C2A-HISTORICAL-DOCUMENT-TEXT",
+      "note": "Older report sections still contain superseded whole-payload-SHA and execution-request wording. Mark historical/superseded explicitly when next editing; no document-only resubmission required."
+    }
+  ],
+  "limitations": [
+    "No actual Python3.13.16/Colab run or new environment numerical bridge result was inspected.",
+    "Synthetic new bridge fixtures reuse the accepted baseline scientific records and rebind metadata; they are NOT empirical cross-environment evidence.",
+    "The unmodified comparator was executed with an actual byte-verified0.110 producer tree and the original comparison spec; this tests its loading/validation contract, not past runtime provenance.",
+    "No production bank intake/fingerprint rebuild, exact POT, new bootstrap plans, real2000-row screen, real infeasibility certificate, full calibration or actual target evaluation.",
+    "No full1935-test independent run; author JUnit/collect matching is separate. Seven external-asset script tests skipped; one large plan consumer test deliberately deselected.",
+    "Extra probes are not pytest test counts. Fresh replay repeats only guard and algebra scripts, not every test.",
+    "No remote Git tree comparison."
+  ],
+  "artifacts": {
+    "report": "ChatGPT_audit_D4C2a_v4_0.111.0.md",
+    "evidence": "D4C2a_v4_0.111.0_audit_evidence.zip"
+  }
+}

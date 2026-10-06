@@ -1,4 +1,21 @@
-# Step 1 Phase D4C-2a 報告：計測版・pseudo 範囲 sub-partial／再開・固定分母の成功不能証明（engine 0.111.0；v4 = v3 ＋ C1／C2／D1・履歴 pin guard・bridge 比較 script）
+# Step 1 Phase D4C-2a 報告：計測版・pseudo 範囲 sub-partial／再開・固定分母の成功不能証明（engine 0.112.0；v5 = v4 ＋ bridge 比較 script v2）
+
+**読み方**：節は新しい順。v4 以前の節は履歴であり，そこに残る「partial の payload SHA 全体の一致」という受入れ条件と当時の実行 GO 依頼文は **superseded**（現行は amendment v0.3 §4 の bridge 比較契約と，v5 節の依頼）。
+
+## v5（2026-10-06）：監査 `D4C2a_v4_0.111.0_audit_decision.json`（C1_C2_D1_HISTORY_IMPLEMENTATION_ACCEPTED__BRIDGE_COMPARATOR_HOLD__SCREEN_CERTIFICATE_EXECUTION_DEFERRED）への対応
+v4 で C1／C2／D1・履歴 guard・amendment v0.2・比較契約は受入れられた。HOLD は bridge 比較 script（`d/d4c2_bridge_compare.py`）の 3 件で，script だけを直し同じ原本を再読込みする（probe の再実行は不要；0.110.0 固定の probe GO は維持）。報告 JSON schema は `d4c2_bridge_comparison_report_v2`。設計 v0.4 §I・amendment v0.3。
+
+| 指摘 | 対応（`d/d4c2_bridge_compare.py` v2） | 試験（`tests/test_d4c2_bridge.py`：合成「新 probe」に launcher lock・final record・構造完全な profile を備える） |
+|---|---|---|
+| R-D4BRIDGE-A producer の provenance（受領 inventory と gates の相互照合のみ；lock／final／precheck／prelaunch 未読；別 pins・attempt 不一致・偽 lock・失敗 final・twelve gate 注入を受理） | 信頼 inventory＝**producer tree（`--phaseb`）の driver から AST で取り出した `REQUIRED_PARTIAL`**（名前と順序の完全一致・gate 集合一致・全 True・`required_all_true`）；run record の `source`（inventory／script／pins／engine）と top-level `pins_sha256`／`engine_version` を **tree の実 file**に束縛；`attempt_id`＝run directory；launcher lock（bytes の SHA＝`attempt.launcher_lock_sha256`＝final の `lock_sha256`）：schema・inventory／script／pins／engine＝tree・登録資産 SHA map（baseline lock と同じ key 集合で tree の inventory と一致）・family E2・probe_n 3・instrument True・row_range／out_root None・commitment／campaign＝run・commit 40 hex（`--expected-commit` で固定）；final record：schema・attempt・埋込 lock＝lock（typed）・stage complete・exit_code 0・fallback False・gates_ok／bindings_ok／evidence_ok True・failures 空・exception None・`record_sha256`＝run record の SHA・gates＝run の gates（typed）・partial_summary＝record・run_dir＝attempt・RAM＞40 GB；`live_source_precheck`／`prelaunch`：head＝lock.commit・clean・inventory／script／pins／engine／登録資産＝lock；twelve gate：`run.twelve.gate`＝`{official, passed True, [], live_collected}`（typed）・`assembled_fingerprints`＝d3c binding・top-level `twelve_gate` の注入は拒否 | 監査の反例 `required_gate_renamed`／`required_order_reversed`／`source_pins_wrong`／`attempt_does_not_match_directory`／`bad_lock_and_failure_final`／`twelve_gate_injected_top_level`／`twelve_gate_failed` と，`producer_gate_false`／`lock_missing`／`final_precheck_dirty`／`lock_registered_asset_sha`／別 `--expected-commit`：すべて rc 1・該当 check を列挙 |
+| R-D4BRIDGE-B typed index identity（`pseudo_index` の JSON `false` を 0 と同一視） | script 内の **型厳密再帰比較 `teq`**（0.110.0 tree に依存しない）で archive index entry の identity 全体を spec の identity と比較（row は int かつ bool でない）；entry の kind／path／bytes の形式；plan transition 文書自身の `pseudo_index`，`parent_ref` の identity／path も typed；registry／partial transition の identity も typed；欠落／余剰／重複（SHA 集合 17・一意） | `typed_index_bool`（監査）・`index_identity_float`・`parent_ref_identity_float` |
+| R-D4BRIDGE-C profile 文書（要約の `missing_targets` だけを見ていた） | profile 本文：schema・engine／python・`instrumentation{wrappers, cprofile, segment_target}`・`missing_targets == []`（typed）・target inventory＝producer の `TARGETS`・segments count 3＝per_segment 数・index 0..2（int）・wall の bookkeeping（和・平均・outside）・各 target の calls＝segment 内＋外（int）・segment target の calls＝3・cProfile 表の存在；run の `profile_summary` と本文の typed 等値；receipt（SHA／bytes）＝file | `profile_rehashed_missing_targets`（監査）・`profile_missing`・`profile_summary_disagrees`・`profile_segment_count`・`profile_target_dropped` |
+| N-D4BRIDGE-ERROR-REPORT | 比較本体を例外捕捉で包み，parse／contract／reader の例外は `unexpected_error` として報告 JSON に発行（rc 1） | `malformed_record_null`（`documents_are_objects` で停止・報告あり）・`lock_missing`（`unexpected_error`・報告あり） |
+| N-D4C2A-HISTORICAL-DOCUMENT-TEXT | 本報告の冒頭に「v4 以前の節は履歴（superseded）」を明記；amendment v0.3 | — |
+
+全 suite：1953 pytest case（122 test file；30 chunk の JUnit `regression_logs/d4c2a_pytest/`；multiset＝collect，fail／error／skip 0）。外側からの対照：本 tree（0.112.0）の比較 script を，v3 packet から展開した未改変 0.110.0 tree（inventory `7df1fb59…`）と元の spec に対して合成「新 probe」で実行し，36 check すべて充足（監査と同じ cross-tree の読込み確認；科学的証拠ではない）。
+
+依頼：(i) bridge 比較 script v2 の受入れ，(ii) bridge probe（0.110.0 固定 commit）の結果は，この v2 script で照合した報告 JSON・raw 結果・実行済み notebook・lock／final・profile とともに別途提出，(iii) 数値 bridge の確認後，修正版 source を固定して screen（E2／E7／E8・全 2000 行）→ certificate の実行 GO を求める。
 
 ## v4（2026-10-06）：監査 `D4C2a_v2_0.109.0_audit_decision.json`（PARTIAL_ACCEPTANCE_A_B_CLOSED__CERTIFICATE_HOLD__PIPELINE_EXECUTION_DEFERRED）と `D4C2a_v3_0.110.0_audit_decision.json`（ENVIRONMENT_AMENDMENT_IN_PRINCIPLE__FIXED_SOURCE_BRIDGE_PROBE_ONLY_GO__SCREEN_CERTIFICATE_HOLD）への対応
 v3 の packet は v2 監査の決定 JSON（C1／C2／D1）が著者に届いていなかったため driver と `infeasibility.py` の bytes が 0.109.0 と同一のままだった（v3 監査の指摘どおり）。v4 で 3 件を解消し，v3 監査の history pin の guard と amendment 文書の訂正，bridge 比較契約の実装を加えた（詳細は設計 v0.3 §H・amendment v0.2）。**bridge probe は固定 commit `39082b64…`（0.110.0）で実行中**であり，v4 は probe の GO を引き継がない（照合は v4 の `d/d4c2_bridge_compare.py` を 0.110.0 の tree に対して実行し，報告 JSON を提出する）。
@@ -16,7 +33,7 @@ v3 の packet は v2 監査の決定 JSON（C1／C2／D1）が著者に届いて
 
 依頼：(i) C1／C2／D1 と履歴 guard の **実装受入れ**（v4 packet），(ii) bridge probe の結果は別途（照合報告 JSON とともに）提出，(iii) 受入れ後に screen（E2／E7／E8・全 2000 行）→ certificate の実行 GO を，v2 監査の注記（修正後の pipeline でまとめて pin し直す）に従い **v4 以降の commit** に対して求める。
 
-## v3（2026-10-06）：登録環境 amendment（Python 3.13.15 → 3.13.16）
+## v3（2026-10-06；superseded：受入れ条件は amendment v0.3 §4 の bridge 比較契約に置換）：登録環境 amendment（Python 3.13.15 → 3.13.16）
 計測付き probe の GO（commit `4668b2e5…`）を実行したところ Colab の既定 runtime が Python 3.13.16 に更新されており，launcher の環境 lock が設計どおり停止した（迂回なし）。3.13.15 は Colab で再現できない（代替 runtime は 3.12 系）ため，`Step1_PhaseD_environment_amendment_v0.1.md` のとおり `official_gate.EXPECTED_VERS.python` と pins 6 の `environment.python` だけを 3.13.16 に改訂した（規則・他の版・登録資産・履歴 record は不変；engine 0.110.0）。**受入れ条件の提案**：本 commit で計測付き probe（E2・N＝3）を実行し，partial record の payload SHA が登録 probe（`057ae753…`）と一致すること（不一致なら amendment 不成立として停止）。したがって v3 packet への依頼は，(i) D4C-2a v2 の実装受入れ（HOLD A〜D の解消），(ii) 環境 amendment の受入れ，(iii) 本 commit での計測付き probe の実行 GO（受入れ条件 (i) の byte 同一性検査を含む），(iv) screen → certificate の実行 GO，である。
 
 ## v2（2026-10-06）：監査 `D4C2a_0.108.0_audit_decision.json`（PARTIAL_ACCEPTANCE__INSTRUMENTED_E2_N3_PROBE_ONLY_GO__SCREEN_CERTIFICATE_HOLD）への対応
@@ -61,5 +78,5 @@ v3 の packet は v2 監査の決定 JSON（C1／C2／D1）が著者に届いて
 ## 5. 全 suite
 29 chunk（`regression_logs/d4c2a_pytest/j1..j29.xml`・`chunks_stdout.txt`；A：chunk 1〜19，B：chunk 20〜29（26〜29 が D4C-2a）），JUnit の multiset＝`pytest --collect-only` の 1927 node id（欠落・余剰なし），fail／error／skip 0（`test_log.txt`）。sandbox 環境（Python 3.11・numpy 等の版）は登録環境と異なるため，script 試験はすべて `--selftest-skip-env-lock` の self-test であり，PASS flag は出ない（設計どおり）。
 
-## 6. 実行計画の提案（別途 GO）
+## 6. 実行計画の提案（別途 GO；superseded：現行の依頼は最新の節）
 1. 計測 probe（E2・N＝3・`INSTRUMENT=True`・commit 固定）。2. screen（E2／E7／E8・全行）→ certificate（どこでも）。3. 証明成立なら原登録の完走／不能証明での終了／明示 amendment の選択を監査へ；不成立なら sub-partial 計画（Drive `OUT_ROOT`，chunk 250〜500 行）と同等性試験付き高速化 tranche。
