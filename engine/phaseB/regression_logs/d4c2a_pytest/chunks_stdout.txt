@@ -1,60 +1,69 @@
-chunk 20 rc=0
-11 passed, 8 deselected in 82.57s (0:01:22)
 chunk 1 rc=0
-893 passed, 1 warning in 199.98s (0:03:19)
-chunk 21 rc=0
-5 passed, 14 deselected in 274.35s (0:04:34)
+893 passed, 1 warning in 251.00s (0:04:11)
 chunk 2 rc=0
-154 passed in 233.91s (0:03:53)
-chunk 22 rc=0
-3 passed, 16 deselected in 195.48s (0:03:15)
-chunk 23 rc=0
-51 passed, 4 deselected in 2.22s
+154 passed in 242.27s (0:04:02)
 chunk 3 rc=0
-122 passed in 239.31s (0:03:59)
+122 passed in 260.87s (0:04:20)
 chunk 4 rc=0
-84 passed in 235.54s (0:03:55)
-chunk 24 rc=0
-2 passed, 53 deselected in 364.75s (0:06:04)
+84 passed in 266.37s (0:04:26)
 chunk 5 rc=0
-40 passed in 230.55s (0:03:50)
-chunk 25 rc=0
-2 passed, 53 deselected in 327.17s (0:05:27)
-chunk 26 rc=0
-6 passed, 6 deselected in 87.46s (0:01:27)
+40 passed in 258.46s (0:04:18)
 chunk 6 rc=0
-36 passed in 214.69s (0:03:34)
-chunk 27 rc=0
-6 passed, 6 deselected in 187.91s (0:03:07)
+36 passed in 248.92s (0:04:08)
 chunk 7 rc=0
-36 passed in 208.77s (0:03:28)
+36 passed in 226.84s (0:03:46)
 chunk 8 rc=0
-33 passed, 4 deselected in 174.28s (0:02:54)
-chunk 28 rc=0
-12 passed, 4 deselected in 334.65s (0:05:34)
+33 passed, 4 deselected in 190.08s (0:03:10)
 chunk 9 rc=0
-26 passed, 4 deselected in 234.67s (0:03:54)
+26 passed, 4 deselected in 248.18s (0:04:08)
 chunk 10 rc=0
-26 passed in 103.90s (0:01:43)
+26 passed in 87.86s (0:01:27)
 chunk 11 rc=0
-27 passed in 78.10s (0:01:18)
+27 passed in 90.61s (0:01:30)
 chunk 12 rc=0
-29 passed in 134.61s (0:02:14)
+29 passed in 145.50s (0:02:25)
 chunk 13 rc=0
-41 passed in 147.64s (0:02:27)
+41 passed in 154.49s (0:02:34)
 chunk 14 rc=0
-40 passed in 118.36s (0:01:58)
+40 passed in 128.80s (0:02:08)
 chunk 15 rc=0
-48 passed, 8 deselected in 72.66s (0:01:12)
-chunk 29 rc=0
-4 passed, 12 deselected in 896.26s (0:14:56)
-ALLDONE_B
+48 passed, 8 deselected in 71.55s (0:01:11)
 chunk 16 rc=0
-8 passed, 48 deselected in 156.70s (0:02:36)
+8 passed, 48 deselected in 163.03s (0:02:43)
 chunk 17 rc=0
-30 passed in 157.22s (0:02:37)
+30 passed in 165.63s (0:02:45)
 chunk 18 rc=0
-99 passed in 128.40s (0:02:08)
+99 passed in 143.32s (0:02:23)
 chunk 19 rc=0
-53 passed in 107.36s (0:01:47)
+53 passed in 117.04s (0:01:57)
 ALLDONE_A
+chunk 20 rc=0
+11 passed, 8 deselected in 91.01s (0:01:31)
+chunk 21 rc=0
+5 passed, 14 deselected in 300.41s (0:05:00)
+chunk 22 rc=0
+3 passed, 16 deselected in 221.14s (0:03:41)
+chunk 23 rc=0
+51 passed, 4 deselected in 2.52s
+chunk 24 rc=0
+2 passed, 53 deselected in 376.20s (0:06:16)
+chunk 25 rc=0
+2 passed, 53 deselected in 330.03s (0:05:30)
+chunk 26 rc=0
+7 passed, 6 deselected in 119.76s (0:01:59)
+chunk 27 rc=0
+6 passed, 7 deselected in 209.27s (0:03:29)
+chunk 28 rc=0
+12 passed, 4 deselected in 315.28s (0:05:15)
+chunk 29 rc=0
+4 passed, 12 deselected in 1447.45s (0:24:07)
+chunk 30 rc=1
+1 failed, 6 passed in 93.46s (0:01:33)
+ALLDONE_B
+ALLDONE_ALL
+chunk 30 rerun rc=1
+1 failed, 6 passed in 95.43s (0:01:35)
+DONE30
+chunk 30 rerun rc=0
+7 passed in 119.92s (0:01:59)
+DONE30

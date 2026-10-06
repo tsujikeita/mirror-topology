@@ -133,6 +133,28 @@ def test_screen_and_certificate_modes(banks, partials, subparts, screen_run, tmp
     tampered('non_object_doc', mutate_run=lambda rr_, fp: (open(fp, 'w').write('null'), restamp(rr_, fp)))
     tampered('missing_N4_restamped', mutate_doc=drop_n4, mutate_run=restamp)                                                                                 # N0-only after the fact: bank_stages / coverage consistent but the self-test binding still requires the recorded bank stages... and a FORMAL certificate requires both prefixes
     tampered('other_screen_sha', mutate_run=lambda rr_, fp: rr_['screen'].update(screen_sha256='0' * 64))
+    # R-D4C2A-C1 (audit 0.109.0 counter-examples): the trusted inventory is the script's FIXED constant of the producer mode, never the run record's own list; source / attempt / profile are checked
+    tampered('gate_removed_from_both_inventories', mutate_run=lambda rr_, fp: (rr_['gates'].pop('G_inputs_resolved'), rr_['required_inventory'].remove('G_inputs_resolved')))
+    tampered('only_env_gate', mutate_run=lambda rr_, fp: rr_.update(gates={'G_env_lock': True}, required_inventory=['G_env_lock']))
+    tampered('extra_gate_in_both_inventories', mutate_run=lambda rr_, fp: (rr_['gates'].update(TEST_EXTRA=True), rr_['required_inventory'].append('TEST_EXTRA')))
+    tampered('reordered_inventory', mutate_run=lambda rr_, fp: rr_.update(required_inventory=list(reversed(rr_['required_inventory']))))
+    tampered('wrong_run_schema', mutate_run=lambda rr_, fp: rr_.update(schema='WRONG'))
+    tampered('wrong_source_script', mutate_run=lambda rr_, fp: rr_['source'].update(script_sha256='0' * 64))
+    tampered('wrong_source_pins', mutate_run=lambda rr_, fp: rr_['source'].update(pins_sha256='0' * 64))
+    tampered('wrong_pins_metadata', mutate_run=lambda rr_, fp: rr_.update(pins_sha256='0' * 64))
+    tampered('wrong_engine_version', mutate_run=lambda rr_, fp: rr_.update(engine_version='0.0.0'))
+    tampered('empty_attempt', mutate_run=lambda rr_, fp: rr_.update(attempt={}))
+    tampered('attempt_not_object', mutate_run=lambda rr_, fp: rr_.update(attempt='x'))
+    tampered('wrong_profile', mutate_run=lambda rr_, fp: rr_.update(profile='NOT_OFFICIAL'))
+    tampered('mode_mismatch', mutate_run=lambda rr_, fp: rr_.update(mode='partial', subpartial=False, row_range=None))
+    tampered('probe_claimed', mutate_run=lambda rr_, fp: rr_.update(probe=True))
+    tampered('foreign_flag', mutate_run=lambda rr_, fp: rr_.update(D4C1_PARTIAL_PASS=True))
+    tampered('selftest_claims_complete', mutate_run=lambda rr_, fp: rr_.update(D4C1_SCREEN_COMPLETE=True))
+    tampered('formal_claimed_by_selftest', mutate_run=lambda rr_, fp: rr_.update(selftest=False, formal=True, required_all_true=True, D4C1_SCREEN_COMPLETE=True))
+    # R-D4C2A-C2: the W2 summary of the screen must equal (typed) the full registered decision per size; a registered checksum with another B_final / validation_state (record re-stamped, run re-stamped) is refused
+    tampered('w2_bfinal_restamped', mutate_doc=lambda dd: dd['w2']['L1.20'].update(B_final=dd['w2']['L1.20']['B_final'] + 1), mutate_run=restamp)
+    tampered('w2_validation_state_restamped', mutate_doc=lambda dd: dd['w2']['L1.20'].update(validation_state='TAMPERED'), mutate_run=restamp)
+    tampered('w2_checksum_restamped', mutate_doc=lambda dd: dd['w2']['L1.00'].update(checksum='0' * 64), mutate_run=restamp)
     oo = str(tmp_path / 'cert_none'); rr = _run(_base_cert(C) + ['--out', oo]); mm = _rec(oo, 'certificate'); assert mm['stage'] == 'inputs'
     oo = str(tmp_path / 'cert_camp'); rr = _run(_base_cert(C, camp='ANOTHER_CAMPAIGN') + ['--out', oo, '--screen', o]); mm = _rec(oo, 'certificate'); assert mm['stage'] == 'inputs'
     # the certificate mode never meets the environment gate (no self-test switch needed for the production route): a FORMAL certificate run in this sandbox proceeds past the preflight to the

@@ -182,17 +182,26 @@ def check_screen_record(d: dict, *, formal: bool = False, registered_N: Optional
     return dict(ok=True, family=d["family"], n_rows=d["n_rows"], n_blocking=nb, w2_applicable=appl, complete_coverage=cov_all, formal=bool(formal))
 
 
-def bind_screen_record(d: dict, *, registry_sha256: str, manifest_sha256: str, w2_context_sha256: str, w2_checksums: Dict[str, str], pseudo_identity: dict, T1, T2, config_ids: Dict[str, list], family: Optional[str] = None, campaign_id: Optional[str] = None, target_commitment: Optional[str] = None, registered_N: Optional[Tuple[int, int]] = None) -> dict:
-    """Binding of a (formally checked) screen record to the CURRENT registered identities supplied by the consumer: registry / manifest SHA, W2 context SHA and the replay-verified
-    decision checksum of every case, the global column identity and the exact row thresholds, the registered configuration ids per size, the family and (optionally) campaign /
-    commitment. The record's own statements are never trusted alone."""
+def typed_equal(a, b) -> bool:
+    """Exact TYPED equality of JSON-like values: same Python type at every node (bool is not int, int is not float, str is not bool), same dict keys, same list length."""
+    if type(a) is not type(b): return False
+    if isinstance(a, dict): return set(a) == set(b) and all(typed_equal(a[k], b[k]) for k in a)
+    if isinstance(a, (list, tuple)): return len(a) == len(b) and all(typed_equal(x, y) for x, y in zip(a, b))
+    return a == b
+
+
+def bind_screen_record(d: dict, *, registry_sha256: str, manifest_sha256: str, w2_context_sha256: str, w2_decisions: Dict[str, VerifiedW2Decision], pseudo_identity: dict, T1, T2, config_ids: Dict[str, list], family: Optional[str] = None, campaign_id: Optional[str] = None, target_commitment: Optional[str] = None, registered_N: Optional[Tuple[int, int]] = None) -> dict:
+    """Binding of a (formally checked) screen record to the CURRENT registered identities supplied by the consumer: registry / manifest SHA, W2 context SHA and the FULL W2 summary of
+    every size (R-D4C2A-C2: {trigger, validation_state, B_final, checksum} re-derived by w2_triggers from the replay-verified VerifiedW2Decision objects of the authenticated context,
+    compared by exact typed equality — a registered checksum paired with another trigger / B_final / validation_state is refused), the global column identity and the exact row
+    thresholds, the registered configuration ids per size, the family and (optionally) campaign / commitment. The record's own statements are never trusted alone."""
     chk = check_screen_record(d, formal=True, registered_N=registered_N)
     if family is not None and d["family"] != family: raise InputContractError("screen family differs from the requested family")
     if d["registry_sha256"] != registry_sha256 or d["manifest_sha256"] != manifest_sha256: raise InputContractError("screen registry / manifest differ from the current registered grid")
     if d["w2_context_sha256"] != w2_context_sha256: raise InputContractError("screen W2 context SHA differs from the registered context")
-    for s_, v in d["w2"].items():
-        key = f"{d['family']}/{s_}"
-        if key not in w2_checksums or v.get("checksum") != w2_checksums[key]: raise InputContractError(f"screen W2 decision {key} is not the registered replay-verified decision")
+    if not isinstance(w2_decisions, dict): raise InputContractError("w2_decisions: the replay-verified decisions of the registered context are required")
+    expected_w2 = w2_triggers(d["family"], d["sizes"], w2_decisions)
+    if not typed_equal(d["w2"], expected_w2): raise InputContractError("screen W2 summary (trigger / validation_state / B_final / checksum per size) differs from the registered replay-verified decisions")
     if d["pseudo"] != dict(n=pseudo_identity["n"], sha256_T1=pseudo_identity["sha256_T1"], sha256_T2=pseudo_identity["sha256_T2"]): raise InputContractError("screen pseudo column identity differs from the registered columns")
     T1 = np.asarray(T1, float); T2 = np.asarray(T2, float)
     if len(T1) != pseudo_identity["n"] or len(T2) != pseudo_identity["n"] or hashlib.sha256(np.ascontiguousarray(T1).tobytes()).hexdigest() != pseudo_identity["sha256_T1"] or hashlib.sha256(np.ascontiguousarray(T2).tobytes()).hexdigest() != pseudo_identity["sha256_T2"]: raise InputContractError("supplied columns do not match the pseudo identity")
@@ -212,9 +221,10 @@ def blocking_rows_from_screen(d: dict, *, formal: bool = False) -> Dict[int, dic
     return {x["row"]: dict(kind="screen", family=d["family"], status={lvl: "unknown_or_technical" for lvl in LEVELS}, source_sha256=d["binding"]["screen_sha256"], ratio_bounds={s: x["sizes"][s]["ratio_bound"] for s in d["sizes"]}) for x in d["results"] if x["blocking"]}
 
 
-def blocking_rows_from_statuses(family: str, statuses: Sequence[dict], start: int, source_sha256: str) -> Dict[int, dict]:
-    """Rows proven blocking by EVALUATED per-pseudo statuses (a family partial / sub-partial record: eligible truths): per level True / unknown / technical_fail; a row whose eligible
-    truth is False at a level is not blocking at that level (it may still be at the other level)."""
+def evaluated_rows_from_statuses(family: str, statuses: Sequence[dict], start: int, source_sha256: str) -> Dict[int, dict]:
+    """EVERY evaluated per-pseudo status of a family partial / sub-partial record (eligible truths) as evidence: per level True / unknown / technical_fail / False. R-D4C2A-D1: a row whose
+    eligible truth is False at both levels is RETAINED (it is evidence that the same (row, family, level) is not blocking, and it must contradict any screen / other evaluated proof of
+    that same (row, family, level) in the certificate's reconciliation); False is never COUNTED as blocking, and a False in one family is compatible with a blocking status in another."""
     if not isinstance(start, int) or isinstance(start, bool) or start < 0 or not _is_sha(source_sha256): raise InputContractError("start / source SHA")
     out = {}
     for i, s in enumerate(statuses):
@@ -227,7 +237,7 @@ def blocking_rows_from_statuses(family: str, statuses: Sequence[dict], start: in
             elif v == TECH: st[lvl] = "technical_fail"
             elif v is False: st[lvl] = "False"
             else: raise InputContractError(f"status[{i}] {lvl}: eligible truth {v!r}")
-        if any(st[lvl] != "False" for lvl in LEVELS): out[start + i] = dict(kind="evaluated", family=family, status=st, source_sha256=source_sha256, eligibility=s.get("eligibility"))
+        out[start + i] = dict(kind="evaluated", family=family, status=st, source_sha256=source_sha256, eligibility=s.get("eligibility"))
     return out
 
 
@@ -239,7 +249,8 @@ def _registered_thresholds() -> dict: return dict(support=RULES.usable_support, 
 
 
 def _merge_same_family(a: str, b: str, where: str) -> str:
-    """Two proofs of the SAME (row, family, level): identical, or a screen's 'unknown_or_technical' refined by an evaluated unknown / technical_fail; anything else is a contradiction."""
+    """Two proofs of the SAME (row, family, level): identical, or a screen's 'unknown_or_technical' refined by an evaluated unknown / technical_fail; anything else (in particular an
+    evaluated False against a screen's unknown_or_technical or against any other non-False evaluated status) is a contradiction and the certificate refuses the evidence."""
     if a == b: return a
     if "unknown_or_technical" in (a, b) and {a, b} <= {"unknown", "technical_fail", "unknown_or_technical"}: return a if a != "unknown_or_technical" else b
     raise InputContractError(f"{where}: conflicting proven statuses {a!r} vs {b!r}")
@@ -264,7 +275,7 @@ def evaluated_rows_from_record(published: dict, archive, *, registered: Optional
     """R-D4C2A-C: admit the EVALUATED per-pseudo statuses of a published family partial / sub-partial record only through the existing readers: the archived copy (load_partial_record /
     load_subpartial_record: payload SHA + identity) equals the published document apart from the self-referencing binding entries; verify_partial_record / verify_subpartial_record
     (position sources, plans, 12-position Results, per-pseudo eligibility re-derived from the archived records; registered context; CURRENT source binding) succeed; the global column
-    identity equals the registered columns. Returns dict(rows=blocking map, family, row_range, partial_sha256, verification)."""
+    identity equals the registered columns. Returns dict(rows=EVERY evaluated row (False rows retained: R-D4C2A-D1), family, row_range, n_rows, n_blocking_rows, n_false_rows, partial_sha256, verification)."""
     from .archive import ArchiveRef
     from .d4c1_partial import PARTIAL_SCHEMA, SUBPARTIAL_SCHEMA, load_partial_record, verify_partial_record
     from .d4c1_subpartial import load_subpartial_record, verify_subpartial_record
@@ -282,14 +293,17 @@ def evaluated_rows_from_record(published: dict, archive, *, registered: Optional
     if dict(n=ps["n"], sha256_T1=ps["sha256_T1"], sha256_T2=ps["sha256_T2"]) != dict(n=pseudo_identity["n"], sha256_T1=pseudo_identity["sha256_T1"], sha256_T2=pseudo_identity["sha256_T2"]): raise InputContractError("evaluated record columns differ from the registered pseudo identity")
     if family is not None and archived["family"] != family: raise InputContractError("evaluated record family differs")
     if start < 0: raise InputContractError("sub-partial row start")
-    rows = blocking_rows_from_statuses(archived["family"], archived["per_pseudo_status"], start, archived["binding"]["partial_sha256"])
-    return dict(rows=rows, family=archived["family"], row_range=[start, start + len(archived["per_pseudo_status"])], partial_sha256=archived["binding"]["partial_sha256"], verification=v)
+    rows = evaluated_rows_from_statuses(archived["family"], archived["per_pseudo_status"], start, archived["binding"]["partial_sha256"])
+    nb = sum(1 for ev in rows.values() if any(ev["status"][lvl] != "False" for lvl in LEVELS))
+    return dict(rows=rows, family=archived["family"], row_range=[start, start + len(archived["per_pseudo_status"])], n_rows=len(rows), n_blocking_rows=nb, n_false_rows=len(rows) - nb, partial_sha256=archived["binding"]["partial_sha256"], verification=v)
 
 
 def infeasibility_certificate(n: int, blocking: Sequence[Dict[int, dict]], *, pseudo_identity: dict, campaign: Optional[dict] = None, target_commitment: Optional[str] = None, sources: Optional[list] = None, thresholds: Optional[dict] = None) -> dict:
-    """blocking: a sequence of {row: evidence} maps (blocking_rows_from_screen / blocking_rows_from_statuses; every evidence names its family). Proofs are reconciled per
-    (row, family, level) — the same family's proofs must agree (a screen's unknown_or_technical may be refined by an evaluated unknown / technical_fail) — and then aggregated
-    over the families per row (aggregate_rows), so different families' True / unknown / technical_fail are combined, never rejected, and no global row is counted twice. thresholds
+    """blocking: a sequence of {row: evidence} maps (blocking_rows_from_screen / evaluated_rows_from_statuses; every evidence names its family). Proofs are reconciled per
+    (row, family, level) — the same family's proofs must agree (a screen's unknown_or_technical may be refined by an evaluated unknown / technical_fail; an evaluated False
+    contradicts a screen's unknown_or_technical and any other non-False proof of the same (row, family, level): R-D4C2A-D1, False rows are retained and reconciled, never
+    counted) — and then aggregated over the families per row (aggregate_rows), so different families' True / unknown / technical_fail / False are combined, never rejected,
+    and no global row is counted twice. rows carries every ADMITTED row (n_rows_admitted); n_rows_proven counts the rows blocking or technical at some level. thresholds
     must be EXACTLY the registered level -> threshold mapping. n is the FIXED denominator (official: RULES.n_pseudo)."""
     if not isinstance(n, int) or isinstance(n, bool) or n < 1: raise InputContractError("n must be a positive int")
     thr = _registered_thresholds() if thresholds is None else thresholds
@@ -312,14 +326,20 @@ def infeasibility_certificate(n: int, blocking: Sequence[Dict[int, dict]], *, ps
     agg = aggregate_rows(fam_rows)
     rows = {str(r): dict(families=fam_rows[r], levels=agg[r], evidence=evidence[r]) for r in sorted(fam_rows)}
     per_level = _levels_from_rows(n, thr, agg)
-    rec = dict(schema=CERT_SCHEMA, kind=CERT_KIND, engine_version=__version__, n=n, pseudo=dict(pseudo_identity), thresholds=thr, levels=per_level, rows=rows, n_rows_proven=len(rows), sources=list(sources or []), campaign=campaign, target_commitment=target_commitment,
-               aggregation=dict(rule="per (row, family, level) the proofs must agree (a screen's unknown_or_technical may be refined by an evaluated unknown / technical_fail); per row the families are combined as in calibration.any_family_truth (technical_fail > True > unknown > False); a row counts once",
+    rec = dict(schema=CERT_SCHEMA, kind=CERT_KIND, engine_version=__version__, n=n, pseudo=dict(pseudo_identity), thresholds=thr, levels=per_level, rows=rows, n_rows_admitted=len(rows), n_rows_proven=_n_proven(agg), sources=list(sources or []), campaign=campaign, target_commitment=target_commitment,
+               aggregation=dict(rule="per (row, family, level) the proofs must agree (a screen's unknown_or_technical may be refined by an evaluated unknown / technical_fail; an evaluated False contradicts any non-False proof of the same (row, family, level)); per row the families are combined as in calibration.any_family_truth (technical_fail > True > unknown > False); a row counts once",
                                 blocking="any family True / unknown / unknown_or_technical -> the row adds 1 to c + u whatever the other families' non-technical outcomes", technical="any family technical_fail -> the calibration is technical (no usable value); counted apart, never as c + u",
-                                unknown_or_technical="a screen row: unknown unless a technical failure occurs in its evaluation (then usable itself fails); a True in another family does not remove that possibility"),
+                                unknown_or_technical="a screen row: unknown unless a technical failure occurs in its evaluation (then usable itself fails); a True in another family does not remove that possibility",
+                                false_rows="evaluated False statuses are RETAINED as admitted evidence (R-D4C2A-D1) and reconciled per (row, family, level); a row False in every admitted family at a level is never counted as blocking at that level"),
                scope=("fixed-denominator ALGEBRAIC infeasibility statement: proven blocking rows vs the first blocking count of wilson_upper(k, n) > threshold; carries no c / u / rate, no statement about unevaluated rows, no technical-success claim for them, no usable == False "
                       "calibration; not a partial, not a sealed calibration (rejected by their readers); E1 rows enter only as evaluated statuses"), binding=binding_manifest())
     rec["binding"]["certificate_sha256"] = hashlib.sha256(ser.dumps({k: v for k, v in rec.items() if k != "binding"}).encode()).hexdigest()
     return rec
+
+
+def _n_proven(agg: Dict[int, dict]) -> int:
+    """Rows blocking or technical at SOME level (the rows that carry a proof; the remaining admitted rows are False at every level in every admitted family)."""
+    return sum(1 for a in agg.values() if any(a[lvl]["blocking"] or a[lvl]["technical"] for lvl in LEVELS))
 
 
 def _levels_from_rows(n: int, thr: dict, agg: Dict[int, dict]) -> dict:
@@ -328,7 +348,7 @@ def _levels_from_rows(n: int, thr: dict, agg: Dict[int, dict]) -> dict:
         k_block = wilson_blocking_count(n, thr[lvl])
         blocking_rows = sum(1 for a in agg.values() if a[lvl]["blocking"]); technical_rows = sum(1 for a in agg.values() if a[lvl]["technical"]); possibly = sum(1 for a in agg.values() if a[lvl]["possibly_technical"])
         cnt = {s: sum(1 for a in agg.values() if a[lvl]["aggregate"] == s) for s in ("technical_fail", "True", "unknown", "unknown_or_technical", "False")}
-        per_level[lvl] = dict(threshold=thr[lvl], first_blocking_count=k_block, proven_blocking_rows=blocking_rows, technical_rows=technical_rows, possibly_technical_rows=possibly, aggregate_counts=cnt,
+        per_level[lvl] = dict(threshold=thr[lvl], first_blocking_count=k_block, proven_blocking_rows=blocking_rows, technical_rows=technical_rows, possibly_technical_rows=possibly, retained_false_rows=cnt["False"], aggregate_counts=cnt,
                               usable_true_impossible_by_wilson=bool(blocking_rows >= k_block), wilson_upper_if_remaining_all_false=wilson_upper(blocking_rows, n), technical_rows_present=bool(technical_rows > 0),
                               statement=("usable == True is impossible at this level for the fixed n: the Wilson upper bound of the proven blocking rows alone exceeds the threshold even if every other row were False" if blocking_rows >= k_block
                                          else "not proven: fewer proven blocking rows than the first blocking count (this is NOT a statement that the calibration is usable)"))
@@ -337,7 +357,7 @@ def _levels_from_rows(n: int, thr: dict, agg: Dict[int, dict]) -> dict:
 
 def check_certificate(d: dict) -> dict:
     """Internal re-derivation of a certificate: content SHA; the thresholds are exactly the registered mapping; every row's family statuses are valid and its level aggregates /
-    the per-level counts / statements re-derive from them; n_rows_proven. (Evidence AUTHENTICATION — run records, publication hashes, readers, registered identities — is the
+    the per-level counts / statements re-derive from them; n_rows_admitted / n_rows_proven. (Evidence AUTHENTICATION — run records, publication hashes, readers, registered identities — is the
     consumer's job before the rows are admitted; this checker only certifies the algebra over the admitted rows.)"""
     if not isinstance(d, dict) or d.get("schema") != CERT_SCHEMA or d.get("kind") != CERT_KIND: raise InputContractError("not an infeasibility certificate")
     body = {k: v for k, v in d.items() if k != "binding"}
@@ -352,9 +372,10 @@ def check_certificate(d: dict) -> dict:
         for fam, st in v["families"].items():
             if set(st) != set(LEVELS) or any(x not in _RANK for x in st.values()): raise InputContractError(f"certificate row {r_} family {fam}: statuses")
         rows[r] = v["families"]
-    if len(rows) != d["n_rows_proven"]: raise InputContractError("certificate n_rows_proven")
+    if len(rows) != d.get("n_rows_admitted"): raise InputContractError("certificate n_rows_admitted")
     agg = aggregate_rows(rows)
+    if d.get("n_rows_proven") != _n_proven(agg): raise InputContractError("certificate n_rows_proven")
     for r_, v in d["rows"].items():
         if v.get("levels") != agg[int(r_)]: raise InputContractError(f"certificate row {r_}: level aggregates differ from the family statuses")
     if d["levels"] != _levels_from_rows(n, d["thresholds"], agg): raise InputContractError("certificate levels / statements differ from the re-derivation")
-    return dict(ok=True, n=n, levels={lvl: d["levels"][lvl]["usable_true_impossible_by_wilson"] for lvl in LEVELS}, n_rows_proven=len(rows), technical_rows={lvl: d["levels"][lvl]["technical_rows"] for lvl in LEVELS})
+    return dict(ok=True, n=n, levels={lvl: d["levels"][lvl]["usable_true_impossible_by_wilson"] for lvl in LEVELS}, n_rows_admitted=len(rows), n_rows_proven=d["n_rows_proven"], technical_rows={lvl: d["levels"][lvl]["technical_rows"] for lvl in LEVELS})

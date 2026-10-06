@@ -1,0 +1,47 @@
+{
+ "schema": "d4c2a_acceptance_file_map_v1",
+ "scope": "External (ChatGPT) audit records for Phase D4C-2a. Stored verbatim; they are not formal inputs and grant no execution GO beyond the commits they name.",
+ "missing": [],
+ "files": {
+  "ChatGPT_audit_D4C2a_0.108.0.md": {
+   "sha256": "4b1efa02d3283ee3bcf96517d21df64d4da8f4a044d855eb10d587d1bb06613d",
+   "bytes": 12430,
+   "role": "audit report of D4C-2a v1 (engine 0.108.0, commit 4668b2e5cb645ff830db4bb6bb181d0c8ac3f960): PARTIAL_ACCEPTANCE, instrumented probe GO, HOLD R-D4C2A-A/B/C/D"
+  },
+  "ChatGPT_audit_D4C2a_v3_0.110.0.md": {
+   "sha256": "4b7319cff2808d79338c4e3da1fd793a29ddab90d224a5a0ff72ec4a3779e09a",
+   "bytes": 14967,
+   "role": "audit report of D4C-2a v3 (engine 0.110.0, commit 39082b641d8621989ae69a273f4e88e0c59673ba): ENVIRONMENT_AMENDMENT_IN_PRINCIPLE__FIXED_SOURCE_BRIDGE_PROBE_ONLY_GO__SCREEN_CERTIFICATE_HOLD"
+  },
+  "D4C2a_0.108.0_audit_decision.json": {
+   "sha256": "c1bc88f7a86421e57f224d0af6e4472bd32e5ebdd032e42fb0db44bf58f847b7",
+   "bytes": 15248,
+   "role": "decision JSON for the 0.108.0 audit"
+  },
+  "D4C2a_0.108.0_audit_evidence.zip": {
+   "sha256": "ab15009f29c52f57aaf60a9b9c69dae2547f1ccfbf7e53ff98f426a43a456391",
+   "bytes": 398462,
+   "role": "audit evidence zip (0.108.0) - byte-preserved"
+  },
+  "D4C2a_v2_0.109.0_audit_decision.json": {
+   "sha256": "f4a2cc420a31a0539b4c3efb372fe443a22f9d5361244804df501c29b76f5604",
+   "bytes": 11701,
+   "role": "decision JSON for the v2 (engine 0.109.0) audit: PARTIAL_ACCEPTANCE_A_B_CLOSED__CERTIFICATE_HOLD__PIPELINE_EXECUTION_DEFERRED (R-D4C2A-C1 / C2 / D1 open; the acceptance baseline named by the v3 decision)"
+  },
+  "D4C2a_v3_0.110.0_audit_decision.json": {
+   "sha256": "071c512d0d97844c3c76afd5b5b2599c4a1ba455f1eb7628829031c299ecc8d4",
+   "bytes": 12072,
+   "role": "decision JSON for the v3 audit (GO: fixed-0.110.0 instrumented E2 N=3 High-RAM bridge probe only; open: R-D4C2A-C1/C2/D1, N-D4ENV-HISTORY-PIN-COMPLETENESS)"
+  },
+  "D4C2a_v3_0.110.0_audit_evidence.zip": {
+   "sha256": "caca05e4b6ceff2933f1146ab36239df850c7bdb7dbfe63af81da4ba2aa54db3",
+   "bytes": 374342,
+   "role": "audit evidence zip (v3) - byte-preserved"
+  },
+  "D4C2a_v3_0.110.0_bridge_comparison_spec.json": {
+   "sha256": "a9cb9ab9b622cb0d929006eac01a957003a5eeffef990a40de8c6338a0981373",
+   "bytes": 7917,
+   "role": "environment bridge comparison contract (D4C2a_environment_bridge_comparison_spec_v1): 15 exact per-row records + required_equal_partial_fields; whole partial/archive SHA need not match"
+  }
+ }
+}

@@ -1,0 +1,302 @@
+{
+  "schema": "step1_D4C2a_0108_audit_v1",
+  "date_JST": "2026-10-06",
+  "decision": "PARTIAL_ACCEPTANCE__INSTRUMENTED_E2_N3_PROBE_ONLY_GO__SCREEN_CERTIFICATE_HOLD",
+  "subject": {
+    "author_supplied_commit": "4668b2e5cb645ff830db4bb6bb181d0c8ac3f960",
+    "engine": "0.108.0",
+    "archive": {
+      "filename": "phaseB_D4C2a_0.108.0.zip",
+      "bytes": 29774881,
+      "sha256": "a0fab34aa540b87bf927d9bd0fcb50f1bdc92e4695149ec91bfdaec4738b4b45"
+    },
+    "inventory_sha256": "0702f6f9458f9922720a088d9ad47b596067276e91825d202469497fdc11d423",
+    "key_files": {
+      "step1_engine/profiling.py": "5a7c34239087f84601c20571560a049118ab03defc4c8f19d3e95dadef0832ad",
+      "step1_engine/d4c1_subpartial.py": "23aaa4a37f8e18f3c75fa73a07d56acc1f05762d8d8cc032c883a51a08b41446",
+      "step1_engine/infeasibility.py": "4537d78b8f4e926b105fbabea5be37871ee0df9172161d118b5c44e0879d9a29",
+      "step1_engine/d4c1_partial.py": "858f2e8ff1379e38921fa0cfec5bbe0d021abaff9d258825b2d184b9d8eec2a5",
+      "step1_engine/run_reader.py": "8c00230e8adf6e3b67d28858cf4a511e2aeb147402f4663b5d83b5631cdb2819",
+      "d/d4c1_calibration.py": "a5c2e6bfdb60f47e9af7058e55a5a3148197cae0ca5b4e5a079d6f880da768cb",
+      "d/MirrorTopology_Step1_D4C1_partial_v0.1.ipynb": "e2808bcda46b36dbbe1876381c9ca6eb98bfad76c51614bd0ac9edd21d011d81",
+      "d/MirrorTopology_Step1_D4C2_screen_v0.1.ipynb": "ca9c263ac5cc6ab398eb948c443404af310d0d89a2aae55cef4760dc5a5f6acb",
+      "d/MirrorTopology_Step1_D4C1_combine_family_v0.1.ipynb": "900a9b3dcc6fa993f1227e80cdbaeb5a36a1a470fa0ca57197f701a83c587327"
+    },
+    "remote_tree_independently_verified": false
+  },
+  "GO": {
+    "whole_packet_implementation_acceptance": false,
+    "instrumentation_scoped_implementation_acceptance": true,
+    "subpartial_synthetic_contract_acceptance": true,
+    "instrumented_E2_first3_HighRAM_probe_execution": true,
+    "screen_E2_E7_E8_execution": false,
+    "certificate_production_execution": false,
+    "formal_subpartial_or_combine_family_execution": false,
+    "formal_four_family_calibration": false,
+    "usable_acceptance": false,
+    "PhaseE_actual_target": false,
+    "W2_or_pseudo_regeneration": false
+  },
+  "findings": [
+    {
+      "id": "R-D4C2A-A-SCREEN-GATE-INVENTORY",
+      "severity": "blocking_screen_execution",
+      "location": "d/d4c1_calibration.py:275 and screen notebook attempt cell",
+      "finding": "Screen initializes 20 REQUIRED keys, but shared preparation inserts G_d3b_units_accepted; exact-key notebook rejects the resulting 21-key successful script record.",
+      "evidence": "results/screen_launcher.json: exact20 baseline succeeds; script21 fails gates_ok with bindings/evidence true. Assignment extracted from submitted AST; unchanged notebook cells, TEST-ONLY child/Git.",
+      "required_change": "Keep required and diagnostic fields separate or promote the gate consistently into script/notebook trusted inventory; add actual screen-run-to-notebook boundary test. Do not weaken exact gate-set rejection."
+    },
+    {
+      "id": "R-D4C2A-B-CERTIFICATE-EXECUTION-SCOPE",
+      "severity": "blocking_offline_certificate_execution",
+      "location": "d/d4c1_calibration.py:229,259 and REQUIRED_CERTIFICATE",
+      "finding": "Removing G_env_lock from the required list does not bypass the earlier unconditional registered-environment return. selftest skip prevents official certificate COMPLETE; frozen-loader/PhaseC common preflight also remains.",
+      "evidence": "results/mode_profiler_boundaries.json executes the exact main environment guard for mode certificate: without skip returns environment rc1.",
+      "required_change": "Separate the certificate-only preflight, preserve authenticated evidence/registered source and constants, record consumer environment, and retain hard runtime environment gates for screen/partial. Do not use a self-test switch as the production route."
+    },
+    {
+      "id": "R-D4C2A-C-CERTIFICATE-EVIDENCE-AND-SCREEN-PROOF",
+      "severity": "blocking_certificate_implementation",
+      "location": "d/d4c1_calibration.py:548-571; step1_engine/infeasibility.py:135-167,229-239",
+      "finding": "Certificate helper does not run partial/subpartial readers or require archive, and does not bind screen document bytes to published run evidence/source/gates. Screen checker does not require both prefixes in formal proofs.",
+      "evidence": "results/certificate_boundaries.json: 81 unsupported rows in non-partial/no-archive fixture reach certificate helper rc0 with both impossibility booleans true; a rehashed missing-N4 screen with stale publication and failed run is accepted. results/real_partial_certificate.json: real synthetic reader rejects unknown->True restamp, certificate helper accepts it.",
+      "required_change": "Authenticate run scope, required inventory, source/attempt/campaign, publication hashes and current registered W2/pseudo identities. Evaluated sources must pass load/verify_partial or subpartial readers. Require canonical full formal position/size/N0/N4 coverage, exact counts and row thresholds, registered decisions, and validated certificate field/summary consistency. A raw arithmetic helper is not evidence authentication."
+    },
+    {
+      "id": "R-D4C2A-D-ROW-FAMILY-AGGREGATION-AND-LEVELS",
+      "severity": "blocking_certificate_implementation",
+      "location": "step1_engine/infeasibility.py:197,206-212,229-239",
+      "finding": "Evidence conflicts are keyed only by global row, incorrectly rejecting legitimate different-family True/unknown/TECH combinations. Threshold validation accepts support/strong threshold swaps.",
+      "evidence": "results/certificate_boundaries.json: E2 unknown+E7 True rejected; E2 True+E7 TECH rejected; swapped support=.01,strong=.05 accepted and labels 12 rows support-impossible.",
+      "required_change": "Check contradictions within a row/family/level, then aggregate across families without double counting and with TECH retained. Keep unknown_or_technical conditional meaning. Require the exact registered level-to-threshold mapping in constructor and checker; preserve same-family contradiction rejection."
+    }
+  ],
+  "probe_execution_settings": {
+    "REPO_COMMIT": "4668b2e5cb645ff830db4bb6bb181d0c8ac3f960",
+    "EXPECTED_INVENTORY_SHA256": "0702f6f9458f9922720a088d9ad47b596067276e91825d202469497fdc11d423",
+    "FAMILY": "E2",
+    "PROBE_N": 3,
+    "ROW_RANGE": null,
+    "INSTRUMENT": true,
+    "OUT_ROOT": null,
+    "STAGE_LOCAL": true,
+    "STAGE_ROOT": "/content/stage",
+    "D2_RUN_ROOT": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2",
+    "D3B_RUN_ROOTS": {
+      "L1.00": "/content/drive/MyDrive/MirrorTopology_D3b/E2_L1.00_20260930T010656Z/out/d3b",
+      "L1.20": "/content/drive/MyDrive/MirrorTopology_D3b/E2_L1.20_20260930T054800Z/out/d3b",
+      "L1.50": "/content/drive/MyDrive/MirrorTopology_D3b/E2_L1.50_20260930T080141Z/out/d3b"
+    },
+    "TARGET_COMMITMENT": "9efa1b8d82fec2e23ac685d24dbaece7932e29955c94fc5a2955ba793c70b326",
+    "CAMPAIGN_ID": "D4C2_9efa1b8d82fe",
+    "scope": "instrumented resource probe only, first 3 registered paired rows, no nonce, no formal PASS, no screen/certificate/subpartial execution GO"
+  },
+  "probe_conditions": [
+    "Use only d/MirrorTopology_Step1_D4C1_partial_v0.1.ipynb content v0.3 at the submitted bytes and specified source lock.",
+    "Mode partial, E2, PROBE_N=3, INSTRUMENT=True, ROW_RANGE=None; preserve paired prefix, bank/plan/W2, constants and all source/environment/intake gates.",
+    "No self-test/env-skip flags. Never promote the probe to a formal PASS.",
+    "Save raw profiler JSON and its run-record receipt, cProfile summary, run/final/lock/archive/stdout/stderr, executed notebook; confirm segments=3 and missing_targets=[] in post-run review.",
+    "Outside-segment time includes per-row persistence, not just fixed overhead. Inclusive target times overlap. Instrumented times do not establish production speedup or a safe chunk size.",
+    "A revised source or inventory requires a new execution decision; this GO is not inherited by an arbitrary patched version."
+  ],
+  "prior_acceptances_preserved": true,
+  "requires_bank_pseudo_D2W_D3c_regeneration_or_rerun": false,
+  "tests": {
+    "unmodified_submitted_pytest": {
+      "passed": 90,
+      "skipped": 8,
+      "failed": 0,
+      "errors": 0,
+      "total": 98,
+      "by_file": {
+        "test_d4c2a": {
+          "passed": 11,
+          "failed": 0,
+          "error": 0,
+          "skipped": 0
+        },
+        "test_d4c2a_script": {
+          "passed": 9,
+          "failed": 0,
+          "error": 0,
+          "skipped": 4
+        },
+        "test_d4c1": {
+          "passed": 19,
+          "failed": 0,
+          "error": 0,
+          "skipped": 0
+        },
+        "test_d4c1_script": {
+          "passed": 51,
+          "failed": 0,
+          "error": 0,
+          "skipped": 4
+        }
+      },
+      "skips": [
+        {
+          "name": "test_subpartial_runs_and_family_combination",
+          "class": "test_d4c2a_script",
+          "reason": "external assets not present"
+        },
+        {
+          "name": "test_family_combination_feeds_combine_and_refusals",
+          "class": "test_d4c2a_script",
+          "reason": "external assets not present"
+        },
+        {
+          "name": "test_instrumented_probe_publishes_profile_and_leaves_the_record",
+          "class": "test_d4c2a_script",
+          "reason": "external assets not present"
+        },
+        {
+          "name": "test_screen_and_certificate_modes",
+          "class": "test_d4c2a_script",
+          "reason": "external assets not present"
+        },
+        {
+          "name": "test_partial_script_selftest_end_to_end",
+          "class": "test_d4c1_script",
+          "reason": "external assets not present"
+        },
+        {
+          "name": "test_combine_script_selftest_and_refusals",
+          "class": "test_d4c1_script",
+          "reason": "external assets not present"
+        },
+        {
+          "name": "test_partial_script_refusals",
+          "class": "test_d4c1_script",
+          "reason": "external assets not present"
+        },
+        {
+          "name": "test_script_selftest_fixture_equivalence",
+          "class": "test_d4c1_script",
+          "reason": "external assets not present"
+        }
+      ]
+    },
+    "author_junit_cases": 1923,
+    "author_junit_files": 29,
+    "author_junit_failures_errors_skips": 0,
+    "collect_count": 1923,
+    "normalized_multiset_equal": true,
+    "normalization": "JUnit bare module class names are mapped to tests/; absolute notebook checkout prefix normalized in four parameter names.",
+    "all_1923_independently_executed": false,
+    "independent_probes": {
+      "screen_launcher_scenarios": 7,
+      "certificate_boundary_scenarios": 9,
+      "real_synthetic_partial_reader_vs_certificate": true,
+      "certificate_environment_actual_guard": true,
+      "outside_segments_persistence_N1_N3": true,
+      "profiler_enter_failure_cleanup_counterexample": true,
+      "fresh_boundary_scripts": 3
+    },
+    "probe_counts_are_not_pytest_counts": true
+  },
+  "metadata": {
+    "inventory_sha256": "0702f6f9458f9922720a088d9ad47b596067276e91825d202469497fdc11d423",
+    "inventory_entries": 2217,
+    "inventory_failures": [],
+    "python_compiled": 218,
+    "notebook_cells_compiled": 12,
+    "author_junit_files": 29,
+    "author_junit_cases": 1923,
+    "author_junit_failure": 0,
+    "author_junit_error": 0,
+    "author_junit_skip": 0,
+    "collect_cases": 1923,
+    "normalized_multiset_equal": true,
+    "author_only": [],
+    "collect_only": [],
+    "old_registered_files": 1904,
+    "registered_unchanged": true,
+    "probe_originals": [
+      {
+        "file": "ChatGPT_audit_D4C2_probe_231d37b8.md",
+        "sha256": "3c39edf2c82d5a31681396e78109fef1b43410168e0fc5c1e208f47427e756a6",
+        "matches_original": true
+      },
+      {
+        "file": "D4C2_probe_231d37b8_audit_decision.json",
+        "sha256": "29d8013532a462e30852a48f15b11c4d604781fa3343094a1dc71fd399f35c49",
+        "matches_original": true
+      },
+      {
+        "file": "D4C2_probe_resource_report_v2.md",
+        "sha256": "d5d5eadb4ee05cbd33f1250e4e84a00672457f748faa7f1334eb69481442fc8c",
+        "matches_original": true
+      },
+      {
+        "file": "D4C2_probe_231d37b8_audit_evidence.zip",
+        "sha256": "44d7298aeb12407c28434fbfb69ad6a8e3c011d0bda730456e86af4e1a599ca7",
+        "matches_original": true
+      },
+      {
+        "file": "MirrorTopology_Step1_D4C1_partial_v0_1_executed_231d37b89271.ipynb",
+        "sha256": "72af76c8b161b09eae3815ede13da9416ab5c71a16781e3784fc5c70b4707cd8",
+        "matches_original": true
+      },
+      {
+        "file": "D4C2_probe_resource_report.md",
+        "sha256": "9e9ad98f0bf555bdd2b30a1c0035421830506abbc5e6e97eb697e7cb15d309ba",
+        "matches_original": true
+      },
+      {
+        "file": "d4c1_partial_E2_231d37b89271.zip",
+        "sha256": "538f5e07f3c4fae84803d17783ff09a03fef5270cd04b600376e2af891644766",
+        "matches_original": true
+      }
+    ]
+  },
+  "preservation": {
+    "submitted": {
+      "files": 2726,
+      "changed": [],
+      "added": [],
+      "unchanged": true
+    },
+    "previous": {
+      "files": 2677,
+      "changed": [],
+      "added": [],
+      "unchanged": true
+    },
+    "fresh": {
+      "files": 2726,
+      "unchanged": true
+    }
+  },
+  "nonblocking": [
+    {
+      "id": "N-D4C2A-PROFILER-ACCOUNTING",
+      "note": "outside_segments is not synonymous with fixed cost: per-pseudo archive puts occur outside evaluate_family_full. Separate or label correctly; no production-speed estimate from instrumented wall time."
+    },
+    {
+      "id": "N-D4C2A-PROFILER-ENTER-CLEANUP",
+      "note": "An alias mismatch during __enter__ can leave already installed inactive wrappers; rollback installed sites on entry failure is recommended. Default inventory normal path passed; not a blocker for the pinned probe."
+    },
+    {
+      "id": "N-D4C2A-DOCUMENT-REQUEST-SCOPE",
+      "note": "Report line3 says no execution GO is requested, while the current user request expressly requests it; this decision follows the current request."
+    },
+    {
+      "id": "N-D4C2A-ROW-TYPE",
+      "note": "envelope_screen_family casts row values to int before rejecting bools; validate integer types first (CLI row ranges already validate)."
+    }
+  ],
+  "limitations": [
+    "No formal bank intake or real 2000-row envelope screen executed.",
+    "No Colab or registered environment reproduction, no remote Git tree comparison.",
+    "Eight submitted script end-to-end tests skipped due to external assets.",
+    "Certificate helper tests run after preflight with explicit TEST-ONLY fixtures, not successful official CLI/Colab runs.",
+    "Notebook boundary probes use unchanged cells but TEST-ONLY Git/child.",
+    "Synthetic arithmetic and partial equivalence do not establish real-data blocking counts, technical success of unevaluated rows, usable, or a sealed calibration.",
+    "Fresh verification repeats three independent boundary scripts, not all selected pytest."
+  ],
+  "artifacts": {
+    "report": "ChatGPT_audit_D4C2a_0.108.0.md",
+    "evidence": "D4C2a_0.108.0_audit_evidence.zip"
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "schema": "D4C2a_environment_bridge_comparison_spec_v1",
+  "scope": "Acceptance criteria for one E2 N=3 environment/profiling probe; not a global numerical equivalence proof",
+  "baseline_zip_sha256": "538f5e07f3c4fae84803d17783ff09a03fef5270cd04b600376e2af891644766",
+  "baseline_partial_payload": "057ae75355fd7a716aba9d52d5a520275c9c6fd3b57162a4e7d389e327223878",
+  "new_engine": "0.110.0",
+  "old_python": "3.13.15",
+  "new_python": "3.13.16",
+  "whole_partial_sha_must_match": false,
+  "whole_archive_sha_set_must_match": false,
+  "raw_originals_must_be_preserved": true,
+  "required_exact_per_row_records": [
+    {
+      "kind": "family_result",
+      "identity": {
+        "family": "E2",
+        "stage": "3-position family mixture (pseudo)",
+        "pseudo_index": 0
+      },
+      "sha256": "f0b44b5c4daccdb7fbbdbbc1b76c37f4813681ada9406b74fac5adb9448a40b8",
+      "bytes": 837951,
+      "row": 0,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "three_position_result",
+      "identity": {
+        "family": "E2",
+        "size_id": "L1.00"
+      },
+      "sha256": "75c3f51a64f2f5c43d1f59a861616dfd61da3f648ea402ba89a9c5d9dd969958",
+      "bytes": 1524,
+      "row": null,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "three_position_result",
+      "identity": {
+        "family": "E2",
+        "size_id": "L1.20"
+      },
+      "sha256": "f5339591a85ac9145d707b961fcffeb10253da14ca12a2d09d9520917fd094cd",
+      "bytes": 1572,
+      "row": null,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "three_position_result",
+      "identity": {
+        "family": "E2",
+        "size_id": "L1.50"
+      },
+      "sha256": "ea190668d69a3103f1253184879b96de1e60022b0f8915f8763f5cbb324f9abf",
+      "bytes": 1524,
+      "row": null,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "transition",
+      "identity": {
+        "kind": "pseudo_family_plan",
+        "family": "E2",
+        "pseudo_index": 0
+      },
+      "sha256": "201b191e18ef747c35713cbe43b4f3982c7501cac8fd7774773a14e41c5d2fac",
+      "bytes": 2325,
+      "row": 0,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "family_result",
+      "identity": {
+        "family": "E2",
+        "stage": "3-position family mixture (pseudo)",
+        "pseudo_index": 1
+      },
+      "sha256": "19d1c96c80b8c8dea091530da0da5e82e9645564dff0c9bdaa613cb84305c62b",
+      "bytes": 852752,
+      "row": 1,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "three_position_result",
+      "identity": {
+        "family": "E2",
+        "size_id": "L1.00"
+      },
+      "sha256": "90c023bf87f526b37147108f18dfa14ed841af7b0a03b59c51b85444673ba969",
+      "bytes": 1524,
+      "row": null,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "three_position_result",
+      "identity": {
+        "family": "E2",
+        "size_id": "L1.20"
+      },
+      "sha256": "d28c6bbe902cabc75a974010dd9f6747c3f7edcd849342dce9713a44c7e50a4d",
+      "bytes": 1570,
+      "row": null,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "three_position_result",
+      "identity": {
+        "family": "E2",
+        "size_id": "L1.50"
+      },
+      "sha256": "eff1bfa49d9d85d376f385298c4ade54969f4b37e18b4e056672896754453023",
+      "bytes": 1524,
+      "row": null,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "transition",
+      "identity": {
+        "kind": "pseudo_family_plan",
+        "family": "E2",
+        "pseudo_index": 1
+      },
+      "sha256": "0aa08703d308a50e1cbddf41afbc9d1cbfc338d9fcd3219abd3f0e8de9f7cfdd",
+      "bytes": 2324,
+      "row": 1,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "family_result",
+      "identity": {
+        "family": "E2",
+        "stage": "3-position family mixture (pseudo)",
+        "pseudo_index": 2
+      },
+      "sha256": "46182b3d8a9254c405e7910235d8e90b73c062146dab700a64088fd33848ca33",
+      "bytes": 834735,
+      "row": 2,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "three_position_result",
+      "identity": {
+        "family": "E2",
+        "size_id": "L1.00"
+      },
+      "sha256": "466489547dbf439de1630457d7ef11c8fab32dccb564f2e589841da9e7c38c8d",
+      "bytes": 1525,
+      "row": null,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "three_position_result",
+      "identity": {
+        "family": "E2",
+        "size_id": "L1.20"
+      },
+      "sha256": "fbf2468aa25ed2c1ad5b0491433eb9acf32585757ad33c47fa9563683b2baaf5",
+      "bytes": 1573,
+      "row": null,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "three_position_result",
+      "identity": {
+        "family": "E2",
+        "size_id": "L1.50"
+      },
+      "sha256": "e2f055ec9b0a2167d4effc25d568e469b5a8ea0c84de79af52a62395e5074f5f",
+      "bytes": 1525,
+      "row": null,
+      "has_engine_field": false,
+      "has_binding_field": false
+    },
+    {
+      "kind": "transition",
+      "identity": {
+        "kind": "pseudo_family_plan",
+        "family": "E2",
+        "pseudo_index": 2
+      },
+      "sha256": "be745b3f5290083263986aaa51f8b38d5141447de5ad59d439203cf069748296",
+      "bytes": 2325,
+      "row": 2,
+      "has_engine_field": false,
+      "has_binding_field": false
+    }
+  ],
+  "other_archive_records": [
+    {
+      "kind": "registry",
+      "document_kind": null,
+      "sha256": "4010a3328c117de0e13fba9997167e4750b4f25051d6e619c5a9e221bda68bfe"
+    },
+    {
+      "kind": "transition",
+      "document_kind": "family_partial_calibration",
+      "sha256": "77252f400aa4a6be14ded506fddf3a8bf656a2f85dddf092be3535bb87187a63"
+    }
+  ],
+  "required_equal_partial_fields": [
+    "schema",
+    "kind",
+    "mode",
+    "family",
+    "registry_sha256",
+    "manifest_sha256",
+    "w2_context_sha256",
+    "w2_asset_sha256",
+    "sizes",
+    "fingerprints",
+    "thresholds",
+    "archive_refs",
+    "per_pseudo_status",
+    "per_pseudo_diagnostics",
+    "per_pseudo_manifest_keys",
+    "w2_context_ref",
+    "campaign",
+    "plan_objects",
+    "scope"
+  ],
+  "comparison_notes": [
+    "Map records by their typed identity and global row/size; require exact canonical bytes and content SHA for these 15 per-row records, with no missing/extra/duplicate rows.",
+    "The fourth transition is the aggregate family_partial_calibration record, not a per-row pseudo_family_plan. Its whole SHA is allowed and expected to change.",
+    "Verify the old and new record payload/file hashes and archived references separately. New record must pass its unmodified own reader with current_source_binding=True.",
+    "Do NOT overwrite the old record or re-label the new record as engine0.107 or Python3.13.15.",
+    "New binding must identify the new fixed module SHA map, rules/tables and registered constants; invariant science/input dependency fields must equal baseline.",
+    "Do not require whole gate dict equality: recorded env and registered expected Python differ. Both gates must be independently valid in their own execution epoch; new precheck/prelaunch and twelve gate must be live collected, exact new six versions and BLAS constraints.",
+    "Exact numeric per-row comparison is for the fixed first3 only; it excludes unexercised N4/KDE-CI/12-position numerical paths and does not approve screening/certificates/target.",
+    "On mismatch preserve artifacts and stop for analysis; distinguish expected metadata differences from any actual numeric/state/identity differences. No retry-until-match or retrospectively chosen tolerance."
+  ]
+}

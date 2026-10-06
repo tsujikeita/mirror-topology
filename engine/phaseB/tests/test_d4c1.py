@@ -103,7 +103,7 @@ def test_archive_flush_conflict_detected_before_overwrite(tmp_path):
 
 
 def test_module_registered_and_version():
-    assert 'd4c1_partial.py' in MODULES and __version__ == '0.110.0' and set(module_shas()) == set(MODULES)
+    assert 'd4c1_partial.py' in MODULES and __version__ == '0.111.0' and set(module_shas()) == set(MODULES)
     inv = json.load(open(os.path.join(P, 'B2_completion_inventory.json'))); assert inv['modules'] == module_shas() and inv['engine_version'] == __version__
 
 

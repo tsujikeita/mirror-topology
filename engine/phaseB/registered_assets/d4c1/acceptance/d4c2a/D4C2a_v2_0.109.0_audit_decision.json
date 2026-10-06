@@ -1,0 +1,288 @@
+{
+  "schema": "step1_D4C2a_v2_0109_audit_v1",
+  "date_JST": "2026-10-06",
+  "decision": "PARTIAL_ACCEPTANCE_A_B_CLOSED__CERTIFICATE_HOLD__PIPELINE_EXECUTION_DEFERRED",
+  "subject": {
+    "author_supplied_commit": "a962485a074b0299935af78e97deac0119672205",
+    "engine": "0.109.0",
+    "archive": {
+      "filename": "phaseB_D4C2a_v2_0.109.0.zip",
+      "bytes": 29796588,
+      "sha256": "2c2bc7b96a4a341e94d0ea25e60d4f4f7b978b3f6894100039b6b21883428c6a",
+      "entries": 2727,
+      "files": 2727
+    },
+    "inventory_sha256": "c4bf18c0c55648060db8ebd5b1bbc61dbf646396b29763e29eead77de4ca57e2",
+    "key_files": {
+      "step1_engine/infeasibility.py": "6e80dde84416365dc0173845376ce4a38fd28ccf9b3d45b4a8bbe7854c6ff67b",
+      "step1_engine/profiling.py": "88e5cb619cae0718108fa975db5ce2b00afd1f2bb55a52d8ea26273841a8a244",
+      "d/d4c1_calibration.py": "815516358ccbcb1b5d9c09fecd06583aeb6ea5a0725664bba9bf1d5378282bf6",
+      "d/MirrorTopology_Step1_D4C2_screen_v0.1.ipynb": "ca9c263ac5cc6ab398eb948c443404af310d0d89a2aae55cef4760dc5a5f6acb"
+    },
+    "remote_tree_independently_verified": false
+  },
+  "prior_decision": {
+    "filename": "D4C2a_0.108.0_audit_decision.json",
+    "sha256": "c1bc88f7a86421e57f224d0af6e4472bd32e5ebdd032e42fb0db44bf58f847b7"
+  },
+  "previous_findings": {
+    "R-D4C2A-A-SCREEN-GATE-INVENTORY": "CLOSED_WITH_EXPLICIT_TEST_SCOPE",
+    "R-D4C2A-B-CERTIFICATE-EXECUTION-SCOPE": "CLOSED_WITH_TEST_ONLY_CLI_BASELINE",
+    "R-D4C2A-C-CERTIFICATE-EVIDENCE-AND-SCREEN-PROOF": "PARTIALLY_CLOSED__C1_C2_REMAIN",
+    "R-D4C2A-D-ROW-FAMILY-AGGREGATION-AND-LEVELS": "MAPPING_AND_CROSS_FAMILY_FIXED__D1_REMAINS"
+  },
+  "findings": [
+    {
+      "id": "R-D4C2A-C1-TRUSTED-RUN-INVENTORY",
+      "status": "OPEN_BLOCKING_CERTIFICATE",
+      "location": "d/d4c1_calibration.py::_certificate.run_ok",
+      "finding": "Producer req and gates are compared to each other, not to trusted mode REQUIRED. Removing a gate from both, env-only req, and extra key in both are accepted. Empty attempt, wrong pins metadata and wrong profile are also accepted.",
+      "evidence": "results/certificate_boundary.json",
+      "required_change": "Compare mode/schema-selected trusted REQUIRED, exact gate keys and strict bools; validate source pins, profile, attempt and matching success flag. Preserve all existing publication/reader checks."
+    },
+    {
+      "id": "R-D4C2A-C2-W2-SUMMARY-BINDING",
+      "status": "OPEN_BLOCKING_CERTIFICATE",
+      "location": "step1_engine/infeasibility.py::bind_screen_record",
+      "finding": "Keeping the expected checksum string permits conflicting trigger/B_final summary fields. Registered W2 context itself is not altered.",
+      "evidence": "results/certificate_boundary.json",
+      "required_change": "Bind the complete stored W2 summary to the actual validated decisions, or derive applicability from trusted decisions and separately require exact summary consistency. Reject restamped field edits with unchanged expected checksum."
+    },
+    {
+      "id": "R-D4C2A-D1-FALSE-EVIDENCE-RETENTION",
+      "status": "OPEN_BLOCKING_CERTIFICATE",
+      "location": "step1_engine/infeasibility.py::blocking_rows_from_statuses and evaluated_rows_from_record",
+      "finding": "Both-level False rows disappear before row/family/level consistency checks; same-family screen/unknown vs verified False can silently lose contrary evidence.",
+      "evidence": "results/algebra_boundaries.json; results/real_evaluated_admission.json",
+      "required_change": "Keep all authenticated evaluated statuses through reconciliation, then count blockers. False contributes zero but must participate in same-family contradiction detection."
+    }
+  ],
+  "GO": {
+    "whole_packet_implementation_acceptance": false,
+    "screen_producer_gate_separation_scoped_acceptance": true,
+    "certificate_environment_free_entry_scoped_acceptance": true,
+    "screen_E2_E7_E8_execution": false,
+    "certificate_execution": false,
+    "formal_subpartial_execution": false,
+    "formal_global_calibration": false,
+    "usable_acceptance": false,
+    "PhaseE_actual_target": false
+  },
+  "screen_execution_deferral_reason": "Operational source coupling: current certificate requires identical producer/current inventory/script/engine. Avoid generating 0109 screens then needing a separately audited historical-source admission in the corrected certificate. No new screen numerical defect is claimed. Re-pin corrected pipeline together.",
+  "prior_0108_instrumented_probe_GO_preserved": true,
+  "prior_probe_GO_does_not_transfer_to_0109": true,
+  "prior_acceptances_preserved": true,
+  "requires_bank_pseudo_D2W_D3c_regeneration_or_rerun": false,
+  "tests": {
+    "total": {
+      "passed": 90,
+      "failed": 0,
+      "error": 0,
+      "skipped": 11
+    },
+    "by_class": {
+      "test_d4c2a": {
+        "passed": 11,
+        "failed": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "test_d4c2a_script": {
+        "passed": 9,
+        "failed": 0,
+        "error": 0,
+        "skipped": 7
+      },
+      "test_d4c1": {
+        "passed": 19,
+        "failed": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "test_d4c1_script": {
+        "passed": 51,
+        "failed": 0,
+        "error": 0,
+        "skipped": 4
+      }
+    },
+    "skips": [
+      {
+        "name": "test_subpartial_runs_and_family_combination",
+        "class": "test_d4c2a_script",
+        "reason": "external assets not present"
+      },
+      {
+        "name": "test_family_combination_feeds_combine_and_refusals",
+        "class": "test_d4c2a_script",
+        "reason": "external assets not present"
+      },
+      {
+        "name": "test_instrumented_probe_publishes_profile_and_leaves_the_record",
+        "class": "test_d4c2a_script",
+        "reason": "external assets not present"
+      },
+      {
+        "name": "test_screen_and_certificate_modes",
+        "class": "test_d4c2a_script",
+        "reason": "external assets not present"
+      },
+      {
+        "name": "test_screen_notebook_accepts_the_actual_script_record[actual_record_ok]",
+        "class": "test_d4c2a_script",
+        "reason": "external assets not present"
+      },
+      {
+        "name": "test_screen_notebook_accepts_the_actual_script_record[extra_gate_key]",
+        "class": "test_d4c2a_script",
+        "reason": "external assets not present"
+      },
+      {
+        "name": "test_screen_notebook_accepts_the_actual_script_record[missing_gate_key]",
+        "class": "test_d4c2a_script",
+        "reason": "external assets not present"
+      },
+      {
+        "name": "test_partial_script_selftest_end_to_end",
+        "class": "test_d4c1_script",
+        "reason": "external assets not present"
+      },
+      {
+        "name": "test_combine_script_selftest_and_refusals",
+        "class": "test_d4c1_script",
+        "reason": "external assets not present"
+      },
+      {
+        "name": "test_partial_script_refusals",
+        "class": "test_d4c1_script",
+        "reason": "external assets not present"
+      },
+      {
+        "name": "test_script_selftest_fixture_equivalence",
+        "class": "test_d4c1_script",
+        "reason": "external assets not present"
+      }
+    ],
+    "all_1926_independently_executed": false
+  },
+  "metadata": {
+    "inventory_sha256": "c4bf18c0c55648060db8ebd5b1bbc61dbf646396b29763e29eead77de4ca57e2",
+    "inventory_entries": 2218,
+    "inventory_failures": [],
+    "python_compiled": 218,
+    "notebook_cells_compiled": 12,
+    "author_junit_files": 29,
+    "author_junit_cases": 1926,
+    "author_junit_failure": 0,
+    "author_junit_error": 0,
+    "author_junit_skip": 0,
+    "collect_cases": 1926,
+    "normalized_multiset_equal": true,
+    "author_only": [],
+    "collect_only": [],
+    "old_registered_files": 1914,
+    "registered_unchanged": true,
+    "probe_originals": [
+      {
+        "file": "MirrorTopology_Step1_D4C1_partial_v0_1_executed_231d37b89271.ipynb",
+        "sha256": "72af76c8b161b09eae3815ede13da9416ab5c71a16781e3784fc5c70b4707cd8",
+        "matches_original": true
+      },
+      {
+        "file": "D4C2_probe_231d37b8_audit_decision.json",
+        "sha256": "29d8013532a462e30852a48f15b11c4d604781fa3343094a1dc71fd399f35c49",
+        "matches_original": true
+      },
+      {
+        "file": "D4C2_probe_resource_report_v2.md",
+        "sha256": "d5d5eadb4ee05cbd33f1250e4e84a00672457f748faa7f1334eb69481442fc8c",
+        "matches_original": true
+      },
+      {
+        "file": "d4c1_partial_E2_231d37b89271.zip",
+        "sha256": "538f5e07f3c4fae84803d17783ff09a03fef5270cd04b600376e2af891644766",
+        "matches_original": true
+      },
+      {
+        "file": "D4C2_probe_resource_report.md",
+        "sha256": "9e9ad98f0bf555bdd2b30a1c0035421830506abbc5e6e97eb697e7cb15d309ba",
+        "matches_original": true
+      },
+      {
+        "file": "D4C2_probe_231d37b8_audit_evidence.zip",
+        "sha256": "44d7298aeb12407c28434fbfb69ad6a8e3c011d0bda730456e86af4e1a599ca7",
+        "matches_original": true
+      },
+      {
+        "file": "ChatGPT_audit_D4C2_probe_231d37b8.md",
+        "sha256": "3c39edf2c82d5a31681396e78109fef1b43410168e0fc5c1e208f47427e756a6",
+        "matches_original": true
+      }
+    ]
+  },
+  "independent_controls": {
+    "certificate_boundary_scenarios": 18,
+    "accepted_baselines": 1,
+    "remaining_malformed_acceptances": 8,
+    "expected_rejections": 9,
+    "actual_cli_environment_free_test_only": true,
+    "screen_launcher_scenarios": 7,
+    "screen_normal": 2,
+    "screen_rejected": 5,
+    "truth_combinations": 256,
+    "algebra_scenarios": 14,
+    "real_evaluated_scenarios": 5,
+    "verified": true
+  },
+  "fresh_replay": {
+    "scope": "Only 7 launcher scenarios and algebra controls incl 256 truth combinations; selected pytest and certificate CLI NOT repeated in this fresh work",
+    "commands": [
+      {
+        "script": "probe_screen_launcher_v2.py",
+        "returncode": 0
+      },
+      {
+        "script": "probe_algebra_v2.py",
+        "returncode": 0
+      }
+    ],
+    "source_files": 2727,
+    "source_unchanged": true
+  },
+  "preservation": {
+    "current": {
+      "files": 2727,
+      "changed": [],
+      "added": [],
+      "unchanged": true
+    },
+    "previous": {
+      "files": 2726,
+      "changed": [],
+      "added": [],
+      "unchanged": true
+    },
+    "phaseB_D4C2a_v2_0.109.0.zip": {
+      "bytes": 29796588,
+      "sha256": "2c2bc7b96a4a341e94d0ea25e60d4f4f7b978b3f6894100039b6b21883428c6a"
+    },
+    "phaseB_D4C2a_0.108.0.zip": {
+      "bytes": 29774881,
+      "sha256": "a0fab34aa540b87bf927d9bd0fcb50f1bdc92e4695149ec91bfdaec4738b4b45"
+    }
+  },
+  "limitations": [
+    "No production bank intake, production 2000-row screen, or real scientific infeasibility certificate.",
+    "Certificate boundary uses real registered metadata/loaders/pseudo but invented count tables and TEST-ONLY producer claims; not proof of real blocking rows.",
+    "Actual CLI success establishes environment-free entry only, on these TEST-ONLY fixtures.",
+    "Notebook boundary uses unchanged cells with TEST-ONLY Git/child; actual small-bank script-to-notebook three-case test skipped for external assets.",
+    "Evaluated reader tests use real synthetic Results from selected tests, not production banks.",
+    "No Colab/registered environment reproduction, remote Git tree, actual target/PhaseE, or complete 1926-test independent rerun.",
+    "Fresh replay repeats launcher/algebra only, not certificate CLI or selected pytest."
+  ],
+  "artifacts": {
+    "report": "ChatGPT_audit_D4C2a_v2_0.109.0.md",
+    "report_sha256": "6543c71629abc47ec551c284222d6e6ade872461fe1e7fd7dec405663971b774",
+    "evidence": "D4C2a_v2_0.109.0_audit_evidence.zip"
+  }
+}

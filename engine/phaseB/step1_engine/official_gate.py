@@ -29,14 +29,39 @@ EXPECTED_VERS_HISTORY = (dict(python="3.13.15", numpy="2.1.3", scipy="1.16.3", h
 VERSION_KEYS = ("python", "numpy", "scipy", "healpy", "camb", "pot")
 
 
+HISTORY_ENTRY_KEYS = VERSION_KEYS + ("registered_until",)                      # an engine history entry: the six version strings (AUTHENTICATED equality fields) + the registered_until label
+PINS_HISTORY_EXTRA_KEYS = ("amendment",)                                          # pins-only metadata (the amendment document name): required to be a non-empty string, not compared with the engine
+
+
+def _check_version_tuple(e: dict, where: str) -> None:
+    if not isinstance(e, dict): raise InputContractError(f"{where}: not an object")
+    for k in VERSION_KEYS:
+        if not isinstance(e.get(k), str) or not e[k]: raise InputContractError(f"{where}: version {k!r} must be a non-empty string")
+
+
 def registered_environments(pins: dict = None) -> list:
-    """Every environment a REGISTERED run may carry: the current EXPECTED_VERS (== pins['environment'] when pins are given) plus the history; version keys only."""
-    cur = {k: EXPECTED_VERS[k] for k in VERSION_KEYS}
+    """Every environment a REGISTERED run may carry: the current EXPECTED_VERS plus EXPECTED_VERS_HISTORY (version keys only). When pins are given (the registered loaders
+    always give them) the pins are AUTHENTICATED against the engine (N-D4ENV-HISTORY-PIN-COMPLETENESS): pins['environment'] carries exactly the current six versions, and
+    pins['environment_history'] is REQUIRED (a list; missing / null / wrong length refused) whose entries equal the engine's history entries in the six versions AND the
+    registered_until label (both are equality fields; a label edited alone is refused) with each entry naming the amendment document (pins-only metadata, non-empty string)."""
+    cur = {k: EXPECTED_VERS[k] for k in VERSION_KEYS}; _check_version_tuple(cur, "EXPECTED_VERS")
+    for i, h in enumerate(EXPECTED_VERS_HISTORY):
+        _check_version_tuple(h, f"EXPECTED_VERS_HISTORY[{i}]")
+        if set(h) != set(HISTORY_ENTRY_KEYS) or not isinstance(h["registered_until"], str) or not h["registered_until"]: raise InputContractError(f"EXPECTED_VERS_HISTORY[{i}]: keys / label")
     if pins is not None:
-        pe = pins.get("environment") or {}
-        if any(pe.get(k) != cur[k] for k in VERSION_KEYS): raise InputContractError("pins environment differs from the engine's registered environment (EXPECTED_VERS)")
+        if not isinstance(pins, dict): raise InputContractError("pins must be an object")
+        pe = pins.get("environment")
+        if not isinstance(pe, dict): raise InputContractError("pins environment missing")
+        _check_version_tuple(pe, "pins environment")
+        if any(pe[k] != cur[k] for k in VERSION_KEYS): raise InputContractError("pins environment differs from the engine's registered environment (EXPECTED_VERS)")
         hist = pins.get("environment_history")
-        if hist is not None and [{k: h.get(k) for k in VERSION_KEYS} for h in hist] != [{k: h[k] for k in VERSION_KEYS} for h in EXPECTED_VERS_HISTORY]: raise InputContractError("pins environment_history differs from the engine's EXPECTED_VERS_HISTORY")
+        if not isinstance(hist, list): raise InputContractError("pins environment_history is required (a list of the registered history entries; [] when the engine has none) and must not be missing or null")
+        if len(hist) != len(EXPECTED_VERS_HISTORY): raise InputContractError(f"pins environment_history has {len(hist)} entries; the engine registers {len(EXPECTED_VERS_HISTORY)}")
+        for i, (p, h) in enumerate(zip(hist, EXPECTED_VERS_HISTORY)):
+            _check_version_tuple(p, f"pins environment_history[{i}]")
+            if set(p) != set(HISTORY_ENTRY_KEYS) | set(PINS_HISTORY_EXTRA_KEYS): raise InputContractError(f"pins environment_history[{i}]: keys must be exactly {sorted(set(HISTORY_ENTRY_KEYS) | set(PINS_HISTORY_EXTRA_KEYS))}")
+            if any(p[k] != h[k] for k in HISTORY_ENTRY_KEYS): raise InputContractError(f"pins environment_history[{i}] differs from the engine's EXPECTED_VERS_HISTORY (versions and registered_until label are equality fields)")
+            if not isinstance(p["amendment"], str) or not p["amendment"]: raise InputContractError(f"pins environment_history[{i}]: amendment document name required")
     return [cur] + [{k: h[k] for k in VERSION_KEYS} for h in EXPECTED_VERS_HISTORY]
 
 

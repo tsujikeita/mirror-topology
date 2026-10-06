@@ -590,28 +590,52 @@ def _certificate_entry(a, out, R, G, note, mark, finish, pins, formal, publish_r
 
 
 def _certificate(a, out, R, G, note, mark, finish, reg, man, w2ctx, ctx, cols, registered, formal, publish_record, ser):
-    """R-D4C2A-C: every source is AUTHENTICATED before its rows are admitted: the run record (schema / complete / no failure / the trusted REQUIRED inventory of its mode all True incl.
-    the environment gate / formal flags / attempt / campaign / commitment / the SAME source binding as this run), its published evidence (file bytes == recorded SHA / bytes), and the
-    record itself through the registered identities: a screen through check_screen_record(formal) + bind_screen_record (registry / manifest, W2 context SHA and the replay-verified
-    decision checksums, column identity and exact row thresholds, registered configuration ids), an evaluated partial / sub-partial through its archive + the existing readers
-    (load_* payload / archived-copy equality, verify_* with the registered identities and the current source binding). Self-test sources are admitted only in a self-test
-    certificate (never COMPLETE)."""
-    from step1_engine.infeasibility import (check_screen_record, bind_screen_record, blocking_rows_from_screen, evaluated_rows_from_record, infeasibility_certificate, check_certificate, registered_blocking_counts)
+    """R-D4C2A-C: every source is AUTHENTICATED before its rows are admitted: the run record (schema / complete / no failure / the FIXED trusted REQUIRED inventory of its mode
+    (R-D4C2A-C1: this script's constant selected by the producer mode, every gate True incl. the environment gate) / profile / formal flags / attempt id + launcher lock / campaign /
+    commitment / the SAME source binding as this run incl. pins), its published evidence (file bytes == recorded SHA / bytes), and the record itself through the registered identities:
+    a screen through check_screen_record(formal) + bind_screen_record (registry / manifest, W2 context SHA and the FULL W2 summary re-derived from the replay-verified decisions
+    (R-D4C2A-C2), column identity and exact row thresholds, registered configuration ids), an evaluated partial / sub-partial through its archive + the existing readers (load_*
+    payload / archived-copy equality, verify_* with the registered identities and the current source binding; every evaluated row retained incl. False: R-D4C2A-D1). Self-test
+    sources are admitted only in a self-test certificate (never COMPLETE)."""
+    from step1_engine.infeasibility import (check_screen_record, bind_screen_record, blocking_rows_from_screen, evaluated_rows_from_record, infeasibility_certificate, check_certificate, registered_blocking_counts, w2_triggers, typed_equal)
     from step1_engine.archive import Archive
     from step1_engine.rules_config import RULES
     idn = cols["identity"]; n = cols["n"]; pid = dict(n=n, sha256_T1=idn["T1_sha256"], sha256_T2=idn["T2_sha256"]); maps = []; sources = []; ok = bool(a.screen or a.evaluated)
     me_src = R["source"]; d2s = ctx.d2_spec
-    def run_ok(run, mode_names, flag_keys):
-        req = run.get("required_inventory") or []; g = run.get("gates") or {}
-        base = (run.get("schema") == "d4c1_run_record_v1" and run.get("mode") in mode_names and run.get("stage") == "complete" and run.get("failures") == [] and isinstance(req, list) and sorted(g) == sorted(req) and all(g.get(k) is True for k in req if formal or k != "G_env_lock")
-                and isinstance(run.get("attempt"), dict) and run.get("campaign_id") == a.campaign_id and run.get("target_commitment") == a.target_commitment and not run.get("probe")
-                and (run.get("source") or {}).get("inventory_sha256") == me_src["inventory_sha256"] and (run.get("source") or {}).get("script_sha256") == me_src["script_sha256"] and (run.get("source") or {}).get("engine_version") == me_src["engine_version"])
-        if formal: return base and run.get("required_all_true") is True and run.get("selftest") is False and run.get("formal") is True and "G_env_lock" in req and any(run.get(k) is True for k in flag_keys)
-        return base and run.get("selftest") is True and run.get("formal") is False                                 # self-test sources: the sandbox environment gate is False by construction; admitted only into a self-test certificate
+    _FLAG = {"screen": "D4C1_SCREEN_COMPLETE", "partial": "D4C1_PARTIAL_PASS", "subpartial": "D4C1_SUBPARTIAL_PASS", "combine-family": "D4C1_PARTIAL_PASS"}
+    _ALL_FLAGS = ("D4C1_PARTIAL_PASS", "D4C1_SUBPARTIAL_PASS", "D4C1_COMBINE_PASS", "D4C1_SCREEN_COMPLETE", "D4C1_CERTIFICATE_COMPLETE")
+    def trusted_inventory(run):
+        """R-D4C2A-C1: the trusted REQUIRED inventory of a producer run is THIS script's fixed constant selected by the producer's mode (and, for --mode partial, by its sub-partial
+        flag / row range), never the run record's own list: screen -> REQUIRED_SCREEN; partial -> REQUIRED_PARTIAL (subpartial False, no row range) or REQUIRED_SUBPARTIAL
+        (subpartial True, a two-element row range); combine-family -> REQUIRED_COMBINE_FAMILY."""
+        mode = run.get("mode"); sub = run.get("subpartial"); rr = run.get("row_range")
+        if mode == "screen": return "screen", REQUIRED_SCREEN
+        if mode == "combine-family": return "combine-family", REQUIRED_COMBINE_FAMILY
+        if mode == "partial" and sub is True and isinstance(rr, list) and len(rr) == 2 and all(isinstance(x, int) and not isinstance(x, bool) for x in rr) and 0 <= rr[0] < rr[1]: return "subpartial", REQUIRED_SUBPARTIAL
+        if mode == "partial" and sub is False and rr is None: return "partial", REQUIRED_PARTIAL
+        return None, None
+    def run_ok(run, mode_names):
+        """A producer run record is trusted only when: schema; mode in mode_names; stage complete / no failure; profile production_official; required_inventory == the FIXED trusted
+        inventory of its mode (exact order) and the gate set == that inventory with every gate True (a self-test source may carry G_env_lock False: sandbox); the SAME source binding
+        as this run (script / inventory / pins / engine, top-level pins_sha256 / engine_version); not a probe / not instrumented; campaign / commitment; attempt with attempt_id and
+        launcher_lock_sha256 (formal: non-empty id, 64-hex lock); the mode's success flag True (formal) and every other flag False."""
+        if not isinstance(run, dict): return False
+        kind, REQ = trusted_inventory(run)
+        if kind is None or run.get("mode") not in mode_names: return False
+        g = run.get("gates"); src = run.get("source"); att = run.get("attempt")
+        if not (isinstance(g, dict) and isinstance(src, dict) and isinstance(att, dict)): return False
+        inv_ok = (run.get("required_inventory") == list(REQ) and sorted(g) == sorted(REQ) and all(g.get(k) is True for k in REQ if formal or k != "G_env_lock"))
+        src_ok = (all(src.get(k) == me_src[k] for k in ("inventory_sha256", "script_sha256", "pins_sha256", "engine_version")) and run.get("pins_sha256") == me_src["pins_sha256"] and run.get("engine_version") == me_src["engine_version"])
+        base = (run.get("schema") == "d4c1_run_record_v1" and run.get("stage") == "complete" and run.get("failures") == [] and run.get("profile") == "production_official" and inv_ok and src_ok
+                and run.get("probe") is False and run.get("instrument") is False and run.get("probe_n") is None and run.get("campaign_id") == a.campaign_id and run.get("target_commitment") == a.target_commitment
+                and set(att) >= {"attempt_id", "launcher_lock_sha256"} and all(run.get(f) is False for f in _ALL_FLAGS if f != _FLAG[kind]))
+        if not base: return False
+        if formal: return (run.get("required_all_true") is True and run.get("selftest") is False and run.get("formal") is True and run.get(_FLAG[kind]) is True and isinstance(att["attempt_id"], str) and att["attempt_id"] != "" and _hex64(att["launcher_lock_sha256"]))
+        return run.get("selftest") is True and run.get("formal") is False and run.get(_FLAG[kind]) is False     # self-test sources: never PASS by construction; admitted only into a self-test certificate
     def evidence_ok(d, run, fn):
         e = (run.get("published_evidence") or {}).get(fn); fp = os.path.join(d, fn)
         return isinstance(e, dict) and os.path.isfile(fp) and not os.path.islink(fp) and set(run["published_evidence"]) == {fn} and e.get("sha256") == sha(fp) and e.get("bytes") == os.path.getsize(fp)
-    w2_checksums = {k: w2ctx.decision_for(k, w2ctx.context_sha256).checksum for k in w2ctx.decisions}
+    w2_decisions = {k: w2ctx.decision_for(k, w2ctx.context_sha256) for k in w2ctx.decisions}                              # replay-verified decisions of the authenticated registered context (R-D4C2A-C2)
     config_ids = {}
     for c in d2s["configurations"].values(): config_ids.setdefault(c["family"], {}).setdefault(c["size_id"], []).append(c["config_id"])
     for d in [os.path.realpath(p) for p in a.screen]:
@@ -619,15 +643,15 @@ def _certificate(a, out, R, G, note, mark, finish, reg, man, w2ctx, ctx, cols, r
         if len(fs) != 1 or len(rr) != 1 or fs[0][:-len("_record.json")] != rr[0][:-len("_run.json")]: R["failures"].append(f"{d}: exactly one screen record / run record pair required"); ok = False; continue
         try:
             run = json.load(open(os.path.join(d, rr[0])))
-            if not run_ok(run, ("screen",), ("D4C1_SCREEN_COMPLETE",)) or not evidence_ok(d, run, fs[0]): raise RuntimeError("screen run record not a complete, trusted-inventory, source-bound run with content-verified published evidence")
+            if not run_ok(run, ("screen",)) or not evidence_ok(d, run, fs[0]): raise RuntimeError("screen run record not a complete, trusted-inventory, source-bound run with content-verified published evidence")
             scr = ser.loads(open(os.path.join(d, fs[0]), encoding="utf-8").read())
             if not isinstance(scr, dict): raise RuntimeError("published screen document is not a JSON object")
             fam = scr.get("family"); sc = run.get("screen") or {}
             if run.get("family") != fam or fam not in TWELVE_FAMILIES: raise RuntimeError("screen family")
-            if formal: b = bind_screen_record(scr, registry_sha256=reg.registry_sha256, manifest_sha256=man.manifest_sha256, w2_context_sha256=w2ctx.context_sha256, w2_checksums=w2_checksums, pseudo_identity=pid, T1=cols["T1"], T2=cols["T2"], config_ids={s_: sorted(v) for s_, v in config_ids[fam].items()}, family=fam, campaign_id=a.campaign_id, target_commitment=a.target_commitment)
+            if formal: b = bind_screen_record(scr, registry_sha256=reg.registry_sha256, manifest_sha256=man.manifest_sha256, w2_context_sha256=w2ctx.context_sha256, w2_decisions=w2_decisions, pseudo_identity=pid, T1=cols["T1"], T2=cols["T2"], config_ids={s_: sorted(v) for s_, v in config_ids[fam].items()}, family=fam, campaign_id=a.campaign_id, target_commitment=a.target_commitment)
             else:
                 b = check_screen_record(scr, formal=False)
-                if scr["w2_context_sha256"] != w2ctx.context_sha256 or any(v.get("checksum") != w2_checksums.get(f"{fam}/{s_}") for s_, v in scr["w2"].items()) or scr["pseudo"] != pid or scr.get("target_commitment") != a.target_commitment or scr["registry_sha256"] != reg.registry_sha256 or not b["complete_coverage"]: raise RuntimeError("self-test screen not bound to the registered context / columns / grid, or without complete N0 / N4 coverage")
+                if scr["w2_context_sha256"] != w2ctx.context_sha256 or not typed_equal(scr["w2"], w2_triggers(fam, scr["sizes"], w2_decisions)) or scr["pseudo"] != pid or scr.get("target_commitment") != a.target_commitment or scr["registry_sha256"] != reg.registry_sha256 or not b["complete_coverage"]: raise RuntimeError("self-test screen not bound to the registered context / columns / grid, or without complete N0 / N4 coverage")
             if sc.get("screen_sha256") != scr["binding"]["screen_sha256"] or sc.get("n_blocking") != scr["n_blocking"] or sc.get("n_rows") != scr["n_rows"]: raise RuntimeError("run record screen summary differs from the published screen record")
             maps.append(blocking_rows_from_screen(scr, formal=formal)); sources.append(dict(kind="screen", dir=d, file=fs[0], sha256=sha(os.path.join(d, fs[0])), run_sha256=sha(os.path.join(d, rr[0])), attempt=run.get("attempt"), screen_sha256=scr["binding"]["screen_sha256"], family=fam, rows=[scr["rows"][0], scr["rows"][-1] + 1] if scr["rows"] else None, n_blocking=b["n_blocking"], complete_coverage=b["complete_coverage"], formal=bool(formal)))
         except Exception as ex_: R["failures"].append(f"{d}: screen source not admitted: {ex_!r}"); ok = False
@@ -636,18 +660,18 @@ def _certificate(a, out, R, G, note, mark, finish, reg, man, w2ctx, ctx, cols, r
         if len(fs) != 1 or len(rr) != 1 or fs[0][:-len("_record.json")] != rr[0][:-len("_run.json")] or not os.path.isdir(os.path.join(d, "archive")): R["failures"].append(f"{d}: exactly one partial / sub-partial record / run record pair and an archive required"); ok = False; continue
         try:
             run = json.load(open(os.path.join(d, rr[0])))
-            if not run_ok(run, ("partial", "combine-family"), ("D4C1_PARTIAL_PASS", "D4C1_SUBPARTIAL_PASS")) or not evidence_ok(d, run, fs[0]): raise RuntimeError("evaluated run record not a complete, trusted-inventory, source-bound run with content-verified published evidence")
+            if not run_ok(run, ("partial", "combine-family")) or not evidence_ok(d, run, fs[0]): raise RuntimeError("evaluated run record not a complete, trusted-inventory, source-bound run with content-verified published evidence")
             rec = ser.loads(open(os.path.join(d, fs[0]), encoding="utf-8").read())
             if not isinstance(rec, dict): raise RuntimeError("published record is not a JSON object")
             res = evaluated_rows_from_record(rec, Archive(os.path.join(d, "archive")), registered=registered, pseudo_identity=pid, family=run.get("family"))
             if rec["thresholds"].get("target_commitment") != a.target_commitment or (rec.get("campaign") or {}).get("id") != a.campaign_id + ("" if formal else "__SELFTEST"): raise RuntimeError("evaluated record commitment / campaign differ")
-            maps.append(res["rows"]); sources.append(dict(kind="evaluated", dir=d, file=fs[0], sha256=sha(os.path.join(d, fs[0])), run_sha256=sha(os.path.join(d, rr[0])), attempt=run.get("attempt"), partial_sha256=res["partial_sha256"], family=res["family"], rows=res["row_range"], verification=res["verification"], formal=bool(formal)))
+            maps.append(res["rows"]); sources.append(dict(kind="evaluated", dir=d, file=fs[0], sha256=sha(os.path.join(d, fs[0])), run_sha256=sha(os.path.join(d, rr[0])), attempt=run.get("attempt"), partial_sha256=res["partial_sha256"], family=res["family"], rows=res["row_range"], n_rows=res["n_rows"], n_blocking_rows=res["n_blocking_rows"], n_false_rows=res["n_false_rows"], verification=res["verification"], formal=bool(formal)))
         except Exception as ex_: R["failures"].append(f"{d}: evaluated source not admitted: {ex_!r}"); ok = False
     G["G_sources_loaded"] = bool(ok and maps); R["sources"] = sources; R["source_scope"] = ("formal sources only (COMPLETE / PASS runs of this source binding, formal screens with full N0/N4 coverage)" if formal else "SELF-TEST sources only (never a COMPLETE certificate)")
     if not G["G_sources_loaded"]: R["failures"].append("no admitted sources"); return finish(1, "inputs")
     cert = infeasibility_certificate(n, maps, pseudo_identity=pid, campaign=dict(id=a.campaign_id + ("" if formal else "__SELFTEST"), formal=bool(formal)), target_commitment=a.target_commitment, sources=sources); mark("certificate")
     chk = check_certificate(cert); G["G_certificate_computed"] = bool(chk["ok"] and cert["n"] == n == RULES.n_pseudo)
-    R["certificate"] = dict(n=n, registered_blocking_counts=registered_blocking_counts(n), levels={lvl: {k: v for k, v in cert["levels"][lvl].items() if k != "statement"} for lvl in ("support", "strong")}, n_rows_proven=cert["n_rows_proven"], certificate_sha256=cert["binding"]["certificate_sha256"],
+    R["certificate"] = dict(n=n, registered_blocking_counts=registered_blocking_counts(n), levels={lvl: {k: v for k, v in cert["levels"][lvl].items() if k != "statement"} for lvl in ("support", "strong")}, n_rows_admitted=cert["n_rows_admitted"], n_rows_proven=cert["n_rows_proven"], certificate_sha256=cert["binding"]["certificate_sha256"],
                             scope="algebraic fixed-denominator statement over AUTHENTICATED proven rows; NOT a calibration, NOT usable == False, no claim on unevaluated rows")
     note("  certificate:", json.dumps({lvl: dict(proven=cert["levels"][lvl]["proven_blocking_rows"], technical=cert["levels"][lvl]["technical_rows"], first_blocking=cert["levels"][lvl]["first_blocking_count"], impossible=cert["levels"][lvl]["usable_true_impossible_by_wilson"]) for lvl in ("support", "strong")}))
     pub = publish_record(os.path.join(out, "d4c1_certificate_record.json"), cert); R["published_evidence"] = {"d4c1_certificate_record.json": pub}

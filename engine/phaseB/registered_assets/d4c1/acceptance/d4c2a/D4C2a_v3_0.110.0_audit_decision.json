@@ -1,0 +1,230 @@
+{
+  "schema": "step1_D4C2a_v3_0110_environment_review_v1",
+  "date_JST": "2026-10-06",
+  "decision": "ENVIRONMENT_AMENDMENT_IN_PRINCIPLE__FIXED_SOURCE_BRIDGE_PROBE_ONLY_GO__SCREEN_CERTIFICATE_HOLD",
+  "subject": {
+    "file": "phaseB_D4C2a_v3_0.110.0.zip",
+    "bytes": 29802369,
+    "sha256": "3ae56bf1d4911e0955b312e5b44335d9a3398d5dab0b654d713e4fce7e677646",
+    "files": 2728,
+    "author_supplied_commit": "39082b641d8621989ae69a273f4e88e0c59673ba",
+    "engine": "0.110.0",
+    "inventory_sha256": "7df1fb5948eb2c0c0d379a37afa93c0f1dbc0bba77c01c49d6be60665d9bb1ba",
+    "remote_tree_independently_verified": false,
+    "key_files": {
+      "d/d4c1_calibration.py": {
+        "sha256": "815516358ccbcb1b5d9c09fecd06583aeb6ea5a0725664bba9bf1d5378282bf6",
+        "same_previous": true
+      },
+      "step1_engine/infeasibility.py": {
+        "sha256": "6e80dde84416365dc0173845376ce4a38fd28ccf9b3d45b4a8bbe7854c6ff67b",
+        "same_previous": true
+      },
+      "step1_engine/official_gate.py": {
+        "sha256": "93e866a2145fd288a666eb355d04ae37190d8c1259ef9f21e607f0afbb7ef2f6",
+        "same_previous": false
+      },
+      "step1_engine/d3c_ledger.py": {
+        "sha256": "3bc18ef1bf8d14836c0f294131e1ac3ff730baf59aa07fa0ad21f3b1cea47145",
+        "same_previous": false
+      },
+      "step1_engine/d4c0_registry.py": {
+        "sha256": "ff6714dd848010c5e5ca4cebb3e790e3b6752ec167f1caa574680bce19556ace",
+        "same_previous": false
+      },
+      "step1_engine/d4c1_partial.py": {
+        "sha256": "858f2e8ff1379e38921fa0cfec5bbe0d021abaff9d258825b2d184b9d8eec2a5",
+        "same_previous": true
+      },
+      "step1_engine/profiling.py": {
+        "sha256": "88e5cb619cae0718108fa975db5ce2b00afd1f2bb55a52d8ea26273841a8a244",
+        "same_previous": true
+      },
+      "d/MirrorTopology_Step1_D4C1_partial_v0.1.ipynb": {
+        "sha256": "e2808bcda46b36dbbe1876381c9ca6eb98bfad76c51614bd0ac9edd21d011d81",
+        "same_previous": true
+      }
+    }
+  },
+  "audit_baseline": {
+    "decision": "D4C2a_v2_0.109.0_audit_decision.json",
+    "sha256": "f4a2cc420a31a0539b4c3efb372fe443a22f9d5361244804df501c29b76f5604",
+    "note": "The latest three blockers, not just the earlier 0.108 A-D descriptions, are the acceptance baseline."
+  },
+  "GO": {
+    "whole_packet_implementation_acceptance": false,
+    "environment_amendment_policy_in_principle": true,
+    "environment_numerical_bridge_acceptance": false,
+    "fixed_0110_instrumented_E2_N3_HighRAM_bridge_probe_execution": true,
+    "screen_E2_E7_E8_execution": false,
+    "certificate_execution": false,
+    "formal_subpartial_or_combination_execution": false,
+    "formal_global_calibration": false,
+    "usable_or_PhaseE_actual_target": false,
+    "bank_pseudo_W2_regeneration": false
+  },
+  "findings": [
+    {
+      "id": "R-D4C2A-C1-TRUSTED-RUN-INVENTORY",
+      "status": "OPEN_UNCHANGED",
+      "evidence": "Driver bytes identical to0.109; unchanged prior probe: remove gate from both inventories, env-only inventory, extra gate in both, empty attempt, wrong pins/profile accepted. Fixed trusted mode inventory and source/attempt/profile checks still needed."
+    },
+    {
+      "id": "R-D4C2A-C2-W2-SUMMARY-BINDING",
+      "status": "OPEN_UNCHANGED",
+      "evidence": "infeasibility.py bytes identical; registered checksum paired with conflicting B_final/trigger accepted."
+    },
+    {
+      "id": "R-D4C2A-D1-FALSE-EVIDENCE-RETENTION",
+      "status": "OPEN_UNCHANGED",
+      "evidence": "Both-level False rows discarded before reconciliation; verified synthetic E2 4-row partial yields empty rows, conflicting same-family screen then accepted."
+    },
+    {
+      "id": "R-D4ENV-COMPARISON-CONTRACT",
+      "status": "REPLACED_BY_THIS_AUDIT_CONTRACT_FOR_PROBE_ONLY",
+      "evidence": "Full partial hash contains engine/modules and gate environment. Editing only engine0.107->0.110 or only env.python15->16 changes hash with all science fields held unchanged. Fourth transition is the partial itself, not a per-row plan.",
+      "required_condition": "Follow the attached bridge comparison specification; never require old full payload SHA for new provenance; keep original bytes; exact15 per-row content records plus declared invariant fields; source/env separately verified."
+    },
+    {
+      "id": "N-D4ENV-HISTORY-PIN-COMPLETENESS",
+      "status": "FIXED_PACKET_PROBE_NOT_BLOCKED__GENERAL_CONTRACT_NEEDS_CLARIFICATION_OR_GUARD",
+      "evidence": "Missing/null environment_history is accepted by helper and genuine copied-tree D3c intake; empty/wrong version rejected; metadata-only change accepted. Current submitted six pins have the correct version history and are inventory-bound. Engine whitelist remains limited to exact3.13.15/16 tuples; no new-run15 bypass shown.",
+      "recommendation": "When pins supplied, require the history field and validate its schema/version tuples; explicitly define whether amendment labels are metadata or authenticated equality fields. Missing/null refusal tests."
+    }
+  ],
+  "probe_execution_settings": {
+    "REPO_COMMIT": "39082b641d8621989ae69a273f4e88e0c59673ba",
+    "EXPECTED_INVENTORY_SHA256": "7df1fb5948eb2c0c0d379a37afa93c0f1dbc0bba77c01c49d6be60665d9bb1ba",
+    "FAMILY": "E2",
+    "PROBE_N": 3,
+    "ROW_RANGE": null,
+    "INSTRUMENT": true,
+    "OUT_ROOT": null,
+    "STAGE_LOCAL": true,
+    "STAGE_ROOT": "/content/stage",
+    "D2_RUN_ROOT": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2",
+    "D3B_RUN_ROOTS": {
+      "L1.00": "/content/drive/MyDrive/MirrorTopology_D3b/E2_L1.00_20260930T010656Z/out/d3b",
+      "L1.20": "/content/drive/MyDrive/MirrorTopology_D3b/E2_L1.20_20260930T054800Z/out/d3b",
+      "L1.50": "/content/drive/MyDrive/MirrorTopology_D3b/E2_L1.50_20260930T080141Z/out/d3b"
+    },
+    "TARGET_COMMITMENT": "9efa1b8d82fec2e23ac685d24dbaece7932e29955c94fc5a2955ba793c70b326",
+    "CAMPAIGN_ID": "D4C2_9efa1b8d82fe",
+    "scope": "E2 first 3 paired rows, current Python3.13.16, instrumented ENVIRONMENT BRIDGE / resource probe ONLY; revised comparison contract applies; no screen/certificate/formal execution"
+  },
+  "comparison_spec": {
+    "file": "D4C2a_v3_0.110.0_bridge_comparison_spec.json",
+    "sha256": "a9cb9ab9b622cb0d929006eac01a957003a5eeffef990a40de8c6338a0981373"
+  },
+  "probe_conditions": [
+    "Fresh default Colab High-RAM runtime; live interpreter must really be3.13.16 with the other five pinned library versions and BLAS rules. Do not install an alternate Python3.12 run or fake/skip gates.",
+    "Use exactly the submitted partial notebook and commit/inventory; E2 PROBE_N=3 ROW_RANGE=None INSTRUMENT=True. No self-test flag, no target nonce, no changed seed/pseudo order/rules/banks.",
+    "Read historical assets through registered loaders using the exact current pins/inventory; preserve old15 records. No asset regeneration.",
+    "Save both failed preflight screenshots/notebooks/logs as failed environment checks, separately from the new attempt; no successful-run promotion.",
+    "New partial must pass its own unmodified reader with current_source_binding=True; run/final/lock must agree, all24 gates true, rc0, no fallback/failures, official twelve gate live_collected. Probe formal PASS flags remain False.",
+    "Collect profile JSON+receipt, segments=3, missing_targets=[], cProfile; old vs new exact scientific/typed per-row checks as in specification. Outside segments includes row persistence; do not interpret instrumented timings as production speedup.",
+    "Full file/payload/archive/index SHA may change due to new provenance; require each original independently valid and never overwrite old metadata to make hashes match.",
+    "Any actual science/state/input/plan mismatch: retain evidence and stop for differential analysis, not retry-until-match or retrospective tolerance.",
+    "Bridge result must be reviewed before claiming the environment amendment numerically validated; success does not approve certificate, screening or full calibration. No automatic transfer of GO to another commit."
+  ],
+  "tests": {
+    "submitted_D4C2a": {
+      "cases": 28,
+      "passed": 21,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 7,
+      "skip_names": [
+        "test_subpartial_runs_and_family_combination",
+        "test_family_combination_feeds_combine_and_refusals",
+        "test_instrumented_probe_publishes_profile_and_leaves_the_record",
+        "test_screen_and_certificate_modes",
+        "test_screen_notebook_accepts_the_actual_script_record[actual_record_ok]",
+        "test_screen_notebook_accepts_the_actual_script_record[extra_gate_key]",
+        "test_screen_notebook_accepts_the_actual_script_record[missing_gate_key]"
+      ]
+    },
+    "registered_regressions": {
+      "cases": 82,
+      "passed": 82,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "skip_names": []
+    },
+    "unmodified_pytest_total": {
+      "passed": 103,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 7,
+      "explicitly_deselected": 1,
+      "deselected_test": "D3c consumer_api_rebuild_and_refusals (full plan regeneration not part of this review)"
+    },
+    "author_junit_cases": 1927,
+    "author_junit_files": 29,
+    "author_junit_failures_errors_skips": 0,
+    "collect_count": 1927,
+    "normalized_multiset_equal": true,
+    "all_1927_independently_executed": false,
+    "independent_certificate_cases": 18,
+    "independent_accepted_adversarial_cases": 8,
+    "environment_controls": 19,
+    "whole_hash_metadata_only_counterexamples": 2,
+    "exact_per_row_baseline_records": 15,
+    "algebra_4family_combinations": 256,
+    "fresh_replay": "algebra and hash-contract scripts only; no full pytest repeat"
+  },
+  "metadata": {
+    "inventory_hash_entries": 2219,
+    "compiled_python": 218,
+    "compiled_notebook_cells": 12,
+    "registered_files": 1914,
+    "registered_changed": [],
+    "runtime_used_for_audit": {
+      "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+      "numpy": "2.3.5",
+      "scipy": "1.17.0",
+      "platform": "Linux-6.18.44-x86_64-with-glibc2.41"
+    }
+  },
+  "preservation": {
+    "current": {
+      "files": 2728,
+      "changed": [],
+      "added": [],
+      "missing": [],
+      "unchanged": true
+    },
+    "previous": {
+      "files": 2727,
+      "changed": [],
+      "added": [],
+      "missing": [],
+      "unchanged": true
+    },
+    "fresh_quick": {
+      "files": 2728,
+      "changed": [],
+      "added": [],
+      "missing": [],
+      "unchanged": true
+    }
+  },
+  "limitations": [
+    "No live Colab or Python3.13.16 runtime executed here; environment-policy checks use injected TEST-ONLY snapshots, whole official gates remain false on synthetic bank sizes.",
+    "Registered D3c, W2, pseudo loaders were actually executed and original pseudo NPZ validated; no physical bank-array intake, bootstrap plan reconstruction or exact OT rerun.",
+    "Certificate fixtures invent counts/producer records to exercise acceptance boundaries. They are NOT real blocking evidence or a scientific impossibility certificate.",
+    "Whole hash changes are demonstrated on in-memory metadata-only copies, NOT numerical results in the new environment.",
+    "No real2000-row screen, global calibration, actual target or independent remote Git tree comparison.",
+    "Actual screenshots prove reported version mismatch and an ImportError, not universal unavailability of3.13.15 or incompatibility of NumPy2.1.3 with Python3.12.",
+    "Seven new-script tests skipped due to missing external assets. One D3c full-plan test deliberately excluded.",
+    "Initial audit environment harness tried nonexistent VerifiedW2Decision.as_dict; corrected to explicit public attributes and repeated successfully; initial log retained, not a submitted-code failure."
+  ],
+  "prior_acceptances_preserved": true,
+  "requires_existing_bank_pseudo_D2W_D3c_regeneration": false,
+  "artifacts": {
+    "report": "ChatGPT_audit_D4C2a_v3_0.110.0.md",
+    "evidence": "D4C2a_v3_0.110.0_audit_evidence.zip",
+    "comparison": "D4C2a_v3_0.110.0_bridge_comparison_spec.json"
+  }
+}
