@@ -1,0 +1,58 @@
+{
+ "schema": "d4c1_probe_evidence_file_map_v1",
+ "attempt_id": "20261006T115712Z_69ece7cef3",
+ "commit": "39082b641d8621989ae69a273f4e88e0c59673ba",
+ "engine": "0.110.0",
+ "family": "E2",
+ "probe_n": 3,
+ "campaign_id": "D4C2_9efa1b8d82fe",
+ "target_commitment": "9efa1b8d82fec2e23ac685d24dbaece7932e29955c94fc5a2955ba793c70b326",
+ "scope": "ENVIRONMENT BRIDGE PROBE EVIDENCE (Python 3.13.16; engine 0.110.0; instrumented; D4C1_PARTIAL_PASS False by design): the 15 per-row scientific records are byte-identical to the registered baseline probe 20261005T100239Z_386d63207c (Python 3.13.15; engine 0.107.0). Accepted by the audit as the fixed E2 first-3 environment bridge only. NOT a formal input, NOT a calibration acceptance, NOT a usable seal. The nonce is not stored anywhere.",
+ "baseline": {
+  "attempt_id": "20261005T100239Z_386d63207c",
+  "zip_sha256": "538f5e07f3c4fae84803d17783ff09a03fef5270cd04b600376e2af891644766",
+  "partial_payload": "057ae75355fd7a716aba9d52d5a520275c9c6fd3b57162a4e7d389e327223878"
+ },
+ "comparison_spec": {
+  "file": "registered_assets/d4c1/acceptance/d4c2a/D4C2a_v3_0.110.0_bridge_comparison_spec.json",
+  "sha256": "a9cb9ab9b622cb0d929006eac01a957003a5eeffef990a40de8c6338a0981373"
+ },
+ "new_partial_payload": "774951eacb3e60e8408f582fc194847ba66191c095ee4a9a026922305680a322",
+ "files": {
+  "d4c1_partial_E2_39082b641d86.zip": {
+   "sha256": "d5bb91b103fa33c6e1ae3764e47aa4e3e2ae3e0326fb4966c0cad52978329ded",
+   "bytes": 523671,
+   "role": "bridge probe evidence zip (launcher output anchor: lock, final record, run_20261006T115712Z_69ece7cef3/: run record, probe record, profile record, archive 17 entries, stdout; outer stdout / stderr) - byte-preserved"
+  },
+  "MirrorTopology_Step1_D4C1_partial_v0_1_executed_39082b641d86.ipynb": {
+   "sha256": "88ac16fb64074d9995be82ab964a07e6e313b363cc1dba8af9678da06be691a8",
+   "bytes": 49671,
+   "role": "executed launcher notebook (v0.3 content) - byte-preserved"
+  },
+  "d4c2_bridge_report_20261006T115712Z_69ece7cef3.json": {
+   "sha256": "cf72b217eec1624fee40aafea8f5cfaf71c460c03a315cca0918b9e9c14b1bef",
+   "bytes": 19756,
+   "role": "comparison report of the accepted comparator v2 (d/d4c2_bridge_compare.py ca545b61..., run from outside against the unmodified 0.110.0 producer tree, the original spec and the baseline zip, --expected-commit 39082b64...): BRIDGE_CONTRACT_SATISFIED 36/36"
+  },
+  "D4C2_bridge_probe_report.md": {
+   "sha256": "265e218d08c5c117a0f5d2b1c7fa9f88f4212a89a82a34dc7b563ff5794f4b9f",
+   "bytes": 7730,
+   "role": "author report submitted to the audit (final version with the executed-notebook SHA)"
+  },
+  "ChatGPT_audit_D4C2_bridge_39082b64.md": {
+   "sha256": "7d7ce500907e888f4e8897479aed58ec1d958760cb2402d1b77c56174ad689c2",
+   "bytes": 16220,
+   "role": "audit report (ChatGPT, 2026-10-07): numerical bridge ACCEPTED with explicit scope; screen -> certificate execution GO on fixed 0.112.0"
+  },
+  "D4C2_bridge_39082b64_acceptance.json": {
+   "sha256": "325f1ad349579729bf6e6e9cf536858b3953077efac3b85be848e3763c269307",
+   "bytes": 18536,
+   "role": "acceptance JSON (ACCEPTED_WITH_EXPLICIT_SCOPE__FIXED_E2_FIRST3_ENVIRONMENT_BRIDGE)"
+  },
+  "D4C2_bridge_39082b64_audit_evidence.zip": {
+   "sha256": "dc779bc457835d5f25df49dc31f5f6d8dbda7e66a96b36c42225f4667cc66356",
+   "bytes": 362747,
+   "role": "audit evidence zip - byte-preserved"
+  }
+ }
+}

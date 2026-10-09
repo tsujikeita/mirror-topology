@@ -1,6 +1,6 @@
 {
  "schema": "b3_2_pins_v1",
- "engine_version": "0.112.0",
+ "engine_version": "0.113.0",
  "profile": "assets_official",
  "environment": {
   "python": "3.13.16",
@@ -104,5 +104,11 @@
   },
   "expected_runtime_hours": "2.5-4 (Colab 2 threads; 6000 exact solves)"
  },
- "note": "science pins for B-3-2 (registered assets); no self-referencing commit/inventory hashes"
+ "note": "science pins for B-3-2 (registered assets); no self-referencing commit/inventory hashes",
+ "d4c2_acceptance_sha256": "3b6c839daa5541cd6f2bac44bf868f415b03a8a5e8778dea1180950e173f8053",
+ "d4c2_execution_decision_sha256": "0477d7b2fb546634c3444cb0613aef993d181730e4556cbfc97f6116f5473282",
+ "d4c2_certificate_sha256": "4a249ee06929b514bfc2f60881ab1c5073518b30c1c2e3667b26621327066557",
+ "d4c2_bridge_acceptance_sha256": "325f1ad349579729bf6e6e9cf536858b3953077efac3b85be848e3763c269307",
+ "d4c2_ledger_sha256": "aaeb91e1bbdda73e969d564c54eb0c0d7cf75c33bc6a3b8de39ad35e867e7fc1",
+ "d4c2_outer_receipt_sha256": "614261413751cdd8c2692ea5f2d4e0d87d10999253641ea625593a71e91bc2a5"
 }

@@ -1,6 +1,6 @@
 {
  "schema": "b3_1_pins_v1",
- "engine_version": "0.112.0",
+ "engine_version": "0.113.0",
  "profile": "control_official",
  "control_profile": {
   "N": 1000000,
@@ -140,5 +140,11 @@
   "notebook_sha256": "c11c41413e33754444118401c8c102b69ca430650619d409bef568f94bba1209",
   "calibration_checkpoint_sha256": "6a8c87889ec1d7a5d35336a3cdc30f9537376f2b3878ac9d1ee12cc34319c5df"
  },
- "note": "science pins for the B-3-1 official-scale control battery; no self-referencing commit/inventory hashes (outer launcher lock)"
+ "note": "science pins for the B-3-1 official-scale control battery; no self-referencing commit/inventory hashes (outer launcher lock)",
+ "d4c2_acceptance_sha256": "3b6c839daa5541cd6f2bac44bf868f415b03a8a5e8778dea1180950e173f8053",
+ "d4c2_execution_decision_sha256": "0477d7b2fb546634c3444cb0613aef993d181730e4556cbfc97f6116f5473282",
+ "d4c2_certificate_sha256": "4a249ee06929b514bfc2f60881ab1c5073518b30c1c2e3667b26621327066557",
+ "d4c2_bridge_acceptance_sha256": "325f1ad349579729bf6e6e9cf536858b3953077efac3b85be848e3763c269307",
+ "d4c2_ledger_sha256": "aaeb91e1bbdda73e969d564c54eb0c0d7cf75c33bc6a3b8de39ad35e867e7fc1",
+ "d4c2_outer_receipt_sha256": "614261413751cdd8c2692ea5f2d4e0d87d10999253641ea625593a71e91bc2a5"
 }

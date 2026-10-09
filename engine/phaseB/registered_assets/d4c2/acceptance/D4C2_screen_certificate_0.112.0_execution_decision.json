@@ -1,0 +1,209 @@
+{
+  "schema": "D4C2_screen_certificate_execution_GO_v1",
+  "date_JST": "2026-10-07",
+  "decision": "GO_FIXED_0112_SCREENS_E2_E7_E8_ALL2000_THEN_AUTHENTICATED_CERTIFICATE_ONLY",
+  "basis_bridge_acceptance": {
+    "file": "D4C2_bridge_39082b64_acceptance.json",
+    "bytes": 18536,
+    "sha256": "325f1ad349579729bf6e6e9cf536858b3953077efac3b85be848e3763c269307"
+  },
+  "basis_previous_implementation_acceptance": {
+    "file": "D4C2a_v5_0.112.0_audit_decision.json",
+    "bytes": 12327,
+    "sha256": "14f5d77e3a40a4bccda3502f754caf5bc107446a8bcb0304b1ea00a4c322e51c"
+  },
+  "fixed_source": {
+    "commit": "ba51e5951ebb8c16c7106247408c912d86944675",
+    "engine": "0.112.0",
+    "source_zip": {
+      "file": "phaseB_D4C2a_v5_0.112.0.zip",
+      "bytes": 31212377,
+      "sha256": "0f52a66f53656fd0e686d2ff9a095724e3f834bcd1db26259509005ca323b62c"
+    },
+    "inventory": {
+      "file": "B2_completion_inventory.json",
+      "bytes": 352053,
+      "sha256": "aa2c11cc01df09fc9cd130a2c0b9aa5af75d1b2acc27f47aef3d5d91d0bb2b77"
+    },
+    "script": {
+      "file": "d4c1_calibration.py",
+      "bytes": 102144,
+      "sha256": "814557791d7f295fbb981c20806c7374ddf7ae19148380c41c004afef3e597b0"
+    },
+    "screen_notebook": {
+      "file": "MirrorTopology_Step1_D4C2_screen_v0.1.ipynb",
+      "bytes": 28964,
+      "sha256": "ca9c263ac5cc6ab398eb948c443404af310d0d89a2aae55cef4760dc5a5f6acb"
+    },
+    "pins": {
+      "file": "d3_pins.json",
+      "bytes": 3402,
+      "sha256": "1d03bc5f83d41a2bf75d817cf7d6b9d29caf856740a4f87dc9e8d303a7e172d2"
+    },
+    "remote_git_tree_independently_verified": false
+  },
+  "GO": {
+    "screen_E2_E7_E8_all_2000_execution": true,
+    "certificate_after_three_complete_authenticated_screens": true,
+    "formal_partial_or_subpartial_execution": false,
+    "global_calibration_combiner": false,
+    "formal_usable_acceptance": false,
+    "PhaseE_actual_target_or_labels": false,
+    "bank_pseudo_W2_regeneration": false
+  },
+  "settings": {
+    "schema": "D4C2_screen_certificate_fixed_settings_v1",
+    "execution_source": {
+      "commit": "ba51e5951ebb8c16c7106247408c912d86944675",
+      "engine": "0.112.0",
+      "source_zip": {
+        "file": "phaseB_D4C2a_v5_0.112.0.zip",
+        "bytes": 31212377,
+        "sha256": "0f52a66f53656fd0e686d2ff9a095724e3f834bcd1db26259509005ca323b62c"
+      },
+      "inventory": {
+        "file": "B2_completion_inventory.json",
+        "bytes": 352053,
+        "sha256": "aa2c11cc01df09fc9cd130a2c0b9aa5af75d1b2acc27f47aef3d5d91d0bb2b77"
+      },
+      "script": {
+        "file": "d4c1_calibration.py",
+        "bytes": 102144,
+        "sha256": "814557791d7f295fbb981c20806c7374ddf7ae19148380c41c004afef3e597b0"
+      },
+      "screen_notebook": {
+        "file": "MirrorTopology_Step1_D4C2_screen_v0.1.ipynb",
+        "bytes": 28964,
+        "sha256": "ca9c263ac5cc6ab398eb948c443404af310d0d89a2aae55cef4760dc5a5f6acb"
+      },
+      "pins": {
+        "file": "d3_pins.json",
+        "bytes": 3402,
+        "sha256": "1d03bc5f83d41a2bf75d817cf7d6b9d29caf856740a4f87dc9e8d303a7e172d2"
+      },
+      "remote_git_tree_independently_verified": false
+    },
+    "screen_notebook": "d/MirrorTopology_Step1_D4C2_screen_v0.1.ipynb",
+    "screen_order": [
+      "E2",
+      "E7",
+      "E8"
+    ],
+    "common_editable_cell": {
+      "REPO_COMMIT": "ba51e5951ebb8c16c7106247408c912d86944675",
+      "EXPECTED_INVENTORY_SHA256": "aa2c11cc01df09fc9cd130a2c0b9aa5af75d1b2acc27f47aef3d5d91d0bb2b77",
+      "ROW_RANGE": null,
+      "TARGET_COMMITMENT": "9efa1b8d82fec2e23ac685d24dbaece7932e29955c94fc5a2955ba793c70b326",
+      "CAMPAIGN_ID": "D4C2_9efa1b8d82fe",
+      "OUT_ROOT": "/content/drive/MyDrive/MirrorTopology_D4C2_screen_0_112_0",
+      "STAGE_LOCAL": true,
+      "STAGE_ROOT": "/content/stage"
+    },
+    "family_editable_cells": {
+      "E2": {
+        "FAMILY": "E2",
+        "D2_RUN_ROOT": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2"
+      },
+      "E7": {
+        "FAMILY": "E7",
+        "D2_RUN_ROOT": "/content/drive/MyDrive/MirrorTopology_D2/E7_20260923T125656Z/out/d2"
+      },
+      "E8": {
+        "FAMILY": "E8",
+        "D2_RUN_ROOT": "/content/drive/MyDrive/MirrorTopology_D2/E8_20260923T174910Z/out/d2"
+      }
+    },
+    "environment": {
+      "python": "3.13.16",
+      "numpy": "2.1.3",
+      "scipy": "1.16.3",
+      "healpy": "1.20.0",
+      "pot": "0.9.7.post1",
+      "camb": "2.0.4",
+      "numpy_openblas_threads": 2,
+      "other_pools_max": 2,
+      "note": "rules §12.1 hard gate (checked live in the generating process); A11-style fingerprint/lock diff recorded as metadata only"
+    },
+    "scope": {
+      "global_pseudo_indices": {
+        "start": 0,
+        "stop_exclusive": 2000
+      },
+      "families": [
+        "E2",
+        "E7",
+        "E8"
+      ],
+      "all_surviving_sizes": [
+        "L1.00",
+        "L1.20",
+        "L1.50"
+      ],
+      "positions_per_size": 3,
+      "stages": [
+        "N0",
+        "N4"
+      ],
+      "n0": 1000000,
+      "nmax": 4000000,
+      "certificate_inputs": "the three COMPLETE same-source full-range screen RUN directories; not outer launcher roots, not bridge probes",
+      "actual_thresholds": "registered paired T1/T2 rows, unchanged",
+      "no_target_nonce": true
+    },
+    "execution_notes": [
+      "Fresh separate family outputs; sequential processes only: common scratch and stage paths must not be used concurrently.",
+      "Use High-RAM CPU conservatively. The screen notebook has a >10 GB minimum guard; this is not an empirical RAM/time guarantee.",
+      "Execute preflight again for each family; retain checks and all technical failure attempts.",
+      "Keep source/inventory fixed until all screens and certificate complete. Do not add this audit to the running source tree.",
+      "Use certificate-only CLI at the same 0.112.0 bytes. No --mt, --phasec, --probe-n, --instrument, --selftest-* or --evaluated inputs under this GO.",
+      "Certificate producer/current source identity must match; consumer environment is recorded, not the screen hard environment gate."
+    ]
+  },
+  "required_record_flags": {
+    "screen": {
+      "REQUIRED_count": 20,
+      "flag": "D4C1_SCREEN_COMPLETE",
+      "flag_value": true,
+      "selftest": false,
+      "formal": true,
+      "probe": false,
+      "instrument": false,
+      "profile": "production_official",
+      "scope": "all rows [0,2000) of one specified family"
+    },
+    "certificate": {
+      "REQUIRED_count": 12,
+      "flag": "D4C1_CERTIFICATE_COMPLETE",
+      "flag_value": true,
+      "selftest": false,
+      "profile": "production_official",
+      "scope": "algebraic certificate over the accepted three complete screen-run evidence sets; no evaluated bridge/probe rows mixed in"
+    }
+  },
+  "conditions": [
+    "One screen per family in order E2 -> E7 -> E8, each in a fresh child process with source/lock precheck and prelaunch, original first-wave D-2 bank, full registered paired 2000 rows, all three sizes and positions, N0/Nmax exact counts.",
+    "No shortcut gate removal, approximate counts, changed seeds, reordered or selected pseudo rows, or scientific result-dependent reruns. A technical failure stops the affected attempt, whose complete evidence is retained.",
+    "High-RAM CPU is recommended to leave margin; no bound on completion time/RSS from the 3-row bridge is claimed. No parallel use of shared scratch/staging paths.",
+    "Use one read-only 0.112.0 source epoch for all three producers and the certificate consumer. Source changes require a new pin/decision; do not relabel previous records.",
+    "Before the certificate, confirm each screen final/run completion, exact trusted20 gates, all true, provenance, correct family and [0,2000) range and published record hash/bytes; retain outer lock/final/log/notebook with the run directory.",
+    "Pass the three actual run_<attempt> directories via separate --screen arguments. Do not pass outer launcher directory, bridge probe, self-test screen, partial/subpartial or arbitrary --evaluated evidence under this decision.",
+    "Certificate-only entry needs --phaseb, --out, --screen x3, --target-commitment and --campaign-id, and the same source identity. It does not take --mt/--phasec or self-test/env-skip flags. Preserve stdout/stderr/command, consumer environment and input file hashes.",
+    "Certificate success is not global calibration completion, measured c/u/rate, or formal usable=False. A false impossibility predicate does not prove usable=True.",
+    "No final scientific certificate conclusion is accepted by this execution GO: submit the screen/certificate originals and executed notebooks for post-run audit.",
+    "Store this audit and bridge originals outside the fixed running tree until the same-source screen/certificate campaign has completed; later provenance registration must preserve historical execution bytes."
+  ],
+  "interpretation": {
+    "fixed_denominator": 2000,
+    "first_blocking_count": {
+      "support": 81,
+      "strong": 12
+    },
+    "same_global_row_counted_once_across_families": true,
+    "unknown_or_technical_kept_conditional": true,
+    "unmarked_screen_rows": "undetermined, never classified False merely for failing this sufficient condition",
+    "TECH": "separate from known unknown, not erased by another family True",
+    "no_actual_blocking_count_predicted": true
+  },
+  "mandatory_patch": false,
+  "prior_acceptances_preserved": true
+}

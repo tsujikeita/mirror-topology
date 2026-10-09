@@ -18,6 +18,11 @@
    "bytes": 12304,
    "role": "audit report of D4C-2a v4 (engine 0.111.0, commit 59b0e7b8bd01ccde1d3be92745aa8144e36e146c): C1 / C2 / D1 / history guard ACCEPTED; bridge comparator HOLD (R-D4BRIDGE-A/B/C); screen / certificate execution deferred"
   },
+  "ChatGPT_audit_D4C2a_v5_0.112.0.md": {
+   "sha256": "ab0121fad90300680b36d49c2521de586ed6a717bb20f2b4481e4dd7661fda8c",
+   "bytes": 9372,
+   "role": "audit report of D4C-2a v5 (engine 0.112.0, commit ba51e5951ebb8c16c7106247408c912d86944675): bridge comparator v2 implementation ACCEPTED (R-D4BRIDGE-A/B/C closed)"
+  },
   "D4C2a_0.108.0_audit_decision.json": {
    "sha256": "c1bc88f7a86421e57f224d0af6e4472bd32e5ebdd032e42fb0db44bf58f847b7",
    "bytes": 15248,
@@ -57,6 +62,16 @@
    "sha256": "9e4a54e5ec2282da6efd4665a5a109148c07cd6a4595fa3b2fd9a8b73279c798",
    "bytes": 508809,
    "role": "audit evidence zip (v4) - byte-preserved"
+  },
+  "D4C2a_v5_0.112.0_audit_decision.json": {
+   "sha256": "14f5d77e3a40a4bccda3502f754caf5bc107446a8bcb0304b1ea00a4c322e51c",
+   "bytes": 12327,
+   "role": "decision JSON for the v5 audit (BRIDGE_COMPARATOR_V2_IMPLEMENTATION_ACCEPTED_WITH_SCOPE__NUMERICAL_BRIDGE_PENDING)"
+  },
+  "D4C2a_v5_0.112.0_audit_evidence.zip": {
+   "sha256": "9f110377efc82cc67f082d0da8f29a50e39fa21083f37f7494e699989eeab244",
+   "bytes": 581223,
+   "role": "audit evidence zip (v5) - byte-preserved"
   }
  }
 }

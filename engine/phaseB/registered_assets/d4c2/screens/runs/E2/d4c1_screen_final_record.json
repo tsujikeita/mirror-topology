@@ -1,0 +1,228 @@
+{
+ "schema": "d4c1_screen_launcher_final_record_v1",
+ "attempt_id": "20261007T113430Z_d4d346bde9",
+ "started_utc": "2026-10-07T11:34:30Z",
+ "lock_sha256": "ac223b5ddb1e964edc796edcf0049f7fb3e255063e7b26691d354e314cf463dc",
+ "lock": {
+  "schema": "d4c1_screen_launcher_lock_v1",
+  "commit": "ba51e5951ebb8c16c7106247408c912d86944675",
+  "inventory_sha256": "aa2c11cc01df09fc9cd130a2c0b9aa5af75d1b2acc27f47aef3d5d91d0bb2b77",
+  "script_sha256": "814557791d7f295fbb981c20806c7374ddf7ae19148380c41c004afef3e597b0",
+  "inventory_script_sha256": "814557791d7f295fbb981c20806c7374ddf7ae19148380c41c004afef3e597b0",
+  "pins_sha256": "1d03bc5f83d41a2bf75d817cf7d6b9d29caf856740a4f87dc9e8d303a7e172d2",
+  "registered_assets_sha256": {
+   "registered_assets/d2/d2_generation_ledger.json": "07574dfa58dcabdf42955b8cc90cd7adf8fa581ae8075587e540c68f07263555",
+   "registered_assets/d3b/d3b_generation_ledger.json": "bdaa8aeb9b3e591d73540c4edce482c3f59f6edcafa0f21f171332102c624837",
+   "registered_assets/d3b/d3b_outer_receipt.json": "ed0fbccba739f26a906da0948885d3b4205ca6c58d5aa8338a62c877b166dabb",
+   "registered_assets/d3c/d3c_profile_ledger.json": "27a0334fb339e29659ea6c13aa26e287c44abe6d3c57e0ccbce5e059cc9a92c5",
+   "registered_assets/d3c/d3c_outer_receipt.json": "a2771b2694e17418a38995c625a331aa9242b7b948ceb4787c1e053e9e80b059",
+   "registered_assets/d4c0/d4c0_ledger.json": "f018f77b4bc89c2d400b2eda57dd29d819f4896e7d8dd0a7510feda2d09548a2",
+   "registered_assets/d4c0/d4c0_outer_receipt.json": "f86939e6a7aa95c752b17c0edccd709769b40c601671a2af09c85036304bae58",
+   "registered_assets/b3_2_twelve_assets.json": "be6860ba2ffbdd798d8a300b2268281bbade1d2b7f33b5b0748dc550ef90d557",
+   "registered_assets/b3_2_shared_null_asset.json": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4"
+  },
+  "engine": "0.112.0",
+  "family": "E2",
+  "d2_run_root": "/content/drive/MyDrive/MirrorTopology_D2/E2_20260923T092030Z/out/d2",
+  "row_range": null,
+  "target_commitment": "9efa1b8d82fec2e23ac685d24dbaece7932e29955c94fc5a2955ba793c70b326",
+  "campaign_id": "D4C2_9efa1b8d82fe",
+  "out_root": "/content/drive/MyDrive/MirrorTopology_D4C2_screen_0_112_0",
+  "stage_local": true,
+  "stage_root": "/content/stage",
+  "mt": "/content/d4c1_scratch",
+  "phaseb": "/content/d4c1_scratch/engine/phaseB",
+  "phasec": "/content/d4c1_scratch/phaseC",
+  "script": "/content/d4c1_scratch/engine/phaseB/d/d4c1_calibration.py",
+  "out": "/content/drive/MyDrive/MirrorTopology_D4C2_screen_0_112_0/d4c1_screen_E2",
+  "locked_utc": "2026-10-07T11:34:30Z"
+ },
+ "output_anchor": "/content/drive/MyDrive/MirrorTopology_D4C2_screen_0_112_0/d4c1_screen_E2",
+ "ram": {
+  "total_bytes": 54750404608,
+  "available_bytes": 52571975680
+ },
+ "stage": "complete",
+ "screen_complete": true,
+ "row_range": null,
+ "exit_code": 0,
+ "D4C1_SCREEN_COMPLETE": true,
+ "launcher_fallback": false,
+ "gates_ok": true,
+ "bindings_ok": true,
+ "evidence_ok": true,
+ "failures": [],
+ "exception": null,
+ "run_dir": "/content/drive/MyDrive/MirrorTopology_D4C2_screen_0_112_0/d4c1_screen_E2/run_20261007T113430Z_d4d346bde9",
+ "staged_inputs": {
+  "d2": "/content/stage/d2"
+ },
+ "bindings": {
+  "live_source_precheck": {
+   "head": "ba51e5951ebb8c16c7106247408c912d86944675",
+   "clean": true,
+   "inventory_sha256": "aa2c11cc01df09fc9cd130a2c0b9aa5af75d1b2acc27f47aef3d5d91d0bb2b77",
+   "script_sha256": "814557791d7f295fbb981c20806c7374ddf7ae19148380c41c004afef3e597b0",
+   "inventory_script_sha256": "814557791d7f295fbb981c20806c7374ddf7ae19148380c41c004afef3e597b0",
+   "pins_sha256": "1d03bc5f83d41a2bf75d817cf7d6b9d29caf856740a4f87dc9e8d303a7e172d2",
+   "registered_assets_sha256": {
+    "registered_assets/d2/d2_generation_ledger.json": "07574dfa58dcabdf42955b8cc90cd7adf8fa581ae8075587e540c68f07263555",
+    "registered_assets/d3b/d3b_generation_ledger.json": "bdaa8aeb9b3e591d73540c4edce482c3f59f6edcafa0f21f171332102c624837",
+    "registered_assets/d3b/d3b_outer_receipt.json": "ed0fbccba739f26a906da0948885d3b4205ca6c58d5aa8338a62c877b166dabb",
+    "registered_assets/d3c/d3c_profile_ledger.json": "27a0334fb339e29659ea6c13aa26e287c44abe6d3c57e0ccbce5e059cc9a92c5",
+    "registered_assets/d3c/d3c_outer_receipt.json": "a2771b2694e17418a38995c625a331aa9242b7b948ceb4787c1e053e9e80b059",
+    "registered_assets/d4c0/d4c0_ledger.json": "f018f77b4bc89c2d400b2eda57dd29d819f4896e7d8dd0a7510feda2d09548a2",
+    "registered_assets/d4c0/d4c0_outer_receipt.json": "f86939e6a7aa95c752b17c0edccd709769b40c601671a2af09c85036304bae58",
+    "registered_assets/b3_2_twelve_assets.json": "be6860ba2ffbdd798d8a300b2268281bbade1d2b7f33b5b0748dc550ef90d557",
+    "registered_assets/b3_2_shared_null_asset.json": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4"
+   },
+   "engine": "0.112.0",
+   "checked_utc": "2026-10-07T11:34:30Z"
+  },
+  "live_source_prelaunch": {
+   "head": "ba51e5951ebb8c16c7106247408c912d86944675",
+   "clean": true,
+   "inventory_sha256": "aa2c11cc01df09fc9cd130a2c0b9aa5af75d1b2acc27f47aef3d5d91d0bb2b77",
+   "script_sha256": "814557791d7f295fbb981c20806c7374ddf7ae19148380c41c004afef3e597b0",
+   "inventory_script_sha256": "814557791d7f295fbb981c20806c7374ddf7ae19148380c41c004afef3e597b0",
+   "pins_sha256": "1d03bc5f83d41a2bf75d817cf7d6b9d29caf856740a4f87dc9e8d303a7e172d2",
+   "registered_assets_sha256": {
+    "registered_assets/d2/d2_generation_ledger.json": "07574dfa58dcabdf42955b8cc90cd7adf8fa581ae8075587e540c68f07263555",
+    "registered_assets/d3b/d3b_generation_ledger.json": "bdaa8aeb9b3e591d73540c4edce482c3f59f6edcafa0f21f171332102c624837",
+    "registered_assets/d3b/d3b_outer_receipt.json": "ed0fbccba739f26a906da0948885d3b4205ca6c58d5aa8338a62c877b166dabb",
+    "registered_assets/d3c/d3c_profile_ledger.json": "27a0334fb339e29659ea6c13aa26e287c44abe6d3c57e0ccbce5e059cc9a92c5",
+    "registered_assets/d3c/d3c_outer_receipt.json": "a2771b2694e17418a38995c625a331aa9242b7b948ceb4787c1e053e9e80b059",
+    "registered_assets/d4c0/d4c0_ledger.json": "f018f77b4bc89c2d400b2eda57dd29d819f4896e7d8dd0a7510feda2d09548a2",
+    "registered_assets/d4c0/d4c0_outer_receipt.json": "f86939e6a7aa95c752b17c0edccd709769b40c601671a2af09c85036304bae58",
+    "registered_assets/b3_2_twelve_assets.json": "be6860ba2ffbdd798d8a300b2268281bbade1d2b7f33b5b0748dc550ef90d557",
+    "registered_assets/b3_2_shared_null_asset.json": "cc67686744f513e3123de2fb8353d79491d4b1deaff2b8d9ecb5f93d0f95afb4"
+   },
+   "engine": "0.112.0",
+   "checked_utc": "2026-10-07T11:36:43Z"
+  }
+ },
+ "seconds_total": 1023.065,
+ "finished_utc": "2026-10-07T11:51:33Z",
+ "staging": {
+  "root": "/content/stage",
+  "d2_units": 30,
+  "input_bytes": 3255156399,
+  "disk_free_bytes_before": 219735109632,
+  "seconds": 132.4,
+  "disk_free_bytes_after": 213216776192
+ },
+ "args": [
+  "/usr/bin/python3",
+  "/content/d4c1_scratch/engine/phaseB/d/d4c1_calibration.py",
+  "--mt",
+  "/content/d4c1_scratch",
+  "--phaseb",
+  "/content/d4c1_scratch/engine/phaseB",
+  "--phasec",
+  "/content/d4c1_scratch/phaseC",
+  "--out",
+  "/content/drive/MyDrive/MirrorTopology_D4C2_screen_0_112_0/d4c1_screen_E2/run_20261007T113430Z_d4d346bde9",
+  "--mode",
+  "screen",
+  "--family",
+  "E2",
+  "--d2-root",
+  "/content/stage/d2",
+  "--target-commitment",
+  "9efa1b8d82fec2e23ac685d24dbaece7932e29955c94fc5a2955ba793c70b326",
+  "--campaign-id",
+  "D4C2_9efa1b8d82fe",
+  "--profile",
+  "production_official",
+  "--attempt-id",
+  "20261007T113430Z_d4d346bde9",
+  "--launcher-lock-sha256",
+  "ac223b5ddb1e964edc796edcf0049f7fb3e255063e7b26691d354e314cf463dc"
+ ],
+ "record_sha256": "c83c95b23c11e583c853582091ceff707b0d59fa008fe36bfeba726d7b0baae3",
+ "record_stage": "complete",
+ "record_failures": [],
+ "gates": {
+  "G_pins_loaded": true,
+  "G_engine_inventory": true,
+  "G_script_sha": true,
+  "G_phaseC_members": true,
+  "G_env_lock": true,
+  "G_external_loader_sha": true,
+  "G_twelve_context": true,
+  "G_w2_context_registered": true,
+  "G_pseudo_registered": true,
+  "G_twelve_asset_registered": true,
+  "G_commitment_form": true,
+  "G_inputs_resolved": true,
+  "G_first_wave_supplies": true,
+  "G_plans_fixed": true,
+  "G_first_wave_views": true,
+  "G_row_range": true,
+  "G_screen_computed": true,
+  "G_screen_published": true,
+  "G_pseudo_identity_bound": true,
+  "G_record_saved": true
+ },
+ "stages_rss_mb": {
+  "preflight": 1283.8,
+  "first_wave_intake": 4223.6,
+  "plans": 7621.2,
+  "first_wave_views": 7640.7,
+  "screen": 7651.8,
+  "final": 7689.4
+ },
+ "stages_peak_rss_mb": {
+  "preflight": 1299.9,
+  "first_wave_intake": 4250.5,
+  "plans": 8450.9,
+  "first_wave_views": 8450.9,
+  "screen": 8450.9,
+  "final": 8450.9
+ },
+ "seconds_script": 887.9556918144226,
+ "timings": {
+  "preflight": 30.981,
+  "first_wave_intake": 161.499,
+  "plans": 200.899,
+  "first_wave_views": 328.295,
+  "screen_seconds": 546.2,
+  "seconds_per_row": 0.2731,
+  "screen": 880.111,
+  "final": 887.956
+ },
+ "screen_summary": {
+  "n_rows": 2000,
+  "n_blocking": 2000,
+  "w2_applicable": true,
+  "w2": {
+   "L1.00": {
+    "trigger": false,
+    "validation_state": "valid"
+   },
+   "L1.20": {
+    "trigger": "unknown",
+    "validation_state": "w2-unresolved"
+   },
+   "L1.50": {
+    "trigger": false,
+    "validation_state": "valid"
+   }
+  },
+  "screen_sha256": "013b5e971c2537b209811f94632cf4e4011450e2fefd831e62299cc5fe30e4e7",
+  "rows": [
+   0,
+   2000
+  ],
+  "ratio_bound_max": {
+   "L1.00": 1.1456692913385829,
+   "L1.20": 1.0814639905548997,
+   "L1.50": 1.0456852791878173
+  },
+  "stages_covered": [
+   "N0",
+   "N4"
+  ]
+ },
+ "stderr_tail": "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR\nI0000 00:00:1791373007.695874    3100 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.\nWARNING: All log messages before absl::InitializeLog() is called are written to STDERR\nI0000 00:00:1791373009.550999    3100 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.\n"
+}

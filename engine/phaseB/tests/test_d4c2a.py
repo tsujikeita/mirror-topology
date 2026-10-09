@@ -36,7 +36,7 @@ XS, YS = [80., 200., 80., 150.], [400., 1000., 400., 700.]              # E7 rat
 
 def test_modules_registered_and_version():
     for m in ('d4c1_subpartial.py', 'infeasibility.py', 'profiling.py'): assert m in MODULES
-    assert __version__ == '0.112.0' and set(module_shas()) == set(MODULES)
+    assert __version__ == '0.113.0' and set(module_shas()) == set(MODULES)
     inv = json.load(open(os.path.join(P, 'B2_completion_inventory.json'))); assert inv['modules'] == module_shas() and inv['engine_version'] == __version__
 
 

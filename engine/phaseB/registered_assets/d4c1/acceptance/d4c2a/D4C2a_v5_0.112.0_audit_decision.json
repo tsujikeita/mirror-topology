@@ -1,0 +1,302 @@
+{
+  "schema": "step1_D4C2a_v5_0112_bridge_comparator_audit_v1",
+  "date": "2026-10-07",
+  "decision": "BRIDGE_COMPARATOR_V2_IMPLEMENTATION_ACCEPTED_WITH_SCOPE__NUMERICAL_BRIDGE_PENDING",
+  "subject": {
+    "author_supplied_commit": "ba51e5951ebb8c16c7106247408c912d86944675",
+    "engine": "0.112.0",
+    "zip": "phaseB_D4C2a_v5_0.112.0.zip",
+    "zip_sha256": "0f52a66f53656fd0e686d2ff9a095724e3f834bcd1db26259509005ca323b62c",
+    "zip_bytes": 31212377,
+    "inventory_sha256": "aa2c11cc01df09fc9cd130a2c0b9aa5af75d1b2acc27f47aef3d5d91d0bb2b77",
+    "script": "d/d4c2_bridge_compare.py",
+    "script_sha256": "ca545b61c8b867ec2c36210a77012b2a93b125a2cd04d193e4b8e68ce93fc605",
+    "remote_git_tree_independently_verified": false
+  },
+  "closed_findings": [
+    {
+      "id": "R-D4BRIDGE-A-PRODUCER-PROVENANCE",
+      "status": "CLOSED_WITH_EXPLICIT_SCOPE",
+      "evidence": "Producer REQUIRED_PARTIAL extracted by AST; source/lock/final/attempt/live records bound. Rehashed cross-tree mutations rejected by their specific semantic checks, not merely a stale final record hash."
+    },
+    {
+      "id": "R-D4BRIDGE-B-TYPED-INDEX-IDENTITY",
+      "status": "CLOSED",
+      "evidence": "Local recursive teq and typed global row identity checks. bool/float index mutations rejected with scientific record bytes unchanged."
+    },
+    {
+      "id": "R-D4BRIDGE-C-PROFILE-DOCUMENT",
+      "status": "CLOSED_WITH_EXPLICIT_SCOPE",
+      "evidence": "Profile body missing targets, instrumentation, target set, segments and call bookkeeping checked against producer TARGETS and summary/receipt. Rehashed mutations rejected."
+    },
+    {
+      "id": "N-D4BRIDGE-ERROR-REPORT",
+      "status": "CLOSED_FOR_TESTED_ORDINARY_ERRORS",
+      "evidence": "Null partial and missing lock return rc1 with a failure report. OS kill or unwritable output is not guaranteed."
+    }
+  ],
+  "GO": {
+    "bridge_comparison_script_v2_implementation_acceptance": true,
+    "offline_comparison_of_fixed_0110_probe_with_original_spec": true,
+    "prior_C1_C2_D1_history_acceptance_preserved": true,
+    "environment_amendment_v03_policy_and_comparison_contract_acceptance": true,
+    "environment_numerical_bridge_acceptance": false,
+    "prior_fixed_0110_bridge_probe_GO_preserved": true,
+    "new_0112_probe_execution": false,
+    "screen_E2_E7_E8_execution": false,
+    "certificate_execution": false,
+    "formal_subpartial_or_global_calibration": false,
+    "usable_or_PhaseE_actual_target": false
+  },
+  "mandatory_new_patch": false,
+  "prior_acceptances_preserved": true,
+  "bank_pseudo_D2W_D3c_regeneration_or_rerun_required": false,
+  "bridge_probe_rerun_due_to_comparator_review_required": false,
+  "comparison_invocation_conditions": {
+    "comparator_version": "0.112.0, exact submitted comparator bytes",
+    "producer_version": "0.110.0, unmodified generating tree; do not substitute the 0.112 reader",
+    "producer_commit": "39082b641d8621989ae69a273f4e88e0c59673ba",
+    "producer_inventory_sha256": "7df1fb5948eb2c0c0d379a37afa93c0f1dbc0bba77c01c49d6be60665d9bb1ba",
+    "producer_zip_sha256": "3ae56bf1d4911e0955b312e5b44335d9a3398d5dab0b654d713e4fce7e677646",
+    "spec_sha256": "a9cb9ab9b622cb0d929006eac01a957003a5eeffef990a40de8c6338a0981373",
+    "baseline_zip_sha256": "538f5e07f3c4fae84803d17783ff09a03fef5270cd04b600376e2af891644766",
+    "explicit_expected_commit_argument_required_for_this_accepted_use": true,
+    "run_in_fresh_CLI_process": true,
+    "use_original_baseline_zip": true,
+    "output": "new report path outside all input/source trees; never overwrite originals",
+    "on_mismatch": "preserve raw evidence and stop; no retry-until-match and no post-hoc tolerance"
+  },
+  "tests": {
+    "unmodified_pytest": {
+      "bridge": {
+        "cases": 25,
+        "passed": 25,
+        "skips": []
+      },
+      "contracts": {
+        "cases": 29,
+        "passed": 22,
+        "skipped": 7,
+        "skips": [
+          {
+            "name": "test_subpartial_runs_and_family_combination",
+            "message": "external assets not present"
+          },
+          {
+            "name": "test_family_combination_feeds_combine_and_refusals",
+            "message": "external assets not present"
+          },
+          {
+            "name": "test_instrumented_probe_publishes_profile_and_leaves_the_record",
+            "message": "external assets not present"
+          },
+          {
+            "name": "test_screen_and_certificate_modes",
+            "message": "external assets not present"
+          },
+          {
+            "name": "test_screen_notebook_accepts_the_actual_script_record[actual_record_ok]",
+            "message": "external assets not present"
+          },
+          {
+            "name": "test_screen_notebook_accepts_the_actual_script_record[extra_gate_key]",
+            "message": "external assets not present"
+          },
+          {
+            "name": "test_screen_notebook_accepts_the_actual_script_record[missing_gate_key]",
+            "message": "external assets not present"
+          }
+        ]
+      },
+      "registered": {
+        "cases": 82,
+        "passed": 82,
+        "skips": []
+      },
+      "total": {
+        "passed": 129,
+        "skipped": 7
+      },
+      "deselected": "test_d3c_tranche2.py::test_consumer_api_rebuild_and_refusals (full-size plan regeneration not run)"
+    },
+    "author_junit": {
+      "files": 30,
+      "cases": 1953,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "all_independently_executed": false
+    },
+    "collect_count": 1953,
+    "normalized_multiset_equal": true,
+    "normalization": "bare JUnit module names to tests/*.py; absolute checkout prefix in six notebook parametrized names",
+    "cross_tree_synthetic_controls": {
+      "cases": 22,
+      "normal_accepted": 1,
+      "mutations_rejected": 21,
+      "all_reports_published": true,
+      "normal_checks": 36,
+      "producer": "unmodified 0.110.0",
+      "spec": "original, not rewritten",
+      "outer_receipts_rehashed": true,
+      "scientific_execution": false
+    },
+    "producer_profiler_format_control": {
+      "rc": 0,
+      "actual_python": "3.13.5",
+      "metadata_python_in_fixture": "3.13.16",
+      "n_targets": 22,
+      "unused_targets": 20,
+      "segments": 3,
+      "scope": "TEST ONLY trivial bodies; producer Profiler format compatibility, not scientific run"
+    },
+    "fresh_check": {
+      "rc": 0,
+      "n_checks": 36,
+      "producer_source_unchanged": true,
+      "new_input_form": "ZIP",
+      "synthetic": true,
+      "all_pytest_repeated": false
+    }
+  },
+  "metadata": {
+    "inventory_sha": "aa2c11cc01df09fc9cd130a2c0b9aa5af75d1b2acc27f47aef3d5d91d0bb2b77",
+    "inventory_entries": 2237,
+    "errors": [],
+    "python_compile_count": 220,
+    "python_compile_errors": [],
+    "notebook_code_cells": 12,
+    "old_registered_count": 1923,
+    "changed_old_registered": [
+      "registered_assets/d4c1/acceptance/d4c2a/file_map.json"
+    ],
+    "new_registered_count": 1926,
+    "keyfiles": {
+      "d/d4c2_bridge_compare.py": "ca545b61c8b867ec2c36210a77012b2a93b125a2cd04d193e4b8e68ce93fc605",
+      "d/d4c1_calibration.py": "814557791d7f295fbb981c20806c7374ddf7ae19148380c41c004afef3e597b0",
+      "step1_engine/infeasibility.py": "ca14656dc6765b87df132270e2647cc2649069026cdaf9003164272940d95788",
+      "step1_engine/profiling.py": "88e5cb619cae0718108fa975db5ce2b00afd1f2bb55a52d8ea26273841a8a244",
+      "step1_engine/official_gate.py": "b8694cebe1ce6b0fa6df6b86a2887ef7dd620b0d16ba026162f164a6cb0d6798",
+      "tests/test_d4c2_bridge.py": "5dea78cfd188ee21c281fc232327da2b8b6cd780e608e80f9a83502a7fda7db7"
+    },
+    "changed": [
+      "B2_completion_inventory.json",
+      "Step1_PhaseD_D4C2a_report.md",
+      "Step1_PhaseB_engine_spec_v0.3_addendum.md",
+      "tests/test_d4c1.py",
+      "tests/test_d4c2_bridge.py",
+      "tests/test_d4c2a.py",
+      "b3/b3_2_pins.json",
+      "b3/b3_0_pins.json",
+      "b3/b3_1_pins.json",
+      "step1_engine/__init__.py",
+      "d/d1_pins.json",
+      "d/d2_pins.json",
+      "d/d3_pins.json",
+      "d/d4c2_bridge_compare.py",
+      "regression_logs/d4c2a_pytest/j25.xml",
+      "regression_logs/d4c2a_pytest/chunks_stdout.txt",
+      "regression_logs/d4c2a_pytest/j12.xml",
+      "regression_logs/d4c2a_pytest/j3.xml",
+      "regression_logs/d4c2a_pytest/j11.xml",
+      "regression_logs/d4c2a_pytest/j24.xml",
+      "regression_logs/d4c2a_pytest/j20.xml",
+      "regression_logs/d4c2a_pytest/j27.xml",
+      "regression_logs/d4c2a_pytest/j13.xml",
+      "regression_logs/d4c2a_pytest/j23.xml",
+      "regression_logs/d4c2a_pytest/j5.xml",
+      "regression_logs/d4c2a_pytest/j18.xml",
+      "regression_logs/d4c2a_pytest/j9.xml",
+      "regression_logs/d4c2a_pytest/j15.xml",
+      "regression_logs/d4c2a_pytest/j22.xml",
+      "regression_logs/d4c2a_pytest/j29.xml",
+      "regression_logs/d4c2a_pytest/test_log.txt",
+      "regression_logs/d4c2a_pytest/j26.xml",
+      "regression_logs/d4c2a_pytest/j8.xml",
+      "regression_logs/d4c2a_pytest/j6.xml",
+      "regression_logs/d4c2a_pytest/j14.xml",
+      "regression_logs/d4c2a_pytest/j19.xml",
+      "regression_logs/d4c2a_pytest/j28.xml",
+      "regression_logs/d4c2a_pytest/j1.xml",
+      "regression_logs/d4c2a_pytest/collect.txt",
+      "regression_logs/d4c2a_pytest/j16.xml",
+      "regression_logs/d4c2a_pytest/j30.xml",
+      "regression_logs/d4c2a_pytest/j21.xml",
+      "regression_logs/d4c2a_pytest/j4.xml",
+      "regression_logs/d4c2a_pytest/j2.xml",
+      "regression_logs/d4c2a_pytest/j7.xml",
+      "regression_logs/d4c2a_pytest/j10.xml",
+      "regression_logs/d4c2a_pytest/j17.xml",
+      "registered_assets/d4c1/acceptance/d4c2a/file_map.json"
+    ],
+    "added": [
+      "Step1_PhaseD_D4C2a_design_v0.4.md",
+      "Step1_PhaseD_environment_amendment_v0.3.md",
+      "registered_assets/d4c1/acceptance/d4c2a/D4C2a_v4_0.111.0_audit_evidence.zip",
+      "registered_assets/d4c1/acceptance/d4c2a/D4C2a_v4_0.111.0_audit_decision.json",
+      "registered_assets/d4c1/acceptance/d4c2a/ChatGPT_audit_D4C2a_v4_0.111.0.md"
+    ],
+    "pin_changes": {
+      "d/d1_pins.json": [
+        "engine_version"
+      ],
+      "d/d2_pins.json": [
+        "engine_version"
+      ],
+      "d/d3_pins.json": [
+        "engine_version"
+      ],
+      "b3/b3_0_pins.json": [
+        "engine_version"
+      ],
+      "b3/b3_1_pins.json": [
+        "engine_version"
+      ],
+      "b3/b3_2_pins.json": [
+        "engine_version"
+      ]
+    },
+    "author_junit_files": 30,
+    "author_junit_cases": 1953,
+    "author_junit_states": {},
+    "collect_rc": 0,
+    "collect_count": 1953,
+    "normalized_multiset_equal": true,
+    "author_only": [],
+    "collect_only": [],
+    "normalization": "module class to tests/file.py; absolute notebook path prefix to <ROOT>"
+  },
+  "preservation": {
+    "current": {
+      "files": 2749,
+      "changed": [],
+      "added": [],
+      "unchanged": true
+    },
+    "previous": {
+      "files": 2744,
+      "changed": [],
+      "added": [],
+      "unchanged": true
+    },
+    "producer": {
+      "files": 2728,
+      "changed": [],
+      "added": [],
+      "unchanged": true
+    }
+  },
+  "limitations": [
+    "No actual bridge result under Python3.13.16 was supplied or executed here. Cross-tree fixtures copy accepted scientific records and synthesize producer metadata.",
+    "No bank intake, plan regeneration, exact POT, 2000-row screen, real-data certificate, global calibration or actual target evaluation.",
+    "Seven submitted script tests skipped due to absent external assets; one full-size D3c plan consumer test deselected.",
+    "The own-reader is the unmodified 0.110 producer reader in a fresh process; the local audit runtime is not the registered production environment.",
+    "No independent comparison of remote Git tree to the submitted ZIP. Expected commit is an explicit external input; the reviewed invocation must provide it and verify the known producer ZIP/inventory.",
+    "Profile checks establish the tested schema/coverage/accounting contract, not the truth of arbitrary timing numbers or a measured speedup.",
+    "Fresh replay covers one synthetic ZIP comparison and source preservation, not all pytest cases again."
+  ],
+  "artifacts": {
+    "report": "ChatGPT_audit_D4C2a_v5_0.112.0.md",
+    "evidence": "D4C2a_v5_0.112.0_audit_evidence.zip"
+  }
+}

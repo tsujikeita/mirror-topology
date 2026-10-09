@@ -1,0 +1,505 @@
+{
+  "schema": "D4C2_screen_certificate_postrun_acceptance_v1",
+  "date_JST": "2026-10-08",
+  "decision": "SCREENS_AND_AUTHENTICATED_FIXED_CAMPAIGN_INFEASIBILITY_ACCEPTED__REGISTRATION_DRAFTING_AND_TESTS_GO",
+  "subject": {
+    "results_archive": {
+      "file": "D4C2_screen_certificate_0.112.0_results.zip",
+      "sha256": "567092dae35b2a9f8ba64ef28af000b680546502b69c890d22af756d309a7cc7",
+      "bytes": 1894673
+    },
+    "report": {
+      "file": "D4C2_screen_certificate_report.md",
+      "sha256": "b9a96cecd1cd6b9d27030381198512d4f05525a8451cb2d4e2d4125b7d179d02",
+      "bytes": 7484
+    },
+    "execution_source": {
+      "commit": "ba51e5951ebb8c16c7106247408c912d86944675",
+      "engine": "0.112.0",
+      "source_zip": {
+        "file": "phaseB_D4C2a_v5_0.112.0.zip",
+        "bytes": 31212377,
+        "sha256": "0f52a66f53656fd0e686d2ff9a095724e3f834bcd1db26259509005ca323b62c"
+      },
+      "inventory": {
+        "file": "B2_completion_inventory.json",
+        "bytes": 352053,
+        "sha256": "aa2c11cc01df09fc9cd130a2c0b9aa5af75d1b2acc27f47aef3d5d91d0bb2b77"
+      },
+      "script": {
+        "file": "d4c1_calibration.py",
+        "bytes": 102144,
+        "sha256": "814557791d7f295fbb981c20806c7374ddf7ae19148380c41c004afef3e597b0"
+      },
+      "screen_notebook": {
+        "file": "MirrorTopology_Step1_D4C2_screen_v0.1.ipynb",
+        "bytes": 28964,
+        "sha256": "ca9c263ac5cc6ab398eb948c443404af310d0d89a2aae55cef4760dc5a5f6acb"
+      },
+      "pins": {
+        "file": "d3_pins.json",
+        "bytes": 3402,
+        "sha256": "1d03bc5f83d41a2bf75d817cf7d6b9d29caf856740a4f87dc9e8d303a7e172d2"
+      },
+      "remote_git_tree_independently_verified": false
+    },
+    "execution_authorization": {
+      "file": "D4C2_screen_certificate_0.112.0_execution_decision.json",
+      "sha256": "0477d7b2fb546634c3444cb0613aef993d181730e4556cbfc97f6116f5473282",
+      "bytes": 9442
+    }
+  },
+  "GO": {
+    "screen_E2_E7_E8_run_evidence_acceptance": true,
+    "certificate_run_evidence_acceptance": true,
+    "fixed_campaign_usable_true_impossibility_acceptance_support": true,
+    "fixed_campaign_usable_true_impossibility_acceptance_strong": true,
+    "registration_drafting_and_tests_GO": true,
+    "originals_repo_registration_tranche_drafting": true,
+    "registration_loader_implementation_acceptance": false,
+    "formal_global_calibration_completed": false,
+    "formal_usable_false_measured": false,
+    "PhaseE_actual_target_or_labels": false,
+    "scientific_amendment_or_new_pseudo_W2_generation": false
+  },
+  "requires_mandatory_code_patch": false,
+  "requires_bank_pseudo_W2_D3c_or_screen_rerun": false,
+  "prior_acceptances_preserved": true,
+  "accepted_screens": {
+    "E2": {
+      "attempt": "20261007T113430Z_d4d346bde9",
+      "n_rows": 2000,
+      "n_blocking": 2000,
+      "max_ratio": 1.1456692913385829,
+      "max_ratio_by_size": {
+        "L1.00": 1.1456692913385829,
+        "L1.20": 1.0814639905548997,
+        "L1.50": 1.0456852791878173
+      },
+      "min_P": 0.0002005,
+      "min_hits": 207,
+      "total_seconds": 1023.065,
+      "script_seconds": 887.9556918144226,
+      "screen_seconds": 546.2,
+      "screen_stage_seconds": 551.816,
+      "peak_rss_mb": 8450.9,
+      "staging": {
+        "root": "/content/stage",
+        "d2_units": 30,
+        "input_bytes": 3255156399,
+        "disk_free_bytes_before": 219735109632,
+        "seconds": 132.4,
+        "disk_free_bytes_after": 213216776192
+      },
+      "screen_content_sha256": "013b5e971c2537b209811f94632cf4e4011450e2fefd831e62299cc5fe30e4e7",
+      "screen_file": {
+        "sha256": "ef097ed55584085e2e7eb532149222be331eef9aa45f9695913a4f9317686809",
+        "bytes": 5054468
+      },
+      "run_file": {
+        "sha256": "c83c95b23c11e583c853582091ceff707b0d59fa008fe36bfeba726d7b0baae3",
+        "bytes": 28562
+      },
+      "lock_file": {
+        "sha256": "ac223b5ddb1e964edc796edcf0049f7fb3e255063e7b26691d354e314cf463dc",
+        "bytes": 2275
+      },
+      "final_file": {
+        "sha256": "2479b87a256c684e5544d44a6ad42c820739dd36056d00b14a78050bcd752ccb",
+        "bytes": 9888
+      },
+      "inner_zip": {
+        "sha256": "a846276b6a9812d874036e724a04b182f05a860278131d22ce059ec17c7e9929",
+        "bytes": 548505
+      },
+      "notebook": {
+        "sha256": "8ab4fbf6276c053cfd5fe750c28cc7116631f1a9ee4d0afdaae690ff43b6aef8",
+        "bytes": 37093
+      }
+    },
+    "E7": {
+      "attempt": "20261007T143438Z_a2d3767433",
+      "n_rows": 2000,
+      "n_blocking": 2000,
+      "max_ratio": 1.1036821705426358,
+      "max_ratio_by_size": {
+        "L1.00": 1.1036821705426358,
+        "L1.20": 1.0492277992277992,
+        "L1.50": 1.0528634361233482
+      },
+      "min_P": 0.00021,
+      "min_hits": 210,
+      "total_seconds": 733.952,
+      "script_seconds": 521.6424329280853,
+      "screen_seconds": 338.7,
+      "screen_stage_seconds": 342.78599999999994,
+      "peak_rss_mb": 8450.6,
+      "staging": {
+        "root": "/content/stage",
+        "d2_units": 30,
+        "input_bytes": 3255156403,
+        "disk_free_bytes_before": 219735089152,
+        "seconds": 209.1,
+        "disk_free_bytes_after": 213216595968
+      },
+      "screen_content_sha256": "55cd4e05ef60b6bacad77b2b94466179cd5816a97583c27dde9d828d118c2a6b",
+      "screen_file": {
+        "sha256": "a5b0af2c0f9268d93b09b736ad240d3ebed37c37f0b4fda393c0f868e388f1f5",
+        "bytes": 5054834
+      },
+      "run_file": {
+        "sha256": "48f2a7294071fe62849219f8a64b25a6f5338f54f7c7c5532215241768b1a71b",
+        "bytes": 28572
+      },
+      "lock_file": {
+        "sha256": "1f92d8cd73d67b5e11a307a12b6f29173591173efd6d73d34e397f5db0bf5525",
+        "bytes": 2275
+      },
+      "final_file": {
+        "sha256": "8b8cf8cf4aefbbd195e1eb177a805b71c3221c79c786890a1135457c14970cdc",
+        "bytes": 9897
+      },
+      "inner_zip": {
+        "sha256": "af6e7e0c0b2fc5359e3188a66d85736fc25363c865e8970d3620c6a64f651afc",
+        "bytes": 553426
+      },
+      "notebook": {
+        "sha256": "aa91b6375726bf277639cd934445059c4fe208285017e8ca359f051c576c49f0",
+        "bytes": 37094
+      }
+    },
+    "E8": {
+      "attempt": "20261007T145023Z_6a25812f53",
+      "n_rows": 2000,
+      "n_blocking": 2000,
+      "max_ratio": 1.1585051546391751,
+      "max_ratio_by_size": {
+        "L1.00": 1.1444444444444444,
+        "L1.20": 1.1585051546391751,
+        "L1.50": 1.1202380952380953
+      },
+      "min_P": 0.000184,
+      "min_hits": 184,
+      "total_seconds": 1053.892,
+      "script_seconds": 901.1062045097351,
+      "screen_seconds": 558.5,
+      "screen_stage_seconds": 564.145,
+      "peak_rss_mb": 8450.1,
+      "staging": {
+        "root": "/content/stage",
+        "d2_units": 30,
+        "input_bytes": 3255156401,
+        "disk_free_bytes_before": 219735138304,
+        "seconds": 149.8,
+        "disk_free_bytes_after": 213216768000
+      },
+      "screen_content_sha256": "571040923c80d74f9064c0f158ff7796e2e1c810d4b5e4a6818d4e66c07e4686",
+      "screen_file": {
+        "sha256": "4bff1eb70361cea7dad9032880550ceb5ef205df070a9d5a31299b25ea9828ad",
+        "bytes": 5054514
+      },
+      "run_file": {
+        "sha256": "edbbeca4c5e4d35502738f7c97cf12fc0e0705af6db3ef910a622db0cf82e96e",
+        "bytes": 28562
+      },
+      "lock_file": {
+        "sha256": "224559f6ef7c534bb4b6b11c87a8af2078cd1c759d0ffd64698d98e2f485494b",
+        "bytes": 2275
+      },
+      "final_file": {
+        "sha256": "3d983f79f4642c5a2af6e2cec71d3ec84b55fbdf725deb28ed47c7049e11d6b3",
+        "bytes": 9888
+      },
+      "inner_zip": {
+        "sha256": "5e4816068635e19b0f42296adea5e685d2712e242bc4b4f6faf0cc3f7989d7db",
+        "bytes": 551687
+      },
+      "notebook": {
+        "sha256": "6d028ca4f629a0e9cdc48ebd39286b24d64d715604a5b0484e0c90a262406572",
+        "bytes": 37093
+      }
+    }
+  },
+  "accepted_certificate": {
+    "file": {
+      "sha256": "0c910b32243e1c2305ad9dfcdc0e6ca06de37397164eeaf79554c554fe20920b",
+      "bytes": 2871232
+    },
+    "content_sha256": "4a249ee06929b514bfc2f60881ab1c5073518b30c1c2e3667b26621327066557",
+    "original_document_rederived_byte_exact": true,
+    "fresh_cli_replayed": true,
+    "fresh_cli_content_hash": "3318195efbbc03cb6653f4b68a739d4928d47c16e405cc690dfb618d3f2d7f52",
+    "fresh_cli_changes": "only source absolute directories and resulting content hash; consumer run metadata is separate"
+  },
+  "formal_statement": {
+    "scope": "conditional on the fixed accepted banks, W2 context, paired 2000 pseudo rows, grid and 0.112.0 registered decision semantics",
+    "premises": [
+      "Each E2/E7/E8 family has >=1 registered W2 unknown and no registered W2 True.",
+      "For every one of 2000 rows and every surviving size, every matched hit count at all three positions and both N0/N4 is positive; the six-rate envelope is <=2.",
+      "The registered position/eligibility logic makes each screened family-row unknown unless a required technical failure occurs.",
+      "Global aggregation is TECH > True > unknown > False; denominator stays2000; thresholds support=.05,strong=.01."
+    ],
+    "distinct_global_blocking_rows": 2000,
+    "family_row_evidence_count": 6000,
+    "probability_count_records": 108000,
+    "possibly_technical_rows": 2000,
+    "known_technical_rows_in_certificate": 0,
+    "conclusion": "If all required evaluations complete non-technically then c+u=2000 and registered WilsonUpper(2000,2000)=1, so both usability tests fail. If any required technical failure occurs, usable=True is unavailable as well. Thus no permitted completion can yield usable=True in this fixed campaign.",
+    "E1": "Not assigned False or removed. Any E1 outcome cannot rescue the original any-family usability criterion; each one of the three screened families already supplies2000 blocking rows.",
+    "not_claimed": [
+      "Universal cosmological topology no-go",
+      "No statistical information in these observables",
+      "Observed-target model exclusion or unsupported label",
+      "Population false-support rate equals1",
+      "Measured global c,u,rate or all2000 required numerical evaluations completed",
+      "Every future pseudo draw/campaign is blocked",
+      "W2 unknown by itself implies impossibility"
+    ]
+  },
+  "interpretation_correction": {
+    "source": "D4C2_screen_certificate_report.md §5 (iii) parenthesis",
+    "status": "NONBLOCKING_EXPLANATORY_ERRATUM_REQUIRED_FOR_NO_GO_TEXT",
+    "reason": "W2 unknown alone does not exclude event-ratio-triggered all-size12-position completion. Include the no-W2-True condition and demonstrated all-row positive envelope bounds, and condition on fixed assets."
+  },
+  "registration_conditions": [
+    "原本ZIP・全member・実行済notebook・command/stdout/stderr/rc・提出report・file_mapと今回の受入れをbyte同一で登録する。既存bridge原本とその別受入れも維持する。",
+    "成功screen 3件とcertificateは0.112.0の実行source・pins・path・時刻・各attemptへ固定する。登録時にengine/inventoryが上がっても旧recordを新版へ再ラベルしない。",
+    "ledger/receiptは原本と今回の受入れ文書から決定論的に再導出し、受入れ文書自身を含むpinsを入口で要求する（wrong/missing/nullの拒否）。",
+    "certificateの純粋な算術checkerと証拠認証を分離する。登録loaderは原本bytes、producer lock/final/run、信頼済みREQUIRED、source、publication、W2 decision全文、paired列、行被覆を認証する。",
+    "登録loaderは保存evidenceから再導出する。将来の新版で厳密な現source条件を一律に外さず、認証済み履歴sourceと今回の受入れidentityを根拠とする専用経路にする。",
+    "screen/certificateをsealed_calibrationや正式partialとして登録・消費しない。unknown_or_technical、technical_rows=0の限定、global rowの一度だけの計数を維持する。",
+    "科学的結論は固定資産・固定2000行・固定判定手続の成功不能に限定する。W2 unknownだけを十分条件としない。原本reportの強すぎる括弧書きは別erratumで訂正する。",
+    "拒否試験：原本改変、gate欠落、旧版混在、family/attempt混在、N4欠落、W2 checksum保持の要約改変、行/threshold/paired列変更、2000を6000とする二重計数、閾値入替え、不能証明のsealed昇格を拒否する。",
+    "登録packetの実装受入れは別途。今回のGOは起草・実装・試験/原本保管であり、Phase Eやtarget解放、規則変更・W2/pseudo再生成の許可ではない。"
+  ],
+  "verification": {
+    "direct_record_checks": 470,
+    "direct_failed": 0,
+    "inventory_sha_entries": 2237,
+    "arithmetic": {
+      "stored_probability_recomputations": 108000,
+      "size_envelopes": 18000,
+      "mixed_prefix_combinations": 144000,
+      "bank_counts_regenerated": false,
+      "registered_Wilson": {
+        "support": {
+          "threshold": 0.05,
+          "first_blocking_count": 81,
+          "previous_upper": 0.049506936641269615,
+          "blocking_upper": 0.050056823219945756,
+          "proven_blocking_rows": 2000,
+          "conditional_upper": 1.0
+        },
+        "strong": {
+          "threshold": 0.01,
+          "first_blocking_count": 12,
+          "previous_upper": 0.009822062795201925,
+          "blocking_upper": 0.010458448381508353,
+          "proven_blocking_rows": 2000,
+          "conditional_upper": 1.0
+        }
+      }
+    },
+    "unmodified_certificate_CLI": {
+      "rc": 0,
+      "source_epoch": "0.112.0",
+      "source_code_modified": false,
+      "skip_flags_or_mock_loaders": false,
+      "record_difference": "local sources[].dir and resulting content SHA only; preserving verified original provenance yields byte-identical original certificate"
+    },
+    "unmodified_selected_pytest": {
+      "passed": 5,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "full_suite_rerun": false
+    },
+    "real_record_mutation_controls": {
+      "refused": 17,
+      "all_expected": true
+    },
+    "fresh_scope": {
+      "wrapper_terminated_by_tool_timeout_seconds": 180,
+      "fresh_certificate_cli_rc": 0,
+      "fresh_scientific_fields_equal": true,
+      "fresh_complete_audit_not_finished": true,
+      "fresh_mutation_controls_not_run": true,
+      "not_counted_as_full_fresh_reproduction": true
+    },
+    "preservation": {
+      "source": {
+        "files": 2749,
+        "unchanged": true
+      },
+      "raw": {
+        "files": 15,
+        "unchanged": true
+      },
+      "screens": {
+        "files": 21,
+        "unchanged": true
+      }
+    }
+  },
+  "raw_files": {
+    "D4C2_screen_certificate_report.md": {
+      "sha256": "b9a96cecd1cd6b9d27030381198512d4f05525a8451cb2d4e2d4125b7d179d02",
+      "bytes": 7484
+    },
+    "certificate/command.txt": {
+      "sha256": "4f8079647a39d4ec34be24d7096c50650737325969d10e809c5d53d350c712c5",
+      "bytes": 521
+    },
+    "certificate/out_20261007T152500Z/d4c1_certificate_record.json": {
+      "sha256": "0c910b32243e1c2305ad9dfcdc0e6ca06de37397164eeaf79554c554fe20920b",
+      "bytes": 2871232
+    },
+    "certificate/out_20261007T152500Z/d4c1_certificate_run.json": {
+      "sha256": "c438768d8dbf0f17cd8d46eb2036e7b9bb4d5bfe53c49cfab094f53daf520ae6",
+      "bytes": 11492
+    },
+    "certificate/out_20261007T152500Z/d4c1_certificate_stdout.log": {
+      "sha256": "68690230f873cc3496ff64b69f10c6129749e36aa5f204b5ef432fb231a21af5",
+      "bytes": 572
+    },
+    "certificate/rc.txt": {
+      "sha256": "93ff7811a209e2a8479230bbb9b6bc19f7f311d3af383ec350c1db2a7e7d5494",
+      "bytes": 5
+    },
+    "certificate/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "certificate/stdout.txt": {
+      "sha256": "0ae34e3fec8bd5af40f33a92bfe7ed63d6e98041e4c65e2f44524ad2084caaec",
+      "bytes": 688
+    },
+    "file_map.json": {
+      "sha256": "628bc3161dcbb5209c55f0793c57b5f2f7fdff435a0de1f1994693d5b75a909c",
+      "bytes": 8744
+    },
+    "screens/MirrorTopology_Step1_D4C2_screen_v0_1_E2_executed_ba51e5951ebb.ipynb": {
+      "sha256": "8ab4fbf6276c053cfd5fe750c28cc7116631f1a9ee4d0afdaae690ff43b6aef8",
+      "bytes": 37093
+    },
+    "screens/MirrorTopology_Step1_D4C2_screen_v0_1_E7_executed_ba51e5951ebb.ipynb": {
+      "sha256": "aa91b6375726bf277639cd934445059c4fe208285017e8ca359f051c576c49f0",
+      "bytes": 37094
+    },
+    "screens/MirrorTopology_Step1_D4C2_screen_v0_1_E8_executed_ba51e5951ebb.ipynb": {
+      "sha256": "6d028ca4f629a0e9cdc48ebd39286b24d64d715604a5b0484e0c90a262406572",
+      "bytes": 37093
+    },
+    "screens/d4c1_screen_E2_ba51e5951ebb.zip": {
+      "sha256": "a846276b6a9812d874036e724a04b182f05a860278131d22ce059ec17c7e9929",
+      "bytes": 548505
+    },
+    "screens/d4c1_screen_E7_ba51e5951ebb.zip": {
+      "sha256": "af6e7e0c0b2fc5359e3188a66d85736fc25363c865e8970d3620c6a64f651afc",
+      "bytes": 553426
+    },
+    "screens/d4c1_screen_E8_ba51e5951ebb.zip": {
+      "sha256": "5e4816068635e19b0f42296adea5e685d2712e242bc4b4f6faf0cc3f7989d7db",
+      "bytes": 551687
+    }
+  },
+  "inner_files": {
+    "E2/d4c1_screen_final_record.json": {
+      "sha256": "2479b87a256c684e5544d44a6ad42c820739dd36056d00b14a78050bcd752ccb",
+      "bytes": 9888
+    },
+    "E2/d4c1_screen_lock.json": {
+      "sha256": "ac223b5ddb1e964edc796edcf0049f7fb3e255063e7b26691d354e314cf463dc",
+      "bytes": 2275
+    },
+    "E2/d4c1_screen_stderr_20261007T113430Z_d4d346bde9.txt": {
+      "sha256": "57019c3de9e5f52a748b62cd7bca9631edf092d5e43a1e3e8b9a6c4b04a9842c",
+      "bytes": 422
+    },
+    "E2/d4c1_screen_stdout_20261007T113430Z_d4d346bde9.txt": {
+      "sha256": "5842a97933b88ad5f32fef4e2226012570ce2331d4272a65bc98cb07b8c6be5b",
+      "bytes": 1223
+    },
+    "E2/run_20261007T113430Z_d4d346bde9/d4c1_screen_E2_record.json": {
+      "sha256": "ef097ed55584085e2e7eb532149222be331eef9aa45f9695913a4f9317686809",
+      "bytes": 5054468
+    },
+    "E2/run_20261007T113430Z_d4d346bde9/d4c1_screen_E2_run.json": {
+      "sha256": "c83c95b23c11e583c853582091ceff707b0d59fa008fe36bfeba726d7b0baae3",
+      "bytes": 28562
+    },
+    "E2/run_20261007T113430Z_d4d346bde9/d4c1_screen_E2_stdout.log": {
+      "sha256": "e38d2bca92b7d1007968f003daee50323d9eac106b1a81b75fe21d2de463ee3b",
+      "bytes": 1107
+    },
+    "E7/d4c1_screen_final_record.json": {
+      "sha256": "8b8cf8cf4aefbbd195e1eb177a805b71c3221c79c786890a1135457c14970cdc",
+      "bytes": 9897
+    },
+    "E7/d4c1_screen_lock.json": {
+      "sha256": "1f92d8cd73d67b5e11a307a12b6f29173591173efd6d73d34e397f5db0bf5525",
+      "bytes": 2275
+    },
+    "E7/d4c1_screen_stderr_20261007T143438Z_a2d3767433.txt": {
+      "sha256": "91a335f1e64df8ae5be2d21cb9b554bac208c6da8a2d6fa01c63d0157bb59a01",
+      "bytes": 422
+    },
+    "E7/d4c1_screen_stdout_20261007T143438Z_a2d3767433.txt": {
+      "sha256": "388c5a6893fd3bfa82751916e100c1e636685d9d3ba0360be9524ef902084472",
+      "bytes": 1214
+    },
+    "E7/run_20261007T143438Z_a2d3767433/d4c1_screen_E7_record.json": {
+      "sha256": "a5b0af2c0f9268d93b09b736ad240d3ebed37c37f0b4fda393c0f868e388f1f5",
+      "bytes": 5054834
+    },
+    "E7/run_20261007T143438Z_a2d3767433/d4c1_screen_E7_run.json": {
+      "sha256": "48f2a7294071fe62849219f8a64b25a6f5338f54f7c7c5532215241768b1a71b",
+      "bytes": 28572
+    },
+    "E7/run_20261007T143438Z_a2d3767433/d4c1_screen_E7_stdout.log": {
+      "sha256": "d522f070d9333009fc5918f54d69f42e48e88588b41b31c9f4916ff4028e28bf",
+      "bytes": 1098
+    },
+    "E8/d4c1_screen_final_record.json": {
+      "sha256": "3d983f79f4642c5a2af6e2cec71d3ec84b55fbdf725deb28ed47c7049e11d6b3",
+      "bytes": 9888
+    },
+    "E8/d4c1_screen_lock.json": {
+      "sha256": "224559f6ef7c534bb4b6b11c87a8af2078cd1c759d0ffd64698d98e2f485494b",
+      "bytes": 2275
+    },
+    "E8/d4c1_screen_stderr_20261007T145023Z_6a25812f53.txt": {
+      "sha256": "8619c95394da10744913323fec766129b6392680a64744455ee3aaf12e60b60b",
+      "bytes": 422
+    },
+    "E8/d4c1_screen_stdout_20261007T145023Z_6a25812f53.txt": {
+      "sha256": "5db01cedab8fa6ac3fe4aba6281be9549fca0e059cde99fbc1473ee0d3d6ba90",
+      "bytes": 1223
+    },
+    "E8/run_20261007T145023Z_6a25812f53/d4c1_screen_E8_record.json": {
+      "sha256": "4bff1eb70361cea7dad9032880550ceb5ef205df070a9d5a31299b25ea9828ad",
+      "bytes": 5054514
+    },
+    "E8/run_20261007T145023Z_6a25812f53/d4c1_screen_E8_run.json": {
+      "sha256": "edbbeca4c5e4d35502738f7c97cf12fc0e0705af6db3ef910a622db0cf82e96e",
+      "bytes": 28562
+    },
+    "E8/run_20261007T145023Z_6a25812f53/d4c1_screen_E8_stdout.log": {
+      "sha256": "d0f0bc9e0eca4ecf0e4c41cf0267eca22bf8fd1bc068f89215e09284b549de61",
+      "bytes": 1107
+    }
+  },
+  "limitations": [
+    "正式D-2 bankのNPZ本体は結果packetに含まれず、当方はhit数を実配列から再走査・再測定していない。保存された108000件のhit/N/Pからの算術確認である。",
+    "実bankのinput_fingerprint、巨大bootstrap planの再生成、物理kernel、exact POT、KDE/12位置の正式較正は未実行。",
+    "過去Colabの実HEAD/環境の直接観測、remote Git treeの全面照合は未実施。記録された観測値と固定sourceの実bytesを比較した。",
+    "全1953 pytestは再実行していない。選択した既存5件のみ全PASS。追加の17改変対照と470項目の直接照合はpytest件数ではない。",
+    "元の教授側bundle d4c1_results.zipは未添付。そこからの転写経路とbundle SHA自体は独立検証していない。添付された3 inner ZIP・3 notebookの実bytesは直接固定・照合した。",
+    "fresh workではcertificate CLIのrc0と科学的内容一致を確認したが、その後の一括監査は180秒のtool制限で中断。完全なfresh監査再現とは数えない。",
+    "当方のcertificate再実行環境はPython3.13.5/NumPy2.3.5/SciPy1.17.0。healpy/POT/CAMBは未導入でmetadataはnull。専用certificate入口は数値生成環境HARD gateを要求しない設計であり、skip flagやstand-inは使用していない。"
+  ],
+  "artifacts": {
+    "report": "ChatGPT_audit_D4C2_screen_certificate_0.112.0.md",
+    "evidence": "D4C2_screen_certificate_0.112.0_audit_evidence.zip"
+  }
+}
